@@ -32,7 +32,7 @@ export default function Layout(props) {
         <meta property="og:image" content={meta.image} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:locale" content="en_CA" />
-        {meta.type === article && (
+        {meta.type === 'article' && (
           <>
             {meta.published_time && (
               <meta
@@ -60,7 +60,7 @@ export default function Layout(props) {
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:image" content={meta.image} />
-      <Navbar />
+      </Head>
       <main id="content" className="justify-centre flex flex-col px-6 md:px-8">
         {children}
       </main>
