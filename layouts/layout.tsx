@@ -1,6 +1,9 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+
 export default function Layout(props) {
   const { children, ...customMeta } = props
   const meta = {
@@ -61,9 +64,11 @@ export default function Layout(props) {
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:image" content={meta.image} />
       </Head>
+      <Navbar />
       <main id="content" className="justify-centre flex flex-col px-6 md:px-8">
         {children}
       </main>
+      <Footer />
     </div>
   )
 }
