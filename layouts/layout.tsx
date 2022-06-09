@@ -29,7 +29,7 @@ export default function Layout({ children, ...customMeta }: Props) {
   const router = useRouter()
 
   return (
-    <div>
+    <div className="text-neutral-900 dark:text-neutral-50">
       <Head>
         <title>{meta.title}</title>
         <meta content={meta.description} name="description" />
@@ -73,7 +73,7 @@ export default function Layout({ children, ...customMeta }: Props) {
             )}
             {meta.tags &&
               meta.tags.map((tag) => (
-                <meta property="article:tag" content={tag} />
+                <meta property="article:tag" content={tag} key={tag} />
               ))}
           </>
         )}
