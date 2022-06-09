@@ -1,11 +1,24 @@
+import { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
-export default function Layout(props) {
-  const { children, ...customMeta } = props
+type Props = {
+  children: ReactNode
+  title?: string
+  description?: string
+  type?: 'website' | 'article'
+  image?: string
+  published_time?: string
+  modified_time?: string
+  author?: string
+  section?: string
+  tags?: string[]
+}
+
+export default function Layout({ children, ...customMeta }: Props) {
   const meta = {
     title: 'Kirill Tregubov',
     description: `Full stack web developer and computer science blogger.`,
@@ -34,7 +47,7 @@ export default function Layout(props) {
         <meta property="og:description" content={meta.description} />
         <meta property="og:image" content={meta.image} />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:locale" content="en_CA" />
+        <meta property="og:locale" content="en_US" />
         {meta.type === 'article' && (
           <>
             {meta.published_time && (
@@ -44,10 +57,13 @@ export default function Layout(props) {
               />
             )}
             {meta.modified_time && (
-              <meta
-                property="article:modified_time"
-                content={meta.modified_time}
-              />
+              <>
+                <meta
+                  property="article:modified_time"
+                  content={meta.modified_time}
+                />
+                <meta property="og:updated_time" content={meta.modified_time} />
+              </>
             )}
             {meta.author && (
               <meta property="article:author" content={meta.author} />
@@ -55,7 +71,10 @@ export default function Layout(props) {
             {meta.section && (
               <meta property="article:section" content={meta.section} />
             )}
-            {meta.tags && <meta property="article:tag" content={meta.tags} />}
+            {meta.tags &&
+              meta.tags.map((tag) => (
+                <meta property="article:tag" content={tag} />
+              ))}
           </>
         )}
         <meta name="twitter:card" content="summary_large_image" />

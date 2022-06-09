@@ -5,8 +5,14 @@ import { useTheme } from 'next-themes'
 import cn from 'classnames'
 import { MoonIcon, SunIcon } from '@heroicons/react/solid'
 
-function NavLink({ href, title }) {
-  const isActive = useRouter().asPath === href
+export type NavLinkProps = {
+  href: string
+  title: string
+}
+
+function NavLink({ href, title }: NavLinkProps) {
+  const { asPath: path } = useRouter()
+  const isActive = path === href
 
   return (
     <li>
@@ -33,11 +39,11 @@ export default function Navbar() {
   useEffect(() => setMounted(true), [])
 
   return (
-    <div className="bg-neutral-100 dark:bg-neutral-900">
-      <nav className="m-auto flex max-w-4xl select-none justify-between p-6 text-neutral-700 dark:text-neutral-400">
+    <div className="relative bg-neutral-100 dark:bg-neutral-900">
+      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-700 dark:text-neutral-400">
         <a
           href="#content"
-          className="absolute -top-8 z-10 -translate-y-8 transform rounded bg-neutral-50 px-3 py-1 transition-all duration-200 focus:top-4 focus:translate-y-3 focus:outline-none focus:ring-2 focus:ring-neutral-700 dark:bg-neutral-900 dark:focus:ring-neutral-300"
+          className="absolute left-4 -top-8 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 transition-all duration-200 focus:top-1 focus:translate-y-3 focus:outline-none focus:ring-2 focus:ring-neutral-700 dark:bg-neutral-900 dark:focus:ring-neutral-300"
         >
           Skip to content
         </a>

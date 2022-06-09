@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
+// import Image from 'next/image'
 
-import Layout from '../layouts/layout'
+import Layout from 'layouts/layout'
 
 const Home: NextPage = () => {
   return (
