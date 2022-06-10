@@ -19,8 +19,9 @@ export default function BlogLayout({ children, ...customMeta }: Props) {
   return (
     <Layout type="article">
       <Head>{/* <meta property="og:type" content={'article'} /> */}</Head>
-      <div>Blog</div>
-      {children}
+      <div className="prose prose-h2:mt-[1.75em] dark:prose-invert">
+        {children}
+      </div>
     </Layout>
   )
 }

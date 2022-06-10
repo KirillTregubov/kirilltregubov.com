@@ -1,8 +1,8 @@
-import type { GetStaticPaths, GetStaticProps } from 'next'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { allBlogPosts, BlogPost } from 'contentlayer/generated'
 
-import Blog from 'layouts/blog'
+import BlogLayout from 'layouts/BlogLayout'
+import MDXComponents from 'components/MDXComponents'
 
 type Props = {
   post: BlogPost
@@ -12,21 +12,27 @@ export default function Post({ post }: Props) {
   const Component = useMDXComponent(post.body.code)
 
   return (
-    <Blog>
-      <Component />
-    </Blog>
+    <BlogLayout>
+      <Component components={{ ...MDXComponents }} as any />
+    </BlogLayout>
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function getStaticPaths() {
   return {
     paths: allBlogPosts.map((post) => ({ params: { slug: post.slug } })),
     fallback: false
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = allBlogPosts.find((post) => post.slug === params?.slug)
+type StaticProps = {
+  params: {
+    slug: string
+  }
+}
+
+export async function getStaticProps({ params: { slug } }: StaticProps) {
+  const post = allBlogPosts.find((post) => post.slug === slug)
 
   return { props: { post } }
 }

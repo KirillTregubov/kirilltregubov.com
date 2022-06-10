@@ -26,7 +26,7 @@ export default function Layout({ children, ...customMeta }: Props) {
     type: 'website',
     ...customMeta
   }
-  console.log(meta)
+  // console.log(meta)
   const router = useRouter()
 
   return (

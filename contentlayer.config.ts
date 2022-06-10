@@ -17,7 +17,7 @@ const BlogPost = defineDocumentType(() => ({
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
-    publishedAt: { type: 'string', required: true },
+    published_time: { type: 'string', required: true },
     description: { type: 'string', required: true },
     image: { type: 'string', required: true }
   },
