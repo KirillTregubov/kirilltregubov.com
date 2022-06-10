@@ -1,16 +1,16 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import Navbar from 'components/Navbar'
+import Footer from 'components/Footer'
 
 type Props = {
   children: ReactNode
   title?: string
   description?: string
-  type?: 'website' | 'article'
   image?: string
+  type?: 'website' | 'article'
   published_time?: string
   modified_time?: string
   author?: string
@@ -26,6 +26,7 @@ export default function Layout({ children, ...customMeta }: Props) {
     type: 'website',
     ...customMeta
   }
+  console.log(meta)
   const router = useRouter()
 
   return (

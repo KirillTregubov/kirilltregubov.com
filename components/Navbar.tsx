@@ -5,12 +5,12 @@ import { useTheme } from 'next-themes'
 import cn from 'classnames'
 import { MoonIcon, SunIcon } from '@heroicons/react/solid'
 
-export type NavLinkProps = {
+type Props = {
   href: string
   title: string
 }
 
-function NavLink({ href, title }: NavLinkProps) {
+function NavLink({ href, title }: Props) {
   const { asPath: path } = useRouter()
   const isActive = path === href
 
