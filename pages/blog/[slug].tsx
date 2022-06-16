@@ -1,38 +1,31 @@
+import type { GetStaticPaths, GetStaticProps } from 'next'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { allBlogPosts, BlogPost } from 'contentlayer/generated'
 
 import BlogLayout from 'layouts/BlogLayout'
 import MDXComponents from 'components/MDXComponents'
 
-type Props = {
-  post: BlogPost
-}
-
-export default function Post({ post }: Props) {
-  const Component = useMDXComponent(post.body.code)
+const Post: React.FC<{ post: BlogPost }> = ({ post }) => {
+  const Article = useMDXComponent(post.body.code)
 
   return (
     <BlogLayout>
-      <Component components={{ ...MDXComponents }} as any />
+      <Article components={{ ...MDXComponents }} />
     </BlogLayout>
   )
 }
 
-export async function getStaticPaths() {
+export default Post
+
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: allBlogPosts.map((post) => ({ params: { slug: post.slug } })),
     fallback: false
   }
 }
 
-type StaticProps = {
-  params: {
-    slug: string
-  }
-}
-
-export async function getStaticProps({ params: { slug } }: StaticProps) {
-  const post = allBlogPosts.find((post) => post.slug === slug)
+export const getStaticProps: GetStaticProps = async (context) => {
+  const post = allBlogPosts.find((post) => post.slug === context?.params?.slug)
 
   return { props: { post } }
 }

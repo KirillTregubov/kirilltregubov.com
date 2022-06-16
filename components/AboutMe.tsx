@@ -1,6 +1,6 @@
 import { differenceInYears } from 'date-fns'
 
-export default function AboutMe() {
+const AboutMe: React.FC = () => {
   const age = differenceInYears(new Date(), new Date(2001, 9, 7))
 
   return (
@@ -28,3 +28,5 @@ export default function AboutMe() {
     </div>
   )
 }
+
+export default AboutMe

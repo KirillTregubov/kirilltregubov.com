@@ -32,7 +32,7 @@ export default class MyDocument extends Document {
             name="robots"
           />
         </Head>
-        <body>
+        <body className="bg-neutral-50 text-neutral-900 antialiased dark:bg-neutral-900 dark:text-neutral-50">
           <Main />
           <NextScript />
         </body>

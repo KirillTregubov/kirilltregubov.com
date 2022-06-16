@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import Head from 'next/head'
 
-type Props = {
+import Layout from 'layouts/layout'
+
+const BlogLayout: React.FC<{
   children: ReactNode
   title?: string
   description?: string
@@ -11,17 +13,15 @@ type Props = {
   author?: string
   section?: string
   tags?: string[]
-}
-
-import Layout from 'layouts/layout'
-
-export default function BlogLayout({ children, ...customMeta }: Props) {
+}> = ({ children, ...customMeta }) => {
   return (
     <Layout type="article">
       <Head>{/* <meta property="og:type" content={'article'} /> */}</Head>
-      <div className="prose prose-h2:mt-[1.75em] dark:prose-invert">
+      <article className="prose prose-h2:mt-[1.75em] dark:prose-invert">
         {children}
-      </div>
+      </article>
     </Layout>
   )
 }
+
+export default BlogLayout

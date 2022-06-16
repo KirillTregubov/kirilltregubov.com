@@ -1,7 +1,7 @@
 import Layout from 'layouts/layout'
 import AboutMe from 'components/AboutMe'
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
     <Layout>
       <div>Index page</div>
@@ -9,3 +9,5 @@ export default function Home() {
     </Layout>
   )
 }
+
+export default Home

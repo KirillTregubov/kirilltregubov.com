@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 
-type Props = {
+const Layout: React.FC<{
   children: ReactNode
   title?: string
   description?: string
@@ -16,9 +16,7 @@ type Props = {
   author?: string
   section?: string
   tags?: string[]
-}
-
-export default function Layout({ children, ...customMeta }: Props) {
+}> = ({ children, ...customMeta }) => {
   const meta = {
     title: 'Kirill Tregubov',
     description: `Full stack web developer and computer science blogger.`,
@@ -30,7 +28,7 @@ export default function Layout({ children, ...customMeta }: Props) {
   const router = useRouter()
 
   return (
-    <div className="text-neutral-900 dark:text-neutral-50">
+    <div>
       <Head>
         <title>{meta.title}</title>
         <meta content={meta.description} name="description" />
@@ -92,3 +90,5 @@ export default function Layout({ children, ...customMeta }: Props) {
     </div>
   )
 }
+
+export default Layout
