@@ -2,11 +2,12 @@ import { useState } from 'react'
 import type { InferGetStaticPropsType } from 'next'
 import cn from 'classnames'
 import { pick } from '@contentlayer/utils'
-import { BlogPost, allBlogPosts } from 'contentlayer/generated'
+import { allBlogPosts } from 'contentlayer/generated'
 import { SearchIcon } from '@heroicons/react/solid'
 
 import Layout from 'layouts/layout'
 import BlogPreview from 'components/BlogPreview'
+import Void from 'components/illustrations/Void'
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts
@@ -37,9 +38,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Search posts"
           aria-label="Search posts"
-          className={cn(
-            'block w-full rounded-lg border border-neutral-300 bg-white pl-8 text-neutral-900 shadow outline-none placeholder:text-neutral-400 focus:border-neutral-900 focus:ring-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:placeholder:text-neutral-400/70 dark:focus:border-neutral-100 dark:focus:ring-neutral-100'
-          )}
+          className="block w-full rounded-lg border border-neutral-300  bg-white pl-8 text-neutral-900 shadow placeholder:text-neutral-400 focus:border-transparent dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:placeholder:text-neutral-400/70"
         />
       </div>
       <div>
@@ -47,7 +46,13 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <div></div>
       </div>
       {!filteredBlogPosts.length && (
-        <p className="mb-4 text-gray-600 dark:text-gray-400">No posts found.</p>
+        <div className="mt-3 flex flex-col items-center">
+          <p className="mb-4 text-gray-600 dark:text-gray-400">
+            <Void className="h-44 w-full text-accent-500" />
+            <p className="mt-3">No posts match your criteria.</p>
+          </p>
+          <h2>Reccommended</h2>
+        </div>
       )}
       {filteredBlogPosts.map((post) => (
         <BlogPreview key={post.title} {...post} />
