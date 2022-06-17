@@ -46,14 +46,14 @@ const ThemeSwitcher: React.FC = () => {
           aria-label="Toggle Theme"
           type="button"
           className={cn(
-            'flex items-center justify-center rounded-full p-2 transition hover:translate-y-[0.05rem] hover:scale-[0.85] hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-50'
+            'group flex items-center justify-center rounded-full p-2 transition hover:translate-y-[0.05rem] hover:scale-[0.85] hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-50'
           )}
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
           {theme === 'dark' ? (
-            <SunIcon className="h-6 w-6" />
+            <SunIcon className="h-6 w-6 group-hover:animate-rotate" />
           ) : (
-            <MoonIcon className="h-6 w-6" />
+            <MoonIcon className="h-6 w-6 group-hover:animate-pulse" />
           )}
         </button>
       )}

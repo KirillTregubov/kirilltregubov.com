@@ -49,7 +49,7 @@
   left: 51%;
   right: 51%;
   bottom: 0;
-  height: 4px;
+  height: 3px;
   -webkit-transition-property: left, right;
   transition-property: left, right;
   -webkit-transition-duration: 0.3s;

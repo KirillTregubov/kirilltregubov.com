@@ -7,13 +7,19 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        accent: 'spin 3s ease-in-out 3s infinite'
+        rotate: 'rotate 2s ease-in-out infinite'
       },
       colors: {
         accent: colors.amber
       },
       fontFamily: {
         sans: ['Inter var', ...fontFamily.sans]
+      },
+      keyframes: {
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '50%, 100%': { transform: 'rotate(360deg)' }
+        }
       }
     }
   },
