@@ -6,6 +6,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      animation: {
+        accent: 'spin 3s ease-in-out 3s infinite'
+      },
       colors: {
         accent: colors.amber
       },

@@ -7,7 +7,7 @@ import {
 const computedFields: ComputedFields = {
   slug: {
     type: 'string',
-    resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, '')
+    resolve: (doc) => doc._raw.flattenedPath.replace(/([^\/]*\/){1}/, '')
   }
 }
 
@@ -23,6 +23,10 @@ const BlogPost = defineDocumentType(() => ({
   },
   computedFields
 }))
+
+// const Topic = defineDocumentType(() => ({
+//   name: 'Topic',
+// }))
 
 export default makeSource({
   contentDirPath: 'content',

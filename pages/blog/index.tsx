@@ -21,7 +21,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Layout>
-      <h1>My Blog</h1>
+      <h1 className="mt-2 font-bold">My Blog</h1>
       <div className="relative my-4 w-full">
         <div className="absolute inset-y-0 ml-2 flex items-center">
           <SearchIcon
@@ -38,7 +38,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Search posts"
           aria-label="Search posts"
-          className="block w-full rounded-lg border border-neutral-300  bg-white pl-8 text-neutral-900 shadow placeholder:text-neutral-400 focus:border-transparent dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:placeholder:text-neutral-400/70"
+          className="block w-full rounded-lg border border-neutral-300 bg-white  pl-8 text-neutral-900 shadow transition  placeholder:text-neutral-400 focus:border-transparent dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:placeholder:text-neutral-400/70"
         />
       </div>
       <div>
@@ -49,11 +49,17 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <div className="mt-3 flex flex-col items-center">
           <p className="mb-4 text-gray-600 dark:text-gray-400">
             <Void className="h-44 w-full text-accent-500" />
-            <p className="mt-3">No posts match your criteria.</p>
+            <p className="mt-3">No posts matched your criteria.</p>
           </p>
-          <h2>Reccommended</h2>
         </div>
       )}
+      {/* {(filteredBlogPosts.length == 0 || searchValue.length == 0) && (
+        <div>
+          <h2 className="flex flex-col items-center text-red-500">
+            Recommended Posts
+          </h2>
+        </div>
+      )} */}
       {filteredBlogPosts.map((post) => (
         <BlogPreview key={post.title} {...post} />
       ))}
@@ -72,6 +78,7 @@ export const getStaticProps = async () => {
       (a, b) =>
         Number(new Date(b.published_time)) - Number(new Date(a.published_time))
     )
+  // const topics = allTopics
 
   return { props: { posts } }
 }

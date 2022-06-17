@@ -18,9 +18,9 @@ const NavLink: React.FC<{
         <a
           className={cn(
             isActive
-              ? 'font-semibold text-neutral-800 dark:text-neutral-300'
-              : 'font-normal',
-            'hidden rounded-md p-1 transition hover:bg-neutral-200 dark:hover:bg-neutral-800 sm:px-4 sm:py-2 md:inline-block'
+              ? 'hvr-underline-from-center-active text-neutral-800 dark:text-neutral-300'
+              : '',
+            'hvr-underline-from-center hidden overflow-visible rounded p-1 font-medium transition hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
           )}
         >
           {title}
@@ -46,7 +46,7 @@ const ThemeSwitcher: React.FC = () => {
           aria-label="Toggle Theme"
           type="button"
           className={cn(
-            'flex items-center justify-center rounded-full p-2 transition hover:translate-y-[0.05rem] hover:scale-[0.85] hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50'
+            'flex items-center justify-center rounded-full p-2 transition hover:translate-y-[0.05rem] hover:scale-[0.85] hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-50'
           )}
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
@@ -63,8 +63,8 @@ const ThemeSwitcher: React.FC = () => {
 
 const Navbar: React.FC = () => {
   return (
-    <div className="relative bg-stone-50 dark:bg-stone-900">
-      <nav className="m-auto flex max-w-5xl select-none justify-between px-6 py-4 text-neutral-600 dark:text-neutral-400">
+    <div className="relative bg-stone-100 transition-[background-color] dark:bg-neutral-800">
+      <nav className="m-auto flex max-w-5xl select-none justify-between px-6 py-4 text-neutral-500/80 dark:text-neutral-400/80">
         {/* dark:text-neutral-400 */}
         <a
           href="#content"
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
         </a>
         <ul className="flex gap-1">
           <NavLink href="/" title="Home" />
-          <NavLink href="/portfolio" title="Portfolio" />
+          {/* <NavLink href="/portfolio" title="Portfolio" /> */}
           <NavLink href="/blog" title="Blog" />
           <NavLink href="/snippets" title="Snippets" />
         </ul>
