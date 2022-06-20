@@ -21,7 +21,12 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Layout>
-      <h1 className="mt-6 text-2xl font-bold">My Blog</h1>
+      <h1 className="text-2xl font-bold">My Blog</h1>
+      <p className="mt-1">
+        My personal blog where I share structured content about what I'm
+        learning and working on, along with other interesting information I want
+        to share with the world.
+      </p>
       <div className="relative my-4 w-full">
         <div className="absolute inset-y-0 ml-2 flex items-center">
           <SearchIcon

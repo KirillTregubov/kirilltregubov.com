@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import Lead from 'components/Lead'
+import TLDR from 'components/TLDR'
 
 const MDXComponents = {
-  Lead
+  TLDR
 }
 
 export default MDXComponents

@@ -9,7 +9,13 @@ const Post: React.FC<{ post: BlogPost }> = ({ post }) => {
   const Article = useMDXComponent(post.body.code)
 
   return (
-    <BlogLayout>
+    <BlogLayout
+      title={post.title}
+      description={post.description}
+      image={post.image}
+      published_time={post.published_time}
+      modified_time={post.published_time}
+    >
       <Article components={{ ...MDXComponents }} />
     </BlogLayout>
   )

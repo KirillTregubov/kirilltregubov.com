@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        rotate: 'rotate 2s ease-in-out infinite'
+        rotate: 'rotate 2s ease-in-out'
       },
       colors: {
         accent: colors.amber
@@ -18,7 +18,7 @@ module.exports = {
       keyframes: {
         rotate: {
           '0%': { transform: 'rotate(0deg)' },
-          '50%, 100%': { transform: 'rotate(360deg)' }
+          '40%, 100%': { transform: 'rotate(360deg)' }
         }
       }
     }

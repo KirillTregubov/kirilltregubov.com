@@ -32,7 +32,6 @@ const NavLink: React.FC<{
 
 const ThemeSwitcher: React.FC = () => {
   const [mounted, setMounted] = useState(false)
-  const [selected, setSelected] = useState(false)
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
@@ -65,7 +64,6 @@ const Navbar: React.FC = () => {
   return (
     <div className="relative bg-stone-100 transition-[background-color] dark:bg-neutral-800">
       <nav className="m-auto flex max-w-5xl select-none justify-between px-6 py-4 text-neutral-500/80 dark:text-neutral-400/80">
-        {/* dark:text-neutral-400 */}
         <a
           href="#content"
           className={cn(

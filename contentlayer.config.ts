@@ -9,6 +9,10 @@ const computedFields: ComputedFields = {
     type: 'string',
     resolve: (doc) => doc._raw.flattenedPath.replace(/([^\/]*\/){1}/, '')
   }
+  // modified_time: {
+  //   type: 'string',
+  //   resolve: (doc) => doc
+  // }
 }
 
 const BlogPost = defineDocumentType(() => ({

@@ -10,7 +10,7 @@ const AboutMe: React.FC = () => {
         <span className="text-orange-400">full-stack developer</span> based in
         Canada. I'm currently building modern web experiences using Next.js, a
         React-based JavaScript framework. My preferred tech stack includes
-        TailwindCSS, Node.js, Prisma, and SQL. I'm also a third-year university
+        TailwindCSS, Node.js, Prisma, and SQL. I'm also a fourth-year university
         student{' '}
         <span className="text-orange-400">
           pursuing a BSc in Computer Science

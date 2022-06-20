@@ -4,7 +4,6 @@ import AboutMe from 'components/AboutMe'
 const Home: React.FC = () => {
   return (
     <Layout>
-      <div>Index page</div>
       <AboutMe />
     </Layout>
   )

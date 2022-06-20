@@ -11,27 +11,21 @@ const Layout: React.FC<{
   description?: string
   image?: string
   type?: 'website' | 'article'
-  published_time?: string
-  modified_time?: string
-  author?: string
-  section?: string
-  tags?: string[]
 }> = ({ children, ...customMeta }) => {
   const meta = {
     title: 'Kirill Tregubov',
     description: `Full stack web developer and computer science blogger.`,
-    // image: 'https://kirilltregubov.com/static/images/banner.png',
+    image: 'banner.png',
     type: 'website',
     ...customMeta
   }
-  // console.log(meta)
   const router = useRouter()
 
   return (
     <div>
       <Head>
         <title>{meta.title}</title>
-        <meta content={meta.description} name="description" />
+        <meta name="description" content={meta.description} />
         <meta name="robots" content="follow, index" />
         <meta property="og:site_name" content="Kirill Tregubov" />
         <link
@@ -44,46 +38,26 @@ const Layout: React.FC<{
         />
         <meta property="og:title" content={meta.title} />
         <meta property="og:description" content={meta.description} />
-        <meta property="og:image" content={meta.image} />
+        <meta
+          property="og:image"
+          content={`https://kirilltregubov.com/static/images/${meta.image}`}
+        />
         <meta property="og:type" content={meta.type} />
         <meta property="og:locale" content="en_US" />
-        {meta.type === 'article' && (
-          <>
-            {meta.published_time && (
-              <meta
-                property="article:published_time"
-                content={meta.published_time}
-              />
-            )}
-            {meta.modified_time && (
-              <>
-                <meta
-                  property="article:modified_time"
-                  content={meta.modified_time}
-                />
-                <meta property="og:updated_time" content={meta.modified_time} />
-              </>
-            )}
-            {meta.author && (
-              <meta property="article:author" content={meta.author} />
-            )}
-            {meta.section && (
-              <meta property="article:section" content={meta.section} />
-            )}
-            {meta.tags &&
-              meta.tags.map((tag) => (
-                <meta property="article:tag" content={tag} key={tag} />
-              ))}
-          </>
-        )}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@KirillTregubov_" />
-        <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:title" content={meta.title} />
-        <meta name="twitter:image" content={meta.image} />
+        <meta name="twitter:description" content={meta.description} />
+        <meta
+          name="twitter:image"
+          content={`https://kirilltregubov.com/static/images/${meta.image}`}
+        />
       </Head>
       <Navbar />
-      <main id="content" className="justify-centre flex flex-col px-6 md:px-8">
+      <main
+        id="content"
+        className="justify-centre m-auto mt-6 flex max-w-5xl flex-col px-6 md:px-8"
+      >
         {children}
       </main>
       <Footer />
