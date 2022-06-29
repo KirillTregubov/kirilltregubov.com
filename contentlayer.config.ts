@@ -31,7 +31,7 @@ const BlogPost = defineDocumentType(() => ({
     publishedTime: { type: 'string', required: true },
     modifiedTime: { type: 'string' },
     description: { type: 'string', required: true },
-    image: { type: 'nested', of: Image },
+    image: { type: 'nested', of: Image, required: true },
     topics: {
       type: 'list',
       of: { type: 'string' },
