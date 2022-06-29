@@ -45,14 +45,14 @@ const ThemeSwitcher: React.FC = () => {
           aria-label="Toggle Theme"
           type="button"
           className={cn(
-            'group flex items-center justify-center rounded-full p-2 transition hover:translate-y-[0.05rem] hover:scale-[0.85] hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-50'
+            'flex items-center justify-center rounded-full p-2 transition hover:bg-neutral-200 hover:text-neutral-900 focus:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus:text-neutral-50'
           )}
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
           {theme === 'dark' ? (
-            <SunIcon className="h-6 w-6 group-hover:animate-rotate" />
+            <SunIcon className="h-6 w-6" />
           ) : (
-            <MoonIcon className="h-6 w-6 group-hover:animate-pulse" />
+            <MoonIcon className="h-6 w-6" />
           )}
         </button>
       )}
@@ -63,7 +63,7 @@ const ThemeSwitcher: React.FC = () => {
 const Navbar: React.FC = () => {
   return (
     <div className="relative bg-stone-100 transition-[background-color] dark:bg-neutral-800">
-      <nav className="m-auto flex max-w-5xl select-none justify-between px-6 py-4 text-neutral-500/80 dark:text-neutral-400/80">
+      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/80 dark:text-neutral-400/80">
         <a
           href="#content"
           className={cn(
@@ -77,6 +77,7 @@ const Navbar: React.FC = () => {
           {/* <NavLink href="/portfolio" title="Portfolio" /> */}
           <NavLink href="/blog" title="Blog" />
           <NavLink href="/snippets" title="Snippets" />
+          <NavLink href="/links" title="Links" />
         </ul>
         <ThemeSwitcher />
       </nav>

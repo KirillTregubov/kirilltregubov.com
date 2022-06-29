@@ -11,8 +11,7 @@ const BlogLayout: React.FC<{
   published_time: string
   modified_time: string
   author?: string
-  section?: string
-  tags?: string[]
+  topics?: string[]
 }> = ({ children, ...customMeta }) => {
   const meta = {
     type: 'website',
@@ -33,13 +32,14 @@ const BlogLayout: React.FC<{
         {meta.author && (
           <meta property="article:author" content={meta.author} />
         )}
-        {meta.section && (
-          <meta property="article:section" content={meta.section} />
+        {meta.topics && (
+          <>
+            <meta property="article:section" content={meta.section} />
+            {meta.topics.map((topic) => (
+              <meta property="article:tag" content={topic} key={topic} />
+            ))}
+          </>
         )}
-        {meta.tags &&
-          meta.tags.map((tag) => (
-            <meta property="article:tag" content={tag} key={tag} />
-          ))}
       </Head>
       <div className="flex gap-12">
         <article className="prose w-[65ch] prose-lead:text-[1.15rem] prose-h2:mt-[1.75em] dark:prose-invert">

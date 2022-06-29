@@ -3,10 +3,10 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import { allBlogPosts, BlogPost } from 'contentlayer/generated'
 
 import BlogLayout from 'layouts/BlogLayout'
-import MDXComponents from 'components/MDXComponents'
+import components from 'components/MDXComponents'
 
 const Post: React.FC<{ post: BlogPost }> = ({ post }) => {
-  const Article = useMDXComponent(post.body.code)
+  const MDXComponent = useMDXComponent(post.body.code)
 
   return (
     <BlogLayout
@@ -16,7 +16,7 @@ const Post: React.FC<{ post: BlogPost }> = ({ post }) => {
       published_time={post.published_time}
       modified_time={post.published_time}
     >
-      <Article components={{ ...MDXComponents }} />
+      <MDXComponent components={{ ...components } as any} />
     </BlogLayout>
   )
 }
