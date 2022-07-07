@@ -54,7 +54,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {topics.map((topic) => (
             <button
               key={topic}
-              className="pressable rounded-full border border-neutral-300 bg-white px-5 py-2 dark:bg-neutral-800"
+              className="pressable rounded-full border border-neutral-300 bg-white px-5 py-2 dark:border-neutral-700 dark:bg-neutral-800"
             >
               {topic}
             </button>
