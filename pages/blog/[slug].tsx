@@ -13,8 +13,8 @@ const Post: React.FC<{ post: BlogPost }> = ({ post }) => {
       title={post.title}
       description={post.description}
       image={post.image}
-      published_time={post.published_time}
-      modified_time={post.published_time}
+      publishedTime={post.publishedTime}
+      modifiedTime={post.publishedTime}
     >
       <MDXComponent components={{ ...components } as any} />
     </BlogLayout>

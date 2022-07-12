@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -6,7 +5,7 @@ import Navbar from 'components/Navbar'
 import Footer from 'components/Footer'
 
 const Layout: React.FC<{
-  children: ReactNode
+  children: React.ReactNode
   title?: string
   description?: string
   image?: string

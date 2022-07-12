@@ -8,7 +8,7 @@ import { SearchIcon } from '@heroicons/react/solid'
 
 import Layout from 'layouts/layout'
 import BlogPreview from 'components/BlogPreview'
-import VoidIllustration from 'components/illustrations/Void'
+import { Void } from 'components/media/illustrations'
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
@@ -36,7 +36,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
               !!searchValue.length
                 ? 'text-neutral-900 dark:text-neutral-100'
                 : 'text-neutral-400 dark:text-neutral-400/70',
-              'h-5 w-5'
+              'h-5 w-5 transition-colors'
             )}
           />
         </div>
@@ -54,7 +54,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {topics.map((topic) => (
             <button
               key={topic}
-              className="pressable rounded-full border border-neutral-300 bg-white px-5 py-2 dark:border-neutral-700 dark:bg-neutral-800"
+              className="pressable rounded-full border border-neutral-300 bg-white px-5 py-2 transition-[background-color,border-color] dark:border-neutral-700 dark:bg-neutral-800"
             >
               {topic}
             </button>
@@ -63,10 +63,10 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </div>
       {!filteredBlogPosts.length && (
         <div className="mt-3 flex flex-col items-center">
-          <p className="mb-4 text-neutral-600 dark:text-neutral-400">
-            <VoidIllustration className="h-44 w-full text-accent-500" />
+          <div className="mb-4 text-neutral-600 dark:text-neutral-400">
+            <Void className="h-44 w-full text-accent-500" />
             <p className="mt-3">No posts matched your criteria.</p>
-          </p>
+          </div>
         </div>
       )}
       {/* TODO: {(filteredBlogPosts.length == 0 || searchValue.length == 0) && (

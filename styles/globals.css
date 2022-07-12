@@ -9,7 +9,7 @@
 }
 
 .pressable {
-  @apply cursor-pointer drop-shadow will-change-transform transition duration-100 active:scale-95 active:drop-shadow-sm;
+  @apply cursor-pointer will-change-transform active:scale-95;
 }
 
 .inline-link {

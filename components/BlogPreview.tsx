@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ClipboardCopyIcon } from '@heroicons/react/solid'
-import { Image as ImageType } from 'contentlayer/generated'
+import type { Image as ImageType } from 'contentlayer/generated'
 
 const BlogPreview: React.FC<{
   title: string
   description: string
   slug: string
   image: ImageType
-}> = ({ title, description, slug, image, imageAlt }) => {
+}> = ({ title, description, slug, image }) => {
   return (
     <Link href={`/blog/${slug}`}>
       <a className="my-2 flex w-full">
