@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { InferGetStaticPropsType } from 'next'
-import cn from 'classnames'
+import clsx from 'clsx'
 import { pick } from '@contentlayer/utils'
 import { allBlogPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
@@ -32,7 +32,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <div className="relative mb-3 w-full">
         <div className="absolute inset-y-0 ml-2 flex items-center">
           <SearchIcon
-            className={cn(
+            className={clsx(
               !!searchValue.length
                 ? 'text-neutral-900 dark:text-neutral-100'
                 : 'text-neutral-400 dark:text-neutral-400/70',

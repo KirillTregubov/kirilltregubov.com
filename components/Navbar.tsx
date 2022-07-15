@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
-import cn from 'classnames'
+import clsx from 'clsx'
 import { MoonIcon, SunIcon } from '@heroicons/react/solid'
 
 const NavLink: React.FC<{
@@ -16,7 +16,7 @@ const NavLink: React.FC<{
     <li>
       <NextLink href={href}>
         <a
-          className={cn(
+          className={clsx(
             isActive
               ? 'hvr-underline-from-center-active text-neutral-800 dark:text-neutral-300'
               : '',
@@ -44,7 +44,7 @@ const ThemeSwitcher: React.FC = () => {
         <button
           aria-label="Toggle Theme"
           type="button"
-          className={cn(
+          className={clsx(
             'flex items-center justify-center rounded-full p-2 transition hover:bg-neutral-200 hover:text-neutral-900 focus:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus:text-neutral-50'
           )}
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
       <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/80 dark:text-neutral-400/80">
         <a
           href="#content"
-          className={cn(
+          className={clsx(
             'absolute left-4 -top-8 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus:top-1 focus:translate-y-3 dark:bg-neutral-900 dark:text-neutral-100'
           )}
         >
