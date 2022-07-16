@@ -2,13 +2,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ClipboardCopyIcon } from '@heroicons/react/solid'
 import type { Image as ImageType } from 'contentlayer/generated'
+import type { ReadTimeResults } from 'reading-time'
 
 const BlogPreview: React.FC<{
+  slug: string
   title: string
   description: string
-  slug: string
   image: ImageType
-}> = ({ title, description, slug, image }) => {
+  topics: string[]
+  readingTime: ReadTimeResults
+}> = ({ slug, title, description, image, topics, readingTime }) => {
   return (
     <Link href={`/blog/${slug}`}>
       <a className="my-2 flex w-full">
@@ -27,6 +30,8 @@ const BlogPreview: React.FC<{
           <div className="mb-1">{title}</div>
           <div className="mb-1">{description}</div>
           {/* <a title="Copy to clipboard" className=""> */}
+          <div>{topics}</div>
+          <div>{readingTime.text}</div>
           <ClipboardCopyIcon className="h-8 w-8 rounded-md bg-black p-2 text-white" />
           {/* </a> */}
         </div>

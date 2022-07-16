@@ -93,8 +93,10 @@ export const getStaticProps = async () => {
         'title',
         'description',
         'publishedTime',
+        'modifiedTime',
         'image',
-        'topics'
+        'topics',
+        'readingTime'
       ])
     )
     .sort((a, b) =>
@@ -103,5 +105,6 @@ export const getStaticProps = async () => {
   // TODO: Blog Article about how flatMap vs map work, why it was the better choice
   const topics = [...Array.from(new Set(posts.flatMap((post) => post.topics)))]
 
+  console.log(posts)
   return { props: { posts, topics } }
 }

@@ -4,6 +4,7 @@ import {
   ComputedFields,
   defineNestedType
 } from 'contentlayer/source-files'
+import readingTime from 'reading-time'
 
 const computedFields: ComputedFields = {
   slug: {
@@ -11,7 +12,8 @@ const computedFields: ComputedFields = {
     resolve: (doc) => {
       return doc._raw.flattenedPath.replace(/([^\/]*\/){1}/, '')
     }
-  }
+  },
+  readingTime: { type: 'json', resolve: (doc) => readingTime(doc.body.raw) }
 }
 
 const Image = defineNestedType(() => ({
@@ -28,9 +30,9 @@ const BlogPost = defineDocumentType(() => ({
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
-    publishedTime: { type: 'string', required: true },
-    modifiedTime: { type: 'string' },
     description: { type: 'string', required: true },
+    publishedTime: { type: 'string', required: true },
+    modifiedTime: { type: 'string', default: 'none' },
     image: { type: 'nested', of: Image, required: true },
     topics: {
       type: 'list',
@@ -40,10 +42,6 @@ const BlogPost = defineDocumentType(() => ({
   },
   computedFields
 }))
-
-// const Topic = defineDocumentType(() => ({
-//   name: 'Topic',
-// }))
 
 export default makeSource({
   contentDirPath: 'content',
