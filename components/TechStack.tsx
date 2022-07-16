@@ -2,6 +2,7 @@ import type React from 'react'
 import {
   Assembly,
   C,
+  CPlusPlus,
   Expo,
   Git,
   GraphQL,
@@ -34,6 +35,7 @@ const techStack: {
   { name: 'GraphQL', image: GraphQL },
   { name: 'Python', image: Python },
   { name: 'C', image: C },
+  { name: 'C++', image: CPlusPlus },
   { name: 'Java', image: Java },
   { name: 'Racket', image: Racket },
   { name: 'Haskell', image: Haskell },

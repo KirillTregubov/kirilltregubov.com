@@ -1,5 +1,6 @@
 export { default as Assembly } from './Assembly'
 export { default as C } from './C'
+export { default as CPlusPlus } from './CPlusPlus'
 export { default as Expo } from './Expo'
 export { default as Git } from './Git'
 export { default as GraphQL } from './GraphQL'

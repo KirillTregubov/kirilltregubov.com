@@ -14,7 +14,14 @@ const Home: React.FC = () => {
         </p>
         <TechStack />
       </div>
-      {/* Tools I am familiar with: Mbed studio, Vercel and Netlify for hosting, Figma, Microsoft Office, Postman (API) */}
+      <div>
+        <h2 className="mt-6 text-xl font-semibold">Familiar Tools</h2>
+        <p className="mt-1 mb-2">
+          Tools and services that I enjoy using and have worked with in the
+          past.
+        </p>
+      </div>
+      {/* Tools I am familiar with: Visual Studio Code, Mbed studio, Vercel and Netlify for hosting, Figma, Microsoft Office, Postman (API), MARS, Logisim, Eclipse, IntelliJ IDEA, PyCharm, DrRacket, RStudio */}
     </Layout>
   )
 }

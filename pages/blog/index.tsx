@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { InferGetStaticPropsType } from 'next'
 import clsx from 'clsx'
-import { pick } from '@contentlayer/utils'
+import { pick } from 'contentlayer/client'
 import { allBlogPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { SearchIcon } from '@heroicons/react/solid'
