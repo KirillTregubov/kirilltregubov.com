@@ -14,7 +14,7 @@ const BlogPreview: React.FC<{
 }> = ({ slug, title, description, image, topics, readingTime }) => {
   return (
     <Link href={`/blog/${slug}`}>
-      <a className="my-2 flex w-full">
+      <a className="flex w-full">
         <div className="mr-3 w-64 flex-shrink-0">
           <Image
             className="aspect-h-4 aspect-w-3 rounded-xl object-cover object-center"
@@ -27,13 +27,11 @@ const BlogPreview: React.FC<{
           />
         </div>
         <div className="">
-          <div className="mb-1">{title}</div>
-          <div className="mb-1">{description}</div>
-          {/* <a title="Copy to clipboard" className=""> */}
-          <div>{topics}</div>
+          <div className="">{title}</div>
+          <div className="mt-1">{description}</div>
+          <div className="mt-1">{topics}</div>
           <div>{readingTime.text}</div>
           <ClipboardCopyIcon className="h-8 w-8 rounded-md bg-black p-2 text-white" />
-          {/* </a> */}
         </div>
       </a>
     </Link>

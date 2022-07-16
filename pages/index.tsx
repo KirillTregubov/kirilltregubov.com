@@ -1,27 +1,32 @@
 import Layout from 'layouts/layout'
 import AboutMe from 'components/AboutMe'
 import TechStack from 'components/TechStack'
+import ToolStack from 'components/ToolStack'
 
 const Home: React.FC = () => {
   return (
     <Layout>
       <AboutMe />
       <div>
-        <h2 className="mt-6 text-xl font-semibold">Tech Stack</h2>
-        <p className="mt-1 mb-2">
+        <h2 className="mt-8 text-xl font-semibold leading-none">Tech Stack</h2>
+        <p className="mt-1.5 mb-3">
           Technologies and programming languages that I enjoy using and have
           worked with in the past.
         </p>
         <TechStack />
       </div>
       <div>
-        <h2 className="mt-6 text-xl font-semibold">Familiar Tools</h2>
-        <p className="mt-1 mb-2">
-          Tools and services that I enjoy using and have worked with in the
-          past.
+        <h2 className="mt-8 text-xl font-semibold leading-none">
+          Tools &amp; Services
+        </h2>
+        <p className="mt-1.5 mb-3">
+          Tools and services that I enjoy using and have used in the past.
         </p>
+        <ToolStack />
       </div>
-      {/* Tools I am familiar with: Visual Studio Code, Mbed studio, Vercel and Netlify for hosting, Figma, Microsoft Office, Postman (API), MARS, Logisim, Eclipse, IntelliJ IDEA, PyCharm, DrRacket, RStudio */}
+      <div>
+        <h2 className="mt-8 text-xl font-semibold leading-none">Projects</h2>
+      </div>
     </Layout>
   )
 }

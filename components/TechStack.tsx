@@ -13,6 +13,7 @@ import {
   Nuxt,
   PostgreSQL,
   Python,
+  R,
   Racket,
   ReactJS,
   TypeScript,
@@ -39,26 +40,29 @@ const techStack: {
   { name: 'Java', image: Java },
   { name: 'Racket', image: Racket },
   { name: 'Haskell', image: Haskell },
+  { name: 'R', image: R },
   { name: 'Assembly', image: Assembly }
 ]
 
 const TechStack: React.FC = () => {
   return (
     <>
-      <div className="group pointer-events-none flex flex-wrap gap-2">
+      <div className="group pointer-events-none -my-1 -mx-1 inline-flex flex-wrap">
         {techStack.map((tech) => (
-          <button
-            key={tech.name}
-            className="pressable pointer-events-auto flex items-center gap-1 rounded-lg border border-neutral-200 px-2 py-1.5 transition-[border-color,opacity] hover:bg-neutral-200 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
-          >
-            <tech.image
-              aria-hidden="true"
-              className="h-6 w-6 text-neutral-800 transition-colors duration-75 dark:text-neutral-50"
-            />
-            <p className="transition-[background-color]">{tech.name}</p>
-          </button>
+          <div key={tech.name} className="pointer-events-auto p-1 opacity-100">
+            <button className="tech-transition pressable pointer-events-auto flex items-center gap-1 rounded-lg border border-neutral-300 px-2 py-1.5 hover:bg-neutral-300 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700">
+              <tech.image
+                aria-hidden="true"
+                className="color-transition h-6 w-6 text-neutral-800 dark:text-neutral-300"
+              />
+              <p className="">{tech.name}</p>
+            </button>
+          </div>
         ))}
       </div>
+      <h4 className="mt-2 select-none text-right text-sm font-medium text-neutral-500/80 dark:text-neutral-400/80 wide:mt-0">
+        Select a technology to see relevant projects and blog posts.
+      </h4>
     </>
   )
 }

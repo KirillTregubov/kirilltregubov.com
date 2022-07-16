@@ -20,6 +20,6 @@
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
-  "include": ["*.*.ts", "**/*.ts", "**/*.tsx", ".contentlayer/generated"],
+  "include": ["**/*.ts", "**/*.tsx", ".contentlayer/generated"],
   "exclude": ["node_modules"]
 }

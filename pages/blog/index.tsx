@@ -23,13 +23,13 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <Layout>
-      <h1 className="mb-1 text-2xl font-bold">My Blog</h1>
-      <p className="mb-3">
+      <h1 className="text-2xl font-bold">My Blog</h1>
+      <p className="mt-1">
         My personal blog where I share structured content about what I'm
         learning and working on, along with other interesting information I want
         to share with the world.
       </p>
-      <div className="relative mb-3 w-full">
+      <div className="relative mt-3 w-full">
         <div className="absolute inset-y-0 ml-2 flex items-center">
           <SearchIcon
             className={clsx(
@@ -48,9 +48,9 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           className="block w-full rounded-lg border border-neutral-300 bg-white pl-8 text-neutral-900 shadow transition placeholder:text-neutral-400 focus:border-transparent dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:placeholder:text-neutral-400/70"
         />
       </div>
-      <div>
-        <h2 className="mb-1 font-medium">Search by topic</h2>
-        <div className="mb-3 flex gap-x-2 gap-y-2">
+      <div className="mt-3">
+        <h2 className="font-medium">Search by topic</h2>
+        <div className="mt-1 flex gap-x-2 gap-y-2">
           {topics.map((topic) => (
             <button
               key={topic}
@@ -62,8 +62,8 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </div>
       </div>
       {!filteredBlogPosts.length && (
-        <div className="mt-3 flex flex-col items-center">
-          <div className="mb-4 text-neutral-600 dark:text-neutral-400">
+        <div className="mt-8 flex flex-col items-center">
+          <div className="text-neutral-600 dark:text-neutral-400">
             <Void className="h-44 w-full text-accent-500" />
             <p className="mt-3">No posts matched your criteria.</p>
           </div>
@@ -76,9 +76,11 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </h2>
         </div>
       )} */}
-      {filteredBlogPosts.map((post) => (
-        <BlogPreview key={post.title} {...post} />
-      ))}
+      <div className="mt-8 flex flex-col gap-5">
+        {filteredBlogPosts.map((post) => (
+          <BlogPreview key={post.title} {...post} />
+        ))}
+      </div>
     </Layout>
   )
 }

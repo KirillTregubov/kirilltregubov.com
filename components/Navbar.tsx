@@ -62,8 +62,8 @@ const ThemeSwitcher: React.FC = () => {
 
 const Navbar: React.FC = () => {
   return (
-    <div className="relative bg-stone-100 transition-colors dark:bg-neutral-800">
-      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/80 dark:text-neutral-400/80">
+    <div className="relative bg-stone-200/70 transition-colors dark:bg-neutral-800">
+      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-5 text-neutral-500/90 dark:text-neutral-400/80">
         <a
           href="#content"
           className={clsx(
@@ -74,10 +74,8 @@ const Navbar: React.FC = () => {
         </a>
         <ul className="flex gap-1">
           <NavLink href="/" title="Home" />
-          {/* <NavLink href="/portfolio" title="Portfolio" /> */}
           <NavLink href="/blog" title="Blog" />
-          <NavLink href="/snippets" title="Snippets" />
-          <NavLink href="/links" title="Links" />
+          <NavLink href="/resources" title="Resources" />
         </ul>
         <ThemeSwitcher />
       </nav>

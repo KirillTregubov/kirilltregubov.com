@@ -7,12 +7,14 @@ const AboutMe: React.FC = () => {
     <div className="text-lg">
       <p>
         Hey! I'm Kirill Tregubov, a {age} year-old{' '}
-        <span className="text-orange-400">full-stack developer</span> based in
-        Canada. I'm currently building modern web experiences using Next.js, a
-        React-based JavaScript framework. My preferred tech stack includes
-        TailwindCSS, Node.js, Prisma, and SQL. I'm also a fourth-year university
-        student{' '}
-        <span className="text-orange-400">
+        <span className="text-accent-500 dark:text-accent-400">
+          full-stack developer
+        </span>{' '}
+        based in Canada. I'm currently building modern web experiences using
+        Next.js, a React-based JavaScript framework. My preferred tech stack
+        includes TailwindCSS, Node.js, Prisma, and SQL. I'm also a fourth-year
+        university student{' '}
+        <span className="text-accent-500 dark:text-accent-400">
           pursuing a BSc in Computer Science
         </span>{' '}
         at the University of Toronto.
@@ -20,10 +22,12 @@ const AboutMe: React.FC = () => {
       <p className="mt-4">
         I'm available for freelance work and job opportunities. If you have a
         project in mind or a position at your company, feel free to email me at{' '}
-        <a href="mailto:contact@kirilltregubov.com" className="inline-link">
-          contact@kirilltregubov.com
-        </a>
-        .
+        <span className="whitespace-nowrap">
+          <a href="mailto:contact@kirilltregubov.com" className="inline-link">
+            contact@kirilltregubov.com
+          </a>
+          .
+        </span>
       </p>
     </div>
   )

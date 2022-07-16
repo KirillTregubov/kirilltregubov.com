@@ -2,7 +2,7 @@ const { fontFamily } = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  content: ['./pages/**/*.tsx', './components/*.tsx', './layouts/*.tsx'],
+  content: ['./pages/**/*.tsx', './components/**/*.tsx', './layouts/*.tsx'],
   darkMode: 'class',
   theme: {
     extend: {
@@ -10,7 +10,7 @@ module.exports = {
         rotate: 'rotate 2s ease-in-out'
       },
       colors: {
-        accent: colors.amber
+        accent: colors.orange
       },
       fontFamily: {
         sans: ['Inter var', ...fontFamily.sans]
@@ -20,6 +20,9 @@ module.exports = {
           '0%': { transform: 'rotate(0deg)' },
           '40%, 100%': { transform: 'rotate(360deg)' }
         }
+      },
+      screens: {
+        'wide': { 'raw': '(min-width: 825px)' }
       }
     }
   },
