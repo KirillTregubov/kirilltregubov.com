@@ -27,6 +27,9 @@ const Home: React.FC = () => {
       </div>
       <div>
         <h2 className="mt-8 text-xl font-semibold leading-none">Projects</h2>
+        <p className="mt-1.5 mb-3">
+          Projects I have created and have contributed to.
+        </p>
         <Projects />
       </div>
     </Layout>

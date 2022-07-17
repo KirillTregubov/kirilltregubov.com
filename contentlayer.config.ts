@@ -30,6 +30,7 @@ const BlogPost = defineDocumentType(() => ({
   fields: {
     title: { type: 'string', required: true },
     description: { type: 'string', required: true },
+    status: { type: 'enum', options: ['draft', 'published'], required: true },
     publishedTime: { type: 'string', required: true },
     modifiedTime: { type: 'string', required: true },
     image: { type: 'nested', of: Image, required: true },
@@ -44,9 +45,24 @@ const BlogPost = defineDocumentType(() => ({
     ...sharedFields
   }
 }))
+
+const Project = defineDocumentType(() => ({
+  name: 'Project',
+  filePathPattern: 'projects/**/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    name: { type: 'string', required: true },
+    description: { type: 'string', required: true },
+    tech: {
+      type: 'list',
+      of: { type: 'string' },
+      required: true
+    },
+    source: { type: 'string', required: true }
+  }
 }))
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [BlogPost]
+  documentTypes: [BlogPost, Project]
 })

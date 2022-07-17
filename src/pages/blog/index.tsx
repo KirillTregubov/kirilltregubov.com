@@ -9,6 +9,7 @@ import { SearchIcon } from '@heroicons/react/solid'
 import Layout from 'layouts/layout'
 import BlogPreview from 'components/BlogPreview'
 import { Void } from 'components/illustrations'
+import { isProduction } from 'lib/isProduction'
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
@@ -94,6 +95,7 @@ export const getStaticProps = async () => {
         'slug',
         'title',
         'description',
+        'status',
         'publishedTime',
         'modifiedTime',
         'image',
@@ -101,12 +103,14 @@ export const getStaticProps = async () => {
         'readingTime'
       ])
     )
+    .filter((post) => (isProduction ? post.status === 'published' : true))
     .sort((a, b) =>
       compareDesc(new Date(a.publishedTime), new Date(b.publishedTime))
     )
   // TODO: Blog Article about how flatMap vs map work, why it was the better choice
   const topics = [...Array.from(new Set(posts.flatMap((post) => post.topics)))]
 
+  console.log(isProduction)
   console.log(posts)
   return { props: { posts, topics } }
 }

@@ -7,30 +7,28 @@ const BlogLayout: React.FC<{
   children: React.ReactNode
   title: string
   description: string
-  image: Image
+  image?: Image
   publishedTime: string
-  modifiedTime: string
-  author?: string
+  modifiedTime?: string
   topics?: string[]
-}> = ({ children, ...customMeta }) => {
-  const meta = {
-    type: 'website',
-    ...customMeta
-  }
-
+}> = ({ children, ...meta }) => {
   return (
     <Layout
       title={meta.title}
       description={meta.description}
-      image={meta.image.path}
+      image={meta.image?.path}
       type="article"
     >
       <Head>
         <meta property="article:published_time" content={meta.publishedTime} />
-        <meta property="article:modified_time" content={meta.modifiedTime} />
-        <meta property="og:updated_time" content={meta.modifiedTime} />
-        {meta.author && (
-          <meta property="article:author" content={meta.author} />
+        {meta.modifiedTime && (
+          <>
+            <meta
+              property="article:modified_time"
+              content={meta.modifiedTime}
+            />
+            <meta property="og:updated_time" content={meta.modifiedTime} />
+          </>
         )}
         {meta.topics && (
           <>

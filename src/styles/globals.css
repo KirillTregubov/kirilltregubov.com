@@ -20,6 +20,19 @@
   transition: color 75ms linear;
 }
 
+.unblur {
+  animation: unblur 200ms ease;
+}
+
+@keyframes unblur {
+  from {
+    filter: blur(20px);
+  }
+  to {
+    filter: blur(0);
+  }
+}
+
 .inline-link {
   @apply relative font-medium;
 }
