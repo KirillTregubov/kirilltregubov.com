@@ -14,7 +14,7 @@
     "importsNotUsedAsValues": "error",
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "incremental": true,
     "paths": {
       "contentlayer/generated": ["./.contentlayer/generated"]
