@@ -18,7 +18,7 @@ import {
   ReactJS,
   TypeScript,
   VueJS
-} from './media/Icons'
+} from './icons'
 
 const techStack: {
   name: string

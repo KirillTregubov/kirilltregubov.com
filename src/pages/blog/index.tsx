@@ -8,7 +8,7 @@ import { SearchIcon } from '@heroicons/react/solid'
 
 import Layout from 'layouts/layout'
 import BlogPreview from 'components/BlogPreview'
-import { Void } from 'components/media/illustrations'
+import { Void } from 'components/illustrations'
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,

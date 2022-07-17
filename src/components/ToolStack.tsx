@@ -16,7 +16,7 @@ import {
   RStudio,
   Vercel,
   VSCode
-} from './media/Icons'
+} from './icons'
 
 const toolStack: {
   name: string
@@ -82,6 +82,7 @@ const ToolStack: React.FC = () => {
             <a
               href={tool.url}
               target="_blank"
+              rel="noreferrer"
               className="tech-transition pressable pointer-events-auto flex items-center gap-1 rounded-lg border border-neutral-300 px-2 py-1.5 hover:bg-neutral-300 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
             >
               <tool.image
