@@ -63,7 +63,7 @@ const ThemeSwitcher: React.FC = () => {
 const Navbar: React.FC = () => {
   return (
     <div className="relative bg-stone-200/70 transition-colors dark:bg-neutral-800">
-      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-5 text-neutral-500/90 dark:text-neutral-400/80">
+      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/90 dark:text-neutral-400/80">
         <a
           href="#content"
           className={clsx(

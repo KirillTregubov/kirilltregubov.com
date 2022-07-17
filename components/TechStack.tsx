@@ -60,7 +60,7 @@ const TechStack: React.FC = () => {
           </div>
         ))}
       </div>
-      <h4 className="mt-2 select-none text-right text-sm font-medium text-neutral-500/80 dark:text-neutral-400/80 wide:mt-0">
+      <h4 className="mt-2 select-none text-right text-sm font-medium text-neutral-500 dark:text-neutral-400/80 wide:mt-0">
         Select a technology to see relevant projects and blog posts.
       </h4>
     </>
