@@ -17,9 +17,8 @@ const NavLink: React.FC<{
       <NextLink href={href}>
         <a
           className={clsx(
-            isActive
-              ? 'hvr-underline-from-center-active text-neutral-800 dark:text-neutral-300'
-              : '',
+            isActive &&
+              'hvr-underline-from-center-active text-neutral-800 dark:text-neutral-300',
             'hvr-underline-from-center hidden overflow-visible rounded p-1 font-medium transition hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
           )}
         >
@@ -44,9 +43,7 @@ const ThemeSwitcher: React.FC = () => {
         <button
           aria-label="Toggle Theme"
           type="button"
-          className={clsx(
-            'flex items-center justify-center rounded-full p-2 transition hover:bg-neutral-200 hover:text-neutral-900 focus:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus:text-neutral-50'
-          )}
+          className="flex items-center justify-center rounded-full p-2 transition hover:bg-neutral-200 hover:text-neutral-900 focus:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus:text-neutral-50"
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
           {theme === 'dark' ? (
