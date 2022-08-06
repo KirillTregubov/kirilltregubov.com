@@ -29,13 +29,19 @@ const techStack: {
   name: string
   image: React.FC<{ className: string }>
 }[] = [
+  { name: 'JavaScript', image: JavaScript },
   { name: 'TypeScript', image: TypeScript },
+  { name: 'Node.js', image: NodeJS },
   { name: 'React', image: ReactJS },
   { name: 'Next.js', image: NextJS },
   { name: 'Expo', image: Expo },
   { name: 'Vue.js', image: VueJS },
   { name: 'Nuxt', image: Nuxt },
+  { name: 'Jest', image: Jest },
+  { name: 'Tailwind CSS', image: TailwindCSS },
+  { name: 'Sass', image: Sass },
   { name: 'PostgreSQL', image: PostgreSQL },
+  { name: 'MongoDB', image: MongoDB },
   { name: 'GraphQL', image: GraphQL },
   { name: 'Python', image: Python },
   { name: 'C', image: C },

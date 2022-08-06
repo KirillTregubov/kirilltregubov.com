@@ -2,10 +2,13 @@ const MARS: React.FC = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 480 480"
+    height="1em"
+    width="1em"
     xmlSpace="preserve"
+    role="img"
     {...props}
   >
-    <g className="brightness-200 contrast-200 grayscale invert transition-[filter] dark:invert-0">
+    <g className="brightness-200 contrast-150 grayscale invert transition-[filter] duration-200 dark:contrast-200 dark:invert-0">
       <path
         style={{
           fill: '#ff4f19'
