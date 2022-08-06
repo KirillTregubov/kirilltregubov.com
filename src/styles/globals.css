@@ -20,8 +20,16 @@
   transition: color 75ms linear;
 }
 
+.color-bg-transition {
+  transition: color 75ms linear, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .unblur {
   animation: unblur 200ms ease;
+}
+
+.img-wrapper > span {
+  height: 100% !important;
 }
 
 @keyframes unblur {

@@ -2,6 +2,8 @@ import type React from 'react'
 import {
   Eclipse,
   Figma,
+  Firebase,
+  Git,
   Heroku,
   IntelliJ,
   Logisim,
@@ -14,6 +16,7 @@ import {
   Racket,
   Railway,
   RStudio,
+  Stripe,
   Vercel,
   VSCode
 } from './icons'
@@ -29,6 +32,7 @@ const toolStack: {
     url: 'https://www.microsoft.com/microsoft-365'
   },
   { name: 'Figma', image: Figma, url: 'https://www.figma.com/' },
+  { name: 'Git', image: Git, url: 'https://git-scm.com/' },
   {
     name: 'Visual Studio Code',
     image: VSCode,
@@ -58,6 +62,8 @@ const toolStack: {
   { name: 'Heroku', image: Heroku, url: 'https://www.heroku.com/' },
   { name: 'Netlify', image: Netlify, url: 'https://www.netlify.com/' },
   { name: 'Railway', image: Railway, url: 'https://railway.app/' },
+  { name: 'Firebase', image: Firebase, url: 'https://firebase.google.com/' },
+  { name: 'Stripe', image: Stripe, url: 'https://stripe.com/' },
   { name: 'Postman', image: Postman, url: 'https://www.postman.com/' },
   {
     name: 'MARS',
@@ -89,7 +95,7 @@ const ToolStack: React.FC = () => {
                 aria-hidden="true"
                 className="color-transition h-6 w-6 text-neutral-800 dark:text-neutral-300"
               />
-              <p className="">{tool.name}</p>
+              <p>{tool.name}</p>
             </a>
           </div>
         ))}

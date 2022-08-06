@@ -1,14 +1,22 @@
+import { useState } from 'react'
+import type { InferGetStaticPropsType } from 'next'
+import { pick } from 'contentlayer/client'
+import { allProjects } from 'contentlayer/generated'
+import { compareDesc } from 'date-fns'
+
 import Layout from 'layouts/layout'
 import AboutMe from 'components/AboutMe'
 import TechStack from 'components/TechStack'
 import ToolStack from 'components/ToolStack'
-import Projects from 'components/Projects'
+import ProjectPreview from 'components/ProjectPreview'
 
-const Home: React.FC = () => {
+const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  projects
+}) => {
   return (
     <Layout>
       <AboutMe />
-      <div className="sticky">
+      <div>
         <h2 className="mt-8 text-xl font-semibold leading-none">Tech Stack</h2>
         <p className="mt-1.5 mb-3">
           Technologies and programming languages that I enjoy using and have
@@ -28,12 +36,43 @@ const Home: React.FC = () => {
       <div>
         <h2 className="mt-8 text-xl font-semibold leading-none">Projects</h2>
         <p className="mt-1.5 mb-3">
-          Projects I have created and have contributed to.
+          Projects that I created and have contributed to.
         </p>
-        <Projects />
+        <div className="mt-3 flex flex-col gap-5">
+          {projects.map((project) => (
+            <ProjectPreview key={project.name} {...project} />
+          ))}
+        </div>
       </div>
     </Layout>
   )
 }
 
 export default Home
+
+export const getStaticProps = async () => {
+  const projects = allProjects
+    .map((project) =>
+      pick(project, [
+        'name',
+        'description',
+        'dateAdded',
+        'image',
+        'technologies',
+        'source',
+        'demo'
+      ])
+    )
+    .sort((a, b) => compareDesc(new Date(a.dateAdded), new Date(b.dateAdded)))
+  // .map((project) => {
+  //   if (project.technologies[0] === null) {
+  //     let newProject = project
+  //     newProject.technologies = []
+  //     return newProject
+  //   } else {
+  //     return project
+  //   }
+  // })
+
+  return { props: { projects } }
+}

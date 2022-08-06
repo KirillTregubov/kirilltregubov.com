@@ -6,6 +6,8 @@ import {
 } from 'contentlayer/source-files'
 import readingTime from 'reading-time'
 
+import { allTechnologies } from './src/lib/content'
+
 const sharedFields: ComputedFields = {
   slug: {
     type: 'string',
@@ -53,12 +55,15 @@ const Project = defineDocumentType(() => ({
   fields: {
     name: { type: 'string', required: true },
     description: { type: 'string', required: true },
-    tech: {
+    dateAdded: { type: 'string', required: true },
+    image: { type: 'nested', of: Image, required: true },
+    technologies: {
       type: 'list',
-      of: { type: 'string' },
+      of: { type: 'enum', required: true, options: allTechnologies },
       required: true
     },
-    source: { type: 'string', required: true }
+    source: { type: 'string', required: true },
+    demo: { type: 'string', required: true }
   }
 }))
 
