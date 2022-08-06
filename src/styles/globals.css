@@ -38,15 +38,17 @@
 }
 
 .inline-link::after {
-  @apply absolute bottom-0 left-0 w-full font-semibold;
-  background: linear-gradient(to top right,
-      theme('textColor.orange.600'),
-      theme('textColor.orange.300'));
+  @apply absolute bottom-0 left-0 w-full font-semibold rounded-full;
+  background: currentColor;
   content: '';
   transform: scaleX(1);
-  height: 2px;
+  height: 1px;
   transform-origin: bottom left;
   transition: transform 0.3s ease-in-out;
+}
+
+.inline-link.primary::after {
+  @apply h-0.5 bg-gradient-to-r from-accent-600 to-accent-300 dark:from-accent-700 dark:to-accent-400;
 }
 
 .inline-link:hover::after {

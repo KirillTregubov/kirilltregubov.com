@@ -2,8 +2,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
-import { ClipboardCopyIcon } from '@heroicons/react/solid'
 import type { Image as ImageType } from 'contentlayer/generated'
+import { ClipboardCopyIcon } from '@heroicons/react/solid'
 import type { ReadTimeResults } from 'reading-time'
 
 import { blurDataURL } from 'lib/images'
@@ -26,12 +26,11 @@ const BlogPreview: React.FC<{
           <Image
             className={clsx(
               loaded && 'unblur',
-              'aspect-h-4 aspect-w-3 rounded-xl object-cover object-center'
+              'aspect-auto rounded-xl object-cover object-center'
             )}
-            title={title}
             src={
               !!image?.path && !error
-                ? `/static/images/${image?.path}`
+                ? `/static/images/blog/${image?.path}`
                 : '/static/images/placeholder.jpg'
             }
             alt={image?.alt}

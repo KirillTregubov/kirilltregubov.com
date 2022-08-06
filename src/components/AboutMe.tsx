@@ -23,7 +23,10 @@ const AboutMe: React.FC = () => {
         I'm available for freelance work and job opportunities. If you have a
         project in mind or a position at your company, feel free to email me at{' '}
         <span className="whitespace-nowrap">
-          <a href="mailto:contact@kirilltregubov.com" className="inline-link">
+          <a
+            href="mailto:contact@kirilltregubov.com"
+            className="inline-link primary"
+          >
             contact@kirilltregubov.com
           </a>
           .
