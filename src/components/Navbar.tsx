@@ -43,7 +43,10 @@ const ThemeSwitcher: React.FC = () => {
         <button
           aria-label="Toggle Theme"
           type="button"
-          className="flex items-center justify-center rounded-full p-2 transition hover:bg-neutral-200 hover:text-neutral-900 focus:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus:text-neutral-50"
+          className={clsx(
+            'flex items-center justify-center rounded-full p-2 opacity-0 transition hover:bg-neutral-200 hover:text-neutral-900 focus-visible:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus-visible:text-neutral-50',
+            mounted && '!opacity-100'
+          )}
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
           {theme === 'dark' ? (
@@ -59,12 +62,12 @@ const ThemeSwitcher: React.FC = () => {
 
 const Navbar: React.FC = () => {
   return (
-    <div className="relative bg-stone-200/70 transition-colors dark:bg-neutral-800">
-      <nav className="m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/90 dark:text-neutral-400/80">
+    <div className="sticky top-0 z-10 border-b border-neutral-200 bg-stone-100 transition-colors dark:border-neutral-700 dark:bg-neutral-800">
+      <nav className="relative m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/90 dark:text-neutral-400/80">
         <a
           href="#content"
           className={clsx(
-            'absolute left-4 -top-8 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus:top-1 focus:translate-y-3 dark:bg-neutral-900 dark:text-neutral-100'
+            'absolute left-4 -top-16 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus:top-1 focus:translate-y-3 dark:bg-neutral-900 dark:text-neutral-100'
           )}
         >
           Skip to content
