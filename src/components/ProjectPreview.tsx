@@ -71,6 +71,7 @@ const ProjectPreview: React.FC<{
                 <a
                   href={source}
                   target="_blank"
+                  rel="noopener noreferrer"
                   // rounded-lg bg-neutral-800 px-3.5 py-2 text-neutral-100
                   className="inline-link flex items-center leading-none"
                 >
@@ -82,6 +83,7 @@ const ProjectPreview: React.FC<{
                 <a
                   href={demo}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-link flex items-center leading-none"
                 >
                   <LinkIcon className="mr-1 h-4 w-4" aria-hidden="true" />
