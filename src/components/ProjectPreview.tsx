@@ -24,7 +24,7 @@ const ProjectPreview: React.FC<{
         <div className="w-72 flex-shrink-0 bg-neutral-800">
           <div className="img-wrapper relative h-full w-full">
             <Image
-              className={clsx(loaded && 'unblur', '')}
+              className={clsx(loaded && 'unblur', 'select-none')}
               src={
                 !!image?.path && !error
                   ? `/static/images/blog/${image?.path}`
@@ -47,7 +47,7 @@ const ProjectPreview: React.FC<{
             {technologies.map((tech) => (
               <h3
                 key={tech}
-                className="color-bg-transition rounded bg-neutral-200 px-2 leading-relaxed text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
+                className="color-bg-transition rounded bg-neutral-200 px-2 leading-relaxed text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300"
               >
                 {tech}
               </h3>
@@ -75,7 +75,7 @@ const ProjectPreview: React.FC<{
                   href={source}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900"
+                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-600 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-600 dark:text-neutral-400 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
                 >
                   <CodeIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
                   Source Code
@@ -86,7 +86,7 @@ const ProjectPreview: React.FC<{
                   href={demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900"
+                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-600 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-600 dark:text-neutral-400 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
                 >
                   <LinkIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
                   Demo

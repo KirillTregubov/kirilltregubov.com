@@ -10,10 +10,10 @@ const AboutMe: React.FC = () => {
         <span className="text-accent-500 dark:text-accent-400">
           full-stack developer
         </span>{' '}
-        based in Canada. I'm currently building modern web experiences using
-        Next.js, a React-based JavaScript framework. My preferred tech stack
-        includes TailwindCSS, Node.js, Prisma, and SQL. I'm also a fourth-year
-        university student{' '}
+        based in Canada. I'm currently building modern mobile and web
+        experiences using React, a JavaScript framework. My preferred tech stack
+        includes Expo, Next.js, TailwindCSS, Node.js and SQL. I'm also a
+        fourth-year university student{' '}
         <span className="text-accent-500 dark:text-accent-400">
           pursuing a BSc in Computer Science
         </span>{' '}
