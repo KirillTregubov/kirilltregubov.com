@@ -8,6 +8,16 @@
   }
 }
 
+.frosted-glass {
+  background-color: rgba(255, 255, 255, 0.825);
+  backdrop-filter: blur(15px);
+}
+
+html.dark .frosted-glass {
+  background-color: rgba(15, 15, 15, 0.825);
+  backdrop-filter: blur(15px);
+}
+
 html {
   overflow-y: overlay;
 }
@@ -82,7 +92,7 @@ html {
 }
 
 .hvr-underline-from-center:before {
-  @apply content-[''] rounded-md bg-neutral-600 dark:bg-neutral-200 mx-3;
+  @apply content-[''] rounded-md bg-neutral-600 dark:bg-neutral-200 mx-1 md:mx-4;
   position: absolute;
   z-index: -1;
   left: 51%;

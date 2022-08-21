@@ -18,8 +18,8 @@ const NavLink: React.FC<{
         <a
           className={clsx(
             isActive &&
-              'hvr-underline-from-center-active text-neutral-800 dark:text-neutral-300',
-            'hvr-underline-from-center hidden overflow-visible rounded p-1 font-medium transition hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-300 dark:focus:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
+              'hvr-underline-from-center-active text-neutral-900 dark:!text-neutral-100',
+            'hvr-underline-from-center hidden overflow-visible rounded p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
           )}
         >
           {title}
@@ -44,15 +44,15 @@ const ThemeSwitcher: React.FC = () => {
           aria-label="Toggle Theme"
           type="button"
           className={clsx(
-            'flex items-center justify-center rounded-full p-2 opacity-0 transition hover:bg-neutral-200 hover:text-neutral-900 focus-visible:text-neutral-900 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700 dark:hover:text-neutral-50 dark:focus-visible:text-neutral-50',
+            'group flex items-center justify-center rounded-full p-2 opacity-0 transition hover:bg-neutral-200 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700',
             mounted && '!opacity-100'
           )}
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
           {theme === 'dark' ? (
-            <SunIcon className="h-6 w-6" />
+            <SunIcon className="h-6 w-6 transition-colors group-hover:text-neutral-50 group-focus-visible:text-neutral-50" />
           ) : (
-            <MoonIcon className="h-6 w-6" />
+            <MoonIcon className="h-6 w-6 transition-colors group-hover:text-neutral-900 group-focus-visible:text-neutral-900" />
           )}
         </button>
       )}
@@ -62,12 +62,12 @@ const ThemeSwitcher: React.FC = () => {
 
 const Navbar: React.FC = () => {
   return (
-    <div className="sticky top-0 z-10 border-b border-neutral-200 bg-stone-100 transition-colors dark:border-neutral-700 dark:bg-neutral-800">
-      <nav className="relative m-auto flex max-w-4xl select-none justify-between px-6 py-4 text-neutral-500/90 dark:text-neutral-400/80">
+    <div className="sticky top-0 z-10 py-2 px-1.5">
+      <nav className="frosted-glass relative m-auto flex max-w-4xl select-none items-center justify-between rounded-full border px-8 py-4 text-neutral-500/90 shadow-sm transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400/80">
         <a
           href="#content"
           className={clsx(
-            'absolute left-4 -top-16 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus:top-1 focus:translate-y-3 dark:bg-neutral-900 dark:text-neutral-100'
+            'absolute left-4 -top-16 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus:top-1 focus:translate-y-3 dark:text-neutral-100'
           )}
         >
           Skip to content
