@@ -8,6 +8,10 @@
   }
 }
 
+html {
+  overflow-y: overlay;
+}
+
 .pressable {
   @apply cursor-pointer will-change-transform active:scale-95;
 }

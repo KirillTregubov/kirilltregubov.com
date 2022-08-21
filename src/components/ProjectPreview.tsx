@@ -56,14 +56,17 @@ const ProjectPreview: React.FC<{
           <h2 className="mt-3 text-xl font-semibold">{name}</h2>
           <div className="leading-snug">{description}</div>
           {(source || demo) && (
-            <div className="mt-5 flex items-center justify-between">
+            <div className="mt-4 flex items-center justify-between">
               {source === 'closed' && (
                 <button
                   disabled
                   aria-disabled="true"
                   className="flex cursor-not-allowed items-center font-medium leading-none disabled:opacity-80"
                 >
-                  <LockClosedIcon className="mr-1 h-4 w-4" aria-hidden="true" />
+                  <LockClosedIcon
+                    className="mr-1.5 h-4 w-4"
+                    aria-hidden="true"
+                  />
                   <div>Closed Source</div>
                 </button>
               )}
@@ -72,10 +75,9 @@ const ProjectPreview: React.FC<{
                   href={source}
                   target="_blank"
                   rel="noopener noreferrer"
-                  // rounded-lg bg-neutral-800 px-3.5 py-2 text-neutral-100
-                  className="inline-link flex items-center leading-none"
+                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900"
                 >
-                  <CodeIcon className="mr-1 h-4 w-4" aria-hidden="true" />
+                  <CodeIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
                   Source Code
                 </a>
               )}
@@ -84,9 +86,9 @@ const ProjectPreview: React.FC<{
                   href={demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-link flex items-center leading-none"
+                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900"
                 >
-                  <LinkIcon className="mr-1 h-4 w-4" aria-hidden="true" />
+                  <LinkIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
                   Demo
                 </a>
               )}
