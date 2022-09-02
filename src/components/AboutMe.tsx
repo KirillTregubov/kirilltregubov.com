@@ -8,11 +8,11 @@ const AboutMe: React.FC = () => {
       <p>
         Hey! I'm Kirill Tregubov, a {age} year-old{' '}
         <span className="text-accent-500 dark:text-accent-400">
-          full-stack developer
+          full stack developer
         </span>{' '}
-        based in Canada. I'm currently building modern mobile and web
+        based in Canada. I'm currently building modern web, mobile and desktop
         experiences using React, a JavaScript framework. My preferred tech stack
-        includes Expo, Next.js, TailwindCSS, Node.js and SQL. I'm also a
+        includes Expo, Next.js, TailwindCSS, Node.js and PostgreSQL. I'm also a
         fourth-year university student{' '}
         <span className="text-accent-500 dark:text-accent-400">
           pursuing a BSc in Computer Science

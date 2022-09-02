@@ -19,7 +19,7 @@ const NavLink: React.FC<{
           className={clsx(
             isActive &&
               'hvr-underline-from-center-active text-neutral-900 dark:!text-neutral-100',
-            'hvr-underline-from-center hidden overflow-visible rounded p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
+            'hvr-underline-from-center hidden overflow-visible rounded-md p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus-visible:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
           )}
         >
           {title}
@@ -50,9 +50,9 @@ const ThemeSwitcher: React.FC = () => {
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         >
           {theme === 'dark' ? (
-            <SunIcon className="h-6 w-6 transition-colors group-hover:text-neutral-50 group-focus-visible:text-neutral-50" />
+            <SunIcon className="group-focus-visible-visible:text-neutral-50 h-6 w-6 transition-colors group-hover:text-neutral-50" />
           ) : (
-            <MoonIcon className="h-6 w-6 transition-colors group-hover:text-neutral-900 group-focus-visible:text-neutral-900" />
+            <MoonIcon className="group-focus-visible-visible:text-neutral-900 h-6 w-6 transition-colors group-hover:text-neutral-900" />
           )}
         </button>
       )}
@@ -63,15 +63,17 @@ const ThemeSwitcher: React.FC = () => {
 const Navbar: React.FC = () => {
   return (
     <div className="sticky top-0 z-10 py-2 px-1.5">
-      <nav className="frosted-glass relative m-auto flex max-w-4xl select-none items-center justify-between rounded-full border px-8 py-4 text-neutral-500/90 shadow-sm transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400/80">
-        <a
-          href="#content"
-          className={clsx(
-            'absolute left-4 -top-16 z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus:top-1 focus:translate-y-3 dark:text-neutral-100'
-          )}
-        >
-          Skip to content
-        </a>
+      <nav className="frosted-glass relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
+        <div className="absolute -top-16 w-full">
+          <a
+            href="#content"
+            className={clsx(
+              'absolute z-10 -translate-y-8 transform rounded-md bg-neutral-50 px-4 py-2 text-neutral-800 transition-all duration-200 focus-visible:top-16 focus-visible:translate-y-3 dark:bg-neutral-900 dark:text-neutral-100 xl:-left-48'
+            )}
+          >
+            Skip to content
+          </a>
+        </div>
         <ul className="flex gap-1">
           <NavLink href="/" title="Home" />
           <NavLink href="/blog" title="Blog" />

@@ -55,7 +55,7 @@ const Layout: React.FC<{
       <Navbar />
       <main
         id="content"
-        className="justify-centre m-auto mt-6 flex max-w-4xl flex-col px-6 md:px-8"
+        className="justify-centre m-auto mt-6 flex max-w-5xl flex-col px-6"
       >
         {children}
       </main>

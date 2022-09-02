@@ -4,7 +4,7 @@
 
 @layer base {
   :focus-visible {
-    @apply outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
+    @apply outline-none focus-visible:ring-2 rounded focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
   }
 }
 
@@ -14,7 +14,7 @@
 }
 
 html.dark .frosted-glass {
-  background-color: rgba(15, 15, 15, 0.825);
+  background-color: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(15px);
 }
 
@@ -23,7 +23,7 @@ html {
 }
 
 .pressable {
-  @apply cursor-pointer will-change-transform active:scale-95;
+  @apply cursor-pointer active:scale-95 active:will-change-transform;
 }
 
 .tech-transition {
@@ -92,12 +92,12 @@ html {
 }
 
 .hvr-underline-from-center:before {
-  @apply content-[''] rounded-md bg-neutral-600 dark:bg-neutral-200 mx-1 md:mx-4;
+  @apply content-[''] rounded-md bg-neutral-600 dark:bg-neutral-200 mx-1 sm:mx-4;
   position: absolute;
   z-index: -1;
   left: 51%;
   right: 51%;
-  bottom: 1px;
+  bottom: 4px;
   height: 3px;
   transition: left 0.3s ease-out, right 0.3s ease-out, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }

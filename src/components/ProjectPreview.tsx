@@ -20,29 +20,28 @@ const ProjectPreview: React.FC<{
 
   return (
     <>
-      <div className="flex w-full overflow-hidden rounded-xl border border-neutral-300 shadow transition-[border-color,background-color] dark:border-neutral-700">
-        <div className="w-72 flex-shrink-0 bg-neutral-800">
-          <div className="img-wrapper relative h-full w-full">
-            <Image
-              className={clsx(loaded && 'unblur', 'select-none')}
-              src={
-                !!image?.path && !error
-                  ? `/static/images/blog/${image?.path}`
-                  : '/static/images/placeholder.jpg'
-              }
-              alt={image?.alt}
-              layout="responsive"
-              objectFit="contain"
-              placeholder="blur"
-              width={1200}
-              height={630}
-              blurDataURL={blurDataURL}
-              onError={() => setError(true)}
-              onLoadingComplete={() => setLoaded(true)}
-            />
-          </div>
+      <div className="w-full">
+        <div className="w-full flex-shrink-0 overflow-clip rounded-2xl bg-neutral-800">
+          <Image
+            className={clsx(loaded && 'unblur', 'select-none')}
+            src={
+              !!image?.path && !error
+                ? `/static/images/blog/${image?.path}`
+                : '/static/images/placeholder.jpg'
+            }
+            alt={image?.alt}
+            layout="responsive"
+            objectFit="contain"
+            placeholder="blur"
+            width={1200}
+            height={630}
+            blurDataURL={blurDataURL}
+            onError={() => setError(true)}
+            onLoadingComplete={() => setLoaded(true)}
+          />
         </div>
-        <div className="color-transition my-4 mx-4 w-full self-center text-neutral-900 dark:text-neutral-100">
+        <div className="mt-4 flex flex-wrap items-center gap-x-2.5">
+          <h2 className="text-lg font-semibold">{name}</h2>
           <div className="flex gap-2">
             {technologies.map((tech) => (
               <h3
@@ -53,48 +52,44 @@ const ProjectPreview: React.FC<{
               </h3>
             ))}
           </div>
-          <h2 className="mt-3 text-xl font-semibold">{name}</h2>
-          <div className="leading-snug">{description}</div>
-          {(source || demo) && (
-            <div className="mt-4 flex items-center justify-between">
-              {source === 'closed' && (
-                <button
-                  disabled
-                  aria-disabled="true"
-                  className="flex cursor-not-allowed items-center font-medium leading-none disabled:opacity-80"
-                >
-                  <LockClosedIcon
-                    className="mr-1.5 h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  <div>Closed Source</div>
-                </button>
-              )}
-              {source !== 'closed' && (
-                <a
-                  href={source}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-600 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-600 dark:text-neutral-400 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
-                >
-                  <CodeIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
-                  Source Code
-                </a>
-              )}
-              {demo && (
-                <a
-                  href={demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-600 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-600 dark:text-neutral-400 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
-                >
-                  <LinkIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
-                  Demo
-                </a>
-              )}
-            </div>
-          )}
         </div>
+        <div>{description}</div>
+        {(source || demo) && (
+          <div className="mt-2 flex items-center gap-2">
+            {source === 'closed' && (
+              <button
+                disabled
+                aria-disabled="true"
+                className="flex cursor-not-allowed items-center font-medium leading-none disabled:opacity-80"
+              >
+                <LockClosedIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                <div>Closed Source</div>
+              </button>
+            )}
+            {source !== 'closed' && (
+              <a
+                href={source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
+              >
+                <CodeIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                Source Code
+              </a>
+            )}
+            {demo && (
+              <a
+                href={demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
+              >
+                <LinkIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                Demo
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </>
   )

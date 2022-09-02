@@ -4,6 +4,7 @@ import {
   Assembly,
   C,
   CPlusPlus,
+  Electron,
   Expo,
   GraphQL,
   Haskell,
@@ -34,7 +35,9 @@ const techStack: {
   { name: 'Node.js', image: NodeJS },
   { name: 'React', image: ReactJS },
   { name: 'Next.js', image: NextJS },
+  { name: 'React Native', image: ReactJS },
   { name: 'Expo', image: Expo },
+  { name: 'Electron', image: Electron },
   { name: 'Vue.js', image: VueJS },
   { name: 'Nuxt', image: Nuxt },
   { name: 'Jest', image: Jest },
@@ -63,7 +66,7 @@ const TechStack: React.FC = () => {
               // href={tool.url}
               target="_blank"
               rel="noreferrer"
-              className="tech-transition pressable pointer-events-auto flex items-center gap-1 rounded-lg border border-neutral-300 px-2 py-1.5 hover:bg-neutral-200 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
+              className="tech-transition pressable pointer-events-auto flex items-center gap-1.5 rounded-lg border border-neutral-300 px-2.5 py-2 hover:bg-neutral-200 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
             >
               <tool.image
                 aria-hidden="true"

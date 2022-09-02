@@ -17,7 +17,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     <Layout>
       <AboutMe />
       <div>
-        <h2 className="mt-8 text-xl font-semibold leading-none">Tech Stack</h2>
+        <h2 className="mt-12 text-xl font-semibold leading-none">Tech Stack</h2>
         <p className="mt-1.5 mb-3">
           Technologies and programming languages that I enjoy using and have
           worked with in the past.
@@ -25,20 +25,21 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <TechStack />
       </div>
       <div>
-        <h2 className="mt-8 text-xl font-semibold leading-none">
+        <h2 className="mt-12 text-xl font-semibold leading-none">
           Tools &amp; Services
         </h2>
         <p className="mt-1.5 mb-3">
-          Tools and services that I enjoy using and have experience with.
+          Tools and services that I enjoy using on a regular basis and have
+          experience with.
         </p>
         <ToolStack />
       </div>
       <div>
-        <h2 className="mt-8 text-xl font-semibold leading-none">Projects</h2>
+        <h2 className="mt-12 text-xl font-semibold leading-none">Projects</h2>
         <p className="mt-1.5 mb-3">
           Projects that I created and have contributed to.
         </p>
-        <div className="mt-3 flex flex-col gap-5">
+        <div className="mt-3 grid grid-cols-1 gap-8 gap-x-10 md:grid-cols-2">
           {projects.map((project) => (
             <ProjectPreview key={project.name} {...project} />
           ))}
