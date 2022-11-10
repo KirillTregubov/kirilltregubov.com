@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 import clsx from 'clsx'
-import { MoonIcon, SunIcon } from '@heroicons/react/solid'
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid'
 
 const NavLink: React.FC<{
   href: string

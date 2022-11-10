@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 import type { Image as ImageType } from 'contentlayer/generated'
-import { ClipboardCopyIcon } from '@heroicons/react/solid'
+import { ClipboardCopyIcon } from '@heroicons/react/24/solid'
 import type { ReadTimeResults } from 'reading-time'
 
 import { blurDataURL } from 'lib/images'

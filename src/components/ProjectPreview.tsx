@@ -2,7 +2,11 @@ import { useState } from 'react'
 import Image from 'next/image'
 import clsx from 'clsx'
 import type { Image as ImageType } from 'contentlayer/generated'
-import { CodeIcon, LinkIcon, LockClosedIcon } from '@heroicons/react/solid'
+import {
+  CodeBracketIcon,
+  LinkIcon,
+  LockClosedIcon
+} from '@heroicons/react/24/solid'
 
 import type { allTechnologies } from 'lib/content'
 import { blurDataURL } from 'lib/images'
@@ -73,7 +77,10 @@ const ProjectPreview: React.FC<{
                 rel="noopener noreferrer"
                 className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
               >
-                <CodeIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                <CodeBracketIcon
+                  className="mr-1.5 h-4 w-4"
+                  aria-hidden="true"
+                />
                 Source Code
               </a>
             )}

@@ -20,7 +20,7 @@ const sharedFields: ComputedFields = {
 const Image = defineNestedType(() => ({
   name: 'Image',
   fields: {
-    path: { type: 'string', required: true },
+    path: { type: 'string' },
     alt: { type: 'string' }
   }
 }))
@@ -34,7 +34,7 @@ const BlogPost = defineDocumentType(() => ({
     description: { type: 'string', required: true },
     status: { type: 'enum', options: ['draft', 'published'], required: true },
     publishedTime: { type: 'string', required: true },
-    modifiedTime: { type: 'string', required: true },
+    modifiedTime: { type: 'string' },
     image: { type: 'nested', of: Image, required: true },
     topics: {
       type: 'list',
@@ -62,8 +62,8 @@ const Project = defineDocumentType(() => ({
       of: { type: 'enum', required: true, options: allTechnologies },
       required: true
     },
-    source: { type: 'string', required: true },
-    demo: { type: 'string', required: true }
+    source: { type: 'string' },
+    demo: { type: 'string' }
   }
 }))
 

@@ -1,6 +1,6 @@
 const Footer: React.FC = () => {
   return (
-    <footer className="select-none px-6 py-4 pt-8 text-center text-neutral-500">
+    <footer className="select-none px-6 py-4 pt-8 text-center text-neutral-400">
       &copy; {new Date().getFullYear()} Kirill Tregubov. This site is{' '}
       <a
         rel="noopener noreferrer"

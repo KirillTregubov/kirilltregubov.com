@@ -1,16 +1,21 @@
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
-import { usePreserveScroll } from 'lib/usePreserveScroll'
+import { Inter } from '@next/font/google'
 
+import { usePreserveScroll } from 'lib/usePreserveScroll'
 import 'styles/globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   usePreserveScroll()
 
   return (
-    <ThemeProvider attribute="class">
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <main className={inter.className}>
+      <ThemeProvider attribute="class">
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </main>
   )
 }
 

@@ -4,7 +4,7 @@ import { compareDesc } from 'date-fns'
 import clsx from 'clsx'
 import { pick } from 'contentlayer/client'
 import { allBlogPosts } from 'contentlayer/generated'
-import { SearchIcon } from '@heroicons/react/solid'
+import { SearchIcon } from '@heroicons/react/24/solid'
 
 import Layout from 'layouts/layout'
 import BlogPreview from 'components/BlogPreview'

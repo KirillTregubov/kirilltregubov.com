@@ -21,7 +21,7 @@ const Layout: React.FC<{
   const router = useRouter()
 
   return (
-    <div>
+    <>
       <Head>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
@@ -60,7 +60,7 @@ const Layout: React.FC<{
         {children}
       </main>
       <Footer />
-    </div>
+    </>
   )
 }
 

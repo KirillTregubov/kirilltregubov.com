@@ -1,4 +1,4 @@
-const { withContentlayer } = require("next-contentlayer");
+const { withContentlayer } = require('next-contentlayer')
 
 /** @type {import('next').NextConfig} */
 module.exports = withContentlayer({
@@ -6,7 +6,6 @@ module.exports = withContentlayer({
   swcMinify: true,
   // https://github.com/vercel/next.js/pull/36584
   experimental: {
-    legacyBrowsers: false,
-    browsersListForSwc: true
+    legacyBrowsers: false
   }
 })

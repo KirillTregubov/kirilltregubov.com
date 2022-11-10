@@ -5,7 +5,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en" className="antialiased">
         <Head>
-          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
           <link rel="shortcut icon" href="/static/favicons/favicon.ico" />
           <link href="/static/favicons/site.webmanifest" rel="manifest" />
           <link
