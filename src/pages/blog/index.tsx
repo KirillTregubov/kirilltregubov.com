@@ -4,7 +4,7 @@ import { compareDesc } from 'date-fns'
 import clsx from 'clsx'
 import { pick } from 'contentlayer/client'
 import { allBlogPosts } from 'contentlayer/generated'
-import { SearchIcon } from '@heroicons/react/24/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 
 import Layout from 'layouts/layout'
 import BlogPreview from 'components/BlogPreview'
@@ -32,7 +32,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </p>
       <div className="relative mt-3 w-full transition-colors">
         <div className="absolute inset-y-0 ml-2 flex items-center">
-          <SearchIcon
+          <MagnifyingGlassIcon
             className={clsx(
               !!searchValue.length
                 ? 'text-neutral-900 dark:text-neutral-100'

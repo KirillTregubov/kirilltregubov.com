@@ -14,19 +14,19 @@ const NavLink: React.FC<{
 
   return (
     <li>
-      <NextLink href={href}>
-        <a
-          className={clsx(
-            isActive &&
-              'hvr-underline-from-center-active text-neutral-900 dark:!text-neutral-100',
-            'hvr-underline-from-center hidden overflow-visible rounded-md p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus-visible:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
-          )}
-        >
-          {title}
-        </a>
+      <NextLink
+        href={href}
+        className={clsx(
+          isActive &&
+            'hvr-underline-from-center-active text-neutral-900 dark:!text-neutral-100',
+          'hvr-underline-from-center hidden overflow-visible rounded-md p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus-visible:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
+        )}>
+
+        {title}
+
       </NextLink>
     </li>
-  )
+  );
 }
 
 const ThemeSwitcher: React.FC = () => {

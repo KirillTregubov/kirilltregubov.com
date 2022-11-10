@@ -9,17 +9,15 @@ const GreenScreen: React.FC = () => {
         <div className="absolute bottom-0 w-screen">
           <p className="w-full bg-transparent pb-2 text-center text-base font-medium text-[#003300]">
             Made with ❤ by{' '}
-            <Link href="/">
-              <a className="font-semibold">
-                {/* relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:rounded-full after:bg-[#003300] after:content-[''] */}
-                Kirill Tregubov
-              </a>
+            <Link href="/" className="font-semibold">
+
+              {/* relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:rounded-full after:bg-[#003300] after:content-[''] */}Kirill Tregubov
             </Link>
           </p>
         </div>
       </HideOnMouseStop>
     </div>
-  )
+  );
 }
 
 export default GreenScreen
