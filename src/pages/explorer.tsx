@@ -1,6 +1,6 @@
 import Layout from 'layouts/layout'
 
-const Explorer: React.FC<> = () => {
+const Explorer: React.FC = () => {
   return <Layout>Explorer</Layout>
 }
 
