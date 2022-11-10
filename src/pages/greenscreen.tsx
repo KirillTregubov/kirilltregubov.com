@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { HideOnMouseStop } from 'react-hide-on-mouse-stop'
 
-const GreenScreen: React.FC<> = () => {
+const GreenScreen: React.FC = () => {
   return (
     <div className="h-screen w-screen">
       <div className="absolute top-0 h-screen w-screen bg-[#02ff01]"></div>
