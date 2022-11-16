@@ -62,18 +62,20 @@ const TechStack: React.FC = () => {
       <div className="group pointer-events-none -my-1 -mx-1 inline-flex flex-wrap">
         {techStack.map((tool) => (
           <div key={tool.name} className="pointer-events-auto p-1 opacity-100">
-            <a
+            {/* <a
               // href={tool.url}
               target="_blank"
               rel="noreferrer"
               className="tech-transition pressable pointer-events-auto flex items-center gap-1.5 rounded-lg border border-neutral-300 px-2.5 py-2 hover:bg-neutral-200 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
-            >
+            > */}
+            <div className="tech-transition flex items-center gap-1.5 rounded-lg border border-neutral-300 px-2.5 py-2 dark:border-neutral-700">
               <tool.image
                 aria-hidden="true"
                 className="color-transition h-6 w-6 text-neutral-800 dark:text-neutral-300"
               />
               <p>{tool.name}</p>
-            </a>
+            </div>
+            {/* </a> */}
           </div>
         ))}
       </div>

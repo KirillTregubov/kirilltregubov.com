@@ -25,7 +25,7 @@ const ProjectPreview: React.FC<{
   return (
     <>
       <div className="w-full">
-        <div className="w-full flex-shrink-0 overflow-clip rounded-2xl bg-neutral-800">
+        <div className="w-full flex-shrink-0 overflow-clip rounded-2xl bg-neutral-800 object-contain">
           <Image
             className={clsx(loaded && 'unblur', 'select-none')}
             src={
@@ -34,8 +34,6 @@ const ProjectPreview: React.FC<{
                 : '/static/images/placeholder.jpg'
             }
             alt={image?.alt}
-            layout="responsive"
-            objectFit="contain"
             placeholder="blur"
             width={1200}
             height={630}
@@ -75,7 +73,7 @@ const ProjectPreview: React.FC<{
                 href={source}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
+                className="flex items-center rounded-lg border-2 border-neutral-400 px-3 py-2 leading-none text-neutral-600 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
               >
                 <CodeBracketIcon
                   className="mr-1.5 h-4 w-4"

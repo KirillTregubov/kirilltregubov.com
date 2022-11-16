@@ -20,18 +20,17 @@ const NavLink: React.FC<{
           isActive &&
             'hvr-underline-from-center-active text-neutral-900 dark:!text-neutral-100',
           'hvr-underline-from-center hidden overflow-visible rounded-md p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus-visible:text-neutral-300 sm:px-4 sm:py-2 md:inline-block'
-        )}>
-
+        )}
+      >
         {title}
-
       </NextLink>
     </li>
-  );
+  )
 }
 
 const ThemeSwitcher: React.FC = () => {
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -47,9 +46,9 @@ const ThemeSwitcher: React.FC = () => {
             'group flex items-center justify-center rounded-full p-2 opacity-0 transition hover:bg-neutral-200 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700',
             mounted && '!opacity-100'
           )}
-          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+          onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
         >
-          {theme === 'dark' ? (
+          {resolvedTheme === 'dark' ? (
             <SunIcon className="group-focus-visible-visible:text-neutral-50 h-6 w-6 transition-colors group-hover:text-neutral-50" />
           ) : (
             <MoonIcon className="group-focus-visible-visible:text-neutral-900 h-6 w-6 transition-colors group-hover:text-neutral-900" />
