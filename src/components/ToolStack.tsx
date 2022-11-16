@@ -82,14 +82,14 @@ const toolStack: {
 const ToolStack: React.FC = () => {
   return (
     <>
-      <div className="group pointer-events-none -my-1 -mx-1 inline-flex flex-wrap">
+      <div className="pointer-events-none -my-1 -mx-1 flex flex-wrap">
         {toolStack.map((tool) => (
           <div key={tool.name} className="pointer-events-auto p-1 opacity-100">
             <a
               href={tool.url}
               target="_blank"
               rel="noreferrer"
-              className="tech-transition pressable pointer-events-auto flex items-center gap-1 rounded-lg border border-neutral-300 px-2 py-1.5 hover:bg-neutral-300 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
+              className="tech-transition pressable pointer-events-auto flex items-center gap-1 rounded-lg border border-neutral-300 px-2 py-1.5 hover:bg-neutral-300 dark:border-neutral-700 dark:hover:bg-neutral-700"
             >
               <tool.image
                 aria-hidden="true"
