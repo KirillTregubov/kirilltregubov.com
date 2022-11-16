@@ -43,19 +43,19 @@ const ProjectPreview: React.FC<{
           />
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-x-2.5">
-          <h2 className="text-lg font-semibold">{name}</h2>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-x-2 gap-y-1.5">
+            <h2 className="text-lg font-semibold">{name}</h2>
             {technologies.map((tech) => (
               <h3
                 key={tech}
-                className="color-bg-transition rounded bg-neutral-200 px-2 leading-relaxed text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300"
+                className="color-bg-transition whitespace-nowrap rounded bg-neutral-200 px-2 leading-relaxed text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300"
               >
                 {tech}
               </h3>
             ))}
           </div>
         </div>
-        <div>{description}</div>
+        <div className="mt-1">{description}</div>
         {(source || demo) && (
           <div className="mt-2 flex items-center gap-2">
             {source === 'closed' && (
