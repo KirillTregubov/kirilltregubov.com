@@ -33,7 +33,7 @@ const ProjectPreview: React.FC<{
                 ? `/static/images/blog/${image?.path}`
                 : '/static/images/placeholder.jpg'
             }
-            alt={image?.alt}
+            alt={image?.alt || 'Placeholder project image'}
             placeholder="blur"
             width={1200}
             height={630}
