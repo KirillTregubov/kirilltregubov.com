@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="sticky top-0 left-0 z-10 py-1 px-1.5">
       <nav className="frosted-glass relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
-        <ul className="flex justify-center gap-1 sm:gap-0">
+        <ul className="flex justify-center gap-1 overflow-hidden sm:gap-0">
           <NavLink href="/" title="Home" />
           <NavLink href="/blog" title="Blog" />
           <NavLink href="/resources" title="Resources" />
