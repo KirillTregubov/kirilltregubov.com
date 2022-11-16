@@ -92,7 +92,7 @@ html {
 }
 
 .hvr-underline-from-center:before {
-  @apply content-[''] rounded-md bg-neutral-600 dark:bg-neutral-200 mx-1 sm:mx-4;
+  @apply content-[''] rounded-md bg-neutral-600 dark:bg-neutral-200 mx-1 sm:mx-3;
   position: absolute;
   z-index: -1;
   left: 51%;

@@ -20,8 +20,8 @@ const BlogPreview: React.FC<{
   const [error, setError] = useState(false)
 
   return (
-    <Link href={`/blog/${slug}`} className="flex w-full">
-      <div className="mr-3 w-64 flex-shrink-0">
+    <Link href={`/blog/${slug}`} className="flex w-full flex-col sm:flex-row">
+      <div className="mr-3 w-full flex-shrink-0 sm:w-72">
         <Image
           className={clsx(
             loaded && 'unblur',

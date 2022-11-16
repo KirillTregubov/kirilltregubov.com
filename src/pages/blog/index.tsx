@@ -51,7 +51,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </div>
       <div className="mt-3">
         <h2 className="font-medium">Search by topic</h2>
-        <div className="mt-1 flex gap-x-2 gap-y-2">
+        <div className="mt-1 flex gap-x-2 gap-y-2 overflow-x-auto">
           {topics.map((topic) => (
             <button
               key={topic}
