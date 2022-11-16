@@ -39,7 +39,7 @@ html {
 }
 
 .unblur {
-  animation: unblur 200ms ease;
+  animation: unblur 300ms ease;
 }
 
 .img-wrapper > span {

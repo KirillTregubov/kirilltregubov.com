@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-
 export default class MyDocument extends Document {
   render() {
     return (
@@ -24,7 +23,16 @@ export default class MyDocument extends Document {
             sizes="32x32"
             type="image/png"
           />
-          <meta content="#ffffff" name="theme-color" />
+          <meta
+            name="theme-color"
+            content="#fafafa"
+            media="(prefers-color-scheme: light)"
+          />
+          <meta
+            name="theme-color"
+            content="#171717"
+            media="(prefers-color-scheme: dark)"
+          ></meta>
           {/* Google Site Verification */}
           <meta
             content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"
