@@ -1,7 +1,8 @@
 import Image from 'next/image'
+import type { ReactPropTypes } from 'react'
 import png from './MARS.png'
 
-const MARS: React.FC = (props) => (
+const MARS: React.FC<{ className: string }> = (props) => (
   <Image
     width={24}
     src={png}
