@@ -15,6 +15,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <Layout>
+      <p>Home Blog Resources</p>
       <AboutMe />
       <div>
         <h2 className="mt-12 text-xl font-semibold leading-none">Tech Stack</h2>

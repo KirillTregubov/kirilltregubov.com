@@ -62,7 +62,8 @@ const ThemeSwitcher: React.FC = () => {
 const Navbar: React.FC = () => {
   return (
     <div className="sticky top-0 z-10 py-2 px-1.5">
-      <nav className="frosted-glass relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
+      {/* <div className="frosted-glass absolute top-0 left-0 h-full w-full"></div> */}
+      <nav className="relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
         <div className="absolute -top-16 w-full">
           <a
             href="#content"
@@ -77,6 +78,7 @@ const Navbar: React.FC = () => {
           <NavLink href="/" title="Home" />
           <NavLink href="/blog" title="Blog" />
           <NavLink href="/resources" title="Resources" />
+          <NavLink href="/explorer" title="Explorer" />
         </ul>
         <ThemeSwitcher />
       </nav>
