@@ -65,9 +65,9 @@ const Navbar: React.FC = () => {
       <nav className="frosted-glass relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
         <ul className="flex justify-center gap-1 overflow-hidden sm:gap-0">
           <NavLink href="/" title="Home" />
-          <NavLink href="/blog" title="Blog" />
+          {/* <NavLink href="/blog" title="Blog" />
           <NavLink href="/resources" title="Resources" />
-          <NavLink href="/explorer" title="Explorer" />
+          <NavLink href="/explorer" title="Explorer" /> */}
         </ul>
         <ThemeSwitcher />
       </nav>

@@ -7,5 +7,19 @@ module.exports = withContentlayer({
   // https://github.com/vercel/next.js/pull/36584
   experimental: {
     legacyBrowsers: false
-  }
+  },
+  async redirects() {
+    return [
+      {
+        source: '/blog',
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/blog/:slug*',
+        destination: '/',
+        permanent: false,
+      },
+    ]
+  },
 })
