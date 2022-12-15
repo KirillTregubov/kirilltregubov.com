@@ -3,8 +3,9 @@ import { differenceInYears } from 'date-fns'
 const AboutMe: React.FC = () => {
   const age = differenceInYears(new Date(), new Date(2001, 9, 7))
 
+  // NOTE: isHome
   return (
-    <div className="text-lg">
+    <div className="pt-2 text-lg">
       <p>
         Hey! I'm Kirill Tregubov, a {age} year-old{' '}
         <span className="text-accent-500 dark:text-accent-400">

@@ -18,8 +18,8 @@ const NavLink: React.FC<{
         href={href}
         className={clsx(
           isActive &&
-            'hvr-underline-from-center-active text-neutral-900 dark:!text-neutral-100',
-          'hvr-underline-from-center hidden overflow-visible rounded-md p-1 font-medium text-neutral-500 transition hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus-visible:text-neutral-300 sm:px-3 sm:py-2 md:inline-block'
+            'hvr-underline-from-center-active !text-neutral-900 dark:!text-neutral-100',
+          'hvr-underline-from-center hidden overflow-visible rounded-md p-1 font-medium text-neutral-600 transition hover:text-neutral-900 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus-visible:text-neutral-300 sm:px-3 sm:py-2 md:inline-block'
         )}
       >
         {title}
@@ -43,8 +43,7 @@ const ThemeSwitcher: React.FC = () => {
           aria-label="Toggle Theme"
           type="button"
           className={clsx(
-            'group flex items-center justify-center rounded-full p-2 opacity-0 transition hover:bg-neutral-200 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700',
-            mounted && '!opacity-100'
+            'fade-in group flex items-center justify-center rounded-full p-2 opacity-0 transition hover:bg-neutral-200 active:translate-y-[0.05rem] active:scale-[0.85] dark:hover:bg-neutral-700'
           )}
           onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
         >
@@ -60,8 +59,22 @@ const ThemeSwitcher: React.FC = () => {
 }
 
 const Navbar: React.FC = () => {
+  const { asPath: path } = useRouter()
+  const isHome = path === '/'
+
+  // NOTE: isHome
+  if (isHome) {
+    return (
+      <div className="fixed bottom-0 right-0 z-10 p-2 md:px-6">
+        <nav className="frosted-glass relative right-0 ml-auto box-content flex h-10 w-10 select-none items-end justify-between rounded-full border px-5 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
+          <ThemeSwitcher />
+        </nav>
+      </div>
+    )
+  }
+
   return (
-    <div className="sticky top-0 left-0 z-10 py-1 px-1.5">
+    <div className="sticky top-0 left-0 z-10 px-4 pt-1.5">
       <nav className="frosted-glass relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
         <ul className="flex justify-center gap-1 overflow-hidden sm:gap-0">
           <NavLink href="/" title="Home" />
