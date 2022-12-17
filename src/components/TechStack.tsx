@@ -41,7 +41,7 @@ const techStack: {
   { name: 'Expo', image: Expo },
   { name: 'Electron', image: Electron },
   { name: 'Vue.js', image: VueJS },
-  { name: 'Nuxt', image: Nuxt },
+  { name: 'NuxtJS', image: Nuxt },
   { name: 'Jest', image: Jest },
   { name: 'Tailwind CSS', image: TailwindCSS },
   { name: 'Sass', image: Sass },
