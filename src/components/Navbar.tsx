@@ -60,7 +60,7 @@ const ThemeSwitcher: React.FC = () => {
 
 const Navbar: React.FC = () => {
   const { asPath: path } = useRouter()
-  const isHome = path === '/'
+  const isHome = path === '/' || path.includes('/#')
 
   // NOTE: isHome
   if (isHome) {

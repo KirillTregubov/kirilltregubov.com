@@ -54,7 +54,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </svg>
         </a>
       </div>
-      <div>
+      <div id="tech-stack">
         <h2 className="mt-12 text-xl font-semibold leading-none">Tech Stack</h2>
         <p className="mt-1.5 mb-3">
           Technologies and programming languages that I enjoy using and have
@@ -62,7 +62,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </p>
         <TechStack />
       </div>
-      <div>
+      <div id="tool-stack">
         <h2 className="mt-12 text-xl font-semibold leading-none">
           Tools &amp; Services
         </h2>
@@ -72,7 +72,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </p>
         <ToolStack />
       </div>
-      <div>
+      <div id="projects">
         <h2 className="mt-12 text-xl font-semibold leading-none">Projects</h2>
         <p className="mt-1.5 mb-3">
           Projects that I created and have contributed to.
