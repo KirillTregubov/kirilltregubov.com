@@ -59,28 +59,28 @@ const ThemeSwitcher: React.FC = () => {
 }
 
 const Navbar: React.FC = () => {
-  const { asPath: path } = useRouter()
-  const isHome = path === '/' || path.includes('/#')
+  // const { asPath: path } = useRouter()
+  // const isHome = path === '/' || path.includes('/#')
 
-  // NOTE: isHome
-  if (isHome) {
-    return (
-      <div className="fixed bottom-0 right-0 z-10 p-2 md:px-6">
-        <nav className="frosted-glass relative right-0 ml-auto box-content flex h-10 w-10 select-none items-end justify-between rounded-full border px-5 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
-          <ThemeSwitcher />
-        </nav>
-      </div>
-    )
-  }
+  // // NOTE: isHome
+  // if (isHome) {
+  //   return (
+  //     <div className="fixed bottom-0 right-0 z-10 p-2 md:px-6">
+  //       <nav className="frosted-glass relative right-0 ml-auto box-content flex h-10 w-10 select-none items-end justify-between rounded-full border px-5 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
+  //         <ThemeSwitcher />
+  //       </nav>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="sticky top-0 left-0 z-10 px-4 pt-1.5">
       <nav className="frosted-glass relative m-auto flex max-w-[65rem] select-none items-center justify-between rounded-full border px-4 py-3 text-neutral-500/90 shadow transition-colors dark:border-neutral-700 dark:text-neutral-400/80">
         <ul className="flex justify-center gap-1 overflow-hidden sm:gap-0">
           <NavLink href="/" title="Home" />
-          {/* <NavLink href="/blog" title="Blog" />
+          <NavLink href="/blog" title="Blog" />
           <NavLink href="/resources" title="Resources" />
-          <NavLink href="/explorer" title="Explorer" /> */}
+          {/* <NavLink href="/explorer" title="Explorer" /> */}
         </ul>
         <ThemeSwitcher />
       </nav>
