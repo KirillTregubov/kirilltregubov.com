@@ -6,7 +6,7 @@ import {
   CodeBracketIcon,
   LinkIcon,
   LockClosedIcon
-} from '@heroicons/react/24/solid'
+} from '@heroicons/react/20/solid'
 import { useTheme } from 'next-themes'
 
 import type { allTechnologies } from 'lib/content'
@@ -56,28 +56,28 @@ const ProjectPreview: React.FC<{
             ))}
           </div>
         </div>
-        <div className="mt-1">{description}</div>
+        <div className="mt-3">{description}</div>
         {(source || demo) && (
           <div className="mt-2 flex items-center gap-2">
             {source === 'closed' && (
               <button
                 disabled
                 aria-disabled="true"
-                className="flex cursor-not-allowed items-center font-medium leading-none disabled:opacity-80"
+                className="py-1.5 pr-2 flex cursor-not-allowed items-center font-medium leading-none disabled:opacity-80"
               >
-                <LockClosedIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                <LockClosedIcon className="mr-1.5 h-5 w-5" aria-hidden="true" />
                 <div>Closed Source</div>
               </button>
             )}
-            {source !== 'closed' && (
+            {source && source !== 'closed' && (
               <a
                 href={source}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center rounded-lg border-2 border-neutral-500 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
+                className="flex items-center rounded-lg border-2 border-neutral-500 px-3 py-1.5 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
               >
                 <CodeBracketIcon
-                  className="mr-1.5 h-4 w-4"
+                  className="mr-1.5 h-5 w-5"
                   aria-hidden="true"
                 />
                 Source Code
@@ -88,9 +88,9 @@ const ProjectPreview: React.FC<{
                 href={demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center rounded-lg border-2 border-neutral-500 px-3 py-2 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
+                className="flex items-center rounded-lg border-2 border-neutral-500 px-3 py-1.5 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
               >
-                <LinkIcon className="mr-1.5 h-4 w-4" aria-hidden="true" />
+                <LinkIcon className="mr-1.5 h-5 w-5" aria-hidden="true" />
                 Demo
               </a>
             )}
