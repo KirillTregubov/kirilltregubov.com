@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
-import { Inter } from '@next/font/google'
+import { Inter } from "next/font/google"
 
 import { usePreserveScroll } from 'lib/usePreserveScroll'
 import 'styles/globals.css'
