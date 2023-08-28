@@ -3,7 +3,6 @@ import { differenceInYears } from 'date-fns'
 const AboutMe: React.FC = () => {
   const age = differenceInYears(new Date(), new Date(2001, 9, 7))
 
-  // NOTE: isHome
   return (
     <div className="pt-2 text-lg">
       <p>
@@ -13,12 +12,12 @@ const AboutMe: React.FC = () => {
         </span>{' '}
         based in Canada. I'm currently building modern web, mobile and desktop
         experiences using React, a JavaScript framework. My preferred tech stack
-        includes Expo, Next.js, TailwindCSS, Node.js and PostgreSQL. I'm also a
-        fourth-year university student{' '}
+        includes Expo, Next.js, TailwindCSS, Node.js and PostgreSQL. I also
+        graduated the University of Toronto with an{' '}
         <span className="text-accent-500 dark:text-accent-400">
-          pursuing a BSc in Computer Science
-        </span>{' '}
-        at the University of Toronto.
+          Honours Bachelor of Science in Computer Science
+        </span>
+        .
       </p>
       <p className="mt-4">
         I'm available for freelance work and job opportunities. If you have a
