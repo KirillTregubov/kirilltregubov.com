@@ -3,6 +3,7 @@
   "[css]": { "editor.defaultFormatter": "bradlc.vscode-tailwindcss" },
   "editor.formatOnSave": true,
   "files.associations": {
-    "*.mdx": "markdown",
-  }
+    "*.mdx": "markdown"
+  },
+  "files.eol": "\n"
 }

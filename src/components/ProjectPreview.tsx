@@ -16,7 +16,7 @@ const ProjectPreview: React.FC<{
   name: string
   description: string
   image: ImageType
-  technologies: typeof allTechnologies[number][]
+  technologies: (typeof allTechnologies)[number][]
   source?: string
   demo?: string
 }> = ({ name, description, image, technologies, source, demo }) => {
@@ -58,7 +58,7 @@ const ProjectPreview: React.FC<{
         </div>
         <div className="mt-3">{description}</div>
         {(source || demo) && (
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 flex items-center gap-2 select-none">
             {source === 'closed' && (
               <button
                 disabled
