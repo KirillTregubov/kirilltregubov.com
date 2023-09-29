@@ -4,10 +4,6 @@ const { withContentlayer } = require('next-contentlayer')
 module.exports = withContentlayer({
   reactStrictMode: true,
   swcMinify: true,
-  // https://github.com/vercel/next.js/pull/36584
-  experimental: {
-    legacyBrowsers: false
-  },
   async redirects() {
     return [
       {
