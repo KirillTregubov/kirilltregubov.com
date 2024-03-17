@@ -1,7 +1,8 @@
-const { fontFamily } = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
+import type { Config } from 'tailwindcss'
+import { fontFamily } from 'tailwindcss/defaultTheme'
+import colors from 'tailwindcss/colors'
 
-module.exports = {
+export default {
   content: ['./src/**/*.tsx'],
   darkMode: 'class',
   theme: {
@@ -22,9 +23,9 @@ module.exports = {
         }
       },
       screens: {
-        'wide': { 'raw': '(min-width: 825px)' }
+        wide: { raw: '(min-width: 825px)' }
       }
     }
   },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
-}
+} satisfies Config
