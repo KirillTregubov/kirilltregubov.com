@@ -1,0 +1,52 @@
+---
+import '../index.css'
+import Layout from '../layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+import Saturn from '../components/Saturn'
+import AboutMe from '../components/AboutMe.astro'
+import ProjectPreview from '../components/ProjectPreview.astro'
+
+const allProjects = await getCollection('projects').then((projects) =>
+  projects
+    .filter((project) => import.meta.env.DEV || project.data.draft !== true)
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+)
+---
+
+<Layout title="Welcome to Astro.">
+  <main class="mx-auto max-w-[90rem]">
+    <section class="mb-8 flex flex-col justify-center lg:flex-row xl:mb-4">
+      <AboutMe class="animate-[fadeUp_0.3s_forwards] pt-6 2xl:pt-12" />
+      <!-- border-2 border-red-500 -->
+      <div
+        class="box-content h-[calc(100vw-3rem)] max-h-[400px] w-full lg:max-h-[350px] lg:min-w-[500px] xl:max-h-[400px] xl:min-w-[700px]"
+        title="My favourite planet, Saturn"
+      >
+        <Saturn client:only="react" />
+      </div>
+    </section>
+    <section>
+      <ul
+        class="mb-8 grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3"
+      >
+        {
+          allProjects.map((project) => (
+            <>
+              {/* <li class="my-8 space-y-2 break-words">
+                <h2>{project.data.name}</h2>
+                <h2>{project.data.description}</h2>
+                <h2>{project.data.pubDate}</h2>
+                <h2>{project.data.updatedDate}</h2>
+                <h2>{project.data.image.url}</h2>
+                <h2>{project.data.technologies}</h2>
+                <h2>{project.data.source}</h2>
+                <h2 class="">{project.data.demo}</h2>
+              </li> */}
+              <ProjectPreview project={project} />
+            </>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+</Layout>

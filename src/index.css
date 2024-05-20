@@ -1,0 +1,64 @@
+:focus-visible {
+  @apply rounded outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.inline-link {
+  @apply relative font-medium;
+}
+
+.inline-link::after {
+  @apply absolute bottom-0 left-0 w-full rounded-full bg-current font-semibold will-change-transform content-[''];
+  transform: scaleX(1);
+  height: 1px;
+  transform-origin: bottom left;
+  transition: transform 0.5s ease-in-out;
+}
+
+.inline-link.primary::after {
+  @apply h-0.5 bg-gradient-to-r from-accent-600 to-accent-300 dark:from-accent-700 dark:to-accent-400;
+}
+
+.inline-link:hover::after {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+}
+
+.social-buttons a {
+  @apply mr-3 inline-block rounded bg-neutral-600 px-2.5 py-1.5 text-neutral-200 transition duration-200 hover:bg-neutral-700 hover:text-neutral-50 active:translate-y-0.5 active:bg-neutral-800 active:text-neutral-50 active:shadow dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-50 dark:active:bg-neutral-500;
+}
+.social-buttons svg {
+  @apply fill-current;
+  height: 1.75rem;
+  width: 1.75rem;
+}
