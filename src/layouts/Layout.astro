@@ -4,20 +4,52 @@ import SpeedInsights from '@vercel/speed-insights/astro'
 
 interface Props {
   title: string
+  description?: string
+  type?: string
+  image?: string
 }
 
-const { title } = Astro.props
+let { title, description, type, image } = Astro.props
+const { pathname } = Astro.url
+if (!description) {
+  description = 'Software Developer specialized in Web and App Development.'
+}
+if (!type) {
+  type = 'website'
+}
+if (!image) {
+  image = 'banner.png'
+}
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="follow, index" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta property="og:site_name" content="Kirill Tregubov" />
+    <meta property="og:url" content={`https://kirilltregubov.com${pathname}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content={`https://kirilltregubov.com/assets/${image}`}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@KirillTregubov_" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content={`https://kirilltregubov.com/assets/${image}`}
+    />
   </head>
   <body class="dark bg-neutral-900 px-6 text-white">
     <slot />

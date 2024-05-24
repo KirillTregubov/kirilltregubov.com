@@ -13,7 +13,7 @@ const allProjects = await getCollection('projects').then((projects) =>
 )
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Kirill Tregubov">
   <main class="mx-auto max-w-[90rem]">
     <section class="mb-8 flex flex-col justify-center lg:flex-row xl:mb-4">
       <AboutMe class="animate-[fadeUp_0.3s_forwards] pt-6 2xl:pt-12" />
@@ -31,7 +31,7 @@ const allProjects = await getCollection('projects').then((projects) =>
       >
         {
           allProjects.map((project) => (
-            <>
+            <li>
               {/* <li class="my-8 space-y-2 break-words">
                 <h2>{project.data.name}</h2>
                 <h2>{project.data.description}</h2>
@@ -43,7 +43,7 @@ const allProjects = await getCollection('projects').then((projects) =>
                 <h2 class="">{project.data.demo}</h2>
               </li> */}
               <ProjectPreview project={project} />
-            </>
+            </li>
           ))
         }
       </ul>

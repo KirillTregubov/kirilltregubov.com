@@ -9,14 +9,14 @@ interface Props {
 const { project } = Astro.props
 ---
 
-<div class="w-full">
+<div>
   <div
     class="w-full flex-shrink-0 overflow-clip rounded-xl bg-neutral-800 object-contain"
   >
     <!-- class:list={[loaded && 'unblur', 'select-none']} -->
     <Image
-      class="select-none"
-      src={`/projects/${project.data.image.url}`}
+      class="unblur select-none"
+      src={`/assets/projects/${project.data.image.url}`}
       alt={project.data.image?.alt || 'Placeholder project image'}
       width={1200}
       height={630}

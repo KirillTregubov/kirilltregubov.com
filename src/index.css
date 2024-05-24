@@ -57,8 +57,22 @@
 .social-buttons a {
   @apply mr-3 inline-block rounded bg-neutral-600 px-2.5 py-1.5 text-neutral-200 transition duration-200 hover:bg-neutral-700 hover:text-neutral-50 active:translate-y-0.5 active:bg-neutral-800 active:text-neutral-50 active:shadow dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-50 dark:active:bg-neutral-500;
 }
+
 .social-buttons svg {
   @apply fill-current;
   height: 1.75rem;
   width: 1.75rem;
+}
+
+@keyframes unblur {
+  from {
+    filter: blur(20px);
+  }
+  to {
+    filter: blur(0);
+  }
+}
+
+.unblur {
+  animation: unblur 0.5s ease;
 }
