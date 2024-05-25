@@ -1,32 +1,34 @@
-import { z, defineCollection } from 'astro:content'
-import { allTechnologies } from './constants'
+import { z, defineCollection, reference } from 'astro:content'
 
-const projectsCollection = defineCollection({
+const technologies = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    type: z.enum(['technology', 'tool']).default('technology'),
+    order: z.number().default(Infinity)
+    // color: z.string()
+  })
+})
+
+const projects = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    pubDate: z.coerce.date(), // was dateAdded
+    pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     image: z.object({
-      url: z.string(), // was path
+      url: z.string(),
       alt: z.string()
     }),
-    technologies: z.array(z.enum(allTechnologies)),
+    technologies: z.array(reference('technologies')),
     source: z.string().optional(),
     demo: z.string().optional(),
     draft: z.boolean().default(false)
-    // pubDate: z.date(),
-    // description: z.string(),
-    // author: z.string(),
-    // image: z.object({
-    //   url: z.string(),
-    //   alt: z.string()
-    // }),
-    // tags: z.array(z.string())
   })
 })
 
 export const collections = {
-  projects: projectsCollection
+  projects,
+  technologies
 }

@@ -1,12 +1,14 @@
 ---
 import { Image } from 'astro:assets'
-import { type CollectionEntry } from 'astro:content'
+import { getEntries, type CollectionEntry } from 'astro:content'
 
 interface Props {
   project: CollectionEntry<'projects'>
 }
 
 const { project } = Astro.props
+
+const technologies = await getEntries(project.data.technologies)
 ---
 
 <div>
@@ -26,10 +28,10 @@ const { project } = Astro.props
     <div class="flex flex-wrap gap-x-2 gap-y-1.5">
       <h2 class="text-lg font-semibold">{project.data.name}</h2>
       {
-        project.data.technologies &&
-          project.data.technologies.map((tech) => (
+        technologies &&
+          technologies.map((tech) => (
             <h3 class="color-bg-transition whitespace-nowrap rounded bg-neutral-200 px-2 leading-relaxed text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300">
-              {tech}
+              {tech.data.name}
             </h3>
           ))
       }

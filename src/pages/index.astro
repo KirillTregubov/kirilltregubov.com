@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content'
 import Saturn from '../components/Saturn'
 import AboutMe from '../components/AboutMe.astro'
 import ProjectPreview from '../components/ProjectPreview.astro'
+import TechStack from '../components/TechStack.astro'
 
 const allProjects = await getCollection('projects').then((projects) =>
   projects
@@ -16,7 +17,7 @@ const allProjects = await getCollection('projects').then((projects) =>
 <Layout title="Kirill Tregubov">
   <main class="mx-auto max-w-[90rem]">
     <section
-      class="mb-8 flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6 2xl:mb-4"
+      class="mb-8 flex flex-col justify-center md:mb-12 lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6"
     >
       <AboutMe class="animate-[fadeUp_0.3s_forwards]" />
       <!-- border-2 border-red-500 -->
@@ -38,21 +39,19 @@ const allProjects = await getCollection('projects').then((projects) =>
         </figcaption>
       </figure>
     </section>
+    <div id="tech-stack" class="mb-8 md:mb-12 2xl:pr-2">
+      <h2 class="text-xl font-semibold leading-none">Tech Stack</h2>
+      <p class="mb-3 mt-2 text-neutral-400">
+        Technologies and programming languages that I enjoy using, and have
+        worked with in the past.
+      </p>
+      <TechStack />
+    </div>
     <section>
       <ul class="grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3">
         {
           allProjects.map((project) => (
             <li>
-              {/* <li class="my-8 space-y-2 break-words">
-                <h2>{project.data.name}</h2>
-                <h2>{project.data.description}</h2>
-                <h2>{project.data.pubDate}</h2>
-                <h2>{project.data.updatedDate}</h2>
-                <h2>{project.data.image.url}</h2>
-                <h2>{project.data.technologies}</h2>
-                <h2>{project.data.source}</h2>
-                <h2 class="">{project.data.demo}</h2>
-              </li> */}
               <ProjectPreview project={project} />
             </li>
           ))
