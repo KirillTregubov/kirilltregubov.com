@@ -13,7 +13,6 @@ const { project } = Astro.props
   <div
     class="w-full flex-shrink-0 overflow-clip rounded-xl bg-neutral-800 object-contain"
   >
-    <!-- class:list={[loaded && 'unblur', 'select-none']} -->
     <Image
       class="unblur select-none"
       src={`/assets/projects/${project.data.image.url}`}
@@ -22,10 +21,6 @@ const { project } = Astro.props
       height={630}
       onerror="this.src='/placeholder.jpg'; this.onerror=null"
     />
-    <!-- placeholder="blur"
-      blurDataURL={blurDataURL}
-      onError={() => setError(true)}
-      onLoadingComplete={() => setLoaded(true)} -->
   </div>
   <div class="mt-4 flex flex-wrap items-center gap-x-2.5">
     <div class="flex flex-wrap gap-x-2 gap-y-1.5">
