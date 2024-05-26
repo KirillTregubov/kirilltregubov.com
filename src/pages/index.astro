@@ -39,15 +39,19 @@ const allProjects = await getCollection('projects').then((projects) =>
         </figcaption>
       </figure>
     </section>
-    <div id="tech-stack" class="mb-8 md:mb-12 2xl:pr-2">
+    <section id="tech-stack" class="mb-8 md:mb-12 2xl:pr-2">
       <h2 class="text-xl font-semibold leading-none">Tech Stack</h2>
       <p class="mb-3 mt-2 text-neutral-400">
         Technologies and programming languages that I enjoy using, and have
         worked with in the past.
       </p>
       <TechStack />
-    </div>
-    <section>
+    </section>
+    <section id="projects">
+      <h2 class="text-xl font-semibold leading-none">Featured Projects</h2>
+      <p class="mb-3 mt-2 text-neutral-400">
+        Projects that I created and have contributed to.
+      </p>
       <ul class="grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3">
         {
           allProjects.map((project) => (

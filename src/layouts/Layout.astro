@@ -29,28 +29,59 @@ if (!image) {
     <meta name="description" content={description} />
     <meta name="robots" content="follow, index" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta property="og:site_name" content="Kirill Tregubov" />
-    <meta property="og:url" content={`https://kirilltregubov.com${pathname}`} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content={type} />
-    <meta property="og:locale" content="en_US" />
-    <meta
-      property="og:image"
-      content={`https://kirilltregubov.com/assets/${image}`}
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    <link rel="shortcut icon" href="/favicons/favicon.ico" />
+    <link href="/favicons/site.webmanifest" rel="manifest" />
+    <link
+      href="/favicons/apple-touch-icon.png"
+      rel="apple-touch-icon"
+      sizes="180x180"
     />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:creator" content="@KirillTregubov_" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta
-      name="twitter:image"
-      content={`https://kirilltregubov.com/assets/${image}`}
+    <link
+      href="/favicons/favicon-16x16.png"
+      rel="icon"
+      sizes="16x16"
+      type="image/png"
     />
-  </head>
+    <link
+      href="/favicons/favicon-32x32.png"
+      rel="icon"
+      sizes="32x32"
+      type="image/png"
+    />
+    <!-- <meta
+      name="theme-color"
+      content="#fafafa"
+      media="(prefers-color-scheme: light)"
+    /> -->
+    <meta
+      name="theme-color"
+      content="#171717"
+      media="(prefers-color-scheme: dark)"
+    /><meta name="generator" content={Astro.generator} /><title>
+      {title}
+    </title></head
+  >
+
+  <meta property="og:site_name" content="Kirill Tregubov" />
+  <meta property="og:url" content={`https://kirilltregubov.com${pathname}`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={type} />
+  <meta property="og:locale" content="en_US" />
+  <meta
+    property="og:image"
+    content={`https://kirilltregubov.com/assets/${image}`}
+  />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:creator" content="@KirillTregubov_" />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta
+    property="twitter:image"
+    content={`https://kirilltregubov.com/assets/${image}`}
+  />
+
   <body class="dark bg-neutral-900 p-6 text-white md:p-12">
     <slot />
     <SpeedInsights />
