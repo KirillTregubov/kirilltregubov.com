@@ -1,7 +1,13 @@
 ---
 import { Image } from 'astro:assets'
 import { getEntries, type CollectionEntry } from 'astro:content'
-import { CodeIcon, ExternalLinkIcon, LinkIcon, LockIcon } from 'lucide-react'
+import {
+  CodeIcon,
+  ExternalLinkIcon,
+  GamepadIcon,
+  LinkIcon,
+  LockIcon
+} from 'lucide-react'
 
 interface Props {
   project: CollectionEntry<'projects'>
@@ -22,7 +28,7 @@ const technologies = await getEntries(project.data.technologies)
       alt={project.data.image?.alt || 'Placeholder project image'}
       width={1200}
       height={630}
-      onerror="this.src='/placeholder.jpg'; this.onerror=null"
+      onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
     />
   </div>
   <div class="my-4 flex flex-col">
@@ -74,6 +80,17 @@ const technologies = await getEntries(project.data.technologies)
             >
               <LinkIcon className="mr-1.5 size-5" aria-hidden="true" />
               Demo
+            </a>
+          )}
+          {project.data.play && (
+            <a
+              href={project.data.play}
+              target="_blank"
+              rel="noopener"
+              class="flex items-center rounded-lg border-2 border-neutral-500 px-2 py-1.5 leading-none text-neutral-700 transition-colors hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50"
+            >
+              <GamepadIcon className="mr-1.5 size-5" aria-hidden="true" />
+              Play
             </a>
           )}
           {project.data.download && (

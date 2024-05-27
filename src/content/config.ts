@@ -25,7 +25,8 @@ const projects = defineCollection({
     technologies: z.array(reference('technologies')),
     source: z.string().optional(),
     demo: z.string().optional(),
-    download: z.string().optional(),
+    download: z.string().url().optional(),
+    play: z.string().url().optional(),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false)
   })
