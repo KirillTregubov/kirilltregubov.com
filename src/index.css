@@ -66,7 +66,7 @@
 
 @keyframes unblur {
   from {
-    filter: blur(20px);
+    filter: blur(24px);
   }
   to {
     filter: blur(0);

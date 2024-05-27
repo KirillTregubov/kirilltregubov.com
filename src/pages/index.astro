@@ -87,7 +87,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
           {
             featuredProjects.map((project) => (
               <li>
-                <ProjectPreview project={project} />
+                <ProjectPreview project={project} featured />
               </li>
             ))
           }

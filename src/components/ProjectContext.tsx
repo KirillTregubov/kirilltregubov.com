@@ -38,11 +38,11 @@ export function ProjectToggle() {
 export function ShowFeatured({ children }: { children: React.ReactNode }) {
   const $showAll = useStore(showAll)
 
-  return <>{$showAll ? null : children}</>
+  return <div className={$showAll ? 'hidden' : ''}>{children}</div>
 }
 
 export function ShowAll({ children }: { children: React.ReactNode }) {
   const $showAll = useStore(showAll)
 
-  return <>{$showAll ? children : null}</>
+  return <div className={$showAll ? '' : 'hidden'}>{children}</div>
 }

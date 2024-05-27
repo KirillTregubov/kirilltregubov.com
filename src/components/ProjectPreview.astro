@@ -11,9 +11,10 @@ import {
 
 interface Props {
   project: CollectionEntry<'projects'>
+  featured?: boolean
 }
 
-const { project } = Astro.props
+const { project, featured } = Astro.props
 
 const technologies = await getEntries(project.data.technologies)
 ---
@@ -29,6 +30,7 @@ const technologies = await getEntries(project.data.technologies)
       width={1200}
       height={630}
       onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+      loading={featured ? 'eager' : 'lazy'}
     />
   </div>
   <div class="my-4 flex flex-col">
