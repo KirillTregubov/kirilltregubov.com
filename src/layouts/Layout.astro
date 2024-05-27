@@ -58,31 +58,27 @@ if (!image) {
       name="theme-color"
       content="#171717"
       media="(prefers-color-scheme: dark)"
-    /><meta name="generator" content={Astro.generator} /><title>
-      {title}
-    </title></head
-  >
-
-  <meta property="og:site_name" content="Kirill Tregubov" />
-  <meta property="og:url" content={`https://kirilltregubov.com${pathname}`} />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:type" content={type} />
-  <meta property="og:locale" content="en_US" />
-  <meta
-    property="og:image"
-    content={`https://kirilltregubov.com/assets/${image}`}
-  />
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:creator" content="@KirillTregubov_" />
-  <meta property="twitter:title" content={title} />
-  <meta property="twitter:description" content={description} />
-  <meta
-    property="twitter:image"
-    content={`https://kirilltregubov.com/assets/${image}`}
-  />
-
-  <body class="dark bg-neutral-900 p-6 text-white md:p-12">
+    /><meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta property="og:site_name" content="Kirill Tregubov" />
+    <meta property="og:url" content={`https://kirilltregubov.com${pathname}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content={`https://kirilltregubov.com/assets/${image}`}
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:creator" content="@KirillTregubov_" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta
+      property="twitter:image"
+      content={`https://kirilltregubov.com/assets/${image}`}
+    />
+  </head><body class="dark bg-neutral-900 p-6 text-white md:p-12">
     <slot />
     <SpeedInsights />
   </body>

@@ -6,12 +6,19 @@ import Saturn from '../components/Saturn'
 import AboutMe from '../components/AboutMe.astro'
 import ProjectPreview from '../components/ProjectPreview.astro'
 import TechStack from '../components/TechStack.astro'
+import {
+  ProjectToggle,
+  ShowAll,
+  ShowFeatured
+} from '../components/ProjectContext'
 
 const allProjects = await getCollection('projects').then((projects) =>
   projects
     .filter((project) => import.meta.env.DEV || project.data.draft !== true)
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 )
+
+const featuredProjects = allProjects.filter((project) => project.data.featured)
 ---
 
 <Layout title="Kirill Tregubov">
@@ -48,18 +55,37 @@ const allProjects = await getCollection('projects').then((projects) =>
       <TechStack />
     </section>
     <section id="projects">
-      <h2 class="text-xl font-semibold leading-none">Featured Projects</h2>
-      <p class="mb-3 mt-2 text-neutral-400">
-        Projects that I created and have contributed to.
-      </p>
-      <ul class="grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3">
-        {
-          allProjects.map((project) => (
-            <li>
-              <ProjectPreview project={project} />
-            </li>
-          ))
-        }
+      <div class="flex items-start justify-between">
+        <div>
+          <h2 class="text-xl font-semibold leading-none">Featured Projects</h2>
+          <p class="mb-3 mt-2 text-neutral-400">
+            Projects I created and have contributed to that best showcase my
+            abilities.
+          </p>
+        </div>
+        <ProjectToggle client:load />
+      </div>
+      <ul
+        class="mb-8 grid grid-cols-1 gap-8 gap-x-10 md:mb-12 lg:grid-cols-2 xl:grid-cols-3"
+      >
+        <ShowFeatured client:load>
+          {
+            featuredProjects.map((project) => (
+              <li>
+                <ProjectPreview project={project} />
+              </li>
+            ))
+          }
+        </ShowFeatured>
+        <ShowAll client:load>
+          {
+            allProjects.map((project) => (
+              <li>
+                <ProjectPreview project={project} />
+              </li>
+            ))
+          }
+        </ShowAll>
       </ul>
     </section>
   </main>
