@@ -21,6 +21,7 @@ const tools = await getCollection('technologies').then((collection) =>
           <div
             set:html={tool.body}
             class="color-transition size-6 text-neutral-800 dark:text-neutral-300"
+            aria-hidden="true"
           />
           <p>{tool.data.name}</p>
         </a>
