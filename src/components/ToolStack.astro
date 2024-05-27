@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content'
+
+const tools = await getCollection('technologies').then((collection) =>
+  collection
+    .filter((tech) => tech.data.type === 'tool')
+    .sort((a, b) => a.data.order - b.data.order)
+)
+---
+
+<div class="group pointer-events-none -mx-1 -my-1 inline-flex flex-wrap">
+  {
+    tools.map((tool) => (
+      <div class="pointer-events-none p-1 opacity-100">
+        <a
+          href={tool.data.link}
+          target="_blank"
+          rel="noreferrer"
+          class="tech-transition pressable pointer-events-auto flex items-center gap-1.5 rounded-lg border border-neutral-300 px-2.5 py-2 hover:bg-neutral-200 hover:!opacity-100 group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
+        >
+          <div
+            set:html={tool.body}
+            class="color-transition size-6 text-neutral-800 dark:text-neutral-300"
+          />
+          <p>{tool.data.name}</p>
+        </a>
+      </div>
+    ))
+  }
+</div>

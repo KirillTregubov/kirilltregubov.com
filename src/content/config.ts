@@ -5,7 +5,8 @@ const technologies = defineCollection({
   schema: z.object({
     name: z.string(),
     type: z.enum(['technology', 'tool']).default('technology'),
-    order: z.number().default(Infinity)
+    order: z.number().default(Infinity),
+    link: z.string().url().optional()
     // color: z.string()
   })
 })

@@ -7,10 +7,12 @@ import AboutMe from '../components/AboutMe.astro'
 import ProjectPreview from '../components/ProjectPreview.astro'
 import TechStack from '../components/TechStack.astro'
 import {
+  ProjectTitle,
   ProjectToggle,
   ShowAll,
   ShowFeatured
 } from '../components/ProjectContext'
+import ToolStack from '../components/ToolStack.astro'
 
 const allProjects = await getCollection('projects').then((projects) =>
   projects
@@ -38,7 +40,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
           title=""
         >
           My favourite planet, Saturn. <a
-            class="underline"
+            class="select-none underline"
             href="https://science.nasa.gov/resource/saturn-3d-model/"
             target="_blank"
             rel="noopener">Source</a
@@ -46,7 +48,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         </figcaption>
       </figure>
     </section>
-    <section id="tech-stack" class="mb-8 md:mb-12 2xl:pr-2">
+    <section id="tech-stack" class="mb-8 md:mb-12">
       <h2 class="text-xl font-semibold leading-none">Tech Stack</h2>
       <p class="mb-3 mt-2 text-neutral-400">
         Technologies and programming languages that I enjoy using, and have
@@ -54,20 +56,20 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
       </p>
       <TechStack />
     </section>
+    <section id="tech-stack" class="mb-8 md:mb-12">
+      <h2 class="text-xl font-semibold leading-none">Tools & Services</h2>
+      <p class="mb-3 mt-2 text-neutral-400">
+        Tools and services that I enjoy using regularly and have experience
+        with.
+      </p>
+      <ToolStack />
+    </section>
     <section id="projects">
       <div class="flex items-start justify-between">
-        <div>
-          <h2 class="text-xl font-semibold leading-none">Featured Projects</h2>
-          <p class="mb-3 mt-2 text-neutral-400">
-            Projects I created and have contributed to that best showcase my
-            abilities.
-          </p>
-        </div>
+        <ProjectTitle client:load />
         <ProjectToggle client:load />
       </div>
-      <ul
-        class="mb-8 grid grid-cols-1 gap-8 gap-x-10 md:mb-12 lg:grid-cols-2 xl:grid-cols-3"
-      >
+      <ul class="grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3">
         <ShowFeatured client:load>
           {
             featuredProjects.map((project) => (
