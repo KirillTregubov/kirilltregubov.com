@@ -3,11 +3,12 @@ import {
   PerspectiveCamera,
   Preload,
   useDetectGPU,
-  useGLTF
+  useGLTF,
+  useProgress
 } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { useSpring, animated } from '@react-spring/three'
+import { useSpring, animated, useReducedMotion } from '@react-spring/three'
 import * as THREE from 'three'
 
 function Scene() {
@@ -15,8 +16,9 @@ function Scene() {
   const { scene } = useGLTF('/assets/Saturn.glb')
   const sceneRef = useRef<THREE.Object3D>(null)
   const [shown, setShown] = useState(false)
+  const reducedMotion = useReducedMotion()
   const { scale } = useSpring({
-    scale: shown ? [0.1, 0.1, 0.1] : [0, 0, 0],
+    scale: reducedMotion || shown ? [0.1, 0.1, 0.1] : [0, 0, 0],
     config: { mass: 2, tension: 280, friction: 60 }
   })
 
@@ -43,19 +45,19 @@ function Scene() {
     }
   }, [])
 
-  useEffect(() => {
-    const ringsTop = scene.getObjectByName('RingsTop')
-    const ringsBottom = scene.getObjectByName('RingsBottom')
+  // useEffect(() => {
+  //   const ringsTop = scene.getObjectByName('RingsTop')
+  //   const ringsBottom = scene.getObjectByName('RingsBottom')
 
-    if (ringsTop && ringsBottom) {
-      // const color = 0xffffff
-      // ringsTop.material.color = new THREE.Color(color)
-      // ringsTop.material.emissive = new THREE.Color(color)
-      // ringsTop.material.emissive = new THREE.Color(0xffffff)
-      // ringsTop.material.emissiveIntensity = 1
-      // console.log(ringsTop, ringsTop.material)
-    }
-  }, [scene])
+  //   if (ringsTop && ringsBottom) {
+  //     // const color = 0xffffff
+  //     // ringsTop.material.color = new THREE.Color(color)
+  //     // ringsTop.material.emissive = new THREE.Color(color)
+  //     // ringsTop.material.emissive = new THREE.Color(0xffffff)
+  //     // ringsTop.material.emissiveIntensity = 1
+  //     // console.log(ringsTop, ringsTop.material)
+  //   }
+  // }, [scene])
 
   return (
     <>
@@ -124,7 +126,7 @@ function CanvasContent() {
 
 function OuterCanvas() {
   const ref = useRef<HTMLCanvasElement>(null)
-  // const [opacity, setOpacity] = useState(0)
+  const { progress } = useProgress()
 
   useEffect(() => {
     const handler = () => {
@@ -141,8 +143,7 @@ function OuterCanvas() {
   return (
     <Canvas
       ref={ref}
-      className="animate-[fadeIn_1s_forwards]"
-      // style={{ opacity: opacity }}
+      className={`opacity-0 ${progress === 100 ? 'animate-[fadeIn_1s_forwards]' : ''}`}
     >
       <Suspense fallback={null}>
         <CanvasContent />
@@ -156,7 +157,7 @@ function Fallback() {
     <img
       src="/assets/SaturnPlaceholder.jpg"
       alt="Saturn placeholder"
-      className="h-full w-full animate-[scaleUp_1s_forwards_0.1s] object-contain opacity-0"
+      className="h-full w-full object-contain motion-safe:animate-[scaleUp_1s_forwards_0.1s] motion-safe:opacity-0"
     />
   )
 }
