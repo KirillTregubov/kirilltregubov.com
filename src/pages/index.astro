@@ -1,0 +1,111 @@
+---
+import '../index.css'
+import Layout from '../layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+import Saturn from '../components/Saturn'
+import AboutMe from '../components/AboutMe.astro'
+import ProjectPreview from '../components/ProjectPreview.astro'
+import TechStack from '../components/TechStack.astro'
+import {
+  ProjectTitle,
+  ProjectToggle,
+  ShowAll,
+  ShowFeatured
+} from '../components/ProjectContext'
+import ToolStack from '../components/ToolStack.astro'
+
+const allProjects = await getCollection('projects').then((projects) =>
+  projects
+    .filter((project) => import.meta.env.DEV || project.data.draft !== true)
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+)
+
+const featuredProjects = allProjects.filter((project) => project.data.featured)
+---
+
+<Layout title="Kirill Tregubov">
+  <main class="mx-auto max-w-[90rem]">
+    <section
+      class="mb-8 flex flex-col justify-center md:mb-12 lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6"
+    >
+      <AboutMe
+        class="motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0"
+      />
+      <!-- border-2 border-red-500 -->
+      <figure
+        class="relative box-content h-[calc(100vw-3rem)] max-h-[300px] w-full lg:max-h-[300px] lg:min-w-[400px] xl:max-h-[400px] xl:min-w-[600px] 2xl:min-w-[700px]"
+        title="My favourite planet, Saturn."
+      >
+        <Saturn client:only="react" />
+        <figcaption
+          class="absolute bottom-0 w-full bg-neutral-900 pb-2 text-center text-sm font-medium text-neutral-400/80 motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6"
+          title=""
+        >
+          My favourite planet, Saturn. <a
+            class="select-none underline"
+            href="https://science.nasa.gov/resource/saturn-3d-model/"
+            target="_blank"
+            rel="noopener">Source</a
+          >
+        </figcaption>
+      </figure>
+    </section>
+    <section
+      id="tech-stack"
+      class="mb-8 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 md:mb-12"
+    >
+      <h2 class="text-xl font-semibold leading-none">Tech Stack</h2>
+      <p class="mb-3 mt-2 text-neutral-400">
+        Technologies and programming languages that I enjoy using, and have
+        worked with in the past.
+      </p>
+      <TechStack />
+    </section>
+    <section
+      id="tech-stack"
+      class="mb-8 motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0 md:mb-12"
+    >
+      <h2 class="text-xl font-semibold leading-none">Tools & Services</h2>
+      <p class="mb-3 mt-2 text-neutral-400">
+        Tools and services that I enjoy using regularly and have experience
+        with.
+      </p>
+      <ToolStack />
+    </section>
+    <section
+      id="projects"
+      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+    >
+      <div class="flex items-start justify-between">
+        <ProjectTitle client:load />
+        <ProjectToggle client:load />
+      </div>
+      <ShowFeatured client:load>
+        <ul
+          class="grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3"
+        >
+          {
+            featuredProjects.map((project) => (
+              <li>
+                <ProjectPreview project={project} featured />
+              </li>
+            ))
+          }
+        </ul>
+      </ShowFeatured>
+      <ShowAll client:load>
+        <ul
+          class="grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-2 xl:grid-cols-3"
+        >
+          {
+            allProjects.map((project) => (
+              <li>
+                <ProjectPreview project={project} />
+              </li>
+            ))
+          }
+        </ul>
+      </ShowAll>
+    </section>
+  </main>
+</Layout>

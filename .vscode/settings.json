@@ -5,5 +5,8 @@
   "files.associations": {
     "*.mdx": "markdown"
   },
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
