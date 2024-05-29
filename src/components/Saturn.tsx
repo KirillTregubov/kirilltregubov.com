@@ -27,7 +27,7 @@ function Scene() {
       //   console.log(sceneRef.current.rotation)
 
       // Incrementally rotates the object around the y-axis
-      sceneRef.current.rotation.y += 0.0005
+      sceneRef.current.rotation.y += 0.001
 
       //   sceneRef.current.rotation.z -= 0.01
 
@@ -152,13 +152,15 @@ function OuterCanvas() {
   )
 }
 
-function Fallback() {
+function Fallback({ className }: { className?: string }) {
   return (
-    <img
-      src="/assets/SaturnPlaceholder.jpg"
-      alt="Saturn placeholder"
-      className="h-full w-full object-contain motion-safe:animate-[scaleUp_1s_forwards_0.1s] motion-safe:opacity-0"
-    />
+    <div className="flex h-full w-full items-center justify-center">
+      <img
+        src="/assets/SaturnPlaceholder.jpg"
+        alt="Saturn placeholder"
+        className={`object-cover motion-safe:animate-[scaleUp_1s_forwards_0.1s] motion-safe:opacity-0${className ? ` ${className}` : ''}`}
+      />
+    </div>
   )
 }
 
@@ -167,15 +169,19 @@ function useDetection() {
     return true
   }
   const GPUTier = useDetectGPU()
-  return GPUTier.tier < 2 // || GPUTier.isMobile
-} // TODO: change to 2
+  return GPUTier.tier < 2
+}
 
-export default function Saturn() {
+export default function Saturn({
+  fallbackClassName
+}: {
+  fallbackClassName?: string
+}) {
   const detected = useDetection()
 
   return (
     <Suspense fallback={null}>
-      {detected ? <Fallback /> : <OuterCanvas />}
+      {detected ? <Fallback className={fallbackClassName} /> : <OuterCanvas />}
     </Suspense>
   )
 }

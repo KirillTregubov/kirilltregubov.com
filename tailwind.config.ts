@@ -10,6 +10,9 @@ export default {
       colors: {
         accent: colors.orange
       },
+      screens: {
+        xs: '375px'
+      },
       fontFamily: {
         sans: ['Inter Variable', ...defaultTheme.fontFamily.sans]
       }

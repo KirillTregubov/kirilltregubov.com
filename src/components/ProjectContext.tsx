@@ -12,7 +12,7 @@ export function ProjectTitle() {
       <h2 className="text-xl font-semibold leading-none">
         {$showAll ? 'All Projects' : 'Featured Projects'}
       </h2>
-      <p className="mb-3 mt-2 text-neutral-400">
+      <p className="mt-2 text-neutral-400">
         {$showAll
           ? 'Projects I created and have contributed to that showcase my abilities.'
           : 'Projects I created and have contributed to that best showcase my abilities.'}
