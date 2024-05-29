@@ -16,7 +16,7 @@ const tools = await getCollection('technologies').then((collection) =>
           href={tool.data.link}
           target="_blank"
           rel="noopener"
-          class="tech-transition pressable pointer-events-auto flex items-center gap-1.5 rounded-lg border border-neutral-300 bg-transparent px-2.5 py-2 hover:bg-neutral-200 motion-safe:hover:!opacity-100 motion-safe:group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700"
+          class="tech-transition pressable pointer-events-auto flex items-center gap-1.5 !rounded-lg border border-neutral-300 bg-transparent px-2.5 py-2 transition hover:bg-neutral-200 motion-safe:hover:!opacity-100 motion-safe:focus-visible:!opacity-100 motion-safe:group-focus-within:opacity-60 motion-safe:group-hover:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-700 dark:focus-visible:border-neutral-400 dark:active:bg-neutral-700"
         >
           <div
             set:html={tool.body}

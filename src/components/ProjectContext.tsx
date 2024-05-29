@@ -27,7 +27,7 @@ export function ProjectToggle() {
   return (
     <button
       onClick={() => showAll.set(!$showAll)}
-      className="-my-1 -mr-3 inline-flex flex-shrink-0 select-none items-center rounded-md px-3 py-1 font-medium transition-colors hover:text-neutral-400"
+      className="-mx-3 -my-1 inline-flex flex-shrink-0 select-none items-center rounded px-3 py-1 pr-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 active:text-neutral-400"
     >
       {$showAll ? 'Show Featured' : 'Show All'}
       <ChevronRightIcon className="size-6" />

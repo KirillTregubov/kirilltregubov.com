@@ -159,6 +159,7 @@ function Fallback({ className }: { className?: string }) {
         src="/assets/SaturnPlaceholder.jpg"
         alt="Saturn placeholder"
         className={`object-cover motion-safe:animate-[scaleUp_1s_forwards_0.1s] motion-safe:opacity-0${className ? ` ${className}` : ''}`}
+        loading="eager"
       />
     </div>
   )
