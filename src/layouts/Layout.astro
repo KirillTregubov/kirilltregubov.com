@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/inter'
 import SpeedInsights from '@vercel/speed-insights/astro'
+import Tabs from '../components/Tabs'
 
 interface Props {
   title: string
@@ -78,9 +79,16 @@ if (!image) {
       property="twitter:image"
       content={`https://kirilltregubov.com/assets/${image}`}
     />
-  </head><body class="dark bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12">
+  </head>
+  <body
+    class="dark bg-neutral-900 p-4 !pb-0 text-white xs:p-6 xs:pt-4 md:p-12 md:pt-4"
+  >
+    <nav
+      class="sticky top-0 z-10 mb-4 bg-neutral-900 pb-2 pt-4 after:absolute after:-bottom-3 after:h-3 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0"
+    >
+      <Tabs client:load />
+    </nav>
     <slot />
-    <SpeedInsights />
     <footer class="mb-4 mt-8 text-center text-neutral-400 md:mt-12">
       &copy; {new Date().getFullYear()} Kirill Tregubov.
       <span class="whitespace-nowrap"
@@ -94,5 +102,6 @@ if (!image) {
         >.</span
       >
     </footer>
+    <SpeedInsights />
   </body>
 </html>
