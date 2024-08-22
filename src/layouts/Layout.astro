@@ -1,4 +1,5 @@
 ---
+import '../index.css'
 import '@fontsource-variable/inter'
 import SpeedInsights from '@vercel/speed-insights/astro'
 
@@ -7,9 +8,10 @@ interface Props {
   description?: string
   type?: string
   image?: string
+  footerClass?: string
 }
 
-let { title, description, type, image } = Astro.props
+let { title, description, type, image, footerClass } = Astro.props
 const { pathname } = Astro.url
 if (!description) {
   description = 'Software Developer specialized in Web and App Development.'
@@ -81,7 +83,9 @@ if (!image) {
   </head><body class="dark bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12">
     <slot />
     <SpeedInsights />
-    <footer class="mb-4 mt-8 text-center text-neutral-400 md:mt-12">
+    <footer
+      class={`mb-4 mt-8 text-center text-neutral-400 md:mt-12 ${footerClass}`}
+    >
       &copy; {new Date().getFullYear()} Kirill Tregubov.
       <span class="whitespace-nowrap"
         >This site is{' '}

@@ -1,5 +1,4 @@
 ---
-import '../index.css'
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import Saturn from '../components/Saturn'
@@ -23,7 +22,10 @@ const allProjects = await getCollection('projects').then((projects) =>
 const featuredProjects = allProjects.filter((project) => project.data.featured)
 ---
 
-<Layout title="Kirill Tregubov">
+<Layout
+  title="Kirill Tregubov"
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+>
   <main class="mx-auto max-w-[90rem] space-y-8 md:space-y-12">
     <section
       class="flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6"

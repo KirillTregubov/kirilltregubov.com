@@ -1,0 +1,14 @@
+---
+interface Props {
+  href: string
+  target?: string
+  children?: string
+}
+
+let { href, target } = Astro.props
+if (!target) {
+  target = '_blank'
+}
+---
+
+<a href={href} target={target} rel="noopener"><slot /></a>

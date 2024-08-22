@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { HomeIcon } from 'lucide-react'
+import { getEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import { getEntries } from 'astro:content'
+
+const projectInfo = await getEntry('projects', 'raiven')
+const technologies = await getEntries(projectInfo.data.technologies)
+const { Content } = await projectInfo.render()
+---
+
+<Layout
+  title="RAIVEN - Kirill Tregubov"
+  description={projectInfo.data.description}
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+>
+  <main class="mx-auto max-w-[50rem] md:space-y-8">
+    <section
+      class="sticky top-0 z-10 -my-4 bg-neutral-900 pb-2 pt-4 after:pointer-events-none after:absolute after:-bottom-3 after:z-10 after:h-3 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0"
+    >
+      <a
+        href="/"
+        class="flex select-none items-center gap-1 font-medium transition-colors hover:text-neutral-400 active:text-neutral-400"
+      >
+        <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
+        <span>Return to Home</span>
+      </a>
+    </section>
+    <section
+      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+    >
+      <div
+        class="mb-6 w-fit overflow-clip rounded-xl bg-neutral-800 object-contain py-2"
+      >
+        <Image
+          class="unblur select-none"
+          src={`/assets/projects/${projectInfo.data.image.url}`}
+          alt={projectInfo.data.image?.alt || 'Placeholder project image'}
+          width={800}
+          height={420}
+          onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+          loading="eager"
+        />
+      </div>
+      <h2 class="text-2xl font-semibold leading-none">
+        {projectInfo.data.name}
+      </h2>
+      <p class="my-3 text-lg">
+        {projectInfo.data.description}
+      </p>
+      <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-lg text-neutral-400">
+        <h3 class="font-medium">Built with</h3>
+        {
+          technologies &&
+            technologies.map((tech) => (
+              <div class="color-bg-transition whitespace-nowrap rounded bg-neutral-200 px-1.5 leading-relaxed text-neutral-700 shadow-sm dark:bg-neutral-800 dark:text-neutral-400">
+                {tech.data.name}
+              </div>
+            ))
+        }
+      </div>
+    </section>
+    <article
+      class="prose prose-lg prose-neutral dark:prose-invert prose-h3:text-xl prose-h4:font-medium max-w-none motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+    >
+      <Content />
+    </article>
+  </main>
+</Layout>
