@@ -21,10 +21,10 @@ const { Content } = await projectInfo.render()
     >
       <a
         href="/"
-        class="flex select-none items-center gap-1 font-medium transition-colors hover:text-neutral-400 active:text-neutral-400"
+        class="-ml-1 inline-flex select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
       >
         <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
-        <span>Return to Home</span>
+        <span>Return Home</span>
       </a>
     </section>
     <section
@@ -41,6 +41,7 @@ const { Content } = await projectInfo.render()
           height={420}
           onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
           loading="eager"
+          draggable="false"
         />
       </div>
       <h2 class="text-2xl font-semibold leading-none">

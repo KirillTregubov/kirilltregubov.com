@@ -14,6 +14,9 @@ export default {
       screens: {
         xs: '375px'
       },
+      minHeight: {
+        dynamic: ['100vh', '100dvh']
+      },
       fontFamily: {
         sans: ['Inter Variable', ...defaultTheme.fontFamily.sans]
       }

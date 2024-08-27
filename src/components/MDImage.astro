@@ -11,6 +11,7 @@ interface Props {
 
 <Image
   {...Astro.props}
-  class="rounded-sm"
+  class="select-none rounded-sm"
+  draggable="false"
   onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
 />

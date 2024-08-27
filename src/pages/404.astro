@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import { HomeIcon } from 'lucide-react'
+---
+
+<Layout
+  title="Page Not Found - Kirill Tregubov"
+  description="Page not found."
+  type="website"
+  image="banner.jpg"
+  bodyClass="flex flex-col min-h-dynamic"
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+>
+  <div
+    class="flex h-full flex-grow flex-col items-center justify-center gap-x-6 text-center motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 [@media_(max-height:500px)]:flex-row"
+  >
+    <Image
+      src="/assets/not_found.svg"
+      alt="Illustration containing an outline of a mountain range behind a big 404 sign with a plant growing in the middle."
+      width={400}
+      height={270}
+      class="mb-6 select-none [@media_(max-height:500px)]:max-w-[300px]"
+      loading="eager"
+      draggable="false"
+    />
+    <div class="flex-shrink-0 [@media_(max-height:500px)]:text-left">
+      <h1 class="mb-1 text-xl font-semibold">Oops! Page not found.</h1>
+      <p class="mb-4 text-neutral-400">The page you requested was not found.</p>
+      <a
+        href="/"
+        class="inline-flex select-none items-center justify-center gap-1 rounded px-1 font-medium text-neutral-400 !ring-white transition-[color,box-shadow] hover:text-white focus-visible:text-white active:text-white [@media_(max-height:500px)]:justify-start"
+      >
+        <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
+        <span>Return Home</span>
+      </a>
+    </div>
+  </div>
+</Layout>
