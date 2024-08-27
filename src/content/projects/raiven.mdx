@@ -21,11 +21,13 @@ featured: true
 import MDImage from '../../components/MDImage.astro'
 import MDLink from '../../components/MDLink.astro'
 
-During my final year of university, I was fortunate to work with a team of 6 other students to develop an MVP for a Computer Vision startup. We decided to create a mobile app used by bars, clubs and other venues to verify the identity of their customers and gather insights on their traffic patterns.
+### Beginning of a Journey
+
+During my final year of university, I was fortunate to work in a team with 6 other students tasked to create a Computer Vision startup and develop an MVP for it. We decided to create a mobile app used by bars, clubs and other venues to verify the identity of their customers and gather insights on their customer traffic patterns. During this project, I was selected as the lead for our app's development (spoiler: I also ended up as the frontend lead).
 
 ### Tech Choices, Architecture Diagram, Roadmap
 
-We started by selecting our tech stack, drawing up prototypes of our key use cases, sketching out the architecture diagram, planning a roadmap and creating a project kanban board. Early on, we determined that our idea wouldn’t work well as a web app, as accessing the website every time a user wanted to use our service would be too cumbersome. Instead, we opted to build a mobile app. Given my familiarity with React Native, particularly with using Expo to streamline the development process, I successfully advocated for its adoption by the team. As the most knowledgeable member, I was appointed as the lead for our app's development.
+We started by selecting our tech stack, drawing up prototypes of our key use cases, sketching out the architecture diagram, planning a roadmap and creating a project kanban board. Early on, we determined that our idea wouldn’t work well as a web app, as accessing the website every time a user wanted to use our service would be too cumbersome. Instead, we opted to build a mobile app. Given my familiarity with React Native, particularly with using Expo to streamline the development process, I successfully advocated for its adoption by the team.
 
 <figure>
   <MDImage
@@ -78,7 +80,7 @@ Login to the app with an administrator account, prompt an email address to creat
 
 ### User Research
 
-We started by creating a mockup of the app we wanted to make in Figma. Having previously worked on app mockups, I took charge by outlining all the screens we needed in our 4 use cases before we began designing. We also simplified the process by using various UI building blocks from community templates. Once we finished with the interface, we connected all the relevant screens and buttons together to be able to execute all the desired flows.
+Before we could continue, we had to design a mockup of our app in Figma. Having previously worked on app mockups, I took charge by outlining all the screens we needed in our 4 use cases before we began designing. We also simplified the process by using various UI building blocks from community templates. Once we finished with the interface, we connected all the relevant screens and buttons together to be able to execute all the desired flows.
 
 <figure>
   <MDImage
@@ -101,7 +103,7 @@ When it came time to start developing the app, we had a clear idea of what we ne
 1. We needed to ensure any encountered issues were recorded in an error reporting system
 1. We needed to set up a CI pipeline to automate linting, formatting, type checking, and unit testing (including code coverage)
 
-As the experienced member of the team, I took the responsibility of initializing the environment and creating any necessary tooling. I set up an Expo app and wrote instructions on how to use Expo Go to test the app on a smartphone. While I was working on the rest of the tooling, I let my peers start implementing screens in the app.
+As the experienced member of the team, I took the responsibility of initializing the environment and creating any necessary tooling. I set up an Expo app and wrote instructions on how to use <MDLink href="https://expo.dev/go">Expo Go</MDLink> to test the app on a smartphone. While I was working on the rest of the tooling, I let my peers start implementing screens in the app.
 
 I wrote a bash script to bootstrap the development environment, which included installing Node.js using NVM, Yarn Classic as our package manager, and the dependencies specified in the committed lockfile. I also wrote a bash script to run the tests using Jest and <MDLink href="https://testing-library.com/">React Testing Library</MDLink>.
 
@@ -117,7 +119,7 @@ During the late stages of development, we realized we needed the ability to gene
 
 ### Conclusion
 
-Our final product was a fully functional MVP that met the goals we initially set out to achieve. If you would like to see the app in action, you can watch <MDLink href={frontmatter.demo}>this demo video</MDLink> prepated by the team.
+Our final product was a fully functional MVP that met the goals we initially set out to achieve. If you would like to see the app in action, you can watch <MDLink href={frontmatter.demo}>this demo video</MDLink> prepared by the team.
 
 <figure>
   <MDImage

@@ -7,7 +7,8 @@ import { getEntries } from 'astro:content'
 
 const projectInfo = await getEntry('projects', 'raiven')
 const technologies = await getEntries(projectInfo.data.technologies)
-const { Content } = await projectInfo.render()
+const { Content, headings } = await projectInfo.render()
+const filteredHeadings = headings.filter((heading) => heading.depth === 3)
 ---
 
 <Layout
@@ -16,8 +17,8 @@ const { Content } = await projectInfo.render()
   footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
 >
   <main class="mx-auto max-w-[50rem] md:space-y-8">
-    <section
-      class="sticky top-0 z-10 -my-4 bg-neutral-900 pb-2 pt-4 after:pointer-events-none after:absolute after:-bottom-3 after:z-10 after:h-3 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0"
+    <menu
+      class="sticky top-0 z-10 -my-4 bg-neutral-900 pb-2 pt-4 after:pointer-events-none after:absolute after:-bottom-3 after:left-0 after:z-10 after:h-3 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0"
     >
       <a
         href="/"
@@ -26,7 +27,7 @@ const { Content } = await projectInfo.render()
         <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
         <span>Return Home</span>
       </a>
-    </section>
+    </menu>
     <section
       class="motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
     >
@@ -63,8 +64,25 @@ const { Content } = await projectInfo.render()
       </div>
     </section>
     <article
-      class="prose prose-lg prose-neutral max-w-none dark:prose-invert prose-h3:text-xl prose-h4:font-medium motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+      class="prose prose-lg prose-neutral max-w-none text-neutral-300 dark:prose-invert prose-h3:scroll-mt-16 prose-h3:text-xl prose-h4:font-medium motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
     >
+      <nav>
+        <h3>Table of Contents</h3>
+        <ul class="flex list-none flex-col gap-1.5 p-0">
+          {
+            filteredHeadings.map((heading) => (
+              <li class="m-0 p-0">
+                <a
+                  href={`#${heading.slug}`}
+                  class="-mx-1 -my-0.5 rounded px-1 py-0.5 text-inherit no-underline transition-[color,box-shadow] hover:text-white focus-visible:text-white focus-visible:!ring-white active:text-white"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
       <Content />
     </article>
   </main>

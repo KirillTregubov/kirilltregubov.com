@@ -39,7 +39,7 @@
 
 .inline-link::after {
   @apply absolute bottom-0 left-0.5 right-0.5 rounded-full bg-current font-semibold will-change-transform content-[''];
-  width: calc(100%-0.25rem);
+  width: calc(100% - 0.25rem);
   transform: scaleX(1);
   height: 1px;
   transform-origin: bottom left;
