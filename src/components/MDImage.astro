@@ -1,17 +1,91 @@
 ---
 import { Image } from 'astro:assets'
+import { CloudDownloadIcon } from 'lucide-react'
 
 interface Props {
   src: string
   alt: string
   width: number
   height: number
+  className?: number
+  borderRadius?: string
+  downloadable?: boolean
+  title?: string
+  description?: string
+  keywords?: string
 }
+
+const {
+  alt,
+  className,
+  borderRadius,
+  downloadable,
+  title,
+  description,
+  keywords,
+  ...props
+} = Astro.props
+
+const imgAlt = alt || title || 'Placeholder image'
 ---
 
-<Image
-  {...Astro.props}
-  class="select-none rounded-sm"
-  draggable="false"
-  onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
-/>
+<figure data-item>
+  <figure class="relative w-fit">
+    <Image
+      {...props}
+      alt={imgAlt}
+      class:list={[
+        'relative select-none',
+        className,
+        borderRadius || 'rounded'
+      ]}
+      onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+      draggable="false"
+    />
+    {
+      downloadable && (
+        <a
+          href={props.src}
+          download
+          class:list={[
+            'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center rounded bg-neutral-950/50 opacity-0 !ring-accent-500/90 transition-opacity hover:opacity-100 focus-visible:opacity-100 active:opacity-100',
+            borderRadius || 'rounded'
+          ]}
+          title={`Download the ${title} background`}
+        >
+          <CloudDownloadIcon className="size-10" />
+        </a>
+      )
+    }
+  </figure>
+  {
+    !!title && title.length > 0 && (
+      <figcaption
+        class:list={[
+          'text-center',
+          !!description && 'mt-2.5 text-lg font-semibold leading-none'
+        ]}
+        data-title
+      >
+        {title}
+      </figcaption>
+    )
+  }
+  {
+    !!description && description.length > 0 && (
+      <p
+        class="mb-1 mt-2 text-center leading-none text-neutral-400"
+        data-description
+      >
+        {description}
+      </p>
+    )
+  }
+  {
+    !!keywords && keywords.length > 0 && (
+      <p class="hidden" data-keywords>
+        {keywords}
+      </p>
+    )
+  }
+</figure>

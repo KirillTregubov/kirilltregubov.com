@@ -3,17 +3,21 @@ interface Props {
   href: string
   target?: string
   children?: string
+  className?: string
 }
 
-let { href, target } = Astro.props
+let { target, className, ...props } = Astro.props
 if (!target) {
   target = '_blank'
 }
 ---
 
 <a
-  class="-m-0.5 text-nowrap rounded p-0.5"
-  href={href}
-  target={target}
+  class:list={[
+    '-m-0.5 text-nowrap rounded p-0.5 text-white underline !ring-neutral-300 transition-[color,box-shadow] hover:text-neutral-300 focus-visible:text-neutral-300 active:text-neutral-300',
+    className
+  ]}
+  {...props}
+  {target}
   rel="noopener"><slot /></a
 >

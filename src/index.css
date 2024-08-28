@@ -80,6 +80,27 @@
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in {
+    animation: fade-in 0.5s ease;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in-slow {
+    animation: fade-in 0.75s ease-in-out;
+  }
+}
+
 .tech-transition {
   transition:
     opacity 150ms linear,
@@ -96,4 +117,26 @@
   figure.saturn figcaption {
     position: initial !important;
   }
+}
+
+.underline-fade-in::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  border-radius: 9999px;
+  opacity: 0;
+  transition:
+    opacity 300ms,
+    transform 300ms;
+}
+
+.underline-fade-in:hover::after,
+.underline-fade-in:focus-visible::after {
+  opacity: 1;
+  transform: translate3d(0, 0.2em, 0);
 }

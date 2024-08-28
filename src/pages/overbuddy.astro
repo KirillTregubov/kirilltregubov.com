@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import MDLink from '../components/MDLink.astro'
+import ReturnHome from '../components/ReturnHome.astro'
+import { MonitorDownIcon } from 'lucide-react'
+
+const projectInfo = await getEntry('projects', 'overbuddy')
+const { Content } = await projectInfo.render()
+---
+
+<Layout
+  title="OverBuddy - Kirill Tregubov"
+  description="aa"
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+>
+  <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
+    <ReturnHome containerClass="justify-between flex-col plus-phone:flex-row">
+      <a
+        href={projectInfo.data.download!}
+        class="sm -ml-1 inline-flex select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+      >
+        <MonitorDownIcon className="mr-1.5 size-5" aria-hidden="true" />
+        <span>Download OverBuddy</span>
+      </a>
+    </ReturnHome>
+    <!-- <section
+      class="inline-flex flex-col items-center justify-center gap-6 text-center motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 md:flex-row md:text-start"
+    >
+      <Image
+        class="fade-in select-none"
+        src={`/assets/projects/overbuddy/icon.png`}
+        alt="OverBuddy icon"
+        width={128}
+        height={128}
+        loading="eager"
+        draggable="false"
+      />
+      <div>
+        <h1 class="text-2xl font-bold leading-none">
+          {projectInfo.data.name}
+        </h1>
+        <p class="my-2 leading-none text-neutral-300">
+          Browse Overwatch™ menu backgrounds and install the app to customize
+          your in-game menu.
+        </p>
+      </div>
+    </section> -->
+    <!-- <div
+      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+    > -->
+    <section
+      class="flex w-full flex-col items-center gap-8 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 lg:flex-row"
+    >
+      <div class="flex flex-col justify-center gap-6">
+        <div
+          class="inline-flex flex-col items-start justify-center gap-6 motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 md:flex-row md:items-center"
+        >
+          <Image
+            class="fade-in select-none"
+            src={`/assets/projects/overbuddy/icon.png`}
+            alt="OverBuddy icon"
+            width={128}
+            height={128}
+            loading="eager"
+            draggable="false"
+          />
+          <div>
+            <h1 class="text-2xl font-bold leading-none">
+              {projectInfo.data.name}
+            </h1>
+            <p class="my-2 text-lg text-neutral-400">
+              Browse Overwatch™ menu backgrounds below.<br
+                class="hidden sm:block"
+              /> Install the Windows app to customize your in-game menu.
+            </p>
+          </div>
+        </div>
+        <ul class="flex flex-col gap-3 text-zinc-400">
+          <li>
+            <h3 class="text-lg font-medium text-white">
+              Personalize your Overwatch™ Experience
+            </h3>
+            <p>
+              OverBuddy allows you to customize your Overwatch in-game main menu
+              background. Browse all available backgrounds and apply your
+              favourite.
+            </p>
+          </li>
+          <li>
+            <h3 class="text-lg font-medium text-white">
+              Free and Transparent
+            </h3><p>
+              OverBuddy is free to use and{' '}
+              <MDLink
+                href={projectInfo.data.repository!}
+                className="!text-neutral-300 hover:!text-white focus-visible:!text-white active:!text-white"
+                >open source</MDLink
+              >. It operates independently and is not affiliated with Blizzard
+              Entertainment®.
+              <!-- or Valve® -->
+              You can undo the changes it makes at any time by reverting to the default
+              background.
+            </p>
+          </li>
+          <li>
+            <h3 class="text-lg font-medium text-white">
+              Built with Privacy in Mind
+            </h3><p>
+              OverBuddy will need to read and write your Battle.net® or Steam®
+              configuration files to change the background. It will
+              <span class="font-semibold">NOT</span> modify any game files or collect
+              any personal data. Your Battle.net or Steam client will be restarted
+              to apply the changes.
+            </p>
+          </li>
+          <li>
+            <h3 class="text-lg font-medium text-white">Frequently Updated</h3>
+            <p>
+              Major Overwatch updates tend to change the availability of
+              backgrounds, including removing existing backgrounds and adding
+              new ones. The app has a built-in updater, and updates can be
+              manually checked in the settings.
+            </p>
+          </li>
+        </ul>
+        <div class="flex gap-6">
+          <a
+            class="inline-flex h-14 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold uppercase tracking-wide text-orange-50 shadow-md ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:ring-1 active:scale-95 disabled:!scale-100 disabled:!border-orange-800/40"
+            href={projectInfo.data.download!}
+            target="_blank"
+            rel="noopener"
+          >
+            Get the App
+          </a>
+          <!-- <div class="flex items-center">
+            <a
+              class:list={[
+                'underline-fade-in relative select-none text-center text-lg font-medium uppercase tracking-wide transition-[color,transform] will-change-transform after:bg-zinc-300 hover:text-zinc-300 focus-visible:text-zinc-300 focus-visible:outline-none active:scale-95 disabled:pointer-events-none'
+              ]}
+              href={projectInfo.data.download!}
+              target="_blank"
+              rel="noopener"
+            >
+              Read the Latest Release
+            </a>
+          </div> -->
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <Image
+          class="fade-in select-none rounded lg:max-w-[28rem] xl:max-w-none"
+          src="/assets/projects/overbuddy/screenshot-22.png"
+          alt="OverBuddy icon"
+          width={684}
+          height={533}
+          loading="eager"
+          draggable="false"
+        />
+      </div>
+    </section>
+    <div
+      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+    >
+    </div>
+    <div
+      class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+    >
+      <h2 class="mb-3 text-xl font-semibold leading-none">
+        Background Gallery
+      </h2>
+      <div
+        class="sticky top-12 z-20 -mt-2 mb-2 w-full bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-['']"
+      >
+        <input
+          id="search"
+          type="search"
+          placeholder="Search backgrounds..."
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white placeholder:text-neutral-500 focus-visible:!ring-white md:max-w-96"
+        />
+      </div>
+      <div
+        class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-[6.75rem]"
+      >
+        <Content />
+      </div>
+    </div>
+  </main>
+
+  <script>
+    import Fuse from 'fuse.js'
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const items = Array.from(document.querySelectorAll('[data-item]')).map(
+        (element) => {
+          const title =
+            element.querySelector('[data-title]')?.textContent?.trim() || ''
+          const description =
+            element.querySelector('[data-description]')?.textContent?.trim() ||
+            ''
+          const keywords =
+            element.querySelector('[data-keywords]')?.textContent?.trim() || ''
+
+          return { title, description, keywords, element }
+        }
+      )
+
+      const fuse = new Fuse(items, {
+        keys: [
+          { name: 'title', weight: 4 },
+          { name: 'description', weight: 2 },
+          { name: 'keywords', weight: 0.5 }
+        ],
+        shouldSort: true,
+        ignoreLocation: true,
+        threshold: 0.3
+      })
+
+      const search = document.getElementById('search')
+      if (!search) return
+
+      search.addEventListener('input', (event) => {
+        const searchTerm = (event.target as HTMLInputElement).value
+        const results = fuse.search(searchTerm)
+
+        if (results.length === 0) {
+          items.forEach(({ element }) => {
+            element.classList.remove('hidden')
+            ;(element as HTMLElement).style.order = '0'
+          })
+          items[0].element.scrollIntoView({
+            behavior: 'smooth',
+            inline: 'start'
+          })
+          return
+        }
+
+        items.forEach(({ element }) => {
+          const index = results.findIndex(
+            (result) => result.item.element === element
+          )
+          if (index !== -1) {
+            element.classList.remove('hidden')
+            ;(element as HTMLElement).style.order = `${index + 1}`
+          } else {
+            element.classList.add('hidden')
+            ;(element as HTMLElement).style.order = '0'
+          }
+        })
+
+        results[0].item.element.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'start'
+        })
+      })
+    })
+  </script>
+</Layout>

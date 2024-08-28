@@ -29,15 +29,13 @@ During my final year of university, I was fortunate to work in a team with 6 oth
 
 We started by selecting our tech stack, drawing up prototypes of our key use cases, sketching out the architecture diagram, planning a roadmap and creating a project kanban board. Early on, we determined that our idea wouldn’t work well as a web app, as accessing the website every time a user wanted to use our service would be too cumbersome. Instead, we opted to build a mobile app. Given my familiarity with React Native, particularly with using Expo to streamline the development process, I successfully advocated for its adoption by the team.
 
-<figure>
-  <MDImage
-    src="/assets/projects/raiven/architecture_plan.jpg"
-    alt="Architecture Diagram"
-    width={800}
-    height={560}
-  />
-  <figcaption class="text-center">Architecture Diagram for RAIVEN</figcaption>
-</figure>
+<MDImage
+  src="/assets/projects/raiven/architecture_plan.jpg"
+  alt="Architecture Diagram"
+  width={800}
+  height={560}
+  title="Architecture Diagram for RAIVEN"
+/>
 
 While we developed the use cases as a team, I took the lead in sketching out the user flows and prototypes. This allowed me to apply and refine the paper prototyping skills I had learned in my Interactive Computational Media Design course (CSC318) the previous year. We ultimately decided on the following set of use cases:
 
@@ -58,47 +56,41 @@ Login to the app with an administrator account to view business analytics includ
 Login to the app with an administrator account, prompt an email address to create a “basic” account, allowing that user to scan IDs for the administrator’s organization.
 
 <div class="flex justify-center gap-2">
-  <figure>
-    <MDImage
-      src="/assets/projects/raiven/use_case1.jpg"
-      alt="Use Case 1 prototype"
-      width={400}
-      height={550}
-    />
-    <figcaption class="text-center">Use Case 1 prototype</figcaption>
-  </figure>
-  <figure>
-    <MDImage
-      src="/assets/projects/raiven/use_case3.jpg"
-      alt="Use Case 3 prototype"
-      width={400}
-      height={550}
-    />
-    <figcaption class="text-center">Use Case 3 prototype</figcaption>
-  </figure>
+  <MDImage
+    src="/assets/projects/raiven/use_case1.jpg"
+    alt="Use Case 1 prototype"
+    width={400}
+    height={550}
+    title="Use Case 1 prototype"
+  />
+  <MDImage
+    src="/assets/projects/raiven/use_case3.jpg"
+    alt="Use Case 3 prototype"
+    width={400}
+    height={550}
+    title="Use Case 3 prototype"
+  />
 </div>
 
 ### User Research
 
 Before we could continue, we had to design a mockup of our app in Figma. Having previously worked on app mockups, I took charge by outlining all the screens we needed in our 4 use cases before we began designing. We also simplified the process by using various UI building blocks from community templates. Once we finished with the interface, we connected all the relevant screens and buttons together to be able to execute all the desired flows.
 
-<figure>
-  <MDImage
-    src="/assets/projects/raiven/mockup2.jpg"
-    alt="Figma Mockup of App"
-    width={800}
-    height={610}
-  />
-  <figcaption class="text-center">Figma Mockup of App</figcaption>
-</figure>
+<MDImage
+  src="/assets/projects/raiven/mockup2.jpg"
+  alt="Figma Mockup of App"
+  width={800}
+  height={610}
+  title="Figma Mockup of App"
+/>
 
 To gather feedback from users, we conducted interviews with course instructors and industry professionals. We developed an interview plan that included tasks for participants to complete using the Figma mockup of our app, along with questions about the accessibility of information the user wants to have during these tasks and their overall experience and thoughts on the app. After the interviews, we reflected on the feedback and summarized our findings, which provided valuable insights to guide our next steps and ensure we were moving in the right direction.
 
-### Development of the App
+### Development
 
-When it came time to start developing the app, we had a clear idea of what we needed to make thanks to the mockup. But we also had several technical requirements that needed to be met during development:
+When it came time to start developing the app, we had a clear idea of what we needed to make thanks to the mockup. But we also had several technical requirements that needed to be met:
 
-1. All user flows needed to be available to a user of the app
+1. All user flows need to be executable in the app
 1. We needed to create the necessary tooling to bootstrap, test, and run our project
 1. We needed to ensure any encountered issues were recorded in an error reporting system
 1. We needed to set up a CI pipeline to automate linting, formatting, type checking, and unit testing (including code coverage)
@@ -121,15 +113,13 @@ During the late stages of development, we realized we needed the ability to gene
 
 Our final product was a fully functional MVP that met the goals we initially set out to achieve. If you would like to see the app in action, you can watch <MDLink href={frontmatter.demo}>this demo video</MDLink> prepared by the team.
 
-<figure>
-  <MDImage
-    src={`/assets/projects/${frontmatter.image.url}`}
-    alt={frontmatter.image?.alt}
-    width={800}
-    height={420}
-  />
-  <figcaption class="text-center">Final Interface of RAIVEN App</figcaption>
-</figure>
+<MDImage
+  src={`/assets/projects/${frontmatter.image.url}`}
+  alt={frontmatter.image?.alt}
+  width={800}
+  height={420}
+  title="Final Interface of RAIVEN App"
+/>
 
 The app included authentication features, allowing users to sign up for new accounts and log into existing ones. An establishment owner could invite an employee by providing a QR code that they can scan, open our Next.js app, and be redirected to the mobile app as an authenticated user. Once logged in, users had access to four main screens: Events, Scan, Insights, and Profile.
 

@@ -23,11 +23,14 @@ const projects = defineCollection({
       alt: z.string()
     }),
     technologies: z.array(reference('technologies')),
+    page: z.string().optional(),
+    pageButton: z.string().optional(),
     source: z.string().optional(),
     article: z.string().optional(),
     demo: z.string().optional(),
     download: z.string().url().optional(),
     play: z.string().url().optional(),
+    repository: z.string().url().optional(),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false)
   })

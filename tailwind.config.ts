@@ -12,7 +12,8 @@ export default {
         accent: colors.orange
       },
       screens: {
-        xs: '375px'
+        xs: '375px',
+        'plus-phone': '414px'
       },
       minHeight: {
         dynamic: ['100vh', '100dvh']
