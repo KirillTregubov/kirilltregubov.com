@@ -52,47 +52,46 @@ const { Content } = await projectInfo.render()
       class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
     > -->
     <section
-      class="flex w-full flex-col items-center gap-8 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 lg:flex-row"
+      class="grid w-full grid-cols-1 gap-12 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 lg:grid-cols-2"
     >
-      <div class="flex flex-col justify-center gap-6">
-        <div
-          class="inline-flex flex-col items-start justify-center gap-6 motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 md:flex-row md:items-center"
-        >
-          <Image
-            class="fade-in select-none"
-            src={`/assets/projects/overbuddy/icon.png`}
-            alt="OverBuddy icon"
-            width={128}
-            height={128}
-            loading="eager"
-            draggable="false"
-          />
-          <div>
-            <h1 class="text-2xl font-bold leading-none">
-              {projectInfo.data.name}
-            </h1>
-            <p class="my-2 text-lg text-neutral-400">
-              Browse Overwatch™ menu backgrounds below.<br
-                class="hidden sm:block"
-              /> Install the Windows app to customize your in-game menu.
-            </p>
-          </div>
+      <div
+        class="inline-flex flex-col items-start justify-center gap-6 motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 md:flex-row md:items-center md:justify-start lg:col-span-2 lg:justify-center"
+      >
+        <Image
+          class="fade-in select-none"
+          src={`/assets/projects/overbuddy/icon.png`}
+          alt="OverBuddy icon"
+          width={128}
+          height={128}
+          loading="eager"
+          draggable="false"
+        />
+        <div>
+          <h1 class="text-2xl font-bold leading-none">
+            {projectInfo.data.name}
+          </h1>
+          <p class="my-2 text-lg text-neutral-400">
+            Browse Overwatch™ menu backgrounds below.<br
+              class="hidden sm:block"
+            /> Install the app to customize your in-game menu background.
+          </p>
         </div>
-        <ul class="flex flex-col gap-3 text-zinc-400">
+      </div>
+      <div class="flex flex-col justify-center gap-6">
+        <ul class="flex flex-col gap-3 text-neutral-400">
           <li>
             <h3 class="text-lg font-medium text-white">
               Personalize your Overwatch™ Experience
             </h3>
-            <p>
+            <p class="">
               OverBuddy allows you to customize your Overwatch in-game main menu
               background. Browse all available backgrounds and apply your
               favourite.
             </p>
           </li>
           <li>
-            <h3 class="text-lg font-medium text-white">
-              Free and Transparent
-            </h3><p>
+            <h3 class="text-lg font-medium text-white">Free and Transparent</h3>
+            <p class="">
               OverBuddy is free to use and{' '}
               <MDLink
                 href={projectInfo.data.repository!}
@@ -108,7 +107,8 @@ const { Content } = await projectInfo.render()
           <li>
             <h3 class="text-lg font-medium text-white">
               Built with Privacy in Mind
-            </h3><p>
+            </h3>
+            <p class="">
               OverBuddy will need to read and write your Battle.net® <!-- or Steam® -->configuration
               files to change the background. It will
               <span class="font-semibold">NOT</span> modify any game files or collect
@@ -118,7 +118,7 @@ const { Content } = await projectInfo.render()
           </li>
           <li>
             <h3 class="text-lg font-medium text-white">Frequently Updated</h3>
-            <p>
+            <p class="">
               Major Overwatch updates tend to change the availability of
               backgrounds, including removing existing backgrounds and adding
               new ones. The app has a built-in updater, and updates can be
@@ -149,9 +149,9 @@ const { Content } = await projectInfo.render()
           </div> -->
         </div>
       </div>
-      <div class="flex-shrink-0">
+      <div class="flex w-full items-center">
         <Image
-          class="fade-in select-none rounded lg:max-w-[28rem] xl:max-w-none"
+          class="fade-in select-none rounded"
           src="https://github.com/KirillTregubov/OverBuddy/blob/main/screenshots/screenshot-2.png?raw=true"
           alt="OverBuddy icon"
           width={684}

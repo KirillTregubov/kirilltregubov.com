@@ -13,7 +13,8 @@ export default {
       },
       screens: {
         xs: '375px',
-        'plus-phone': '414px'
+        'plus-phone': '414px',
+        xxl: '1400px'
       },
       minHeight: {
         dynamic: ['100vh', '100dvh']
