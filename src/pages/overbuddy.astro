@@ -12,7 +12,7 @@ const { Content } = await projectInfo.render()
 
 <Layout
   title="OverBuddy - Kirill Tregubov"
-  description="aa"
+  description={projectInfo.data.description}
   footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
