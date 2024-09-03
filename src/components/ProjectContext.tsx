@@ -14,8 +14,8 @@ export function ProjectTitle() {
       </h2>
       <p className="mt-2 text-neutral-400">
         {$showAll
-          ? 'Projects I created and have contributed to that showcase my abilities.'
-          : 'Projects I created and have contributed to that best showcase my abilities.'}
+          ? 'Projects I have worked on that showcase my abilities.'
+          : 'Projects I have worked on that best showcase my abilities.'}
       </p>
     </div>
   )
