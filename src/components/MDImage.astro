@@ -13,6 +13,7 @@ interface Props {
   title?: string
   description?: string
   keywords?: string
+  link?: string
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   title,
   description,
   keywords,
+  link,
   ...props
 } = Astro.props
 
@@ -73,12 +75,21 @@ const imgAlt = alt || title || 'Placeholder image'
   }
   {
     !!description && description.length > 0 && (
-      <p
-        class="mb-1 mt-2 text-center leading-none text-neutral-400"
-        data-description
-      >
-        {description}
-      </p>
+      <div class="mb-1 mt-2 text-center leading-none text-neutral-400">
+        <p class="inline-block" data-description>
+          {description}
+        </p>
+        {link && URL.canParse(link) && (
+          <a
+            href={link}
+            rel="noopener"
+            target="_blank"
+            class="-m-0.5 p-0.5 !ring-white transition-[color,box-shadow] hover:text-white focus-visible:text-white active:text-white"
+          >
+            (<span class="underline">Link</span>)
+          </a>
+        )}
+      </div>
     )
   }
   {
