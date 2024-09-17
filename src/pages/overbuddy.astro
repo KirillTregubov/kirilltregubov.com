@@ -170,7 +170,7 @@ const { Content } = await projectInfo.render()
   <script>
     import Fuse from 'fuse.js'
 
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('astro:page-load', () => {
       const items = Array.from(document.querySelectorAll('[data-item]')).map(
         (element) => {
           const title =
