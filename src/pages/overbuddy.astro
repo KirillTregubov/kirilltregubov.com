@@ -171,6 +171,10 @@ const { Content } = await projectInfo.render()
     import Fuse from 'fuse.js'
 
     document.addEventListener('astro:page-load', () => {
+      if (window.location.pathname !== '/overbuddy') {
+        return
+      }
+
       const items = Array.from(document.querySelectorAll('[data-item]')).map(
         (element) => {
           const title =
