@@ -227,6 +227,10 @@ const currentStandings: ChampionshipResult[] = [
   { driver: 77, points: 0 }
 ]
 
+const topDrivers = currentStandings.slice(0, 3).map((entry) => {
+  return currentDrivers.find((driver) => driver.id === entry.driver)!
+})
+
 const remainingRaces = [
   {
     name: 'Brazilian Grand Prix',
@@ -255,20 +259,36 @@ const remainingRaces = [
 ] as const satisfies Race[]
 
 const pointsPerPosition = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1] as const
+const positions = Array.from({ length: 20 }, (_, i) => i)
 
 // SIMULATION
 
 // RACE RESULT MODELS
-type raceModel = (drivers: Driver[]) => Driver[]
+type raceModel = (drivers: Driver[]) => (Driver & { position: number })[]
 const uniformProbabilityModel: raceModel = (drivers: Driver[]) => {
-  return drivers.sort(() => Math.random() - 0.5)
+  const newPositions = positions.toSorted(() => Math.random() - 0.5).slice(0, 3)
+
+  return drivers.map((driver, index) => {
+    return {
+      ...driver!,
+      position: newPositions[index]
+    }
+  })
 }
 
 // FASTEST LAP MODELS
-type fastestLapModel = (drivers: Driver[]) => DriverID
-const randomFastestLap: fastestLapModel = (drivers: Driver[]) =>
-  drivers[Math.floor(Math.random() * drivers.length)].id
+type fastestLapModel = (drivers: Driver[]) => DriverID | null
+const randomFastestLap: fastestLapModel = (drivers: Driver[]) => {
+  for (const driver of drivers) {
+    if (Math.random() < 1 / 20) {
+      return driver.id
+    }
+  }
 
+  return null
+}
+
+// HELPERS
 const simulateRace = (
   drivers: Driver[],
   raceModel: raceModel,
@@ -285,7 +305,7 @@ const simulateRace = (
 
   // Race result
   raceResult.forEach((driver, index) => {
-    const points = pointsPerPosition[index] || null
+    const points = pointsPerPosition[driver.position] || null
     if (points === null) return
 
     result.push({
@@ -297,11 +317,12 @@ const simulateRace = (
 
   // Fastest lap
   const fastestLap = fastestLapModel(drivers)
+  if (!fastestLap) return result
+
   const fastestLapEntry = result.find((entry) => entry.driverID === fastestLap)
   if (fastestLapEntry) {
     fastestLapEntry.fastestLap = true
   }
-
   return result
 }
 
@@ -314,13 +335,17 @@ const runSimulation = (
 ) => {
   console.log(`> Running simulation with ${drivers.length} drivers`)
 
-  const standings: { [driverID: number]: number } = {}
-  drivers.forEach((driver) => (standings[driver.id] = 0))
+  const results = []
 
   // Run simulations
   for (let i = 0; i < numSimulations; i++) {
-    const simulationPoints: { [driverId: number]: number } = {}
-    drivers.forEach((driver) => (simulationPoints[driver.id] = 0))
+    const currentSimulation = drivers.reduce(
+      (acc, driver) => {
+        acc[driver.id] = 0
+        return acc
+      },
+      {} as { [id: number]: number }
+    )
 
     // Simulate each race
     remainingRaces.forEach(() => {
@@ -328,58 +353,72 @@ const runSimulation = (
 
       // Race result
       raceResult.forEach((entry) => {
-        simulationPoints[entry.driverID] += entry.points
+        currentSimulation[entry.driverID] += entry.points
       })
 
       // Fastest lap
       const fastestLapDriver = raceResult.find((entry) => entry.fastestLap)
       if (fastestLapDriver) {
-        simulationPoints[fastestLapDriver.driverID] += 1
+        currentSimulation[fastestLapDriver.driverID] += 1
       }
     })
 
-    for (const [driverID, points] of Object.entries(simulationPoints)) {
-      standings[Number(driverID)] += points
-    }
+    const finalStandings = Object.entries(currentSimulation)
+      .map(([driverId, points]) => ({
+        driver: Number(driverId),
+        name: currentDrivers.find((driver) => driver.id === Number(driverId))
+          ?.name,
+        points:
+          points +
+          (currentStandings.find(
+            (standing) => standing.driver === Number(driverId)
+          )?.points || 0)
+      }))
+      .sort((a, b) => b.points - a.points)
+
+    results.push(finalStandings)
   }
 
   console.log(
-    `> ${numSimulations} ${numSimulations > 1 ? 'simulations' : 'simulation'} complete`
+    `> Scheduled ${numSimulations} ${numSimulations > 1 ? 'simulations' : 'simulation'}, Completed ${results.length} ${results.length > 1 ? 'simulations' : 'simulation'}`
   )
 
-  const finalStandings = Object.entries(standings)
-    .map(([driverId, points]) => ({
-      driver: Number(driverId),
-      name: currentDrivers.find((driver) => driver.id === Number(driverId))
-        ?.name,
-      points:
-        points +
-        (currentStandings.find(
-          (standing) => standing.driver === Number(driverId)
-        )?.points || 0)
-    }))
-    .sort((a, b) => b.points - a.points)
+  const driverWins = drivers.reduce(
+    (acc, driver) => {
+      acc[driver.id] = 0
+      return acc
+    },
+    {} as { [id: number]: number }
+  )
 
-  console.log(`> Final standings:`, finalStandings)
+  results.forEach((result) => {
+    driverWins[result[0].driver] += 1
+  })
+
+  Object.entries(driverWins).forEach(([driverId, wins]) => {
+    const driver = currentDrivers.find((d) => d.id === Number(driverId))
+    console.log(`> ${driver?.name} wins: ${wins}`)
+  })
 }
 
 // RUN SIMULATION
 
-const numSimulations = 1
 runSimulation(
-  currentDrivers.filter((driver) => !driver.isReserve),
-  currentStandings,
+  topDrivers,
+  currentStandings.splice(0, 3),
   uniformProbabilityModel,
   randomFastestLap,
-  numSimulations
+  100000
 )
 
 /* Analysis
  *
  * 1. Should consider all possibilities, not arbitrary amount of simulations
- * 2. Should consider reserve drivers for sickness/injury reasons
- * 3. Should consider driver performance probability / historical data
- *    - Driver average position this season
+ *    - First I wanted to generate all possible permutations, but this results in 20! (over 2.4 quintillion) possible outcomes for every race. This is too many to run in a reasonable amount of time, so I considered alternatives. I will now consider only the top 3 drivers, as Oscar Piastri who is currently in 4th place will not overtake the top driver (Max Verstappen) even if he wins the remaining races and gets the fastest lap each weekend.
+ * 2. Should consider driver performance probability / historical data
+ *    - Initially I thought to consider driver average position this season, but this would take a lot of time to collect all the data and analyze it. I decided to explore alternatives first.
+ *    - The betting odds for each driver are available online, but they are heavily biased by the drivers' recent performances.
+ * 3. Should consider reserve drivers for sickness/injury reasons
  */
 
 /* Limitations
