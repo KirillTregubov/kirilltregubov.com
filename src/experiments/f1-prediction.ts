@@ -258,8 +258,9 @@ const remainingRaces = [
   }
 ] as const satisfies Race[]
 
+const NUMBER_OF_DRIVERS = 20 as const
 const pointsPerPosition = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1] as const
-const positions = Array.from({ length: 20 }, (_, i) => i)
+const positions = Array.from({ length: NUMBER_OF_DRIVERS }, (_, i) => i)
 
 // SIMULATION
 
@@ -276,11 +277,121 @@ const uniformProbabilityModel: raceModel = (drivers: Driver[]) => {
   })
 }
 
+const getRecentPositionsForDriver = (driverId: DriverID): number[] => {
+  switch (driverId) {
+    case 33:
+      return [6, 3, 2, 5, 6, 2, 4, 5, 2, 5, 1, 1, 6, 1, 2, 1, 1, 21, 1, 1]
+    case 4:
+      return [2, 4, 1, 4, 3, 1, 5, 2, 3, 20, 2, 2, 4, 2, 1, 2, 5, 3, 8, 6]
+    case 16:
+      return [3, 1, 5, 2, 1, 3, 3, 4, 14, 11, 5, 0, 1, 3, 3, 4, 3, 4, 2, 4]
+    default:
+      throw new Error(`Driver ${driverId} not found`)
+  }
+}
+
+const calculateWeightedAveragePosition = (
+  recentPositions: number[]
+): number => {
+  const weights = [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0, // Races before summer break are weighted less heavily
+    0.5,
+    0.1,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5
+  ]
+  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0)
+  const weightedSum = recentPositions.reduce(
+    (sum, pos, index) => sum + pos * weights[index],
+    0
+  )
+  return weightedSum / totalWeight
+}
+
+// Momentum based on recent results compared to a baseline
+const calculateMomentum = (
+  recentPositions: number[],
+  baseline: number
+): number => {
+  const averageRecent =
+    recentPositions.reduce((sum, pos) => sum + pos, 0) / recentPositions.length
+  return baseline - averageRecent // Positive momentum for improving recent results
+}
+
+const adjustProbability = (
+  recentPositions: number[],
+  baseProbabilities: number[]
+): number[] => {
+  const weightedAvg = calculateWeightedAveragePosition(recentPositions)
+
+  const baselinePosition = 10 // Assume an average mid-field position as a baseline
+  const momentum = calculateMomentum(recentPositions, baselinePosition)
+
+  // Scale probabilities by shifting based on weighted average and momentum
+  return baseProbabilities.map((prob, index) => {
+    // Favor positions around the weighted average and factor in momentum
+    const positionBias = Math.exp(-Math.abs(index - weightedAvg) / 2) // Gaussian-like bias towards weighted average
+    const momentumFactor = 1 + momentum / 10 // Scale momentum effect
+    return prob * positionBias * momentumFactor
+  })
+}
+
+const performanceBasedRaceModel: raceModel = (drivers: Driver[]) => {
+  const baseProbabilities: number[] = Array(NUMBER_OF_DRIVERS).fill(
+    1 / NUMBER_OF_DRIVERS
+  ) // Uniform probability for each position
+
+  // Generate adjusted probabilities based on drivers' recent performance
+  const driverProbabilities = drivers.map((driver) => {
+    const recentPositions = getRecentPositionsForDriver(driver.id)
+    return baseProbabilities
+    // return adjustProbability(recentPositions, [...baseProbabilities])
+  })
+
+  // Assign drivers to positions based on adjusted probabilities
+  return drivers.map((driver, index) => {
+    // Cumulative probability distribution
+    const cumulativeProbabilities = driverProbabilities[index].reduce(
+      (acc, prob, i) => {
+        acc[i] = prob + (acc[i - 1] || 0)
+        return acc
+      },
+      [] as number[]
+    )
+
+    // Draw a random position based on it
+    const rand = Math.random()
+    const position = cumulativeProbabilities.findIndex(
+      (cumProb) => cumProb > rand
+    )
+
+    return {
+      ...driver,
+      position
+    }
+  })
+}
+
 // FASTEST LAP MODELS
 type fastestLapModel = (drivers: Driver[]) => DriverID | null
 const randomFastestLap: fastestLapModel = (drivers: Driver[]) => {
   for (const driver of drivers) {
-    if (Math.random() < 1 / 20) {
+    if (Math.random() < 1 / NUMBER_OF_DRIVERS) {
       return driver.id
     }
   }
@@ -406,7 +517,8 @@ const runSimulation = (
 runSimulation(
   topDrivers,
   currentStandings.splice(0, 3),
-  uniformProbabilityModel,
+  //   uniformProbabilityModel,
+  performanceBasedRaceModel,
   randomFastestLap,
   100000
 )
@@ -416,8 +528,8 @@ runSimulation(
  * 1. Should consider all possibilities, not arbitrary amount of simulations
  *    - First I wanted to generate all possible permutations, but this results in 20! (over 2.4 quintillion) possible outcomes for every race. This is too many to run in a reasonable amount of time, so I considered alternatives. I will now consider only the top 3 drivers, as Oscar Piastri who is currently in 4th place will not overtake the top driver (Max Verstappen) even if he wins the remaining races and gets the fastest lap each weekend.
  * 2. Should consider driver performance probability / historical data
- *    - Initially I thought to consider driver average position this season, but this would take a lot of time to collect all the data and analyze it. I decided to explore alternatives first.
- *    - The betting odds for each driver are available online, but they are heavily biased by the drivers' recent performances.
+ *    - I considered using betting odds of each upcoming race, but they were hard to find reliably and I was unable to find data for all of the upcoming races, only the closest one or two.
+ *    - Next I considered calculating the driver average position this season, applying weights to into the recent results.
  * 3. Should consider reserve drivers for sickness/injury reasons
  */
 
