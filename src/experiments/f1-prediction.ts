@@ -35,6 +35,7 @@ type Race = {
   location: string
   date: string
   circuit: string
+  hasSprint: boolean
 }
 
 const currentDrivers: Driver[] = [
@@ -234,27 +235,31 @@ const topDrivers = currentStandings.slice(0, 3).map((entry) => {
 const remainingRaces = [
   // {
   //   name: 'Brazilian Grand Prix',
-  //   location: 'Interlagos, Brazil',
+  //   location: 'São Paulo',
   //   date: '2024-11-03',
   //   circuit: 'Autódromo José Carlos Pace'
+  //   hasSprint: true
   // },
   {
     name: 'Las Vegas Grand Prix',
     location: 'Las Vegas',
     date: '2024-11-24',
-    circuit: 'Las Vegas Street Circuit'
+    circuit: 'Las Vegas Street Circuit',
+    hasSprint: false
   },
   {
     name: 'Qatar Grand Prix',
     location: 'Lusail',
     date: '2024-12-01',
-    circuit: 'Lusail International Circuit'
+    circuit: 'Lusail International Circuit',
+    hasSprint: true
   },
   {
     name: 'Abu Dhabi Grand Prix',
     location: 'Yas Marina',
     date: '2024-12-08',
-    circuit: 'Yas Marina Circuit'
+    circuit: 'Yas Marina Circuit',
+    hasSprint: false
   }
 ] as const satisfies Race[]
 
