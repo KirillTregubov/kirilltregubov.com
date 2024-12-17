@@ -252,11 +252,6 @@ const backgrounds = await getCollection('overbuddy')
           button.classList.remove('opacity-100')
           button.classList.remove('*:pointer-events-auto')
         })
-
-        button.addEventListener('pointerleave', () => {
-          button.classList.remove('opacity-100')
-          button.classList.remove('*:pointer-events-auto')
-        })
       })
 
       const fuse = new Fuse(items, {
