@@ -503,5 +503,13 @@
     "description": "Upcoming China NetEase Re-release",
     "keywords": "",
     "available": true
+  },
+  {
+    "id": "avatar_the_last_airbender",
+    "image": "/assets/projects/overbuddy/avatar_the_last_airbender.jpg",
+    "title": "Avatar: The Last Airbender",
+    "description": "Avatar: The Last Airbender Event (Season 14)",
+    "keywords": "collaboration crossover animation",
+    "available": true
   }
 ]
