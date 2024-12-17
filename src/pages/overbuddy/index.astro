@@ -21,7 +21,7 @@ const backgrounds = await getCollection('overbuddy')
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
     <ReturnHome
-      containerClass="justify-between flex-col plus-phone:flex-row items-start justify-start"
+      containerClass="flex-col items-start justify-start justify-between plus-phone:flex-row"
     >
       <a
         href={projectInfo.data.download!}
@@ -181,7 +181,7 @@ const backgrounds = await getCollection('overbuddy')
               description={background.data.description}
               keywords={background.data.keywords}
               link={background.data.link}
-              className="fade-in-slow w-full shadow-lg rounded-lg"
+              className="fade-in-slow w-full rounded-lg shadow-lg"
               draggable="false"
               hasDetails
             >
@@ -196,7 +196,7 @@ const backgrounds = await getCollection('overbuddy')
                   title={`View  ${background.data.title} background`}
                   class="group pointer-events-none focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
                 >
-                  <EyeIcon className="size-10 rounded transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+                  <EyeIcon className="size-10 rounded transition-[color,transform] active:text-neutral-400 group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100" />
                 </a>
                 <a
                   href={background.data.image}
@@ -205,7 +205,7 @@ const backgrounds = await getCollection('overbuddy')
                   data-astro-prefetch="tap"
                   class="group pointer-events-none focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
                 >
-                  <CloudDownloadIcon className="size-10 rounded transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+                  <CloudDownloadIcon className="size-10 rounded transition-[color,transform] active:text-neutral-400 group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100" />
                 </a>
               </div>
             </MDImage>
@@ -244,6 +244,11 @@ const backgrounds = await getCollection('overbuddy')
         button.addEventListener('pointerdown', () => {
           button.classList.toggle('opacity-100')
           button.classList.toggle('*:pointer-events-auto')
+        })
+
+        button.addEventListener('mouseleave', () => {
+          button.classList.remove('opacity-100')
+          button.classList.remove('*:pointer-events-auto')
         })
       })
 

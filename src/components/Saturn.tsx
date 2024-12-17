@@ -173,16 +173,12 @@ function useDetection() {
   return GPUTier.tier < 2
 }
 
-export default function Saturn({
-  fallbackClassName
-}: {
-  fallbackClassName?: string
-}) {
+export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
   const detected = useDetection()
 
   return (
     <Suspense fallback={null}>
-      {detected ? <Fallback className={fallbackClassName} /> : <OuterCanvas />}
+      {detected ? <Fallback className={fallbackClass} /> : <OuterCanvas />}
     </Suspense>
   )
 }
