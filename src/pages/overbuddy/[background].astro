@@ -58,54 +58,52 @@ const layoutDescription =
     <section
       class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
     >
-      <figure>
-        <MDImage
-          id={id}
-          src={image}
-          width={472}
-          height={265}
-          className="fade-in-slow w-full rounded-lg shadow-lg"
-          draggable="false"
-        />
-        <div class="mt-4 flex flex-wrap items-center gap-3 gap-y-2">
-          <div class="mr-auto">
-            <figcaption class="text-2xl font-bold" data-title>
-              {title}
-            </figcaption>
-            <div class="mt-1 text-lg text-neutral-400">
-              <p class="inline-block" data-description>
-                {description}
-              </p>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-3">
-            <a
-              class="inline-flex h-12 select-none items-center justify-center rounded-[0.2rem] border-2 border-neutral-900/40 bg-neutral-700 px-4 text-center font-semibold uppercase tracking-wide text-neutral-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95 lg:h-14 lg:px-6 lg:text-lg"
-              href={image}
-              download
-              title="Download this background"
-              data-astro-prefetch="tap"
-            >
-              Download
-            </a>
-            {
-              available !== 'never' && (
-                <a
-                  class:list={[
-                    'inline-flex h-12 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
-                    !available && 'pointer-events-none opacity-60'
-                  ]}
-                  href={projectInfo.data.download!}
-                  title="Install OverBuddy to apply this background"
-                >
-                  {available ? 'Apply in Game' : 'Removed from Game'}
-                </a>
-              )
-            }
+      <MDImage
+        id={id}
+        src={image}
+        width={472}
+        height={265}
+        className="fade-in-slow w-full rounded-lg shadow-lg"
+        draggable="false"
+      />
+      <div class="mt-4 flex flex-wrap items-center gap-3 gap-y-2">
+        <div class="mr-auto">
+          <figcaption class="text-2xl font-bold" data-title>
+            {title}
+          </figcaption>
+          <div class="mt-1 text-lg text-neutral-400">
+            <p class="inline-block" data-description>
+              {description}
+            </p>
           </div>
         </div>
-      </figure>
+
+        <div class="flex flex-wrap gap-3">
+          <a
+            class="inline-flex h-12 select-none items-center justify-center rounded-[0.2rem] border-2 border-neutral-900/40 bg-neutral-700 px-4 text-center font-semibold uppercase tracking-wide text-neutral-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95 lg:h-14 lg:px-6 lg:text-lg"
+            href={image}
+            download
+            title="Download this background"
+            data-astro-prefetch="tap"
+          >
+            Download
+          </a>
+          {
+            available !== 'never' && (
+              <a
+                class:list={[
+                  'inline-flex h-12 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
+                  !available && 'pointer-events-none opacity-60'
+                ]}
+                href={projectInfo.data.download!}
+                title="Install OverBuddy to apply this background"
+              >
+                {available ? 'Apply in Game' : 'Removed from Game'}
+              </a>
+            )
+          }
+        </div>
+      </div>
     </section>
     <div
       class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"

@@ -33,7 +33,7 @@ const imgAlt = alt || title || 'Placeholder image'
 ---
 
 <figure data-item>
-  <figure class="relative w-fit">
+  <div class="relative w-fit">
     <Image
       {...props}
       alt={imgAlt}
@@ -42,13 +42,13 @@ const imgAlt = alt || title || 'Placeholder image'
       draggable="false"
     />
     {hasDetails && <slot />}
-  </figure>
+  </div>
   {
     !!title && title.length > 0 && (
       <figcaption
         class:list={[
           'text-center',
-          !!description && 'mt-3 text-lg font-semibold leading-none'
+          !!description && 'mt-3 text-lg font-semibold leading-6'
         ]}
         data-title
       >
@@ -58,7 +58,7 @@ const imgAlt = alt || title || 'Placeholder image'
   }
   {
     !!description && description.length > 0 && (
-      <div class="mb-1 mt-2 text-center leading-none text-neutral-400">
+      <div class="text-center text-neutral-400">
         <p class="inline-block" data-description>
           {description}
         </p>
