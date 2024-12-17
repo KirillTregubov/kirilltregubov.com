@@ -241,7 +241,9 @@ const backgrounds = await getCollection('overbuddy')
 
       const buttons = document.querySelectorAll('[data-detail-button]')
       buttons.forEach((button) => {
-        button.addEventListener('pointerdown', () => {
+        button.addEventListener('pointerdown', (event) => {
+          if (event.target !== button) return
+
           button.classList.toggle('opacity-100')
           button.classList.toggle('*:pointer-events-auto')
         })
