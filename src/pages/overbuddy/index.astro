@@ -4,7 +4,7 @@ import { getCollection, getEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import MDLink from '@components/MDLink.astro'
 import ReturnHome from '@components/ReturnHome.astro'
-import { MonitorDownIcon } from 'lucide-react'
+import { MonitorDownIcon, EyeIcon, CloudDownloadIcon } from 'lucide-react'
 import MDImage from '@components/MDImage.astro'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
@@ -17,7 +17,7 @@ const backgrounds = await getCollection('overbuddy')
   title="OverBuddy - Kirill Tregubov"
   description={projectInfo.data.description}
   image={`projects/${projectInfo.data.image.url}`}
-  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
     <ReturnHome
@@ -35,7 +35,7 @@ const backgrounds = await getCollection('overbuddy')
       class="grid w-full grid-cols-1 gap-12 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 lg:grid-cols-2"
     >
       <div
-        class="inline-flex flex-col items-start justify-center gap-6 md:flex-row md:items-center md:justify-start lg:col-span-2 lg:justify-center"
+        class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center"
       >
         <Image
           class="fade-in select-none"
@@ -52,7 +52,7 @@ const backgrounds = await getCollection('overbuddy')
           </h1>
           <p class="my-2 text-neutral-400">
             Browse Overwatch™ menu backgrounds.<br class="hidden sm:block" /> Install
-            the app to customize your in-game menu background.
+            the app to customize your in-game main menu background.
           </p>
         </div>
       </div>
@@ -98,16 +98,16 @@ const backgrounds = await getCollection('overbuddy')
           <li>
             <h3 class="text-lg font-medium text-white">Frequently Updated</h3>
             <p class="">
-              Major Overwatch updates tend to change the availability of
-              backgrounds, including removing existing backgrounds and adding
-              new ones. The app has a built-in updater, and updates can be
-              manually checked in the settings.
+              Major Overwatch patches tend to change the availability of
+              backgrounds, including adding new backgrounds and removing some
+              existing ones. The app has a secure built-in updater, and updates
+              can be manually checked in the settings.
             </p>
           </li>
         </ul>
         <div class="flex gap-6">
           <a
-            class="inline-flex h-14 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold uppercase tracking-wide text-orange-50 shadow-md ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:ring-1 active:scale-95 disabled:!scale-100 disabled:!border-orange-800/40"
+            class="inline-flex h-14 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95"
             href={projectInfo.data.download!}
           >
             Get the App
@@ -143,7 +143,7 @@ const backgrounds = await getCollection('overbuddy')
     >
     </div>
     <div
-      class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+      class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
     >
       <h2
         class="mb-3 scroll-mt-[4.5rem] text-xl font-semibold leading-none plus-phone:scroll-mt-6"
@@ -152,38 +152,63 @@ const backgrounds = await getCollection('overbuddy')
         Background Gallery
       </h2>
       <div
-        class="sticky top-24 z-20 -mt-2 mb-2 flex w-full gap-3 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12"
+        class="sticky top-24 z-20 -mt-2 mb-4 flex w-full gap-2 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12"
       >
         <input
           id="search"
           type="search"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white placeholder:text-neutral-400 focus-visible:!ring-white md:max-w-96"
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition-[box-shadow] placeholder:text-neutral-400 focus-visible:!ring-white md:max-w-96"
         />
         <button
-          class="inline-flex w-auto flex-grow-0 select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+          class="inline-flex w-auto flex-shrink-0 flex-grow-0 select-none items-center gap-1 rounded px-2 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
           id="sort"
         >
           Sort by <span id="sort-text" class="font-semibold">Newest</span>
         </button>
       </div>
       <div
-        class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40 plus-phone:[&>figure]:scroll-mt-[7rem]"
+        class="grid grid-cols-1 gap-3 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40 plus-phone:[&>figure]:scroll-mt-[7rem]"
       >
         {
           backgrounds.map((background) => (
             <MDImage
+              id={background.data.id}
               src={background.data.image}
               width={472}
               height={265}
               title={background.data.title}
               description={background.data.description}
               keywords={background.data.keywords}
-              className="fade-in-slow w-full shadow-lg"
-              borderRadius="rounded-lg"
+              link={background.data.link}
+              className="fade-in-slow w-full shadow-lg rounded-lg"
               draggable="false"
-              downloadable
-            />
+              hasDetails
+            >
+              <div
+                class:list={[
+                  'group/parent absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center gap-8 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100'
+                ]}
+                data-detail-button
+              >
+                <a
+                  href={`/overbuddy/${background.data.id}`}
+                  title={`View  ${background.data.title} background`}
+                  class="group pointer-events-none focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
+                >
+                  <EyeIcon className="size-10 rounded transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+                </a>
+                <a
+                  href={background.data.image}
+                  download
+                  title={`Download the ${background.data.title} background`}
+                  data-astro-prefetch="tap"
+                  class="group pointer-events-none focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
+                >
+                  <CloudDownloadIcon className="size-10 rounded transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+                </a>
+              </div>
+            </MDImage>
           ))
         }
       </div>
@@ -213,6 +238,14 @@ const backgrounds = await getCollection('overbuddy')
           return { title, description, keywords, element }
         }
       )
+
+      const buttons = document.querySelectorAll('[data-detail-button]')
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          button.classList.toggle('opacity-100')
+          button.classList.toggle('*:pointer-events-auto')
+        })
+      })
 
       const fuse = new Fuse(items, {
         keys: [

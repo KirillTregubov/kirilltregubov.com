@@ -44,7 +44,9 @@ const overbuddy = defineCollection({
     image: z.string(),
     title: z.string(),
     description: z.string(),
-    keywords: z.string()
+    keywords: z.string(),
+    link: z.string().optional(),
+    available: z.boolean().or(z.literal('never'))
   })
 })
 

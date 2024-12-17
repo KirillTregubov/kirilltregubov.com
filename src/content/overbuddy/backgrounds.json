@@ -4,440 +4,504 @@
     "image": "/assets/projects/overbuddy/owl.jpg",
     "title": "Overwatch League",
     "description": "Overwatch League Promo",
-    "keywords": "esports competitive zenyatta widowmaker reaper bastion cassidy tracer"
+    "keywords": "esports competitive zenyatta widowmaker reaper bastion cassidy tracer",
+    "available": true
   },
   {
     "id": "heroes",
     "image": "/assets/projects/overbuddy/heroes.jpg",
     "title": "Heroes",
     "description": "2022 Alpha Test",
-    "keywords": "mei reinhardt tracer lucio mercy"
+    "keywords": "mei reinhardt tracer lucio mercy",
+    "available": true
   },
   {
     "id": "sojourn",
     "image": "/assets/projects/overbuddy/sojourn.jpg",
     "title": "Sojourn",
     "description": "2022 PvP Beta",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "kiriko",
     "image": "/assets/projects/overbuddy/kiriko.jpg",
     "title": "Kiriko",
     "description": "Kiriko Release (Season 1)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": false
   },
   {
     "id": "zero_hour",
     "image": "/assets/projects/overbuddy/zero_hour.jpg",
     "title": "Zero Hour",
     "description": "Overwatch 2 Launch",
-    "keywords": "tracer sojourn genji mercy"
+    "keywords": "tracer sojourn genji mercy",
+    "available": true
   },
   {
     "id": "cyber_demon_genji_green",
     "image": "/assets/projects/overbuddy/cyber_demon_genji_green.jpg",
     "title": "Cyber Demon Genji (Green)",
     "description": "Season 1 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "cyber_demon_genji_red",
     "image": "/assets/projects/overbuddy/cyber_demon_genji_red.jpg",
     "title": "Cyber Demon Genji (Red)",
     "description": "Season 1 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "cyber_demon_genji_pink",
     "image": "/assets/projects/overbuddy/cyber_demon_genji_pink.jpg",
     "title": "Cyber Demon Genji (Pink)",
     "description": "Season 1 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "ramattra",
     "image": "/assets/projects/overbuddy/ramattra.jpg",
     "title": "Ramattra",
     "description": "Ramattra Release (Season 2)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": false
   },
   {
     "id": "shambali_monastery",
     "image": "/assets/projects/overbuddy/shambali_monastery.jpg",
     "title": "Shambali Monastery",
     "description": "Shambali Monastery Release (Season 2)",
-    "keywords": "map"
+    "keywords": "map",
+    "available": false
   },
   {
     "id": "zeus_junker_queen",
     "image": "/assets/projects/overbuddy/zeus_junker_queen.jpg",
     "title": "Zeus Junker Queen",
     "description": "Season 2 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "winter_wonderland_2022",
     "image": "/assets/projects/overbuddy/winter_wonderland_2022.jpg",
     "title": "Festive Junkrat & Roadhog",
     "description": "Winter Wonderland 2022 (Season 2)",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "mei_lunar_2023",
     "image": "/assets/projects/overbuddy/mei_lunar_2023.jpg",
     "title": "Festive Mei",
     "description": "Lunar New Year 2023 (Season 2)",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "dva_lunar_2023",
     "image": "/assets/projects/overbuddy/dva_lunar_2023.jpg",
     "title": "Palanquin D.Va",
     "description": "Lunar New Year 2023 (Season 2)",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "antarctic_peninsula",
     "image": "/assets/projects/overbuddy/antarctic_peninsula.jpg",
     "title": "Antarctic Peninsula",
     "description": "Antarctic Peninsula Release (Season 3)",
-    "keywords": "map"
+    "keywords": "map",
+    "available": false
   },
   {
     "id": "kiriko_amaterasu",
     "image": "/assets/projects/overbuddy/kiriko_amaterasu.jpg",
     "title": "Kiriko Amaterasu",
     "description": "Season 3 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "kiriko_amaterasu_art",
     "image": "/assets/projects/overbuddy/kiriko_amaterasu_art.jpg",
     "title": "Kiriko Amaterasu Art",
     "description": "Season 3 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "cupid_hanzo",
     "image": "/assets/projects/overbuddy/cupid_hanzo.jpg",
     "title": "Cupid Hanzo",
     "description": "Ultimate Valentine 2023 (Season 3)",
-    "keywords": "valentine's day february 14 pink"
+    "keywords": "valentine's day february 14 pink",
+    "available": true
   },
   {
     "id": "one_punch_man_doomfist",
     "image": "/assets/projects/overbuddy/one_punch_man_doomfist.jpg",
     "title": "Saitama Doomfist",
     "description": "One Punch Man Event (Season 3)",
-    "keywords": "collaboration crossover anime"
+    "keywords": "collaboration crossover anime",
+    "available": false
   },
   {
     "id": "lifeweaver",
     "image": "/assets/projects/overbuddy/lifeweaver.jpg",
     "title": "Lifeweaver",
     "description": "Lifeweaver Release (Season 4)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": false
   },
   {
     "id": "galactic_emperor_sigma",
     "image": "/assets/projects/overbuddy/galactic_emperor_sigma.jpg",
     "title": "Galactic Emperor Sigma",
     "description": "Season 4 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "starwatch_art",
     "image": "/assets/projects/overbuddy/starwatch_art.jpg",
     "title": "Starwatch Art",
     "description": "Starwatch Event (Season 4)",
-    "keywords": "sigma sojourn soldier winston mercy doomfist baptiste bastion echo lucio ashe hammond wrecking ball"
+    "keywords": "sigma sojourn soldier winston mercy doomfist baptiste bastion echo lucio ashe hammond wrecking ball",
+    "available": false
   },
   {
     "id": "zero_hour_owl",
     "image": "/assets/projects/overbuddy/zero_hour_owl.jpg",
     "title": "Overwatch League Zero Hour",
     "description": "Overwatch League Promo (Season 4)",
-    "keywords": "tracer sojourn genji mercy esports competitive"
+    "keywords": "tracer sojourn genji mercy esports competitive",
+    "available": true
   },
   {
     "id": "questwatch",
     "image": "/assets/projects/overbuddy/questwatch.jpg",
     "title": "Questwatch Art",
     "description": "Questwatch Event (Season 5)",
-    "keywords": "orisa reinhardt brigitte lifeweaver lucio zenyatta genji"
+    "keywords": "orisa reinhardt brigitte lifeweaver lucio zenyatta genji",
+    "available": false
   },
   {
     "id": "summer_games_2023",
     "image": "/assets/projects/overbuddy/summer_games_2023.jpg",
     "title": "Tropical Doomfist",
     "description": "Summer Games 2023 (Season 5)",
-    "keywords": "beach"
+    "keywords": "beach",
+    "available": true
   },
   {
     "id": "illari",
     "image": "/assets/projects/overbuddy/illari.jpg",
     "title": "Illari",
     "description": "Illari Release (Season 6)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": false
   },
   {
     "id": "a_7000_wargod_ana",
     "image": "/assets/projects/overbuddy/a_7000_wargod_ana.jpg",
     "title": "A-7000 Wargod Ana",
     "description": "Season 6 Mythic Skin",
-    "keywords": "Ana"
+    "keywords": "Ana",
+    "available": false
   },
   {
     "id": "gothenburg_mothership",
     "image": "/assets/projects/overbuddy/gothenburg_mothership.jpg",
     "title": "Gothenburg Mothership",
     "description": "Invasion PvE Event (Season 6)",
-    "keywords": "map"
+    "keywords": "map",
+    "available": true
   },
   {
     "id": "onryo_hanzo",
     "image": "/assets/projects/overbuddy/onryo_hanzo.jpg",
     "title": "Onryo Hanzo",
     "description": "Season 7 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "onryo_hanzo_art",
     "image": "/assets/projects/overbuddy/onryo_hanzo_art.jpg",
     "title": "Onryo Hanzo Art",
     "description": "Season 7 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "lilith_moira",
     "image": "/assets/projects/overbuddy/lilith_moira.jpg",
     "title": "Lilith Moira",
     "description": "Halloween Terror 2023 (Season 7)",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "overwatch_world_cup",
     "image": "/assets/projects/overbuddy/overwatch_world_cup.jpg",
     "title": "Overwatch World Cup",
     "description": "Overwatch World Cup 2023 (Season 7)",
-    "keywords": "esports competitive"
+    "keywords": "esports competitive",
+    "available": true
   },
   {
     "id": "le_sserafim",
     "image": "/assets/projects/overbuddy/le_sserafim.jpg",
     "title": "LE SSERAFIM Art",
     "description": "LE SSERAFIM Event (Season 7)",
-    "keywords": "k-pop korean pop collaboration crossover"
+    "keywords": "k-pop korean pop collaboration crossover",
+    "available": false
   },
   {
     "id": "le_sserafim_full",
     "image": "/assets/projects/overbuddy/le_sserafim_full.jpeg",
     "title": "LE SSERAFIM Full Art",
     "description": "From X / @PlayOverwatch",
-    "keywords": "external twitter k-pop korean pop collaboration crossover"
+    "keywords": "external twitter k-pop korean pop collaboration crossover",
+    "link": "https://twitter.com/PlayOverwatch/status/1719042353158332706",
+    "available": "never"
   },
   {
     "id": "mauga",
     "image": "/assets/projects/overbuddy/mauga.jpg",
     "title": "Mauga",
     "description": "Mauga Release (Season 8)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": false
   },
   {
     "id": "grand_beast_orisa",
     "image": "/assets/projects/overbuddy/grand_beast_orisa.jpg",
     "title": "Grand Beast Orisa",
     "description": "Season 8 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": false
   },
   {
     "id": "winter_wonderland_2023",
     "image": "/assets/projects/overbuddy/winter_wonderland_2023.jpg",
     "title": "Festive Mercy B.O.B. and Genji Art",
     "description": "Winter Wonderland 2023 (Season 8)",
-    "keywords": "christmas holidays"
+    "keywords": "christmas holidays",
+    "available": false
   },
   {
     "id": "winter_wonderland_2021",
     "image": "/assets/projects/overbuddy/winter_wonderland_2021.jpg",
     "title": "Festive Mercy Ashe B.O.B. Genji Wrecking Ball Art",
     "description": "Winter Wonderland 2021",
-    "keywords": "christmas holidays hammond"
+    "keywords": "christmas holidays hammond",
+    "available": false
   },
   {
     "id": "ancient_caller_moira",
     "image": "/assets/projects/overbuddy/ancient_caller_moira.jpg",
     "title": "Ancient Caller Moira Art",
     "description": "Season 9 Mythic Skin",
-    "keywords": "halloween"
+    "keywords": "halloween",
+    "available": true
   },
   {
     "id": "cowboy_bebop",
     "image": "/assets/projects/overbuddy/cowboy_bebop.jpg",
     "title": "Cowboy Bebop Art",
     "description": "Cowboy Bebop Event (Season 9)",
-    "keywords": "collaboration crossover anime"
+    "keywords": "collaboration crossover anime",
+    "available": false
   },
   {
     "id": "venture",
     "image": "/assets/projects/overbuddy/venture.jpg",
     "title": "Venture",
     "description": "Venture Release (Season 10)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": true
   },
   {
     "id": "mirrorwatch",
     "image": "/assets/projects/overbuddy/mirrorwatch.jpg",
     "title": "Mirrorwatch",
     "description": "Mirrorwatch Event (Season 10)",
-    "keywords": "doomfist mercy"
+    "keywords": "doomfist mercy",
+    "available": true
   },
   {
     "id": "mirrorwatch_art",
     "image": "/assets/projects/overbuddy/mirrorwatch_art.jpg",
     "title": "Mirrorwatch Art",
     "description": "Mirrorwatch Event (Season 10)",
-    "keywords": "reinhardt mercy ana sombra doomfist widowmaker"
+    "keywords": "reinhardt mercy ana sombra doomfist widowmaker",
+    "available": true
   },
   {
     "id": "porsche_dva",
     "image": "/assets/projects/overbuddy/porsche_dva.jpg",
     "title": "Porsche D.Va",
     "description": "Porsche Event (Season 10)",
-    "keywords": "collaboration crossover car"
+    "keywords": "collaboration crossover car",
+    "available": true
   },
   {
     "id": "calamity_empress_ashe",
     "image": "/assets/projects/overbuddy/calamity_empress_ashe.jpg",
     "title": "Calamity Empress Ashe",
     "description": "Season 11 Mythic Skin",
-    "keywords": "B.O.B. roadhog cassidy genji"
+    "keywords": "B.O.B. roadhog cassidy genji",
+    "available": false
   },
   {
     "id": "rose_gold_mercy",
     "image": "/assets/projects/overbuddy/rose_gold_mercy.jpg",
     "title": "Rose Gold Mercy",
     "description": "Breast Cancer Charity Event (Season 11)",
-    "keywords": "pink mercy"
+    "keywords": "pink mercy",
+    "available": true
   },
   {
     "id": "transformers",
     "image": "/assets/projects/overbuddy/transformers.jpg",
     "title": "Optimus Prime Reinhardt",
     "description": "Transformers Event (Season 11)",
-    "keywords": "collaboration crossover movies"
+    "keywords": "collaboration crossover movies",
+    "available": false
   },
   {
     "id": "summer_games_2024",
     "image": "/assets/projects/overbuddy/summer_games_2024.jpg",
     "title": "Lifeguard Lifeweaver & Kiriko",
     "description": "Summer Games 2024 (Season 11)",
-    "keywords": "beach"
+    "keywords": "beach",
+    "available": true
   },
   {
     "id": "reinhardt_bound_demon",
     "image": "/assets/projects/overbuddy/reinhardt_bound_demon.jpg",
     "title": "Reinhardt Bound Demon",
     "description": "Reinhardt Mythic Weapon (Season 11)",
-    "keywords": "weapon mythic reinhardt"
+    "keywords": "weapon mythic reinhardt",
+    "available": true
   },
   {
     "id": "juno",
     "image": "/assets/projects/overbuddy/juno.jpg",
     "title": "Juno",
     "description": "Juno Release (Season 12)",
-    "keywords": "hero mars"
+    "keywords": "hero mars",
+    "available": false
   },
   {
     "id": "anubis_reaper",
     "image": "/assets/projects/overbuddy/anubis_reaper.jpg",
     "title": "Anubis Reaper Art",
     "description": "Season 12 Mythic Skin",
-    "keywords": "illari doomfist echo egypt"
+    "keywords": "illari doomfist echo egypt",
+    "available": true
   },
   {
     "id": "sylvanas_widowmaker",
     "image": "/assets/projects/overbuddy/sylvanas_widowmaker.jpg",
     "title": "Sylvanas Widowmaker",
     "description": "World of Warcraft Event (Season 12)",
-    "keywords": "collaboration crossover widowmaker world of warcraft wow"
+    "keywords": "collaboration crossover widowmaker world of warcraft wow",
+    "available": true
   },
   {
     "id": "ana_midnight_sun",
     "image": "/assets/projects/overbuddy/ana_midnight_sun.jpg",
     "title": "Ana Midnight Sun",
     "description": "Ana Mythic Weapon (Season 12)",
-    "keywords": "weapon mythic ana"
+    "keywords": "weapon mythic ana",
+    "available": true
   },
   {
     "id": "spellbinder_widowmaker",
     "image": "/assets/projects/overbuddy/spellbinder_widowmaker.jpg",
     "title": "Spellbinder Widowmaker",
     "description": "Season 13 Mythic Skin",
-    "keywords": "Widowmaker Spellbinder Magic"
+    "keywords": "Widowmaker Spellbinder Magic",
+    "available": true
   },
   {
     "id": "my_hero_academia",
     "image": "/assets/projects/overbuddy/my_hero_academia.jpg",
     "title": "My Hero Academia",
     "description": "My Hero Academia Event (Season 13)",
-    "keywords": "collaboration crossover anime tracer reinhardt juno kiriko reaper"
+    "keywords": "collaboration crossover anime tracer reinhardt juno kiriko reaper",
+    "available": false
   },
   {
     "id": "overwatch_classic",
     "image": "/assets/projects/overbuddy/overwatch_classic.jpg",
     "title": "Overwatch Classic",
     "description": "Overwatch Classic Event (Season 13)",
-    "keywords": "ow1 1.0 tracer winston reaper dva mercy lucio"
+    "keywords": "ow1 1.0 tracer winston reaper dva mercy lucio",
+    "available": true
   },
   {
     "id": "owcs_finals_2024",
     "image": "/assets/projects/overbuddy/owcs_finals_2024.jpg?v=1",
     "title": "OWCS Finals 2024",
     "description": "Overwatch Championship Series Finals 2024",
-    "keywords": "esports competitive junkrat tracer mei champions"
+    "keywords": "esports competitive junkrat tracer mei champions",
+    "available": true
   },
   {
     "id": "soldier_76_deliverance",
     "image": "/assets/projects/overbuddy/soldier_76_deliverance.jpg",
     "title": "Soldier: 76 Deliverance",
     "description": "Soldier: 76 Mythic Weapon (Season 13)",
-    "keywords": "weapon mythic soldier"
+    "keywords": "weapon mythic soldier",
+    "available": true
   },
   {
     "id": "hazard",
     "image": "/assets/projects/overbuddy/hazard.jpg",
     "title": "Hazard",
     "description": "Hazard Release (Season 14)",
-    "keywords": "hero"
+    "keywords": "hero",
+    "available": true
   },
   {
     "id": "thor_reinhardt",
     "image": "/assets/projects/overbuddy/thor_reinhardt.jpg",
     "title": "Thor Reinhardt",
     "description": "Season 14 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "thor_reinhardt_armorless",
     "image": "/assets/projects/overbuddy/thor_reinhardt_armorless.jpg",
     "title": "Thor Reinhardt (Armorless)",
     "description": "Season 14 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "thor_reinhardt_chest_armor",
     "image": "/assets/projects/overbuddy/thor_reinhardt_chest_armor.jpg",
     "title": "Thor Reinhardt (With Chest Armor)",
     "description": "Season 14 Mythic Skin",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   },
   {
     "id": "welcome_home_china",
     "image": "/assets/projects/overbuddy/welcome_home_china.jpg",
     "title": "Welcome Home, China (欢迎回家)",
     "description": "Upcoming China NetEase Re-release",
-    "keywords": ""
+    "keywords": "",
+    "available": true
   }
 ]

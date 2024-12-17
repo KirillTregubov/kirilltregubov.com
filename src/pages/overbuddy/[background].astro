@@ -1,0 +1,214 @@
+---
+import MDImage from '@components/MDImage.astro'
+import MDLink from '@components/MDLink.astro'
+import Layout from '@layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import { getEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import { fade } from 'astro:transitions'
+import { ChevronLeftCircleIcon, MonitorDownIcon } from 'lucide-react'
+
+export async function getStaticPaths() {
+  const collection = await getCollection('overbuddy')
+  if (!collection) return []
+
+  return collection.map((background) => ({
+    params: {
+      background: background.id
+    },
+    props: {
+      ...background.data
+    }
+  }))
+}
+
+const projectInfo = await getEntry('projects', 'overbuddy')
+if (!projectInfo) throw new Error('OverBuddy project not found')
+
+const { id, title, description, image, available } = Astro.props
+
+const layoutDescription =
+  available === true
+    ? `${description}, available on Overwatch™ 2 using the OverBuddy app`
+    : `${description}`
+---
+
+<Layout
+  title={`${title} - OverBuddy`}
+  description={layoutDescription}
+  image={image}
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+>
+  <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
+    <menu
+      class:list={[
+        "sticky -top-12 z-10 -my-4 -mt-16 mb-2 flex flex-col items-start justify-between gap-6 bg-neutral-900 pb-2 pt-16 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 plus-phone:flex-row"
+      ]}
+      transition:name="menu"
+      transition:animate={fade({ duration: '0.4s' })}
+    >
+      <a
+        href={projectInfo.data.article!}
+        class="-ml-1 inline-flex w-auto flex-grow-0 select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+      >
+        <ChevronLeftCircleIcon className="mr-1.5 size-5" aria-hidden="true" />
+        <span>Back to Gallery</span>
+      </a>
+    </menu>
+    <section
+      class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+    >
+      <figure>
+        <MDImage
+          id={id}
+          src={image}
+          width={472}
+          height={265}
+          className="fade-in-slow w-full rounded-lg shadow-lg"
+          draggable="false"
+        />
+        <div class="mt-4 flex flex-wrap items-center gap-3 gap-y-2">
+          <div class="mr-auto">
+            <figcaption class="text-2xl font-bold" data-title>
+              {title}
+            </figcaption>
+            <div class="mt-1 text-lg text-neutral-400">
+              <p class="inline-block" data-description>
+                {description}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <a
+              class="inline-flex h-12 select-none items-center justify-center rounded-[0.2rem] border-2 border-neutral-900/40 bg-neutral-700 px-4 text-center font-semibold uppercase tracking-wide text-neutral-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95 lg:h-14 lg:px-6 lg:text-lg"
+              href={image}
+              download
+              title="Download this background"
+              data-astro-prefetch="tap"
+            >
+              Download
+            </a>
+            {
+              available !== 'never' && (
+                <a
+                  class:list={[
+                    'inline-flex h-12 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
+                    !available && 'pointer-events-none opacity-60'
+                  ]}
+                  href={projectInfo.data.download!}
+                  title="Install OverBuddy to apply this background"
+                >
+                  {available ? 'Apply in Game' : 'Removed from Game'}
+                </a>
+              )
+            }
+          </div>
+        </div>
+      </figure>
+    </section>
+    <div
+      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+    >
+    </div>
+    <section
+      class="grid w-full grid-cols-1 gap-12 motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0 lg:grid-cols-2"
+    >
+      <div class="flex flex-col justify-center gap-6">
+        <div class="flex items-center justify-start gap-3">
+          <Image
+            class="fade-in select-none"
+            src={`/assets/projects/overbuddy/icon.png`}
+            alt="OverBuddy icon"
+            width={48}
+            height={48}
+            loading="eager"
+            draggable="false"
+          />
+          <h1 class="text-2xl font-bold leading-none">
+            {projectInfo.data.name}
+          </h1>
+        </div>
+        <ul class="flex flex-col gap-3 text-neutral-400">
+          <li>
+            <h3 class="text-lg font-medium text-white">
+              Personalize your Overwatch™ Experience
+            </h3>
+            <p class="">
+              OverBuddy allows you to customize your Overwatch in-game main menu
+              background. Browse all available backgrounds and apply your
+              favourite.
+            </p>
+          </li>
+          <li>
+            <h3 class="text-lg font-medium text-white">Free and Transparent</h3>
+            <p class="">
+              OverBuddy is free to use and{' '}
+              <MDLink
+                href={projectInfo.data.repository!}
+                className="!text-neutral-300 hover:!text-white focus-visible:!text-white active:!text-white"
+                >open source</MDLink
+              >. It operates independently and is not affiliated with Blizzard
+              Entertainment®.
+              <!-- or Valve® -->
+              You can undo the changes it makes at any time by reverting to the default
+              background.
+            </p>
+          </li>
+          <li>
+            <h3 class="text-lg font-medium text-white">
+              Built with Privacy in Mind
+            </h3>
+            <p class="">
+              OverBuddy will need to read and write your Battle.net® <!-- or Steam® -->configuration
+              files to change the background. It will
+              <span class="font-semibold">NOT</span> modify any game files or collect
+              any personal data. Your Battle.net <!--or Steam--> client will be restarted
+              to apply the changes.
+            </p>
+          </li>
+          <li>
+            <h3 class="text-lg font-medium text-white">Frequently Updated</h3>
+            <p class="">
+              Major Overwatch patches tend to change the availability of
+              backgrounds, including adding new backgrounds and removing some
+              existing ones. The app has a secure built-in updater, and updates
+              can be manually checked in the settings.
+            </p>
+          </li>
+        </ul>
+        <div class="flex gap-6">
+          <a
+            class="inline-flex h-14 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95"
+            href={projectInfo.data.download!}
+          >
+            Get the App
+          </a>
+          <!-- <div class="flex items-center">
+            <a
+              class:list={[
+                'underline-fade-in relative select-none text-center text-lg font-medium uppercase tracking-wide transition-[color,transform] will-change-transform after:bg-zinc-300 hover:text-zinc-300 focus-visible:text-zinc-300 focus-visible:outline-none active:scale-95 disabled:pointer-events-none'
+              ]}
+              href={projectInfo.data.download!}
+              target="_blank"
+              rel="noopener"
+            >
+              Read the Latest Release
+            </a>
+          </div> -->
+        </div>
+      </div>
+      <div class="flex w-full items-center">
+        <Image
+          class="fade-in select-none rounded"
+          src="/assets/projects/overbuddy/screenshot-2.png"
+          alt="Screenshot of the OverBuddy app"
+          width={684}
+          height={533}
+          loading="eager"
+          draggable="false"
+        />
+      </div>
+    </section>
+  </main>
+</Layout>

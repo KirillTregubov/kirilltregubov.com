@@ -1,15 +1,14 @@
 ---
 import { Image } from 'astro:assets'
-import { CloudDownloadIcon } from 'lucide-react'
 
 interface Props {
+  id?: string
   src: string
   alt?: string
   width: number
   height: number
   className?: string
-  borderRadius?: string
-  downloadable?: boolean
+  hasDetails?: boolean
   title?: string
   description?: string
   keywords?: string
@@ -19,10 +18,10 @@ interface Props {
 }
 
 const {
+  id,
   alt,
   className,
-  borderRadius,
-  downloadable,
+  hasDetails,
   title,
   description,
   keywords,
@@ -38,37 +37,18 @@ const imgAlt = alt || title || 'Placeholder image'
     <Image
       {...props}
       alt={imgAlt}
-      class:list={[
-        'relative select-none',
-        className,
-        borderRadius || 'rounded'
-      ]}
+      class:list={['relative select-none', className]}
       onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
       draggable="false"
     />
-    {
-      downloadable && (
-        <a
-          href={props.src}
-          download
-          class:list={[
-            'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center rounded bg-neutral-950/50 opacity-0 !ring-accent-500/90 transition-opacity hover:opacity-100 focus-visible:opacity-100 active:opacity-100',
-            borderRadius || 'rounded'
-          ]}
-          title={`Download the ${title} background`}
-          data-astro-prefetch="tap"
-        >
-          <CloudDownloadIcon className="size-10" />
-        </a>
-      )
-    }
+    {hasDetails && <slot />}
   </figure>
   {
     !!title && title.length > 0 && (
       <figcaption
         class:list={[
           'text-center',
-          !!description && 'mt-2.5 text-lg font-semibold leading-none'
+          !!description && 'mt-3 text-lg font-semibold leading-none'
         ]}
         data-title
       >
