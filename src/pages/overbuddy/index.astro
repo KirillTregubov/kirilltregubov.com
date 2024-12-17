@@ -187,14 +187,14 @@ const backgrounds = await getCollection('overbuddy')
             >
               <div
                 class:list={[
-                  'group/parent absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center gap-8 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100'
+                  'group/parent absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100'
                 ]}
                 data-detail-button
               >
                 <a
                   href={`/overbuddy/${background.data.id}`}
                   title={`View  ${background.data.title} background`}
-                  class="group pointer-events-none focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
+                  class="group pointer-events-none p-2 focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
                 >
                   <EyeIcon className="size-10 rounded transition-[color,transform] active:text-neutral-400 group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100" />
                 </a>
@@ -203,7 +203,7 @@ const backgrounds = await getCollection('overbuddy')
                   download
                   title={`Download the ${background.data.title} background`}
                   data-astro-prefetch="tap"
-                  class="group pointer-events-none focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
+                  class="group pointer-events-none p-2 focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
                 >
                   <CloudDownloadIcon className="size-10 rounded transition-[color,transform] active:text-neutral-400 group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100" />
                 </a>
