@@ -1,17 +1,17 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Layout from '@layouts/Layout.astro'
 import { getCollection } from 'astro:content'
-import Saturn from '../components/Saturn'
-import AboutMe from '../components/AboutMe.astro'
-import ProjectPreview from '../components/ProjectPreview.astro'
-import TechStack from '../components/TechStack.astro'
+import Saturn from '@components/Saturn'
+import AboutMe from '@components/AboutMe.astro'
+import ProjectPreview from '@components/ProjectPreview.astro'
+import TechStack from '@components/TechStack.astro'
 import {
   ProjectTitle,
   ProjectToggle,
   ShowAll,
   ShowFeatured
-} from '../components/ProjectContext'
-import ToolStack from '../components/ToolStack.astro'
+} from '@components/ProjectContext'
+import ToolStack from '@components/ToolStack.astro'
 
 const allProjects = await getCollection('projects').then((projects) =>
   projects

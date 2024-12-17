@@ -2,7 +2,7 @@
 import '../index.css'
 import '@fontsource-variable/inter'
 import SpeedInsights from '@vercel/speed-insights/astro'
-import { ViewTransitions } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 
 interface Props {
   title: string
@@ -82,7 +82,7 @@ if (!image) {
       property="twitter:image"
       content={`https://kirilltregubov.com/assets/${image}`}
     />
-    <ViewTransitions />
+    <ClientRouter />
   </head><body
     class:list={[
       'dark bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12',

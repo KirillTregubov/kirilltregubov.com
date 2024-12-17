@@ -1,13 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import { getEntry } from 'astro:content'
+import Layout from '@layouts/Layout.astro'
+import { getCollection, getEntry } from 'astro:content'
 import { Image } from 'astro:assets'
-import MDLink from '../components/MDLink.astro'
-import ReturnHome from '../components/ReturnHome.astro'
+import MDLink from '@components/MDLink.astro'
+import ReturnHome from '@components/ReturnHome.astro'
 import { MonitorDownIcon } from 'lucide-react'
+import MDImage from '@components/MDImage.astro'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
-const { Content } = await projectInfo.render()
+if (!projectInfo) throw new Error('OverBuddy project not found')
+
+const backgrounds = await getCollection('overbuddy')
 ---
 
 <Layout
@@ -47,10 +50,9 @@ const { Content } = await projectInfo.render()
           <h1 class="text-2xl font-bold leading-none">
             {projectInfo.data.name}
           </h1>
-          <p class="my-2 text-lg text-neutral-400">
-            Browse Overwatch™ menu backgrounds below.<br
-              class="hidden sm:block"
-            /> Install the app to customize your in-game menu background.
+          <p class="my-2 text-neutral-400">
+            Browse Overwatch™ menu backgrounds.<br class="hidden sm:block" /> Install
+            the app to customize your in-game menu background.
           </p>
         </div>
       </div>
@@ -150,19 +152,40 @@ const { Content } = await projectInfo.render()
         Background Gallery
       </h2>
       <div
-        class="sticky top-24 z-20 -mt-2 mb-2 w-full bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12"
+        class="sticky top-24 z-20 -mt-2 mb-2 flex w-full gap-3 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12"
       >
         <input
           id="search"
           type="search"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white placeholder:text-neutral-500 focus-visible:!ring-white md:max-w-96"
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white placeholder:text-neutral-400 focus-visible:!ring-white md:max-w-96"
         />
+        <button
+          class="inline-flex w-auto flex-grow-0 select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+          id="sort"
+        >
+          Sort by <span id="sort-text" class="font-semibold">Newest</span>
+        </button>
       </div>
       <div
         class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40 plus-phone:[&>figure]:scroll-mt-[7rem]"
       >
-        <Content />
+        {
+          backgrounds.map((background) => (
+            <MDImage
+              src={background.data.image}
+              width={472}
+              height={265}
+              title={background.data.title}
+              description={background.data.description}
+              keywords={background.data.keywords}
+              className="fade-in-slow w-full shadow-lg"
+              borderRadius="rounded-lg"
+              draggable="false"
+              downloadable
+            />
+          ))
+        }
       </div>
     </div>
   </main>
@@ -175,15 +198,17 @@ const { Content } = await projectInfo.render()
         return
       }
 
+      // Search
       const items = Array.from(document.querySelectorAll('[data-item]')).map(
-        (element) => {
+        (item) => {
           const title =
-            element.querySelector('[data-title]')?.textContent?.trim() || ''
+            item.querySelector('[data-title]')?.textContent?.trim() || ''
           const description =
-            element.querySelector('[data-description]')?.textContent?.trim() ||
-            ''
+            item.querySelector('[data-description]')?.textContent?.trim() || ''
           const keywords =
-            element.querySelector('[data-keywords]')?.textContent?.trim() || ''
+            item.querySelector('[data-keywords]')?.textContent?.trim() || ''
+
+          const element = item as HTMLElement
 
           return { title, description, keywords, element }
         }
@@ -237,6 +262,29 @@ const { Content } = await projectInfo.render()
           inline: 'start'
         })
       })
+
+      // Sort button
+      const sortButton = document.getElementById('sort')
+      if (sortButton) {
+        sortButton.addEventListener('click', () => {
+          const textElement = document.getElementById('sort-text')
+          if (!textElement) {
+            console.error('Could not find sort button text element')
+            return
+          }
+          const currentText = textElement.textContent?.trim()
+          const newText = currentText === 'Newest' ? 'Oldest' : 'Newest'
+          textElement.textContent = newText
+
+          items.forEach(({ element }, index) => {
+            if (newText === 'Newest') {
+              element.style.order = `${index + 1}`
+            } else {
+              element.style.order = `${items.length - index}`
+            }
+          })
+        })
+      }
     })
   </script>
 </Layout>

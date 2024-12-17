@@ -4,16 +4,18 @@ import { CloudDownloadIcon } from 'lucide-react'
 
 interface Props {
   src: string
-  alt: string
+  alt?: string
   width: number
   height: number
-  className?: number
+  className?: string
   borderRadius?: string
   downloadable?: boolean
   title?: string
   description?: string
   keywords?: string
   link?: string
+  loading?: 'eager' | 'lazy'
+  draggable?: 'true' | 'false'
 }
 
 const {

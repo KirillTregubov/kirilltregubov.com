@@ -1,7 +1,8 @@
 import { z, defineCollection, reference } from 'astro:content'
+import { file, glob } from 'astro/loaders'
 
 const technologies = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/technologies' }),
   schema: z.object({
     name: z.string(),
     type: z.enum(['technology', 'tool']).default('technology'),
@@ -12,7 +13,7 @@ const technologies = defineCollection({
 })
 
 const projects = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/projects' }),
   schema: z.object({
     name: z.string(),
     description: z.string(),
@@ -36,7 +37,19 @@ const projects = defineCollection({
   })
 })
 
+const overbuddy = defineCollection({
+  loader: file('src/content/overbuddy/backgrounds.json'),
+  schema: z.object({
+    id: z.string(),
+    image: z.string(),
+    title: z.string(),
+    description: z.string(),
+    keywords: z.string()
+  })
+})
+
 export const collections = {
   projects,
-  technologies
+  technologies,
+  overbuddy
 }

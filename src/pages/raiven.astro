@@ -1,13 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import { getEntry } from 'astro:content'
+import Layout from '@layouts/Layout.astro'
+import { getEntry, render } from 'astro:content'
 import { Image } from 'astro:assets'
 import { getEntries } from 'astro:content'
-import ReturnHome from '../components/ReturnHome.astro'
+import ReturnHome from '@components/ReturnHome.astro'
 
 const projectInfo = await getEntry('projects', 'raiven')
+if (!projectInfo) throw new Error('RAIVEN project not found')
 const technologies = await getEntries(projectInfo.data.technologies)
-const { Content, headings } = await projectInfo.render()
+
+const { Content, headings } = await render(projectInfo)
 const filteredHeadings = headings.filter((heading) => heading.depth === 3)
 ---
 
@@ -24,6 +26,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
       <div
         class="mb-6 w-fit overflow-clip rounded-xl bg-neutral-800 object-contain py-2"
       >
+        <!-- @ts-expect-error no-unused-vars -->
         <Image
           class="unblur select-none"
           src={`/assets/projects/${projectInfo.data.image.url}`}

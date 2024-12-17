@@ -130,7 +130,7 @@ function OuterCanvas() {
 
   useEffect(() => {
     const handler = () => {
-      if (!ref.current) return
+      if (!ref || !ref.current) return
       ref.current.style.opacity = '0'
     }
 
