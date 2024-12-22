@@ -3,7 +3,7 @@ import '../index.css'
 import '@fontsource-variable/inter'
 import SpeedInsights from '@vercel/speed-insights/astro'
 import { ClientRouter } from 'astro:transitions'
-import Snowfall from 'react-snowfall'
+import Snow from '@components/Snow'
 
 interface Props {
   title: string
@@ -25,6 +25,10 @@ if (!type) {
 if (!image) {
   image = 'banner.jpg'
 }
+
+const today = new Date()
+const isHolidaySeason =
+  today.getMonth() === 11 || (today.getMonth() === 0 && today.getDate() <= 8)
 ---
 
 <!doctype html>
@@ -111,11 +115,6 @@ if (!image) {
         >.</span
       >
     </footer>
-    <Snowfall
-      color="#e5e5e5"
-      changeFrequency={400}
-      opacity={[0.3, 0.4]}
-      client:only
-    />
+    {isHolidaySeason && <Snow client:only />}
   </body>
 </html>
