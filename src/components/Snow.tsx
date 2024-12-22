@@ -11,6 +11,7 @@ export default function Snow() {
       radius={[0.5, 10.0]}
       rotationSpeed={[-0.5, 0.5]}
       images={[snowflake1]}
+      style={{ zIndex: 999 }}
     />
   )
 }
