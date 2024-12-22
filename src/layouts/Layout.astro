@@ -3,6 +3,7 @@ import '../index.css'
 import '@fontsource-variable/inter'
 import SpeedInsights from '@vercel/speed-insights/astro'
 import { ClientRouter } from 'astro:transitions'
+import Snowfall from 'react-snowfall'
 
 interface Props {
   title: string
@@ -86,7 +87,7 @@ if (!image) {
   </head>
   <body
     class:list={[
-      'dark bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12',
+      'dark relative bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12',
       bodyClass
     ]}
   >
@@ -110,5 +111,11 @@ if (!image) {
         >.</span
       >
     </footer>
+    <Snowfall
+      color="#e5e5e5"
+      changeFrequency={400}
+      opacity={[0.3, 0.4]}
+      client:only
+    />
   </body>
 </html>
