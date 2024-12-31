@@ -25,7 +25,7 @@ const backgrounds = await getCollection('overbuddy')
     >
       <a
         href={projectInfo.data.download!}
-        class="-ml-1 inline-flex select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+        class="-mr-1 inline-flex select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
       >
         <MonitorDownIcon className="mr-1.5 size-5" aria-hidden="true" />
         <span>Download OverBuddy</span>
@@ -152,7 +152,7 @@ const backgrounds = await getCollection('overbuddy')
         Background Gallery
       </h2>
       <div
-        class="sticky top-24 z-20 -mt-2 mb-4 flex w-full gap-2 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12"
+        class="sticky top-24 z-20 -mt-2 mb-4 flex w-full gap-1 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12 md:gap-2"
       >
         <input
           id="search"
@@ -161,10 +161,18 @@ const backgrounds = await getCollection('overbuddy')
           class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition-[box-shadow] placeholder:text-neutral-400 focus-visible:!ring-white md:max-w-96"
         />
         <button
-          class="inline-flex w-auto flex-shrink-0 flex-grow-0 select-none items-center gap-1 rounded px-2 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+          class="group -mr-2 grid w-auto flex-shrink-0 flex-grow-0 select-none items-center gap-1 rounded px-2 text-right font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400 md:text-center"
           id="sort"
+          data-newest="true"
         >
-          Sort by <span id="sort-text" class="font-semibold">Newest</span>
+          <span
+            class="invisible [grid-area:1/-1] group-data-[newest=true]:visible"
+          >
+            Sort by <span class="font-semibold">Newest</span>
+          </span>
+          <span class="[grid-area:1/-1] group-data-[newest=true]:invisible">
+            Sort by <span class="font-semibold">Oldest</span>
+          </span>
         </button>
       </div>
       <div
@@ -307,17 +315,11 @@ const backgrounds = await getCollection('overbuddy')
       const sortButton = document.getElementById('sort')
       if (sortButton) {
         sortButton.addEventListener('click', () => {
-          const textElement = document.getElementById('sort-text')
-          if (!textElement) {
-            console.error('Could not find sort button text element')
-            return
-          }
-          const currentText = textElement.textContent?.trim()
-          const newText = currentText === 'Newest' ? 'Oldest' : 'Newest'
-          textElement.textContent = newText
+          const sortByNewest = sortButton.getAttribute('data-newest') !== 'true'
+          sortButton.setAttribute('data-newest', sortByNewest.toString())
 
           items.forEach(({ element }, index) => {
-            if (newText === 'Newest') {
+            if (sortByNewest) {
               element.style.order = `${index + 1}`
             } else {
               element.style.order = `${items.length - index}`
