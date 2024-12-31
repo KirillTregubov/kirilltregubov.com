@@ -29,6 +29,8 @@ if (!image) {
 const today = new Date()
 const isHolidaySeason =
   today.getMonth() === 11 || (today.getMonth() === 0 && today.getDate() <= 8)
+
+const formattedImage = image.replace('/assets/', '')
 ---
 
 <!doctype html>
@@ -77,7 +79,7 @@ const isHolidaySeason =
     <meta property="og:locale" content="en_US" />
     <meta
       property="og:image"
-      content={`https://kirilltregubov.com/assets/${image}`}
+      content={`https://kirilltregubov.com/assets/${formattedImage}`}
     />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:creator" content="@KirillTregubov_" />
@@ -85,7 +87,7 @@ const isHolidaySeason =
     <meta property="twitter:description" content={description} />
     <meta
       property="twitter:image"
-      content={`https://kirilltregubov.com/assets/${image}`}
+      content={`https://kirilltregubov.com/assets/${formattedImage}`}
     />
     <ClientRouter />
   </head>
