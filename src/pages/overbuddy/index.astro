@@ -11,6 +11,7 @@ const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
 
 const backgrounds = await getCollection('overbuddy')
+if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
 ---
 
 <Layout
