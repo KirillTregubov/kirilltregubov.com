@@ -7,6 +7,7 @@ interface Props {
   alt?: string
   width: number
   height: number
+  containerClassName?: string
   className?: string
   hasDetails?: boolean
   title?: string
@@ -20,6 +21,7 @@ interface Props {
 const {
   id,
   alt,
+  containerClassName,
   className,
   hasDetails,
   title,
@@ -33,7 +35,7 @@ const imgAlt = alt || title || 'Placeholder image'
 ---
 
 <figure data-item>
-  <div class="relative w-fit">
+  <div class:list={['relative w-fit', containerClassName]}>
     <Image
       {...props}
       alt={imgAlt}
