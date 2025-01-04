@@ -37,15 +37,15 @@ const projects = defineCollection({
   })
 })
 
-const blog = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/blog' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional()
-  })
-})
+// const blog = defineCollection({
+//   loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/blog' }),
+//   schema: z.object({
+//     title: z.string(),
+//     description: z.string(),
+//     pubDate: z.coerce.date(),
+//     updatedDate: z.coerce.date().optional()
+//   })
+// })
 
 const overbuddy = defineCollection({
   loader: file('src/content/overbuddy/backgrounds.json'),
@@ -63,6 +63,6 @@ const overbuddy = defineCollection({
 export const collections = {
   technologies,
   projects,
-  blog,
+  // blog,
   overbuddy
 }
