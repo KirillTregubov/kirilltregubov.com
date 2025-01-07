@@ -1,0 +1,19 @@
+---
+import Layout from '@layouts/Layout.astro'
+import { getEntry, render } from 'astro:content'
+
+const post = await getEntry('blog', 'battleship')
+if (!post) throw new Error('Blog post not found')
+
+const { Content } = await render(post)
+---
+
+<!-- description -->
+<Layout
+  title="Blog - Kirill Tregubov"
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+>
+  <main class="mx-auto max-w-[50rem] md:space-y-8">
+    <Content />
+  </main>
+</Layout>
