@@ -38,13 +38,23 @@ const technologies = await getEntries(project.data.technologies)
   <div class="my-4 mb-3 flex flex-col">
     <div class="mb-1 flex flex-wrap justify-between gap-x-2 gap-y-0">
       <h2 class="text-lg font-semibold">{project.data.name}</h2>
-      <h3 class="text-neutral-400" title="Date last updated">
+      <div class="flex flex-wrap gap-x-1.5 text-neutral-400">
         {
-          formatApproximateDate(
-            project.data.updatedDate ?? project.data.pubDate
+          project.data.pubDate && (
+            <h3 title="Date first published">
+              {formatApproximateDate(project.data.pubDate)}
+            </h3>
           )
         }
-      </h3>
+        {project.data.pubDate && project.data.updatedDate && <span>-</span>}
+        {
+          project.data.updatedDate && (
+            <h3 title="Date last updated">
+              {formatApproximateDate(project.data.updatedDate)}
+            </h3>
+          )
+        }
+      </div>
     </div>
     <p class="mb-2">{project.data.description}</p>
     <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400">

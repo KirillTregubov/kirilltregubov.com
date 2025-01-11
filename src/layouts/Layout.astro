@@ -12,9 +12,18 @@ interface Props {
   image?: string
   bodyClass?: string
   footerClass?: string
+  footerContent?: string
 }
 
-let { title, description, type, image, bodyClass, footerClass } = Astro.props
+let {
+  title,
+  description,
+  type,
+  image,
+  bodyClass,
+  footerClass,
+  footerContent = null
+} = Astro.props
 const { pathname } = Astro.url
 if (!description) {
   description = 'Software Developer specialized in Web and App Development.'
@@ -111,8 +120,9 @@ const formattedImage = image.replace('/assets/', '')
           target="_blank"
           class="-m-0.5 rounded p-0.5 underline underline-offset-2 transition-shadow"
           >open source</a
-        >.</span
-      >
+        >.
+      </span>
+      {footerContent && <div class="md:inline-block">{footerContent}</div>}
     </footer>
     {isHolidaySeason && <Snow client:only />}
   </body>

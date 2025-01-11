@@ -6,6 +6,7 @@ import MDLink from '@components/MDLink.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import { MonitorDownIcon, EyeIcon, CloudDownloadIcon } from 'lucide-react'
 import MDImage from '@components/MDImage.astro'
+import OverBuddy from '@components/OverBuddy.astro'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
@@ -19,6 +20,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
   description={projectInfo.data.description}
   image={`projects/${projectInfo.data.image.url}`}
   footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+  footerContent="All trademarks are the property of their respective owners."
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
     <ReturnHome
@@ -57,76 +59,10 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
           </p>
         </div>
       </div>
-      <div class="flex flex-col justify-center gap-6">
-        <ul class="flex flex-col gap-3 text-neutral-400">
-          <li>
-            <h3 class="text-lg font-medium text-white">
-              Personalize your Overwatch™ Experience
-            </h3>
-            <p class="">
-              OverBuddy allows you to customize your Overwatch in-game main menu
-              background. Browse all available backgrounds and apply your
-              favourite.
-            </p>
-          </li>
-          <li>
-            <h3 class="text-lg font-medium text-white">Free and Transparent</h3>
-            <p class="">
-              OverBuddy is free to use and{' '}
-              <MDLink
-                href={projectInfo.data.repository!}
-                className="!text-neutral-300 hover:!text-white focus-visible:!text-white active:!text-white"
-                >open source</MDLink
-              >. It operates independently and is not affiliated with Blizzard
-              Entertainment®.
-              <!-- or Valve® -->
-              You can undo the changes it makes at any time by reverting to the default
-              background.
-            </p>
-          </li>
-          <li>
-            <h3 class="text-lg font-medium text-white">
-              Built with Privacy in Mind
-            </h3>
-            <p class="">
-              OverBuddy will need to read and write your Battle.net® <!-- or Steam® -->configuration
-              files to change the background. It will
-              <span class="font-semibold">NOT</span> modify any game files or collect
-              any personal data. Your Battle.net <!--or Steam--> client will be restarted
-              to apply the changes.
-            </p>
-          </li>
-          <li>
-            <h3 class="text-lg font-medium text-white">Frequently Updated</h3>
-            <p class="">
-              Major Overwatch patches tend to change the availability of
-              backgrounds, including adding new backgrounds and removing some
-              existing ones. The app has a secure built-in updater, and updates
-              can be manually checked in the settings.
-            </p>
-          </li>
-        </ul>
-        <div class="flex gap-6">
-          <a
-            class="inline-flex h-14 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95"
-            href={projectInfo.data.download!}
-          >
-            Get the App
-          </a>
-          <!-- <div class="flex items-center">
-            <a
-              class:list={[
-                'underline-fade-in relative select-none text-center text-lg font-medium uppercase tracking-wide transition-[color,transform] will-change-transform after:bg-zinc-300 hover:text-zinc-300 focus-visible:text-zinc-300 focus-visible:outline-none active:scale-95 disabled:pointer-events-none'
-              ]}
-              href={projectInfo.data.download!}
-              target="_blank"
-              rel="noopener"
-            >
-              Read the Latest Release
-            </a>
-          </div> -->
-        </div>
-      </div>
+      <OverBuddy
+        repository={projectInfo.data.repository!}
+        download={projectInfo.data.download!}
+      />
       <div class="flex w-full items-center">
         <Image
           class="fade-in select-none rounded"

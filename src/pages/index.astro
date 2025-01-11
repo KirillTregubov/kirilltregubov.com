@@ -16,7 +16,11 @@ import ToolStack from '@components/ToolStack.astro'
 const allProjects = await getCollection('projects').then((projects) =>
   projects
     .filter((project) => import.meta.env.DEV || project.data.draft !== true)
-    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+    .sort(
+      (a, b) =>
+        (b.data.updatedDate?.getTime() ?? b.data.pubDate.getTime()) -
+        (a.data.updatedDate?.getTime() ?? a.data.pubDate.getTime())
+    )
 )
 
 const featuredProjects = allProjects.filter((project) => project.data.featured)
