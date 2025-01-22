@@ -16,6 +16,7 @@ interface Props {
   link?: string
   loading?: 'eager' | 'lazy'
   draggable?: 'true' | 'false'
+  parentProps?: object
 }
 
 const {
@@ -28,13 +29,14 @@ const {
   description,
   keywords,
   link,
+  parentProps,
   ...props
 } = Astro.props
 
 const imgAlt = alt || title || 'Placeholder image'
 ---
 
-<figure data-item>
+<figure {...parentProps}>
   <div class:list={['relative w-fit', containerClassName]}>
     <Image
       {...props}
@@ -49,8 +51,8 @@ const imgAlt = alt || title || 'Placeholder image'
     !!title && title.length > 0 && (
       <figcaption
         class:list={[
-          'text-center',
-          !!description && 'mt-3 text-lg font-semibold leading-6'
+          'mt-0 text-center',
+          !!description && 'text-lg font-semibold leading-6'
         ]}
         data-title
       >

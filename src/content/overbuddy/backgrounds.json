@@ -511,5 +511,21 @@
     "description": "Avatar: The Last Airbender Event (Season 14)",
     "keywords": "collaboration crossover animation",
     "available": true
+  },
+  {
+    "id": "ashe_lead_rose",
+    "image": "/assets/projects/overbuddy/ashe_lead_rose.jpg",
+    "title": "Ashe Lead Rose",
+    "description": "Ashe Mythic Weapon (Season 14)",
+    "keywords": "weapon mythic ashe",
+    "available": true
+  },
+  {
+    "id": "celestial_skins",
+    "image": "/assets/projects/overbuddy/celestial_skins.jpg",
+    "title": "Celestial Skins",
+    "description": "Celestial Skin Bundle (Season 14)",
+    "keywords": "weapon mythic ashe",
+    "available": true
   }
 ]

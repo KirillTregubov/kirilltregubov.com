@@ -100,7 +100,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
         <button
           class="group -mr-2 grid w-auto flex-shrink-0 flex-grow-0 select-none items-center gap-1 rounded px-2 text-right font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400 md:text-center"
           id="sort"
-          data-newest="true"
+          data-newest="false"
         >
           <span
             class="invisible [grid-area:1/-1] group-data-[newest=true]:visible"
@@ -116,7 +116,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
         class="grid grid-cols-1 gap-3 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40 plus-phone:[&>figure]:scroll-mt-[7rem]"
       >
         {
-          backgrounds.map((background) => (
+          backgrounds.map((background, index) => (
             <MDImage
               id={background.data.id}
               src={background.data.image}
@@ -129,6 +129,12 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
               className="fade-in-slow w-full rounded-lg shadow-lg"
               draggable="false"
               hasDetails
+              parentProps={{
+                'data-item': true,
+                style: {
+                  order: `${backgrounds.length - index}`
+                }
+              }}
             >
               <div
                 class:list={[
