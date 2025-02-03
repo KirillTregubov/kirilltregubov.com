@@ -87,7 +87,7 @@ export default function Globe() {
     <div className="relative aspect-[1] w-full max-w-[600px]">
       <canvas
         ref={canvasRef}
-        className="contain-[layout_paint_size] h-full w-full animate-[scaleUp_1.2s_forwards] will-change-transform"
+        className="h-full w-full animate-[scaleUp_1.2s_forwards] will-change-transform contain-[layout_paint_size]"
         // onPointerEnter={() => {
         //   pointerHovering.current = true
         //   focusRef.current = -0.1

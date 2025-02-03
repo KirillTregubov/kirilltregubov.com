@@ -4,7 +4,7 @@ import Age from './Age'
 const { class: className } = Astro.props
 ---
 
-<div class:list={['text-pretty text-lg', className]}>
+<div class:list={['text-lg text-pretty', className]}>
   <p>
     Hey! I'm Kirill Tregubov, a
     <Age client:load /> year-old

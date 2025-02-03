@@ -1,5 +1,5 @@
 ---
-import '../index.css'
+import '@styles/global.css'
 import '@fontsource-variable/inter'
 import SpeedInsights from '@vercel/speed-insights/astro'
 import { ClientRouter } from 'astro:transitions'
@@ -109,7 +109,7 @@ const formattedImage = image.replace('/assets/', '')
   </head>
   <body
     class:list={[
-      'dark relative min-h-dynamic bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12',
+      'dark relative min-h-dvh bg-neutral-900 p-4 !pb-0 text-white xs:p-6 md:p-12',
       bodyClass
     ]}
   >
@@ -125,7 +125,7 @@ const formattedImage = image.replace('/assets/', '')
           rel="noopener"
           href="https://github.com/KirillTregubov/kirilltregubov.com"
           target="_blank"
-          class="-m-0.5 rounded p-0.5 underline underline-offset-2 transition-shadow"
+          class="-m-0.5 rounded-sm p-0.5 underline underline-offset-2 transition-shadow"
           >open source</a
         >.
       </span>

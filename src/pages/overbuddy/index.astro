@@ -22,12 +22,10 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
   footerContent="All trademarks are the property of their respective owners."
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
-    <ReturnHome
-      containerClass="flex-col items-start justify-start justify-between plus-phone:flex-row"
-    >
+    <ReturnHome>
       <a
         href={projectInfo.data.download!}
-        class="-mr-1 inline-flex select-none items-center gap-1 rounded px-1 font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+        class="-mx-1 inline-flex items-center gap-1 rounded-sm px-1 font-medium transition-[color,box-shadow] select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
       >
         <MonitorDownIcon className="mr-1.5 size-5" aria-hidden="true" />
         <span>Download OverBuddy</span>
@@ -49,7 +47,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
           draggable="false"
         />
         <div>
-          <h1 class="text-2xl font-bold leading-none">
+          <h1 class="text-2xl leading-none font-bold">
             {projectInfo.data.name}
           </h1>
           <p class="my-2 text-neutral-400">
@@ -64,7 +62,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
       />
       <div class="flex w-full items-center">
         <Image
-          class="fade-in select-none rounded"
+          class="fade-in rounded-sm select-none"
           src="/assets/projects/overbuddy/screenshot-2.png"
           alt="Screenshot of the OverBuddy app"
           width={684}
@@ -82,13 +80,13 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
       class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
     >
       <h2
-        class="mb-3 scroll-mt-[4.5rem] text-xl font-semibold leading-none plus-phone:scroll-mt-6"
+        class="mb-3 scroll-mt-[4.5rem] text-xl leading-none font-semibold"
         id="gallery"
       >
         Background Gallery
       </h2>
       <div
-        class="sticky top-24 z-20 -mt-2 mb-4 flex w-full gap-1 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] plus-phone:top-12 md:gap-2"
+        class="sticky top-12 z-20 -mt-2 mb-4 flex w-full gap-1 bg-neutral-900 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 md:gap-2"
       >
         <input
           id="search"
@@ -97,7 +95,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
           class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition-[box-shadow] placeholder:text-neutral-400 focus-visible:!ring-white md:max-w-96"
         />
         <button
-          class="group -mr-2 grid w-auto flex-shrink-0 flex-grow-0 select-none items-center gap-1 rounded px-2 text-right font-medium transition-[color,box-shadow] hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400 md:text-center"
+          class="group -mr-2 grid w-auto shrink-0 grow-0 items-center gap-1 rounded-sm px-2 text-right font-medium transition-[color,box-shadow] select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400 md:text-center"
           id="sort"
           data-newest="false"
         >
@@ -112,7 +110,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
         </button>
       </div>
       <div
-        class="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40 plus-phone:[&>figure]:scroll-mt-[7rem]"
+        class="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40"
       >
         {
           backgrounds.map((background, index) => (
@@ -137,25 +135,25 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
             >
               <div
                 class:list={[
-                  'group/parent absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100'
+                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100'
                 ]}
                 data-detail-button
               >
                 <a
                   href={`/overbuddy/${background.data.id}`}
                   title={`View  ${background.data.title} background`}
-                  class="group pointer-events-none p-2 focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
+                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:!ring-0"
                 >
-                  <EyeIcon className="size-10 rounded transition-[color,transform] active:text-neutral-400 group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100" />
+                  <EyeIcon className="size-10 rounded-sm transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
                 </a>
                 <a
                   href={background.data.image}
                   download
                   title={`Download the ${background.data.title} background`}
                   data-astro-prefetch="tap"
-                  class="group pointer-events-none p-2 focus-visible:!ring-0 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto"
+                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:!ring-0"
                 >
-                  <CloudDownloadIcon className="size-10 rounded transition-[color,transform] active:text-neutral-400 group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100" />
+                  <CloudDownloadIcon className="size-10 rounded-sm transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
                 </a>
               </div>
             </MDImage>

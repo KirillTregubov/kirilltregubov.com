@@ -24,7 +24,7 @@ const { repository, download, showTitle = false } = Astro.props
           loading="eager"
           draggable="false"
         />
-        <h1 class="text-2xl font-bold leading-none">OverBuddy</h1>
+        <h1 class="text-2xl leading-none font-bold">OverBuddy</h1>
       </div>
     )
   }
@@ -73,7 +73,7 @@ const { repository, download, showTitle = false } = Astro.props
   </ul>
   <div class="flex gap-6">
     <a
-      class="inline-flex h-14 select-none items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold uppercase tracking-wide text-orange-50 shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:outline-none focus-visible:!ring-1 active:scale-95"
+      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold tracking-wide text-orange-50 uppercase shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform select-none hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95"
       href={download}
     >
       Get the App
@@ -81,7 +81,7 @@ const { repository, download, showTitle = false } = Astro.props
     <!-- <div class="flex items-center">
         <a
           class:list={[
-            'underline-fade-in relative select-none text-center text-lg font-medium uppercase tracking-wide transition-[color,transform] will-change-transform after:bg-zinc-300 hover:text-zinc-300 focus-visible:text-zinc-300 focus-visible:outline-none active:scale-95 disabled:pointer-events-none'
+            'underline-fade-in relative select-none text-center text-lg font-medium uppercase tracking-wide transition-[color,transform] will-change-transform after:bg-zinc-300 hover:text-zinc-300 focus-visible:text-zinc-300 focus-visible:outline-hidden active:scale-95 disabled:pointer-events-none'
           ]}
           href={projectInfo.data.download!}
           target="_blank"

@@ -12,5 +12,6 @@
     "bodyClass",
     "footerClass",
     "fallbackClass"
-  ]
+  ],
+  "tailwindStylesheet": "./src/styles/global.css"
 }

@@ -1,9 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: dark;
+}
+
+@theme {
+  --font-sans: 'Inter Variable';
+  --breakpoint-xs: 24rem; /* Used to be 375px; */
+}
+
+@theme inline {
+  --color-accent-50: var(--color-orange-50);
+  --color-accent-100: var(--color-orange-100);
+  --color-accent-200: var(--color-orange-200);
+  --color-accent-300: var(--color-orange-300);
+  --color-accent-400: var(--color-orange-400);
+  --color-accent-500: var(--color-orange-500);
+  --color-accent-600: var(--color-orange-600);
+  --color-accent-700: var(--color-orange-700);
+  --color-accent-800: var(--color-orange-800);
+  --color-accent-900: var(--color-orange-900);
+  --color-accent-950: var(--color-orange-950);
+}
 
 :focus-visible {
-  @apply rounded outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
+  @apply rounded-sm outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
 }
 
 @keyframes scaleUp {
@@ -38,11 +62,11 @@
 }
 
 .inline-link {
-  @apply relative -m-0.5 rounded p-0.5 font-medium transition-shadow;
+  @apply relative -m-0.5 rounded-sm p-0.5 font-medium transition-shadow;
 }
 
 .inline-link::after {
-  @apply absolute bottom-0 left-0.5 right-0.5 rounded-full bg-current font-semibold will-change-transform content-[''];
+  @apply absolute right-0.5 bottom-0 left-0.5 rounded-full bg-current font-semibold will-change-transform content-[''];
   width: calc(100% - 0.25rem);
   transform: scaleX(1);
   height: 1px;
@@ -60,7 +84,7 @@
 }
 
 .social-buttons a {
-  @apply inline-block rounded bg-neutral-600 px-2.5 py-1.5 text-neutral-200 transition duration-200 hover:bg-neutral-700 hover:text-neutral-50 active:translate-y-0.5 active:bg-neutral-800 active:text-neutral-50 active:shadow dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-50 dark:active:bg-neutral-500;
+  @apply inline-block rounded-sm bg-neutral-600 px-2.5 py-1.5 text-neutral-200 transition duration-200 hover:bg-neutral-700 hover:text-neutral-50 active:translate-y-0.5 active:bg-neutral-800 active:text-neutral-50 active:shadow-sm dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-50 dark:active:bg-neutral-500;
 }
 
 .social-buttons svg {

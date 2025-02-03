@@ -23,7 +23,7 @@ const technologies = await getEntries(project.data.technologies)
 
 <div>
   <div
-    class="w-full flex-shrink-0 overflow-clip rounded-xl bg-neutral-800 object-contain"
+    class="w-full shrink-0 overflow-clip rounded-xl bg-neutral-800 object-contain"
   >
     <Image
       class="unblur select-none"
@@ -62,7 +62,7 @@ const technologies = await getEntries(project.data.technologies)
       {
         technologies &&
           technologies.map((tech) => (
-            <div class="color-bg-transition whitespace-nowrap rounded-sm bg-neutral-200 px-1.5 leading-relaxed text-neutral-700 shadow-sm dark:bg-neutral-800 dark:text-neutral-400">
+            <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
               {tech.data.name}
             </div>
           ))
@@ -71,7 +71,7 @@ const technologies = await getEntries(project.data.technologies)
   </div>
   {
     (project.data.source || project.data.demo || project.data.article) && (
-      <div class="mt-2 flex select-none flex-wrap items-center gap-2">
+      <div class="mt-2 flex flex-wrap items-center gap-2 select-none">
         {project.data.page ? (
           <a
             href={project.data.page}
@@ -86,7 +86,7 @@ const technologies = await getEntries(project.data.technologies)
             <button
               disabled
               aria-disabled="true"
-              class="flex cursor-not-allowed items-center py-1.5 pr-2 font-medium leading-none disabled:opacity-80"
+              class="flex cursor-not-allowed items-center py-1.5 pr-2 leading-none font-medium disabled:opacity-80"
             >
               <LockIcon className="mr-1.5 size-5" aria-hidden="true" />
               <div>Closed Source</div>
