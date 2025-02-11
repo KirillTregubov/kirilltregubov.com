@@ -10,5 +10,16 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()]
+  },
+
+  redirects: {
+    '/github': {
+      status: 308,
+      destination: 'https://github.com/KirillTregubov'
+    },
+    '/linkedin': {
+      status: 308,
+      destination: 'https://www.linkedin.com/in/kirilltregubov/'
+    }
   }
 })
