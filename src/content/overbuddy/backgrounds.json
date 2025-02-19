@@ -500,7 +500,7 @@
     "id": "welcome_home_china",
     "image": "/assets/projects/overbuddy/welcome_home_china.jpg",
     "title": "Welcome Home, China (欢迎回家)",
-    "description": "Upcoming China NetEase Re-release",
+    "description": "Chinese (NetEase) beta re-release of Overwatch (Season 14)",
     "keywords": "",
     "available": true
   },
@@ -526,6 +526,22 @@
     "title": "Celestial Skins",
     "description": "Celestial Skin Bundle (Season 14)",
     "keywords": "weapon mythic ashe",
+    "available": true
+  },
+  {
+    "id": "honor_and_glory",
+    "image": "/assets/projects/overbuddy/honor_and_glory.jpg",
+    "title": "Honor and Glory",
+    "description": "Season 15 Release Art",
+    "keywords": "pixiu zenyatta sigma hanzo venture mercy static",
+    "available": true
+  },
+  {
+    "id": "party_in_china",
+    "image": "/assets/projects/overbuddy/party_in_china.jpg",
+    "title": "Party in China",
+    "description": "Chinese (NetEase) re-release of Overwatch (Season 15)",
+    "keywords": "mei illari sojourn juno mauga lifeweaver venture kiriko hazard junker queen animated",
     "available": true
   }
 ]
