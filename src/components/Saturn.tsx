@@ -61,7 +61,6 @@ function Scene() {
 
   return (
     <>
-      {/* @ts-expect-error Type instantiation is excessively deep and possibly infinite */}
       <animated.primitive
         ref={sceneRef}
         object={scene}
