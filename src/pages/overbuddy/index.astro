@@ -193,12 +193,12 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
           if (event.target !== button) return
 
           button.classList.toggle('opacity-100')
-          button.classList.toggle('*:pointer-events-auto')
+          button.classList.toggle('*:pointer-events-auto!')
         })
 
         button.addEventListener('mouseleave', () => {
           button.classList.remove('opacity-100')
-          button.classList.remove('*:pointer-events-auto')
+          button.classList.remove('*:pointer-events-auto!')
         })
       })
 
