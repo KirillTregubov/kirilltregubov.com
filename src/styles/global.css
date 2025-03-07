@@ -28,8 +28,8 @@
   --color-accent-950: var(--color-orange-950);
 }
 
-:focus-visible {
-  @apply rounded-sm outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
+:where(:focus-visible) {
+  @apply outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-500 dark:focus-visible:ring-neutral-400;
 }
 
 @keyframes scaleUp {
