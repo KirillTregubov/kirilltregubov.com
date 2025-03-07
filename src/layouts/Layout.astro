@@ -133,7 +133,9 @@ const formattedImage = image.replace('/assets/', '')
     </footer>
     {isHolidaySeason && <Snow client:only />}
     <!-- Analytics: Simple Analytics - 100% privacy-first analytics-->
-    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"
-    ></script>
+    <script
+      is:inline
+      async
+      src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   </body>
 </html>

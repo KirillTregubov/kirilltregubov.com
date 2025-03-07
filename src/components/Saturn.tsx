@@ -21,14 +21,12 @@ function Scene() {
     scale: reducedMotion || shown ? [0.1, 0.1, 0.1] : [0, 0, 0],
     config: { mass: 2, tension: 280, friction: 60 }
   })
+  // const camera = useThree((state) => state.camera)
 
   useFrame(() => {
     if (sceneRef.current) {
-      //   console.log(sceneRef.current.rotation)
-
       // Incrementally rotates the object around the y-axis
       sceneRef.current.rotation.y += 0.001
-
       //   sceneRef.current.rotation.z -= 0.01
 
       if (sceneRef.current.rotation.y > Math.PI * 2) {
@@ -39,10 +37,7 @@ function Scene() {
 
   useEffect(() => {
     setShown(true)
-
-    return () => {
-      setShown(false)
-    }
+    return () => setShown(false)
   }, [])
 
   // useEffect(() => {
@@ -60,14 +55,12 @@ function Scene() {
   // }, [scene])
 
   return (
-    <>
-      <animated.primitive
-        ref={sceneRef}
-        object={scene}
-        scale={scale}
-        position={[0, 0, 0]}
-      />
-    </>
+    <animated.primitive
+      ref={sceneRef}
+      object={scene}
+      scale={scale}
+      position={[0, 0, 0]}
+    />
   )
 }
 
@@ -86,9 +79,12 @@ function CanvasContent() {
       {/* <OrbitControls
         // ref={cameraRef}
         // args={[camera, gl.domElement]}
+        // camera={camera}
         target={[0, 0, 0]}
         enablePan={false}
         enableZoom={false}
+        // enableRotate={false}
+        maxPolarAngle={2 * Math.PI} // Prevents camera from going below the object
         // onChange={(e) => {
         //   if (!e) return
         //   const camera = e.target.object
@@ -106,7 +102,6 @@ function CanvasContent() {
       <Preload all />
       <PerspectiveCamera
         makeDefault
-        // position={[150, 40, 150]}
         // position={[200, 60, 175]}
         position={[150, 40, 150]}
       />

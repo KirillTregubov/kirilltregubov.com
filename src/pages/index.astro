@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import Layout from '@layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import Saturn from '@components/Saturn'
@@ -28,7 +29,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
 
 <Layout
   title="Kirill Tregubov"
-  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.75s] motion-safe:opacity-0"
 >
   <main class="mx-auto max-w-[90rem] space-y-8 md:space-y-12">
     <section
@@ -59,8 +60,237 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
       </figure>
     </section>
     <section
-      id="projects"
+      id="experience"
       class="motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+    >
+      <h2 class="text-xl leading-none font-semibold">Work Experience</h2>
+      <p class="mt-2 mb-3 text-neutral-400">
+        Roles and projects where I have applied my skills professionally,
+        showcasing my impact and expertise.
+      </p>
+      <div class="mt-4 space-y-6">
+        <div
+          class="flex flex-col gap-x-6 gap-y-4 lg:flex-row lg:items-center xl:gap-x-10"
+        >
+          <Image
+            class="unblur rounded-xl select-none lg:w-[calc(50%-1.25rem)]"
+            src="/assets/experience/PollutionReporter.jpg"
+            alt="Screenshots of the EQAO Practice Test website"
+            width={1200}
+            height={630}
+            onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+            loading="eager"
+          />
+          <div>
+            <h2 class="mb-1 text-lg font-semibold">Pollution Reporter</h2>
+            <p class="mb-2 text-neutral-200">
+              Updated a mobile app that provides academic research connecting
+              polluters to pollution to health harms in Ontario's Chemical
+              Valley. It also helps residents report pollution incidents by
+              drafting an email addressed to the Ontario Ministry of the
+              Environment's Spills Action Center.
+            </p>
+            <div class="mb-2 flex gap-2 select-none">
+              <a
+                href="https://apps.apple.com/ca/app/pollution-reporter/id1476589861"
+                target="_blank"
+                rel="noopener noreferrer"
+                draggable="false"
+                class="rounded-lg! transition-opacity hover:opacity-70 focus-visible:opacity-70 active:opacity-60"
+              >
+                <Image
+                  src="/assets/experience/AppStoreBadge.svg"
+                  alt="Download on the App Store"
+                  width={120}
+                  height={40}
+                  draggable="false"
+                />
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.PollutionReporter"
+                target="_blank"
+                rel="noopener noreferrer"
+                draggable="false"
+                class="rounded-md! transition-opacity hover:opacity-70 focus-visible:opacity-70 active:opacity-60"
+              >
+                <Image
+                  src="/assets/experience/GooglePlayBadge.png"
+                  alt="Get it on Google Play"
+                  width={135}
+                  height={40}
+                  draggable="false"
+                />
+              </a>
+            </div>
+            <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400">
+              <h3 class="font-medium">Built with</h3>
+              {
+                [
+                  'TypeScript',
+                  'React Native',
+                  'Expo',
+                  'Reanimated',
+                  'Airtable'
+                ].map((tech) => (
+                  <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                    {tech}
+                  </div>
+                ))
+              }
+            </div>
+            <div class="mt-2 flex flex-col gap-1.5 text-neutral-400">
+              <p>
+                Migrated an outdated Flow React Native app to the latest Expo
+                managed workflow with TypeScript. Released the app on the Google
+                Play Store.
+              </p>
+              <p>
+                Refined the UI by fixing splash screen issues, adjusting safe
+                areas and content padding, adding animations and fixing data
+                loading issues.
+              </p>
+              <p>
+                Modernized the app's architecture by automating native code
+                generation, transitioning to functional components and hooks
+                where appropriate, integrating linting and formatting tools, and
+                applying best practices.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-col gap-x-6 gap-y-4 lg:flex-row lg:items-center xl:gap-x-10"
+        >
+          <div class="lg:text-right">
+            <h2 class="mb-1 text-lg font-semibold">
+              Peel District School Board
+            </h2>
+            <p class="mb-2 text-neutral-200">
+              Created a practice test website for students in grades 3, 6, 9,
+              and 10, offering mathematics and language assessments. The
+              platform has already served over 40,000 learners.
+            </p>
+            <div
+              class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400 lg:justify-end"
+            >
+              <h3 class="font-medium">Built with</h3>
+              {
+                [
+                  'TypeScript',
+                  'React',
+                  'React Router',
+                  'Vite',
+                  'Tailwind CSS',
+                  'Motion'
+                ].map((tech) => (
+                  <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                    {tech}
+                  </div>
+                ))
+              }
+            </div>
+            <div class="mt-2 flex flex-col gap-1.5 text-neutral-400">
+              <p>
+                Designed and developed a React single-page website closely
+                modeled after the official ministry practice test platform.
+                Improved styling for irregular screen sizes, enhanced
+                accessibility, and added confetti on submission to add a touch
+                of fun.
+              </p>
+              <p>
+                Extensively tested the website across different browsers, screen
+                sizes, and old browser versions like Chrome 76 and iOS 14
+                Safari. Conducted classroom usability testing to observe user
+                engagement and identify areas for improvement, particularly in
+                UI and UX.
+              </p>
+            </div>
+          </div>
+          <Image
+            class="unblur -order-1 rounded-xl select-none lg:order-none lg:w-[calc(50%-1.25rem)]"
+            src="/assets/experience/PracticeTests.jpg"
+            alt="Screenshots of the EQAO Practice Test website"
+            width={1200}
+            height={630}
+            onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+            loading="eager"
+          />
+        </div>
+        <div
+          class="flex flex-col gap-x-6 gap-y-4 lg:flex-row lg:items-center xl:gap-x-10"
+        >
+          <div class="flex shrink-0 flex-col gap-2 lg:w-[calc(50%-1.25rem)]">
+            <Image
+              class="unblur rounded-xl select-none"
+              src="/assets/experience/BeaneraApp.jpg"
+              alt="Screenshots of the EQAO Practice Test website"
+              width={1200}
+              height={630}
+              onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+              loading="eager"
+            />
+            <!-- <Image
+              class="unblur rounded-xl select-none"
+              src="/assets/experience/BeaneraAdmin.jpg"
+              alt="Screenshots of the EQAO Practice Test website"
+              width={1200}
+              height={630}
+              onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+              loading="eager"
+            /> -->
+          </div>
+          <div>
+            <h2 class="mb-1 text-lg font-semibold">Beanera</h2>
+            <p class="mb-2 text-neutral-200">
+              A coffee shop directory app to help you discover your next
+              favourite brew.
+              <br />
+              Designed and developed an iOS and Android mobile app, Node.js backend,
+              and admin dashboard website with shared data schema layer.
+            </p>
+            <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400">
+              <h3 class="font-medium">Built with</h3>
+              {
+                [
+                  'TypeScript',
+                  'React Native',
+                  'Expo',
+                  'Node.js',
+                  'Fastify',
+                  'PostgreSQL',
+                  'Prisma',
+                  'Next.js',
+                  'Tailwind CSS'
+                ].map((tech) => (
+                  <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                    {tech}
+                  </div>
+                ))
+              }
+            </div>
+            <div class="mt-2 flex flex-col gap-1.5 text-neutral-400">
+              <p>
+                Designed and developed a strict TypeScript monorepo integrating
+                a React Native mobile app, a Next.js admin dashboard, and a
+                Node.js backend with PostgreSQL database. Implemented a shared
+                Zod schema layer for data synchronization across the stack.
+              </p>
+              <p>
+                Documented backend HTTP endpoints, request structures, response
+                payloads (including HTTP codes), authentication requirements,
+                logging and error handling, integrated Swagger and OpenAPI 2.0.
+                Configured a continuous deployment pipeline to deploy the
+                backend to a dedicated Linux server using Docker and GitHub
+                Actions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      id="projects"
+      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
     >
       <div
         class="sticky top-0 z-10 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 pt-4 pb-0.5 after:absolute after:-bottom-3.5 after:h-3.5 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:flex-row"
@@ -69,7 +299,9 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         <ProjectToggle client:load />
       </div>
       <ShowFeatured client:load>
-        <ul class="mt-4 grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-3">
+        <ul
+          class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10"
+        >
           {
             featuredProjects.map((project) => (
               <li>
@@ -80,7 +312,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         </ul>
       </ShowFeatured>
       <ShowAll client:load>
-        <ul class="mt-4 grid grid-cols-1 gap-8 gap-x-10 lg:grid-cols-3">
+        <ul class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3">
           {
             allProjects.map((project) => (
               <li>
@@ -93,7 +325,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
     </section>
     <section
       id="tech-stack"
-      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
     >
       <h2 class="text-xl leading-none font-semibold">Tech Stack</h2>
       <p class="mt-2 mb-3 text-neutral-400">
@@ -104,7 +336,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
     </section>
     <section
       id="tech-stack"
-      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
     >
       <h2 class="text-xl leading-none font-semibold">Tools & Services</h2>
       <p class="mt-2 mb-3 text-neutral-400">
