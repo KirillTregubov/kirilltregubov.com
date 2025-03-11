@@ -10,8 +10,9 @@ import OverBuddy from '@components/OverBuddy.astro'
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
 
-const backgrounds = await getCollection('overbuddy')
+let backgrounds = await getCollection('overbuddy')
 if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
+backgrounds = backgrounds.reverse()
 ---
 
 <Layout
@@ -127,10 +128,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
               draggable="false"
               hasDetails
               parentProps={{
-                'data-item': true,
-                style: {
-                  order: `${backgrounds.length - index}`
-                }
+                'data-item': true
               }}
             >
               <div
@@ -171,6 +169,22 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
         return
       }
 
+      // Mobile detail buttons
+      const buttons = document.querySelectorAll('[data-detail-button]')
+      buttons.forEach((button) => {
+        button.addEventListener('pointerdown', (event) => {
+          if (event.target !== button) return
+
+          button.classList.toggle('opacity-100')
+          button.classList.toggle('*:pointer-events-auto!')
+        })
+
+        button.addEventListener('mouseleave', () => {
+          button.classList.remove('opacity-100')
+          button.classList.remove('*:pointer-events-auto!')
+        })
+      })
+
       // Search
       const items = Array.from(document.querySelectorAll('[data-item]')).map(
         (item) => {
@@ -187,21 +201,6 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
         }
       )
 
-      const buttons = document.querySelectorAll('[data-detail-button]')
-      buttons.forEach((button) => {
-        button.addEventListener('pointerdown', (event) => {
-          if (event.target !== button) return
-
-          button.classList.toggle('opacity-100')
-          button.classList.toggle('*:pointer-events-auto!')
-        })
-
-        button.addEventListener('mouseleave', () => {
-          button.classList.remove('opacity-100')
-          button.classList.remove('*:pointer-events-auto!')
-        })
-      })
-
       const fuse = new Fuse(items, {
         keys: [
           { name: 'title', weight: 4 },
@@ -210,7 +209,7 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
         ],
         shouldSort: true,
         ignoreLocation: true,
-        threshold: 0.3
+        threshold: 0.2
       })
 
       const search = document.getElementById('search')
@@ -260,9 +259,9 @@ if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
 
           items.forEach(({ element }, index) => {
             if (sortByNewest) {
-              element.style.order = `${index + 1}`
-            } else {
               element.style.order = `${items.length - index}`
+            } else {
+              element.style.order = `${index + 1}`
             }
           })
         })

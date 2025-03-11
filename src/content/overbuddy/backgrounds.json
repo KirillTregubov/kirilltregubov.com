@@ -260,7 +260,7 @@
     "image": "/assets/projects/overbuddy/le_sserafim.jpg",
     "title": "LE SSERAFIM Art",
     "description": "LE SSERAFIM Event (Season 7)",
-    "keywords": "k-pop korean pop collaboration crossover",
+    "keywords": "k-pop korean pop collaboration crossover kiriko brigitte dva d.va tracer sombra",
     "available": false
   },
   {
@@ -268,7 +268,7 @@
     "image": "/assets/projects/overbuddy/le_sserafim_full.jpeg",
     "title": "LE SSERAFIM Full Art",
     "description": "From X / @PlayOverwatch",
-    "keywords": "external twitter k-pop korean pop collaboration crossover",
+    "keywords": "external twitter k-pop korean pop collaboration crossover kiriko brigitte dva d.va tracer sombra",
     "link": "https://twitter.com/PlayOverwatch/status/1719042353158332706",
     "available": "never"
   },
@@ -293,7 +293,7 @@
     "image": "/assets/projects/overbuddy/winter_wonderland_2023.jpg",
     "title": "Festive Mercy B.O.B. and Genji Art",
     "description": "Winter Wonderland 2023 (Season 8)",
-    "keywords": "christmas holidays",
+    "keywords": "christmas holidays bob",
     "available": false
   },
   {
@@ -301,7 +301,7 @@
     "image": "/assets/projects/overbuddy/winter_wonderland_2021.jpg",
     "title": "Festive Mercy Ashe B.O.B. Genji Wrecking Ball Art",
     "description": "Winter Wonderland 2021",
-    "keywords": "christmas holidays hammond",
+    "keywords": "christmas holidays bob hammond",
     "available": false
   },
   {
@@ -543,5 +543,14 @@
     "description": "Chinese (NetEase) re-release of Overwatch (Season 15)",
     "keywords": "mei illari sojourn juno mauga lifeweaver venture kiriko hazard junker queen animated",
     "available": true
+  },
+  {
+    "id": "le_sserafim_remix_promo",
+    "image": "/assets/projects/overbuddy/le_sserafim_remix_promo.jpg",
+    "title": "LE SSERAFIM Remix Promo",
+    "description": "From Blizzard News",
+    "keywords": "external blizzard k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
+    "link": "https://overwatch.blizzard.com/en-us/news/24177860/remix-the-beat-with-overwatch-2-x-le-sserafim/",
+    "available": "never"
   }
 ]
