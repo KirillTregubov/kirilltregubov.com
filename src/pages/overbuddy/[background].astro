@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
 
-const { id, title, description, image, available } = Astro.props
+const { id, title, description, image, available, link } = Astro.props
 
 const layoutDescription =
   available === true
@@ -74,6 +74,18 @@ const layoutDescription =
           <div class="mt-1 text-lg text-neutral-400">
             <p class="inline-block" data-description>
               {description}
+              {
+                link && URL.canParse(link) && (
+                  <a
+                    href={link}
+                    rel="noopener"
+                    target="_blank"
+                    class="-m-0.5 p-0.5 !ring-white transition-[color,box-shadow] hover:text-white focus-visible:text-white active:text-white"
+                  >
+                    (<span class="underline">Link</span>)
+                  </a>
+                )
+              }
             </p>
           </div>
         </div>
