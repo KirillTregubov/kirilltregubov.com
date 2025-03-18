@@ -560,5 +560,13 @@
     "description": "LE SSERAFIM Homecoming Event (Season 15)",
     "keywords": "k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
     "available": true
+  },
+  {
+    "id": "owcs_juno",
+    "image": "/assets/projects/overbuddy/owcs_juno.jpg",
+    "title": "OWCS Juno",
+    "description": "Champions Clash Hangzhou 2025 Juno Skin",
+    "keywords": "esports competitive juno",
+    "available": true
   }
 ]
