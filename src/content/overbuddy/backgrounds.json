@@ -547,10 +547,18 @@
   {
     "id": "le_sserafim_remix_promo",
     "image": "/assets/projects/overbuddy/le_sserafim_remix_promo.jpg",
-    "title": "LE SSERAFIM Remix Promo",
+    "title": "LE SSERAFIM Homecoming Full Art",
     "description": "From Blizzard News",
-    "keywords": "external blizzard k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
+    "keywords": "external k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
     "link": "https://overwatch.blizzard.com/en-us/news/24177860/remix-the-beat-with-overwatch-2-x-le-sserafim/",
     "available": "never"
+  },
+  {
+    "id": "le_sserafim_homecoming",
+    "image": "/assets/projects/overbuddy/le_sserafim_homecoming.jpg",
+    "title": "LE SSERAFIM Homecoming",
+    "description": "LE SSERAFIM Homecoming Event (Season 15)",
+    "keywords": "k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
+    "available": true
   }
 ]
