@@ -562,10 +562,26 @@
     "available": true
   },
   {
+    "id": "widowmaker_dame_chance_2",
+    "image": "/assets/projects/overbuddy/widowmaker_dame_chance_2.jpg",
+    "title": "Widowmaker Dame Chance (Alternate)",
+    "description": "Widowmaker Mythic Weapon (Season 15)",
+    "keywords": "weapon mythic widowmaker",
+    "available": true
+  },
+  {
+    "id": "widowmaker_dame_chance",
+    "image": "/assets/projects/overbuddy/widowmaker_dame_chance.jpg",
+    "title": "Widowmaker Dame Chance",
+    "description": "Widowmaker Mythic Weapon (Season 15)",
+    "keywords": "weapon mythic widowmaker",
+    "available": true
+  },
+  {
     "id": "owcs_juno",
     "image": "/assets/projects/overbuddy/owcs_juno.jpg",
-    "title": "OWCS Juno",
-    "description": "Champions Clash Hangzhou 2025 Juno Skin",
+    "title": "Ember Juno",
+    "description": "2025 Champions Clash Hangzhou Crowdfunding Skin",
     "keywords": "esports competitive juno",
     "available": true
   }
