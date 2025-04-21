@@ -329,7 +329,9 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         </ul>
       </ShowFeatured>
       <ShowAll client:load>
-        <ul class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3">
+        <ul
+          class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10"
+        >
           {
             allProjects.map((project) => (
               <li>

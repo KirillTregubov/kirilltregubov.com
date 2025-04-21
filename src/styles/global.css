@@ -63,28 +63,6 @@
   }
 }
 
-.inline-link {
-  @apply relative -m-0.5 rounded-sm p-0.5 font-medium transition-shadow;
-}
-
-.inline-link::after {
-  @apply absolute right-0.5 bottom-0 left-0.5 rounded-full bg-current font-semibold will-change-transform content-[''];
-  width: calc(100% - 0.25rem);
-  transform: scaleX(1);
-  height: 1px;
-  transform-origin: bottom left;
-  transition: transform 0.5s ease-in-out;
-}
-
-.inline-link.primary::after {
-  @apply h-0.5 bg-gradient-to-r from-accent-600 to-accent-300 dark:from-accent-700 dark:to-accent-400;
-}
-
-.inline-link:hover::after {
-  transform: scaleX(0);
-  transform-origin: bottom right;
-}
-
 .social-buttons a {
   @apply inline-block rounded-sm bg-neutral-600 px-2.5 py-1.5 text-neutral-200 transition duration-200 hover:bg-neutral-700 hover:text-neutral-50 active:translate-y-0.5 active:bg-neutral-800 active:text-neutral-50 active:shadow-sm dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600 dark:hover:text-neutral-50 dark:active:bg-neutral-500;
 }
