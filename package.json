@@ -29,7 +29,7 @@
     "cobe": "^0.6.3",
     "date-fns": "^4.1.0",
     "fuse.js": "^7.1.0",
-    "lucide-react": "^0.501.0",
+    "lucide-react": "^0.503.0",
     "motion": "^12.7.4",
     "nanostores": "^1.0.1",
     "react": "^19.1.0",

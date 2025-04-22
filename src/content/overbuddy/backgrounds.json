@@ -486,7 +486,7 @@
     "title": "Thor Reinhardt (Armorless)",
     "description": "Season 14 Mythic Skin",
     "keywords": "",
-    "available": true
+    "available": false
   },
   {
     "id": "thor_reinhardt_chest_armor",
@@ -494,7 +494,7 @@
     "title": "Thor Reinhardt (With Chest Armor)",
     "description": "Season 14 Mythic Skin",
     "keywords": "",
-    "available": true
+    "available": false
   },
   {
     "id": "welcome_home_china",
@@ -583,6 +583,22 @@
     "title": "Ember Juno",
     "description": "2025 Champions Clash Hangzhou Crowdfunding Skin",
     "keywords": "esports competitive juno",
+    "available": true
+  },
+  {
+    "id": "stadium",
+    "image": "/assets/projects/overbuddy/stadium.jpg",
+    "title": "Stadium",
+    "description": "Stadium Release (Season 16)",
+    "keywords": "gamemode mode new",
+    "available": true
+  },
+  {
+    "id": "freja",
+    "image": "/assets/projects/overbuddy/freja.jpg",
+    "title": "Freja",
+    "description": "Freja Release (Season 16)",
+    "keywords": "hero",
     "available": true
   }
 ]
