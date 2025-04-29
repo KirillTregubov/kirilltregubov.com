@@ -172,7 +172,7 @@
     "image": "/assets/projects/overbuddy/starwatch_art.jpg",
     "title": "Starwatch Art",
     "description": "Starwatch Event (Season 4)",
-    "keywords": "sigma sojourn soldier winston mercy doomfist baptiste bastion echo lucio ashe hammond wrecking ball",
+    "keywords": "sigma sojourn soldier 76 winston mercy doomfist baptiste bastion echo lucio ashe hammond wrecking ball",
     "available": false
   },
   {
@@ -599,6 +599,14 @@
     "title": "Freja",
     "description": "Freja Release (Season 16)",
     "keywords": "hero",
+    "available": true
+  },
+  {
+    "id": "gundam_wing",
+    "image": "/assets/projects/overbuddy/gundam_wing.jpg",
+    "title": "Gundam Wing",
+    "description": "Gundam Wing Event (Season 16)",
+    "keywords": "collaboration crossover anime mech mercy ramattra soldier 76 reaper",
     "available": true
   }
 ]
