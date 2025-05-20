@@ -608,5 +608,21 @@
     "description": "Gundam Wing Event (Season 16)",
     "keywords": "collaboration crossover anime mech mercy ramattra soldier 76 reaper",
     "available": true
+  },
+  {
+    "id": "street_fighter_6",
+    "image": "/assets/projects/overbuddy/street_fighter_6.jpg",
+    "title": "Street Fighter 6",
+    "description": "Street Fighter 6 Event (Season 16)",
+    "keywords": "collaboration crossover fighting game juno hanzo zenyatta sigma kiriko widowmaker winston soldier 76",
+    "available": true
+  },
+  {
+    "id": "mercy_merciful_magitech",
+    "image": "/assets/projects/overbuddy/mercy_merciful_magitech.jpg",
+    "title": "Mercy Merciful Magitech",
+    "description": "Mercy Mythic Weapon (Season 16)",
+    "keywords": "weapon mythic mercy cute",
+    "available": true
   }
 ]
