@@ -26,7 +26,7 @@ backgrounds = backgrounds.reverse()
     <ReturnHome>
       <a
         href={projectInfo.data.download!}
-        class="-mx-1 inline-flex items-center gap-1 rounded-sm px-1 font-medium transition-[color,box-shadow] select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+        class="-mx-1 inline-flex items-center gap-1 rounded-sm px-1 font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
       >
         <MonitorDownIcon className="mr-1.5 size-5" aria-hidden="true" />
         <span>Download OverBuddy</span>
@@ -82,10 +82,10 @@ backgrounds = backgrounds.reverse()
           id="search"
           type="search"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition-[box-shadow] placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-white md:max-w-96"
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-white md:max-w-96"
         />
         <button
-          class="group -mr-2 grid w-auto shrink-0 grow-0 items-center gap-1 rounded-sm px-2 text-right font-medium transition-[color,box-shadow] select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-500 active:ring-neutral-500! md:text-center"
+          class="group -mr-2 grid w-auto shrink-0 grow-0 items-center gap-1 rounded-sm px-2 text-right font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-500 active:ring-neutral-500! md:text-center"
           id="sort"
           data-newest="false"
         >
@@ -131,7 +131,7 @@ backgrounds = backgrounds.reverse()
                   title={`View ${background.data.title} background`}
                   class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:!ring-0"
                 >
-                  <EyeIcon className="size-10 rounded-sm transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+                  <EyeIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
                 </a>
                 <a
                   href={background.data.image}
@@ -140,7 +140,7 @@ backgrounds = backgrounds.reverse()
                   data-astro-prefetch="tap"
                   class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:!ring-0"
                 >
-                  <CloudDownloadIcon className="size-10 rounded-sm transition-[color,transform] group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+                  <CloudDownloadIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
                 </a>
               </div>
             </MDImage>

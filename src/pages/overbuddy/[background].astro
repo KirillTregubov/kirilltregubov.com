@@ -48,7 +48,7 @@ const layoutDescription =
     >
       <a
         href={projectInfo.data.article!}
-        class="-ml-1 inline-flex w-auto grow-0 items-center gap-1 rounded-sm px-1 font-medium transition-[color,box-shadow] select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+        class="-ml-1 inline-flex w-auto grow-0 items-center gap-1 rounded-sm px-1 font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
       >
         <ChevronLeftCircleIcon className="mr-1.5 size-5" aria-hidden="true" />
         <span>Back to Gallery</span>
@@ -80,7 +80,7 @@ const layoutDescription =
                     href={link}
                     rel="noopener"
                     target="_blank"
-                    class="-m-0.5 p-0.5 !ring-white transition-[color,box-shadow] hover:text-white focus-visible:text-white active:text-white"
+                    class="-m-0.5 p-0.5 !ring-white transition hover:text-white focus-visible:text-white active:text-white"
                   >
                     (<span class="underline">Link</span>)
                   </a>
@@ -92,7 +92,7 @@ const layoutDescription =
 
         <div class="flex flex-wrap gap-3">
           <a
-            class="inline-flex h-12 items-center justify-center rounded-[0.2rem] border-2 border-neutral-900/40 bg-neutral-700 px-4 text-center font-semibold tracking-wide text-neutral-50 uppercase shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform select-none hover:scale-105 hover:rounded-[0.25rem] hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 lg:h-14 lg:px-6 lg:text-lg"
+            class="inline-flex h-12 items-center justify-center rounded-[0.2rem] border-2 border-neutral-900/40 bg-neutral-700 px-4 text-center font-semibold tracking-wide text-neutral-50 uppercase shadow-md !ring-white transition will-change-transform select-none hover:scale-105 hover:rounded-[0.25rem] hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 lg:h-14 lg:px-6 lg:text-lg"
             href={image}
             download
             title="Download this background"
@@ -104,7 +104,7 @@ const layoutDescription =
             available !== 'never' && (
               <a
                 class:list={[
-                  'inline-flex h-12 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold tracking-wide text-orange-50 uppercase shadow-md !ring-white transition-[border-color,transform,border-radius,box-shadow] will-change-transform select-none hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
+                  'inline-flex h-12 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold tracking-wide text-orange-50 uppercase shadow-md !ring-white transition will-change-transform select-none hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
                   !available && 'pointer-events-none opacity-60'
                 ]}
                 href={projectInfo.data.download!}
