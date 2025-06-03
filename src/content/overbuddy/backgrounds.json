@@ -163,7 +163,7 @@
     "id": "galactic_emperor_sigma",
     "image": "/assets/projects/overbuddy/galactic_emperor_sigma.jpg",
     "title": "Galactic Emperor Sigma",
-    "description": "Season 4 Mythic Skin",
+    "description": "Sigma Mythic Skin (Season 4)",
     "keywords": "",
     "available": true
   },
@@ -308,7 +308,7 @@
     "id": "ancient_caller_moira",
     "image": "/assets/projects/overbuddy/ancient_caller_moira.jpg",
     "title": "Ancient Caller Moira Art",
-    "description": "Season 9 Mythic Skin",
+    "description": "Moira Mythic Skin (Season 9)",
     "keywords": "halloween",
     "available": true
   },
@@ -404,7 +404,7 @@
     "id": "anubis_reaper",
     "image": "/assets/projects/overbuddy/anubis_reaper.jpg",
     "title": "Anubis Reaper Art",
-    "description": "Season 12 Mythic Skin",
+    "description": "Reaper Mythic Skin (Season 12)",
     "keywords": "illari doomfist echo egypt",
     "available": true
   },
@@ -428,7 +428,7 @@
     "id": "spellbinder_widowmaker",
     "image": "/assets/projects/overbuddy/spellbinder_widowmaker.jpg",
     "title": "Spellbinder Widowmaker",
-    "description": "Season 13 Mythic Skin",
+    "description": "Widowmaker Mythic Skin (Season 13)",
     "keywords": "Widowmaker Spellbinder Magic",
     "available": true
   },
@@ -623,6 +623,14 @@
     "title": "Mercy Merciful Magitech",
     "description": "Mercy Mythic Weapon (Season 16)",
     "keywords": "weapon mythic mercy cute",
+    "available": true
+  },
+  {
+    "id": "0x0800000000001345",
+    "image": "/assets/projects/overbuddy/heart_of_hope_juno.jpg",
+    "title": "Heart of Hope Juno",
+    "description": "Juno Mythic Skin (Season 16)",
+    "keywords": "mythic skin animated art",
     "available": true
   }
 ]
