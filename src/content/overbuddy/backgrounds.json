@@ -43,7 +43,7 @@
     "id": "cyber_demon_genji_green",
     "image": "/assets/projects/overbuddy/cyber_demon_genji_green.jpg",
     "title": "Cyber Demon Genji (Green)",
-    "description": "Season 1 Mythic Skin",
+    "description": "Genji Mythic Skin (Season 1)",
     "keywords": "",
     "available": false
   },
@@ -51,7 +51,7 @@
     "id": "cyber_demon_genji_red",
     "image": "/assets/projects/overbuddy/cyber_demon_genji_red.jpg",
     "title": "Cyber Demon Genji (Red)",
-    "description": "Season 1 Mythic Skin",
+    "description": "Genji Mythic Skin (Season 1)",
     "keywords": "",
     "available": false
   },
@@ -59,7 +59,7 @@
     "id": "cyber_demon_genji_pink",
     "image": "/assets/projects/overbuddy/cyber_demon_genji_pink.jpg",
     "title": "Cyber Demon Genji (Pink)",
-    "description": "Season 1 Mythic Skin",
+    "description": "Genji Mythic Skin (Season 1)",
     "keywords": "",
     "available": false
   },
@@ -83,7 +83,7 @@
     "id": "zeus_junker_queen",
     "image": "/assets/projects/overbuddy/zeus_junker_queen.jpg",
     "title": "Zeus Junker Queen",
-    "description": "Season 2 Mythic Skin",
+    "description": "Junker Queen Mythic Skin (Season 2)",
     "keywords": "",
     "available": false
   },
@@ -123,7 +123,7 @@
     "id": "kiriko_amaterasu",
     "image": "/assets/projects/overbuddy/kiriko_amaterasu.jpg",
     "title": "Amaterasu Kiriko",
-    "description": "Season 3 Mythic Skin",
+    "description": "Kiriko Mythic Skin (Season 3)",
     "keywords": "",
     "available": false
   },
@@ -131,7 +131,7 @@
     "id": "kiriko_amaterasu_art",
     "image": "/assets/projects/overbuddy/kiriko_amaterasu_art.jpg",
     "title": "Amaterasu Kiriko Art",
-    "description": "Season 3 Mythic Skin",
+    "description": "Kiriko Mythic Skin (Season 3)",
     "keywords": "",
     "available": false
   },
@@ -211,8 +211,8 @@
     "id": "a_7000_wargod_ana",
     "image": "/assets/projects/overbuddy/a_7000_wargod_ana.jpg",
     "title": "A-7000 Wargod Ana",
-    "description": "Season 6 Mythic Skin",
-    "keywords": "Ana",
+    "description": "Ana Mythic Skin (Season 6)",
+    "keywords": "hero",
     "available": false
   },
   {
@@ -227,16 +227,16 @@
     "id": "onryo_hanzo",
     "image": "/assets/projects/overbuddy/onryo_hanzo.jpg",
     "title": "Onryo Hanzo",
-    "description": "Season 7 Mythic Skin",
-    "keywords": "",
+    "description": "Hanzo Mythic Skin (Season 7)",
+    "keywords": "hero",
     "available": false
   },
   {
     "id": "onryo_hanzo_art",
     "image": "/assets/projects/overbuddy/onryo_hanzo_art.jpg",
     "title": "Onryo Hanzo Art",
-    "description": "Season 7 Mythic Skin",
-    "keywords": "",
+    "description": "Hanzo Mythic Skin (Season 7)",
+    "keywords": "hero",
     "available": false
   },
   {
@@ -284,8 +284,8 @@
     "id": "grand_beast_orisa",
     "image": "/assets/projects/overbuddy/grand_beast_orisa.jpg",
     "title": "Grand Beast Orisa",
-    "description": "Season 8 Mythic Skin",
-    "keywords": "",
+    "description": "Orisa Mythic Skin (Season 8)",
+    "keywords": "hero",
     "available": false
   },
   {
@@ -356,7 +356,7 @@
     "id": "calamity_empress_ashe",
     "image": "/assets/projects/overbuddy/calamity_empress_ashe.jpg",
     "title": "Calamity Empress Ashe",
-    "description": "Season 11 Mythic Skin",
+    "description": "Ashe Mythic Skin (Season 11)",
     "keywords": "B.O.B. roadhog cassidy genji",
     "available": false
   },
@@ -476,7 +476,7 @@
     "id": "thor_reinhardt",
     "image": "/assets/projects/overbuddy/thor_reinhardt.jpg",
     "title": "Thor Reinhardt",
-    "description": "Season 14 Mythic Skin",
+    "description": "Reinhardt Mythic Skin (Season 14)",
     "keywords": "",
     "available": false
   },
@@ -484,7 +484,7 @@
     "id": "thor_reinhardt_armorless",
     "image": "/assets/projects/overbuddy/thor_reinhardt_armorless.jpg",
     "title": "Thor Reinhardt (Armorless)",
-    "description": "Season 14 Mythic Skin",
+    "description": "Reinhardt Mythic Skin (Season 14)",
     "keywords": "",
     "available": false
   },
@@ -492,7 +492,7 @@
     "id": "thor_reinhardt_chest_armor",
     "image": "/assets/projects/overbuddy/thor_reinhardt_chest_armor.jpg",
     "title": "Thor Reinhardt (With Chest Armor)",
-    "description": "Season 14 Mythic Skin",
+    "description": "Reinhardt Mythic Skin (Season 14)",
     "keywords": "",
     "available": false
   },
