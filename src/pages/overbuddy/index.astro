@@ -19,7 +19,7 @@ backgrounds = backgrounds.reverse()
   title="OverBuddy - Kirill Tregubov"
   description={projectInfo.data.description}
   image={`projects/overbuddy/marketing.jpg`}
-  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="mt-8 motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
   footerContent="All trademarks are the property of their respective owners."
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
@@ -33,13 +33,13 @@ backgrounds = backgrounds.reverse()
       </a>
     </ReturnHome>
     <section
-      class="grid w-full grid-cols-1 gap-12 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 lg:grid-cols-2"
+      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
     >
       <div
-        class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center"
+        class="inline-flex flex-col items-start justify-start gap-6 xs:flex-row xs:items-center lg:col-span-2 lg:justify-center"
       >
         <Image
-          class="fade-in select-none"
+          class="fade-in select-none max-md:size-28 max-sm:size-24"
           src={`/assets/projects/overbuddy/icon.png`}
           alt="OverBuddy icon"
           width={128}
@@ -76,16 +76,17 @@ backgrounds = backgrounds.reverse()
         Background Gallery
       </h2>
       <div
-        class="sticky top-12 z-20 -mx-1 -mt-2 mb-4 box-content flex w-full gap-1 bg-neutral-900 px-1 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 md:gap-2"
+        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 sm:flex-row sm:items-center"
       >
         <input
           id="search"
           type="search"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-white md:max-w-96"
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition outline-none placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-white md:max-w-96"
+          autocomplete="off"
         />
         <button
-          class="group -mr-2 grid w-auto shrink-0 grow-0 items-center gap-1 rounded-sm px-2 text-right font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-500 active:ring-neutral-500! md:text-center"
+          class="group grid w-auto shrink-0 grow-0 rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:!ring-neutral-200 active:border-neutral-600/65 active:bg-neutral-700/65 active:!ring-neutral-300"
           id="sort"
           data-newest="false"
         >
@@ -97,10 +98,25 @@ backgrounds = backgrounds.reverse()
           <span class="[grid-area:1/-1] group-data-[newest=true]:invisible">
             Sort by <span class="font-semibold">Oldest</span>
           </span>
+          <!-- Sort by Relevance -->
+        </button>
+        <button
+          class="group grid w-auto shrink-0 grow-0 rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:!ring-neutral-200 active:border-neutral-600/65 active:bg-neutral-700/65 active:!ring-neutral-300"
+          id="filter"
+          data-visible="true"
+        >
+          <span
+            class="invisible [grid-area:1/-1] group-data-[visible=false]:visible"
+          >
+            Show <span class="font-semibold">All Backgrounds</span>
+          </span>
+          <span class="[grid-area:1/-1] group-data-[visible=false]:invisible">
+            Hide <span class="font-semibold">Unavailable</span>
+          </span>
         </button>
       </div>
       <div
-        class="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-40"
+        class="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29"
       >
         {
           backgrounds.map((background) => (
@@ -120,9 +136,18 @@ backgrounds = backgrounds.reverse()
                 'data-item': true
               }}
             >
+              {background.data.available === true && (
+                <div
+                  class="absolute top-2 right-2 z-10 flex cursor-help items-center gap-1 rounded-[0.1875rem] border border-amber-200/60 bg-amber-300 px-1 pt-px text-xs font-bold tracking-wide text-yellow-950 uppercase shadow shadow-amber-700 select-none"
+                  title="Available in game"
+                  data-available
+                >
+                  Available
+                </div>
+              )}
               <div
                 class:list={[
-                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100'
+                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!'
                 ]}
                 data-detail-button
               >
@@ -164,17 +189,20 @@ backgrounds = backgrounds.reverse()
         button.addEventListener('pointerdown', (event) => {
           if (event.target !== button) return
 
-          button.classList.toggle('opacity-100')
-          button.classList.toggle('*:pointer-events-auto!')
+          document.querySelectorAll('[data-detail-active]').forEach((el) => {
+            if (el !== button) {
+              el.removeAttribute('data-detail-active')
+            }
+          })
+          button.setAttribute('data-detail-active', '')
         })
 
         button.addEventListener('mouseleave', () => {
-          button.classList.remove('opacity-100')
-          button.classList.remove('*:pointer-events-auto!')
+          button.removeAttribute('data-detail-active')
         })
       })
 
-      // Search
+      // Search and sorting functionality
       const items = Array.from(document.querySelectorAll('[data-item]')).map(
         (item) => {
           const title =
@@ -183,12 +211,15 @@ backgrounds = backgrounds.reverse()
             item.querySelector('[data-description]')?.textContent?.trim() || ''
           const keywords =
             item.querySelector('[data-keywords]')?.textContent?.trim() || ''
+          const isAvailable = item.querySelector('[data-available]') !== null
 
           const element = item as HTMLElement
 
-          return { title, description, keywords, element }
+          return { title, description, keywords, isAvailable, element }
         }
       )
+
+      const availableItems = items.filter((item) => item.isAvailable)
 
       const fuse = new Fuse(items, {
         keys: [
@@ -201,11 +232,17 @@ backgrounds = backgrounds.reverse()
         threshold: 0.2
       })
 
-      const search = document.getElementById('search')
-      if (!search) return
+      // Search
+      const search = document.getElementById(
+        'search'
+      ) as HTMLInputElement | null
+      if (!search) {
+        console.warn('Search input not found')
+        return
+      }
 
-      search.addEventListener('input', (event) => {
-        const searchTerm = (event.target as HTMLInputElement).value
+      const executeSearch = () => {
+        const searchTerm = search.value.trim()
         const results = fuse.search(searchTerm)
 
         if (results.length === 0) {
@@ -227,9 +264,11 @@ backgrounds = backgrounds.reverse()
           if (index !== -1) {
             element.classList.remove('hidden')
             ;(element as HTMLElement).style.order = `${index + 1}`
+            element.setAttribute('data-search-order', `${index + 1}`)
           } else {
             element.classList.add('hidden')
             ;(element as HTMLElement).style.order = '0'
+            element.removeAttribute('data-search-order')
           }
         })
 
@@ -237,7 +276,9 @@ backgrounds = backgrounds.reverse()
           behavior: 'smooth',
           inline: 'start'
         })
-      })
+      }
+
+      search.addEventListener('input', executeSearch)
 
       // Sort button
       const sortButton = document.getElementById('sort')
@@ -254,6 +295,36 @@ backgrounds = backgrounds.reverse()
             }
           })
         })
+      } else {
+        console.warn('Sort button not found')
+      }
+
+      // Filter button
+      const filterButton = document.getElementById('filter')
+      if (filterButton) {
+        filterButton.addEventListener('click', () => {
+          const willBeVisible =
+            filterButton.getAttribute('data-visible') !== 'true'
+
+          filterButton.setAttribute('data-visible', willBeVisible.toString())
+          items.forEach(({ element, isAvailable }) => {
+            if (isAvailable) return
+
+            if (willBeVisible) {
+              element.classList.remove('hidden')
+            } else {
+              element.classList.add('hidden')
+            }
+          })
+
+          const nextItems = willBeVisible ? items : availableItems
+          fuse.setCollection(nextItems)
+          if (search.value.trim() !== '') {
+            executeSearch()
+          }
+        })
+      } else {
+        console.warn('Filter button not found')
       }
     })
   </script>
