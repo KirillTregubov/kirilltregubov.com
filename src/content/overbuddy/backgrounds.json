@@ -21,7 +21,7 @@
     "title": "Sojourn",
     "description": "2022 PvP Beta",
     "keywords": "",
-    "available": true
+    "available": false
   },
   {
     "id": "kiriko",
@@ -101,7 +101,7 @@
     "title": "Festive Mei",
     "description": "Lunar New Year 2023 (Season 2)",
     "keywords": "",
-    "available": true
+    "available": false
   },
   {
     "id": "dva_lunar_2023",
@@ -109,7 +109,7 @@
     "title": "Palanquin D.Va",
     "description": "Lunar New Year 2023 (Season 2)",
     "keywords": "dva",
-    "available": true
+    "available": false
   },
   {
     "id": "antarctic_peninsula",
@@ -165,7 +165,7 @@
     "title": "Galactic Emperor Sigma",
     "description": "Sigma Mythic Skin (Season 4)",
     "keywords": "",
-    "available": true
+    "available": false
   },
   {
     "id": "starwatch_art",
@@ -181,7 +181,7 @@
     "title": "Overwatch League Zero Hour",
     "description": "Overwatch League Promo (Season 4)",
     "keywords": "tracer sojourn genji mercy esports competitive",
-    "available": true
+    "available": false
   },
   {
     "id": "questwatch",
@@ -221,7 +221,7 @@
     "title": "Gothenburg Mothership",
     "description": "Invasion PvE Event (Season 6)",
     "keywords": "map",
-    "available": true
+    "available": false
   },
   {
     "id": "onryo_hanzo",
@@ -253,7 +253,7 @@
     "title": "Overwatch World Cup",
     "description": "Overwatch World Cup 2023 (Season 7)",
     "keywords": "esports competitive",
-    "available": true
+    "available": false
   },
   {
     "id": "le_sserafim",
@@ -310,7 +310,7 @@
     "title": "Ancient Caller Moira Art",
     "description": "Moira Mythic Skin (Season 9)",
     "keywords": "halloween",
-    "available": true
+    "available": false
   },
   {
     "id": "cowboy_bebop",
@@ -326,7 +326,7 @@
     "title": "Venture",
     "description": "Venture Release (Season 10)",
     "keywords": "hero",
-    "available": true
+    "available": false
   },
   {
     "id": "mirrorwatch",
@@ -334,7 +334,7 @@
     "title": "Mirrorwatch",
     "description": "Mirrorwatch Event (Season 10)",
     "keywords": "doomfist mercy",
-    "available": true
+    "available": false
   },
   {
     "id": "mirrorwatch_art",
@@ -342,7 +342,7 @@
     "title": "Mirrorwatch Art",
     "description": "Mirrorwatch Event (Season 10)",
     "keywords": "reinhardt mercy ana sombra doomfist widowmaker",
-    "available": true
+    "available": false
   },
   {
     "id": "porsche_dva",
@@ -350,7 +350,7 @@
     "title": "Porsche D.Va",
     "description": "Porsche Event (Season 10)",
     "keywords": "dva collaboration crossover car",
-    "available": true
+    "available": false
   },
   {
     "id": "calamity_empress_ashe",
@@ -366,7 +366,7 @@
     "title": "Rose Gold Mercy",
     "description": "Breast Cancer Charity Event (Season 11)",
     "keywords": "pink mercy",
-    "available": true
+    "available": false
   },
   {
     "id": "transformers",
@@ -382,7 +382,7 @@
     "title": "Lifeguard Lifeweaver & Kiriko",
     "description": "Summer Games 2024 (Season 11)",
     "keywords": "beach",
-    "available": true
+    "available": false
   },
   {
     "id": "reinhardt_bound_demon",
@@ -390,7 +390,7 @@
     "title": "Reinhardt Bound Demon",
     "description": "Reinhardt Mythic Weapon (Season 11)",
     "keywords": "weapon mythic reinhardt",
-    "available": true
+    "available": false
   },
   {
     "id": "juno",
@@ -406,7 +406,7 @@
     "title": "Anubis Reaper Art",
     "description": "Reaper Mythic Skin (Season 12)",
     "keywords": "illari doomfist echo egypt",
-    "available": true
+    "available": false
   },
   {
     "id": "sylvanas_widowmaker",
@@ -414,7 +414,7 @@
     "title": "Sylvanas Widowmaker",
     "description": "World of Warcraft Event (Season 12)",
     "keywords": "collaboration crossover widowmaker world of warcraft wow",
-    "available": true
+    "available": false
   },
   {
     "id": "ana_midnight_sun",
@@ -430,7 +430,7 @@
     "title": "Spellbinder Widowmaker",
     "description": "Widowmaker Mythic Skin (Season 13)",
     "keywords": "Widowmaker Spellbinder Magic",
-    "available": true
+    "available": false
   },
   {
     "id": "my_hero_academia",
@@ -446,7 +446,7 @@
     "title": "Overwatch Classic",
     "description": "Overwatch Classic Event (Season 13)",
     "keywords": "ow1 1.0 tracer winston reaper dva mercy lucio",
-    "available": true
+    "available": false
   },
   {
     "id": "owcs_finals_2024",
@@ -454,7 +454,7 @@
     "title": "OWCS Finals 2024",
     "description": "Overwatch Championship Series Finals 2024",
     "keywords": "esports competitive junkrat tracer mei champions",
-    "available": true
+    "available": false
   },
   {
     "id": "soldier_76_deliverance",
@@ -462,7 +462,7 @@
     "title": "Soldier: 76 Deliverance",
     "description": "Soldier: 76 Mythic Weapon (Season 13)",
     "keywords": "weapon mythic soldier",
-    "available": true
+    "available": false
   },
   {
     "id": "hazard",
@@ -470,7 +470,7 @@
     "title": "Hazard",
     "description": "Hazard Release (Season 14)",
     "keywords": "hero",
-    "available": true
+    "available": false
   },
   {
     "id": "thor_reinhardt",
@@ -502,7 +502,7 @@
     "title": "Welcome Home, China (欢迎回家)",
     "description": "Chinese (NetEase) beta re-release of Overwatch (Season 14)",
     "keywords": "",
-    "available": true
+    "available": false
   },
   {
     "id": "avatar_the_last_airbender",
@@ -510,7 +510,7 @@
     "title": "Avatar: The Last Airbender",
     "description": "Avatar: The Last Airbender Event (Season 14)",
     "keywords": "collaboration crossover animation",
-    "available": true
+    "available": false
   },
   {
     "id": "ashe_lead_rose",
@@ -518,7 +518,7 @@
     "title": "Ashe Lead Rose",
     "description": "Ashe Mythic Weapon (Season 14)",
     "keywords": "weapon mythic ashe",
-    "available": true
+    "available": false
   },
   {
     "id": "celestial_skins",
@@ -526,7 +526,7 @@
     "title": "Celestial Skins",
     "description": "Celestial Skin Bundle (Season 14)",
     "keywords": "weapon mythic ashe",
-    "available": true
+    "available": false
   },
   {
     "id": "honor_and_glory",
@@ -534,7 +534,7 @@
     "title": "Honor and Glory",
     "description": "Season 15 Release Art",
     "keywords": "pixiu zenyatta sigma hanzo venture mercy static",
-    "available": true
+    "available": false
   },
   {
     "id": "party_in_china",
@@ -542,7 +542,7 @@
     "title": "Party in China",
     "description": "Chinese (NetEase) re-release of Overwatch (Season 15)",
     "keywords": "mei illari sojourn juno mauga lifeweaver venture kiriko hazard junker queen animated",
-    "available": true
+    "available": false
   },
   {
     "id": "le_sserafim_remix_promo",
@@ -559,7 +559,7 @@
     "title": "LE SSERAFIM Homecoming",
     "description": "LE SSERAFIM Homecoming Event (Season 15)",
     "keywords": "k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
-    "available": true
+    "available": false
   },
   {
     "id": "widowmaker_dame_chance_2",
@@ -567,7 +567,7 @@
     "title": "Widowmaker Dame Chance (Alternate)",
     "description": "Widowmaker Mythic Weapon (Season 15)",
     "keywords": "weapon mythic widowmaker",
-    "available": true
+    "available": false
   },
   {
     "id": "widowmaker_dame_chance",
@@ -575,7 +575,7 @@
     "title": "Widowmaker Dame Chance",
     "description": "Widowmaker Mythic Weapon (Season 15)",
     "keywords": "weapon mythic widowmaker",
-    "available": true
+    "available": false
   },
   {
     "id": "owcs_juno",
@@ -583,7 +583,7 @@
     "title": "Ember Juno",
     "description": "2025 Champions Clash Hangzhou Crowdfunding Skin",
     "keywords": "esports competitive juno",
-    "available": true
+    "available": false
   },
   {
     "id": "stadium",
@@ -591,7 +591,7 @@
     "title": "Stadium",
     "description": "Stadium Release (Season 16)",
     "keywords": "gamemode mode new",
-    "available": true
+    "available": false
   },
   {
     "id": "freja",
@@ -599,7 +599,7 @@
     "title": "Freja",
     "description": "Freja Release (Season 16)",
     "keywords": "hero",
-    "available": true
+    "available": false
   },
   {
     "id": "gundam_wing",
@@ -607,7 +607,7 @@
     "title": "Gundam Wing",
     "description": "Gundam Wing Event (Season 16)",
     "keywords": "collaboration crossover anime mech mercy ramattra soldier 76 reaper",
-    "available": true
+    "available": false
   },
   {
     "id": "street_fighter_6",
@@ -615,7 +615,7 @@
     "title": "Street Fighter 6",
     "description": "Street Fighter 6 Event (Season 16)",
     "keywords": "collaboration crossover fighting game juno hanzo zenyatta sigma kiriko widowmaker winston soldier 76",
-    "available": true
+    "available": false
   },
   {
     "id": "mercy_merciful_magitech",
@@ -623,7 +623,7 @@
     "title": "Mercy Merciful Magitech",
     "description": "Mercy Mythic Weapon (Season 16)",
     "keywords": "weapon mythic mercy cute",
-    "available": true
+    "available": false
   },
   {
     "id": "heart_of_hope_juno",
@@ -631,6 +631,14 @@
     "title": "Heart of Hope Juno",
     "description": "Juno Mythic Skin (Season 16)",
     "keywords": "mythic skin animated art",
+    "available": false
+  },
+  {
+    "id": "reaper_steel_death",
+    "image": "/assets/projects/overbuddy/reaper_steel_death.jpg",
+    "title": "Reaper Steel Death",
+    "description": "Reaper Mythic Weapon (Season 17)",
+    "keywords": "weapon mythic art",
     "available": true
   }
 ]

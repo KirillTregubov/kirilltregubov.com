@@ -98,7 +98,7 @@ backgrounds = backgrounds.reverse()
           <span class="[grid-area:1/-1] group-data-[newest=true]:invisible">
             Sort by <span class="font-semibold">Oldest</span>
           </span>
-          <!-- Sort by Relevance -->
+          <!-- TODO: Sort by Relevance -->
         </button>
         <button
           class="group grid w-auto shrink-0 grow-0 rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:!ring-neutral-200 active:border-neutral-600/65 active:bg-neutral-700/65 active:!ring-neutral-300"
@@ -294,6 +294,8 @@ backgrounds = backgrounds.reverse()
               element.style.order = `${index + 1}`
             }
           })
+
+          // TODO: scroll to first item
         })
       } else {
         console.warn('Sort button not found')
