@@ -640,5 +640,13 @@
     "description": "Reaper Mythic Weapon (Season 17)",
     "keywords": "weapon mythic art",
     "available": true
+  },
+  {
+    "id": "gi_joe",
+    "image": "/assets/projects/overbuddy/gi_joe.jpg",
+    "title": "G.I. Joe",
+    "description": "G.I. Joe Event (Season 17)",
+    "keywords": "collaboration crossover gi joe reaper genji doomfist freja widowmaker explosion",
+    "available": true
   }
 ]
