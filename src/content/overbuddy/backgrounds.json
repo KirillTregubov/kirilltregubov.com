@@ -582,7 +582,7 @@
     "image": "/assets/projects/overbuddy/owcs_juno.jpg",
     "title": "Ember Juno",
     "description": "2025 Champions Clash Hangzhou Crowdfunding Skin",
-    "keywords": "esports competitive juno",
+    "keywords": "owcs overwatch championship series esports competitive juno",
     "available": false
   },
   {
@@ -647,6 +647,14 @@
     "title": "G.I. Joe",
     "description": "G.I. Joe Event (Season 17)",
     "keywords": "collaboration crossover gi joe reaper genji doomfist freja widowmaker explosion",
+    "available": true
+  },
+  {
+    "id": "radiant_angel",
+    "image": "/assets/projects/overbuddy/radiant_angel.jpg",
+    "title": "Radiant Angel Mercy",
+    "description": "OWCS 2025 Midseason Championship Crowdfunding Skin",
+    "keywords": "overwatch championship series esports competitive",
     "available": true
   }
 ]

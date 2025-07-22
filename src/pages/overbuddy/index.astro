@@ -67,7 +67,7 @@ backgrounds = backgrounds.reverse()
     >
     </div>
     <div
-      class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+      class="min-h-[calc(100vh-11rem)] w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0 xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
     >
       <h2
         class="mb-3 scroll-mt-[4.5rem] text-xl leading-none font-semibold"
@@ -129,7 +129,7 @@ backgrounds = backgrounds.reverse()
               description={background.data.description}
               keywords={background.data.keywords}
               link={background.data.link}
-              className="fade-in-slow w-full rounded-lg shadow-lg"
+              className="fade-in w-full rounded-lg shadow-lg"
               draggable="false"
               hasDetails
               parentProps={{
@@ -241,12 +241,25 @@ backgrounds = backgrounds.reverse()
         return
       }
 
+      const filterButton = document.getElementById('filter')
+      if (!filterButton) {
+        console.warn('Filter button not found')
+        return
+      }
+
       const executeSearch = () => {
         const searchTerm = search.value.trim()
         const results = fuse.search(searchTerm)
 
+        const filterAvailable =
+          filterButton.getAttribute('data-visible') !== 'true'
+
         if (results.length === 0) {
-          items.forEach(({ element }) => {
+          items.forEach(({ element, isAvailable }) => {
+            if (filterAvailable && !isAvailable) {
+              return
+            }
+
             element.classList.remove('hidden')
             ;(element as HTMLElement).style.order = '0'
           })
@@ -277,32 +290,46 @@ backgrounds = backgrounds.reverse()
           inline: 'start'
         })
       }
-
       search.addEventListener('input', executeSearch)
 
       // Sort button
       const sortButton = document.getElementById('sort')
-      if (sortButton) {
-        sortButton.addEventListener('click', () => {
-          const sortByNewest = sortButton.getAttribute('data-newest') !== 'true'
-          sortButton.setAttribute('data-newest', sortByNewest.toString())
-
-          items.forEach(({ element }, index) => {
-            if (sortByNewest) {
-              element.style.order = `${items.length - index}`
-            } else {
-              element.style.order = `${index + 1}`
-            }
-          })
-
-          // TODO: scroll to first item
-        })
-      } else {
+      if (!sortButton) {
         console.warn('Sort button not found')
+        return
       }
 
+      const scrollToFirstItem = () => {
+        const firstVisible =
+          sortButton.getAttribute('data-newest') === 'true'
+            ? items.findLast(
+                ({ element }) => !element.classList.contains('hidden')
+              )
+            : items.find(({ element }) => !element.classList.contains('hidden'))
+        if (firstVisible) {
+          firstVisible.element.scrollIntoView({
+            behavior: 'smooth',
+            inline: 'start'
+          })
+        }
+      }
+
+      sortButton.addEventListener('click', () => {
+        const sortByNewest = sortButton.getAttribute('data-newest') !== 'true'
+        sortButton.setAttribute('data-newest', sortByNewest.toString())
+
+        items.forEach(({ element }, index) => {
+          if (sortByNewest) {
+            element.style.order = `${items.length - index}`
+          } else {
+            element.style.order = `${index + 1}`
+          }
+        })
+
+        scrollToFirstItem()
+      })
+
       // Filter button
-      const filterButton = document.getElementById('filter')
       if (filterButton) {
         filterButton.addEventListener('click', () => {
           const willBeVisible =
@@ -324,6 +351,8 @@ backgrounds = backgrounds.reverse()
           if (search.value.trim() !== '') {
             executeSearch()
           }
+
+          scrollToFirstItem()
         })
       } else {
         console.warn('Filter button not found')

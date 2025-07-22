@@ -99,7 +99,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .fade-in {
-    animation: fade-in 0.5s ease;
+    animation: fade-in 0.5s ease-out;
   }
 }
 

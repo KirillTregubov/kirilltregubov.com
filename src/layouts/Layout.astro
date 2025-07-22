@@ -116,7 +116,10 @@ const formattedImage = image.replace('/assets/', '')
     <slot />
     <SpeedInsights />
     <footer
-      class:list={['my-6 text-center text-neutral-400 md:mt-12', footerClass]}
+      class:list={[
+        'my-6 text-center text-sm text-neutral-400 sm:text-base md:mt-12',
+        footerClass
+      ]}
     >
       &copy; {new Date().getFullYear()} Kirill Tregubov.
       <span class="whitespace-nowrap">
