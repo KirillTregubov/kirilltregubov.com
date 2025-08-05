@@ -656,5 +656,13 @@
     "description": "OWCS 2025 Midseason Championship Crowdfunding Skin",
     "keywords": "overwatch championship series esports competitive",
     "available": true
+  },
+  {
+    "id": "nerf",
+    "image": "/assets/projects/overbuddy/nerf.jpg",
+    "title": "NERF",
+    "description": "NERF Collaboration Event (Season 17)",
+    "keywords": "collaboration crossover cassidy nerf gun nerfgun guns bow foam dart bullet",
+    "available": true
   }
 ]

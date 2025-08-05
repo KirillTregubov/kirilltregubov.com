@@ -75,7 +75,7 @@ export async function GET({ props }: APIContext) {
   const pngData = resvg.render()
   const pngBuffer = pngData.asPng()
 
-  return new Response(pngBuffer, {
+  return new Response(pngBuffer as Buffer<ArrayBuffer>, {
     headers: {
       'Content-Type': 'image/png'
     }
