@@ -317,8 +317,8 @@
     "image": "/assets/projects/overbuddy/cowboy_bebop.jpg",
     "title": "Cowboy Bebop Art",
     "description": "Cowboy Bebop Event (Season 9)",
-    "keywords": "collaboration crossover anime",
-    "available": false
+    "keywords": "collaboration crossover anime mauga sombra cassidy ashe",
+    "available": true
   },
   {
     "id": "venture",
@@ -663,6 +663,38 @@
     "title": "NERF",
     "description": "NERF Collaboration Event (Season 17)",
     "keywords": "collaboration crossover cassidy nerf gun nerfgun guns bow foam dart bullet",
+    "available": true
+  },
+  {
+    "id": "wuyang",
+    "image": "/assets/projects/overbuddy/wuyang.jpg",
+    "title": "Wuyang",
+    "description": "Wuyang Release (Season 18)",
+    "keywords": "art",
+    "available": true
+  },
+  {
+    "id": "ultraviolet_sentinel_blazing_sunsetter",
+    "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter.jpg",
+    "title": "Season 18 Mythics",
+    "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
+    "keywords": "mythic skin mythic weapon",
+    "available": true
+  },
+  {
+    "id": "ultraviolet_sentinel_blazing_sunsetter_2",
+    "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter_2.jpg",
+    "title": "Season 18 Mythics (Alternate)",
+    "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
+    "keywords": "mythic skin mythic weapon",
+    "available": true
+  },
+  {
+    "id": "ultraviolet_sentinel_blazing_sunsetter_art",
+    "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter_art.jpg",
+    "title": "Season 18 Mythic Art",
+    "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
+    "keywords": "mythic skin mythic weapon art",
     "available": true
   }
 ]
