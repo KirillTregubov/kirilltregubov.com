@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import { Image as AstroImage } from 'astro:assets'
 
 interface Props {
   id?: string
@@ -38,7 +38,7 @@ const imgAlt = alt || title || 'Placeholder image'
 
 <figure {...parentProps}>
   <div class:list={['relative', containerClassName]}>
-    <Image
+    <AstroImage
       {...props}
       alt={imgAlt}
       class:list={[
@@ -46,7 +46,7 @@ const imgAlt = alt || title || 'Placeholder image'
         className,
         !!title && title.length > 0 && 'mb-0'
       ]}
-      onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+      onerror="this.src='/assets/projects/placeholder.jpg'; void src; this.onerror=null; void onerror;"
       draggable="false"
     />
     {hasDetails && <slot />}

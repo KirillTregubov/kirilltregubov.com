@@ -18,7 +18,7 @@ function Scene() {
   const [shown, setShown] = useState(false)
   const reducedMotion = useReducedMotion()
   const { scale } = useSpring({
-    scale: reducedMotion || shown ? [0.1, 0.1, 0.1] : [0, 0, 0],
+    scale: reducedMotion || shown ? [0.1, 0.1, 0.1] : [0.06, 0.06, 0.06],
     config: { mass: 2, tension: 280, friction: 60 }
   })
   // const camera = useThree((state) => state.camera)

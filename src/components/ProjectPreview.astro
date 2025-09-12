@@ -31,7 +31,7 @@ const technologies = await getEntries(project.data.technologies)
       alt={project.data.image?.alt || 'Placeholder project image'}
       width={1200}
       height={630}
-      onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+      onerror="this.src='/assets/projects/placeholder.jpg'; void src; this.onerror=null; void onerror;"
       loading={featured ? 'eager' : 'lazy'}
     />
   </div>

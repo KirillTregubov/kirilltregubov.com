@@ -1,5 +1,5 @@
 ---
-import MDImage from '@components/MDImage.astro'
+import MDImage from '@components/markdown/MDImage.astro'
 import OverBuddy from '@components/OverBuddy.astro'
 import Layout from '@layouts/Layout.astro'
 import { getEntry } from 'astro:content'
@@ -36,12 +36,12 @@ const layoutDescription =
   title={`${title} - OverBuddy`}
   description={layoutDescription}
   image={`generated/${id}.png`}
-  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
     <menu
       class:list={[
-        "sticky -top-1 z-10 -mx-1 -mt-5 mb-4 flex gap-6 bg-neutral-900 px-1 pt-5 pb-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 xs:-mt-7 xs:pt-7 md:-mt-13"
+        "sticky -top-1 z-10 -mx-1 -mt-5 mb-4 flex gap-6 bg-neutral-900 px-1 pt-5 pb-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xs:-mt-7 xs:pt-7 md:-mt-13"
       ]}
       transition:animate={fade({ duration: '0.4s' })}
     >
@@ -54,7 +54,7 @@ const layoutDescription =
       </a>
     </menu>
     <section
-      class="w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+      class="w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
     >
       <MDImage
         id={id}
@@ -79,7 +79,7 @@ const layoutDescription =
                     href={link}
                     rel="noopener"
                     target="_blank"
-                    class="-m-0.5 p-0.5 !ring-white transition hover:text-white focus-visible:text-white active:text-white"
+                    class="-m-0.5 p-0.5 !ring-white transition hover:text-neutral-200 focus-visible:text-neutral-200 active:text-neutral-200"
                   >
                     (<span class="underline">Link</span>)
                   </a>
@@ -117,11 +117,11 @@ const layoutDescription =
       </div>
     </section>
     <div
-      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
     >
     </div>
     <section
-      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
+      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
     >
       <OverBuddy
         showTitle

@@ -19,8 +19,8 @@ demo: 'https://www.youtube.com/watch?v=MPjCZC6z37s'
 featured: true
 ---
 
-import MDImage from '@components/MDImage.astro'
-import MDLink from '@components/MDLink.astro'
+import Image from '@components/markdown/MDImage.astro'
+import Link from '@components/markdown/MDLink.astro'
 
 ### Beginning of a Journey
 
@@ -30,7 +30,7 @@ During my final year of university, I was fortunate to work in a team with 6 oth
 
 We started by selecting our tech stack, drawing up prototypes of our key use cases, sketching out the architecture diagram, planning a roadmap and creating a project kanban board. Early on, we determined that our idea wouldn’t work well as a web app, as accessing the website every time a user wanted to use our service would be too cumbersome. Instead, we opted to build a mobile app. Given my familiarity with React Native, particularly with using Expo to streamline the development process, I successfully advocated for its adoption by the team.
 
-<MDImage
+<Image
   src="/assets/projects/raiven/architecture_plan.jpg"
   alt="Architecture Diagram"
   width={800}
@@ -57,14 +57,14 @@ Login to the app with an administrator account to view business analytics includ
 Login to the app with an administrator account, prompt an email address to create a “basic” account, allowing that user to scan IDs for the administrator’s organization.
 
 <div class="flex justify-center gap-2">
-  <MDImage
+  <Image
     src="/assets/projects/raiven/use_case1.jpg"
     alt="Use Case 1 prototype"
     width={400}
     height={550}
     title="Use Case 1 prototype"
   />
-  <MDImage
+  <Image
     src="/assets/projects/raiven/use_case3.jpg"
     alt="Use Case 3 prototype"
     width={400}
@@ -77,7 +77,7 @@ Login to the app with an administrator account, prompt an email address to creat
 
 Before we could continue, we had to design a mockup of our app in Figma. Having previously worked on app mockups, I took charge by outlining all the screens we needed in our 4 use cases before we began designing. We also simplified the process by using various UI building blocks from community templates. Once we finished with the interface, we connected all the relevant screens and buttons together to be able to execute all the desired flows.
 
-<MDImage
+<Image
   src="/assets/projects/raiven/mockup2.jpg"
   alt="Figma Mockup of App"
   width={800}
@@ -96,25 +96,25 @@ When it came time to start developing the app, we had a clear idea of what we ne
 1. We needed to ensure any encountered issues were recorded in an error reporting system
 1. We needed to set up a CI pipeline to automate linting, formatting, type checking, and unit testing (including code coverage)
 
-As the experienced member of the team, I took the responsibility of initializing the environment and creating any necessary tooling. I set up an Expo app and wrote instructions on how to use <MDLink href="https://expo.dev/go">Expo Go</MDLink> to test the app on a smartphone. While I was working on the rest of the tooling, I let my peers start implementing screens in the app.
+As the experienced member of the team, I took the responsibility of initializing the environment and creating any necessary tooling. I set up an Expo app and wrote instructions on how to use <Link href="https://expo.dev/go">Expo Go</Link> to test the app on a smartphone. While I was working on the rest of the tooling, I let my peers start implementing screens in the app.
 
-I wrote a bash script to bootstrap the development environment, which included installing Node.js using NVM, Yarn Classic as our package manager, and the dependencies specified in the committed lockfile. I also wrote a bash script to run the tests using Jest and <MDLink href="https://testing-library.com/">React Testing Library</MDLink>.
+I wrote a bash script to bootstrap the development environment, which included installing Node.js using NVM, Yarn Classic as our package manager, and the dependencies specified in the committed lockfile. I also wrote a bash script to run the tests using Jest and <Link href="https://testing-library.com/">React Testing Library</Link>.
 
 I set up the CI pipeline on GitHub Actions to automate all the aforementioned tasks using a YAML script. The script runs ESLint, Prettier, Jest, and the TypeScript checker.
 
-Finally, I created a <MDLink href="https://sentry.io/">Sentry</MDLink> account and <MDLink href="https://docs.sentry.io/platforms/react-native/manual-setup/expo/">installed it into our Expo app</MDLink> to track any errors that users might encounter.
+Finally, I created a <Link href="https://sentry.io/">Sentry</Link> account and <Link href="https://docs.sentry.io/platforms/react-native/manual-setup/expo/">installed it into our Expo app</Link> to track any errors that users might encounter.
 
 #### Finishing the MVP
 
-The rest of the development process went smoothly. We were a bit behind schedule initially, but managed to finish an MVP in time for the deadline. A few notable libraries we chose to use were <MDLink href="https://tanstack.com/query/">TanStack Query</MDLink> to help managing data fetching and mutations, <MDLink href="https://react-hook-form.com/">React Hook Form</MDLink> to handle form input and submission, and <MDLink href="https://github.com/colinhacks/zod">Zod</MDLink> to validate the data and responses received from the backend.
+The rest of the development process went smoothly. We were a bit behind schedule initially, but managed to finish an MVP in time for the deadline. A few notable libraries we chose to use were <Link href="https://tanstack.com/query/">TanStack Query</Link> to help managing data fetching and mutations, <Link href="https://react-hook-form.com/">React Hook Form</Link> to handle form input and submission, and <Link href="https://github.com/colinhacks/zod">Zod</Link> to validate the data and responses received from the backend.
 
-During the late stages of development, we realized we needed the ability to generate links for users to join an establishment and redirect to our app. I quickly initialized a <MDLink href="https://nextjs.org/">Next.js</MDLink> project and created a route to handle sending the POST request to the backend and redirecting the user to the app using <MDLink href="https://developer.apple.com/ios/universal-links/">universal links</MDLink>.
+During the late stages of development, we realized we needed the ability to generate links for users to join an establishment and redirect to our app. I quickly initialized a <Link href="https://nextjs.org/">Next.js</Link> project and created a route to handle sending the POST request to the backend and redirecting the user to the app using <Link href="https://developer.apple.com/ios/universal-links/">universal links</Link>.
 
 ### Conclusion
 
-Our final product was a fully functional MVP that met the goals we initially set out to achieve. If you would like to see the app in action, you can watch <MDLink href={frontmatter.demo}>this demo video</MDLink> prepared by the team.
+Our final product was a fully functional MVP that met the goals we initially set out to achieve. If you would like to see the app in action, you can watch <Link href={frontmatter.demo}>this demo video</Link> prepared by the team.
 
-<MDImage
+<Image
   src={`/assets/projects/${frontmatter.image.url}`}
   alt={frontmatter.image?.alt}
   width={800}

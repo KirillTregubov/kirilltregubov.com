@@ -16,12 +16,12 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
 <Layout
   title="RAIVEN - Kirill Tregubov"
   description={projectInfo.data.description}
-  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
 >
   <main class="mx-auto max-w-[50rem] md:space-y-8">
     <ReturnHome />
     <section
-      class="!mt-6 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+      class="!mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
     >
       <div
         class="mb-6 w-fit overflow-clip rounded-xl bg-neutral-800 object-contain py-2"
@@ -33,7 +33,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
           alt={projectInfo.data.image?.alt || 'Placeholder project image'}
           width={800}
           height={420}
-          onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
+          onerror="this.src='/assets/projects/placeholder.jpg';void src; this.onerror=null; void onerror;"
           loading="eager"
           draggable="false"
         />
@@ -60,7 +60,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
       class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-h3:scroll-mt-16 prose-h3:text-xl prose-h4:font-medium"
     >
       <nav
-        class="motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
       >
         <h3>Table of Contents</h3>
         <ul class="flex list-none flex-col gap-1.5 p-0">
@@ -79,7 +79,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
         </ul>
       </nav>
       <div
-        class="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
       >
         <Content />
       </div>

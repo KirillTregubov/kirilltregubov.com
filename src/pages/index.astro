@@ -1,5 +1,4 @@
 ---
-// import { Image } from 'astro:assets'
 import Layout from '@layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import Saturn from '@components/Saturn'
@@ -29,15 +28,13 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
 
 <Layout
   title="Kirill Tregubov"
-  footerClass="motion-safe:animate-[fadeUp_0.3s_forwards_0.75s] motion-safe:opacity-0"
+  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.75s] motion-safe:opacity-0"
 >
   <main class="mx-auto max-w-[90rem] space-y-8 md:space-y-12">
     <section
       class="flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6"
     >
-      <AboutMe
-        class="motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0"
-      />
+      <AboutMe class="animate-[fadeUp_0.6s_forwards] lg:text-balance" />
       <figure
         class="saturn relative box-content h-[calc(100vw-9rem)] max-h-[300px] w-full lg:min-w-[400px] xl:max-h-[400px] xl:min-w-[600px] 2xl:min-w-[700px]"
         title="My favourite planet, Saturn."
@@ -47,7 +44,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
           fallbackClass="max-h-[300px] xl:max-h-[400px]"
         />
         <figcaption
-          class="absolute bottom-0 w-full bg-neutral-900 pb-2 text-center text-sm font-medium text-neutral-400/80 motion-safe:animate-[fadeUp_0.3s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6"
+          class="absolute bottom-0 w-full pb-2 text-center text-sm font-medium text-neutral-400/80 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6"
           title=""
         >
           My favourite planet, Saturn. <a
@@ -59,9 +56,10 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         </figcaption>
       </figure>
     </section>
-    <!-- <section
+    {
+      /* <section
       id="experience"
-      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0"
+      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
     >
       <h2 class="text-xl leading-none font-semibold">Work Experience</h2>
       <p class="mt-2 mb-3 text-neutral-400">
@@ -295,10 +293,12 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
           </div>
         </div>
       </div>
-    </section> -->
+    </section> */
+    }
+
     <section
       id="projects"
-      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
     >
       <div
         class="sticky top-0 z-10 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 pt-4 pb-0.5 after:absolute after:-bottom-3.5 after:h-3.5 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:flex-row"
@@ -335,7 +335,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
     </section>
     <section
       id="tech-stack"
-      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0"
+      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
     >
       <h2 class="text-xl leading-none font-semibold">Tech Stack</h2>
       <p class="mt-2 mb-3 text-neutral-400">
@@ -346,7 +346,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
     </section>
     <section
       id="tech-stack"
-      class="motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
     >
       <h2 class="text-xl leading-none font-semibold">Tools & Services</h2>
       <p class="mt-2 mb-3 text-neutral-400">

@@ -354,7 +354,7 @@ const performanceBasedRaceModel: raceModel = (drivers: Driver[]) => {
   ) // Uniform probability for each position
 
   // Generate adjusted probabilities based on drivers' recent performance
-  const driverProbabilities = drivers.map((driver) => {
+  const driverProbabilities = drivers.map(() => {
     // const recentPositions = getRecentPositionsForDriver(driver.id)
     // let adjustedProbabilities = adjustProbability(recentPositions, [
     //   ...baseProbabilities
@@ -418,7 +418,7 @@ const simulateRace = (
   const result: Points = []
 
   // Race result
-  raceResult.forEach((driver, index) => {
+  raceResult.forEach((driver) => {
     const points = pointsPerPosition[driver.position] || null
     if (points === null) return
 

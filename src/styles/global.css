@@ -3,7 +3,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@source '../components';
+/* @source '../components'; */
 
 :root {
   color-scheme: dark;
@@ -12,6 +12,7 @@
 @theme {
   --font-sans: 'Inter Variable';
   --breakpoint-xs: 24rem; /* Used to be 375px; */
+  --breakpoint-2xl: 84rem;
 }
 
 @theme inline {

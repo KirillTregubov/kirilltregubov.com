@@ -2,7 +2,6 @@
 interface Props {
   href: string
   target?: string
-  children?: string
   className?: string
 }
 
@@ -14,7 +13,7 @@ if (!target) {
 
 <a
   class:list={[
-    '-m-0.5 rounded-sm p-0.5 text-nowrap text-white underline !ring-neutral-300 transition hover:text-neutral-300 focus-visible:text-neutral-300 active:text-neutral-300',
+    '-m-0.5 rounded-sm p-0.5 text-nowrap underline underline-offset-2 !ring-neutral-400 transition hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400',
     className
   ]}
   {...props}

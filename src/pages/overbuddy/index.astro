@@ -4,7 +4,7 @@ import { getCollection, getEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import ReturnHome from '@components/ReturnHome.astro'
 import { MonitorDownIcon, EyeIcon, CloudDownloadIcon } from 'lucide-react'
-import MDImage from '@components/MDImage.astro'
+import MDImage from '@components/markdown/MDImage.astro'
 import OverBuddy from '@components/OverBuddy.astro'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
@@ -19,7 +19,7 @@ backgrounds = backgrounds.reverse()
   title="OverBuddy - Kirill Tregubov"
   description={projectInfo.data.description}
   image={`projects/overbuddy/marketing.jpg`}
-  footerClass="mt-8 motion-safe:animate-[fadeUp_0.3s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="mt-8 motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
   footerContent="All trademarks are the property of their respective owners."
 >
   <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
@@ -33,10 +33,10 @@ backgrounds = backgrounds.reverse()
       </a>
     </ReturnHome>
     <section
-      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.3s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
+      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
     >
       <div
-        class="inline-flex flex-col items-start justify-start gap-6 xs:flex-row xs:items-center lg:col-span-2 lg:justify-center"
+        class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center"
       >
         <Image
           class="fade-in select-none max-md:size-28 max-sm:size-24"
@@ -48,7 +48,7 @@ backgrounds = backgrounds.reverse()
           draggable="false"
         />
         <div>
-          <h1 class="text-2xl leading-none font-bold">
+          <h1 class="text-2xl leading-none font-bold text-neutral-200">
             {projectInfo.data.name}
           </h1>
           <p class="my-2 text-neutral-400">
@@ -63,11 +63,11 @@ backgrounds = backgrounds.reverse()
       />
     </section>
     <div
-      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.3s_forwards_0.3s] motion-safe:opacity-0"
+      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
     >
     </div>
     <div
-      class="min-h-[calc(100vh-11rem)] w-full motion-safe:animate-[fadeUp_0.3s_forwards_0.45s] motion-safe:opacity-0 xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
+      class="min-h-[calc(100vh-11rem)] w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
     >
       <h2
         class="mb-3 scroll-mt-[4.5rem] text-xl leading-none font-semibold"
@@ -76,13 +76,13 @@ backgrounds = backgrounds.reverse()
         Background Gallery
       </h2>
       <div
-        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 sm:flex-row sm:items-center"
+        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 sm:flex-row sm:items-center"
       >
         <input
           id="search"
           type="search"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 text-white transition outline-none placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-white md:max-w-96"
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 transition outline-none placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-neutral-300 md:max-w-96"
           autocomplete="off"
         />
         <button

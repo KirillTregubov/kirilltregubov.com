@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import MDLink from './MDLink.astro'
+import MDLink from './markdown/MDLink.astro'
 
 export interface Props {
   showTitle?: boolean
@@ -24,13 +24,15 @@ const { repository, download, showTitle = false } = Astro.props
           loading="eager"
           draggable="false"
         />
-        <h1 class="text-2xl leading-none font-bold">OverBuddy</h1>
+        <h1 class="text-2xl leading-none font-bold text-neutral-200">
+          OverBuddy
+        </h1>
       </div>
     )
   }
   <ul class="flex flex-col gap-3 text-neutral-400">
     <li>
-      <h3 class="text-lg font-medium text-white">
+      <h3 class="-mr-0.5 text-lg font-medium text-neutral-200">
         Personalize your Overwatch™ Experience
       </h3>
       <p class="">
@@ -39,12 +41,12 @@ const { repository, download, showTitle = false } = Astro.props
       </p>
     </li>
     <li>
-      <h3 class="text-lg font-medium text-white">Free and Transparent</h3>
+      <h3 class="text-lg font-medium text-neutral-200">Free and Transparent</h3>
       <p class="">
         OverBuddy is free to use and{' '}
         <MDLink
           href={repository}
-          className="!text-neutral-300 hover:!text-white focus-visible:!text-white active:!text-white"
+          className="!text-neutral-300 hover:!text-neutral-200 focus-visible:!text-neutral-200 active:!text-neutral-200"
           >open source</MDLink
         >. It operates independently and is not affiliated with Blizzard
         Entertainment® or Valve®. You can undo the changes it makes at any
@@ -52,7 +54,9 @@ const { repository, download, showTitle = false } = Astro.props
       </p>
     </li>
     <li>
-      <h3 class="text-lg font-medium text-white">Built with Privacy in Mind</h3>
+      <h3 class="text-lg font-medium text-neutral-200">
+        Built with Privacy in Mind
+      </h3>
       <p class="">
         To change the menu background, OverBuddy will need to read and write
         your Battle.net® and/or Steam® configuration files. It will
@@ -62,7 +66,7 @@ const { repository, download, showTitle = false } = Astro.props
       </p>
     </li>
     <li>
-      <h3 class="text-lg font-medium text-white">Frequently Updated</h3>
+      <h3 class="text-lg font-medium text-neutral-200">Frequently Updated</h3>
       <p class="">
         Major Overwatch patches tend to change the availability of backgrounds,
         including adding new backgrounds and removing some existing ones. The
@@ -79,7 +83,7 @@ const { repository, download, showTitle = false } = Astro.props
       Get the App
     </a>
     <a
-      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-neutral-800/40 bg-neutral-700 px-6 text-center text-lg font-semibold tracking-wide text-neutral-50 uppercase shadow-md !ring-white transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 max-[480px]:w-full"
+      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-neutral-800/40 bg-neutral-700 px-6 text-center text-lg font-semibold tracking-wide text-neutral-100 uppercase shadow-md !ring-white transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 max-[480px]:w-full"
       href={repository}
       target="_blank"
       rel="noopener"
