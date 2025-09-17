@@ -108,7 +108,7 @@
     "image": "/assets/projects/overbuddy/dva_lunar_2023.jpg",
     "title": "Palanquin D.Va",
     "description": "Lunar New Year 2023 (Season 2)",
-    "keywords": "dva",
+    "keywords": "dva d.va",
     "available": false
   },
   {
@@ -156,7 +156,7 @@
     "image": "/assets/projects/overbuddy/lifeweaver.jpg",
     "title": "Lifeweaver",
     "description": "Lifeweaver Release (Season 4)",
-    "keywords": "hero",
+    "keywords": "lw hero",
     "available": false
   },
   {
@@ -188,7 +188,7 @@
     "image": "/assets/projects/overbuddy/questwatch.jpg",
     "title": "Questwatch Art",
     "description": "Questwatch Event (Season 5)",
-    "keywords": "orisa reinhardt brigitte lifeweaver lucio zenyatta genji",
+    "keywords": "orisa reinhardt brigitte lifeweaver lw lucio zenyatta genji",
     "available": false
   },
   {
@@ -381,7 +381,7 @@
     "image": "/assets/projects/overbuddy/summer_games_2024.jpg",
     "title": "Lifeguard Lifeweaver & Kiriko",
     "description": "Summer Games 2024 (Season 11)",
-    "keywords": "beach",
+    "keywords": "lw beach",
     "available": false
   },
   {
@@ -445,7 +445,7 @@
     "image": "/assets/projects/overbuddy/overwatch_classic.jpg",
     "title": "Overwatch Classic",
     "description": "Overwatch Classic Event (Season 13)",
-    "keywords": "ow1 1.0 tracer winston reaper dva mercy lucio",
+    "keywords": "ow1 1.0 tracer winston reaper dva d.va mercy lucio",
     "available": false
   },
   {
@@ -541,7 +541,7 @@
     "image": "/assets/projects/overbuddy/party_in_china.jpg",
     "title": "Party in China",
     "description": "Chinese (NetEase) re-release of Overwatch (Season 15)",
-    "keywords": "mei illari sojourn juno mauga lifeweaver venture kiriko hazard junker queen animated",
+    "keywords": "mei illari sojourn juno mauga lifeweaver lw venture kiriko hazard junker queen animated",
     "available": false
   },
   {
@@ -549,7 +549,7 @@
     "image": "/assets/projects/overbuddy/le_sserafim_remix_promo.jpg",
     "title": "LE SSERAFIM Homecoming Full Art",
     "description": "From Blizzard News",
-    "keywords": "external k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
+    "keywords": "external k-pop korean pop collaboration crossover illari ashe dva d.va mercy juno bob",
     "link": "https://overwatch.blizzard.com/en-us/news/24177860/remix-the-beat-with-overwatch-2-x-le-sserafim/",
     "available": "never"
   },
@@ -558,7 +558,7 @@
     "image": "/assets/projects/overbuddy/le_sserafim_homecoming.jpg",
     "title": "LE SSERAFIM Homecoming",
     "description": "LE SSERAFIM Homecoming Event (Season 15)",
-    "keywords": "k-pop korean pop collaboration crossover illari ashe dva mercy juno bob",
+    "keywords": "k-pop korean pop collaboration crossover illari ashe dva d.va mercy juno bob",
     "available": false
   },
   {
@@ -695,6 +695,22 @@
     "title": "Season 18 Mythic Art",
     "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
     "keywords": "mythic skin mythic weapon art",
+    "available": true
+  },
+  {
+    "id": "persona5",
+    "image": "/assets/projects/overbuddy/phantom_thieves.jpg",
+    "title": "Phantom Thieves",
+    "description": "Persona 5 Event (Season 18)",
+    "keywords": "collaboration crossover art game wuyang genji dva d.va lifeweaver lw mercy phantom by atlus sound team",
+    "available": true
+  },
+  {
+    "id": "anniversary_2025",
+    "image": "/assets/projects/overbuddy/anniversary_2025.jpg",
+    "title": "Anniversary 2025",
+    "description": "Anniversary Celebration (Season 18)",
+    "keywords": "milestone all heroes art song overture by sam cardon dva d.va Doomfist Hazard Junker Queen Mauga Orisa Ramattra Reinhardt Roadhog Sigma Winston Wrecking Ball Zarya Ashe Bastion Cassidy Echo Freja Genji Hanzo Junkrat Mei Pharah Reaper Sojourn Soldier 76 Sombra Symmetra Torbjorn Tracer Venture Widowmaker Ana Baptiste Brigitte Illari Juno Kiriko lifeweaver lw Lucio Mercy Moira Wuyang Zenyatta",
     "available": true
   }
 ]
