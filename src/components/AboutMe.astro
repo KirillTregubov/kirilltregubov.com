@@ -1,6 +1,5 @@
 ---
 import Age from './Age'
-import InlineLink from './InlineLink.astro'
 import Highlight from './Highlight.astro'
 
 const { class: className } = Astro.props
@@ -12,7 +11,7 @@ const { class: className } = Astro.props
     <Age client:load /> year-old
     <Highlight>software developer</Highlight> based in <span
       class="whitespace-nowrap"
-      ><span class="flag-emoji" aria-hidden>🇨🇦</span>Canada</span
+      ><span class="canadian-flag" aria-hidden>🇨🇦</span>Canada</span
     >. I specialize in TypeScript and spend most of my time building CLI tools
     and modern web, mobile and desktop apps using React. My preferred tech stack
     includes React Native, Tauri (Rust), Vite, TailwindCSS, Node.js and
@@ -54,9 +53,13 @@ const { class: className } = Astro.props
       }
 
       const showFlag = isCanadianFlagSupported()
-      const buttons = document.querySelectorAll('.flag-emoji')
-      buttons.forEach((button) => {
-        button.textContent = showFlag ? '🇨🇦' : '🍁'
+      const flags = document.querySelectorAll('.canadian-flag')
+      flags.forEach((button) => {
+        if (!showFlag) {
+          button.textContent = ''
+          button.innerHTML =
+            '<img src="/assets/canada.svg" alt="Canada" class="inline-block size-[1em] w-auto align-middle mb-[2px] mr-px" />'
+        }
       })
     })
   </script>

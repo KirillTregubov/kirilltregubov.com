@@ -6,17 +6,18 @@ Built with [Astro](https://astro.build/), [React](https://react.dev/), [TypeScri
 
 ## Setup
 
-Please install [Bun](https://bun.sh/) and run `bun install` to install the dependencies.
+Please install [Bun](https://bun.sh/) and clone this repository.
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+All commands are run from the root of the project, inside a terminal:
 
 | Command                 | Action                                      |
 | :---------------------- | :------------------------------------------ |
-| `bun i`                 | Installs dependencies                       |
+| `bun install`           | Installs dependencies                       |
 | `bun dev`               | Starts local dev server at `localhost:4321` |
 | `bun run build`         | Build the production site to `./dist/`      |
 | `bun preview`           | Preview the build locally, before deploying |
+| `bun astro`             | Run Astro CLI commands                      |
 | `bun format`            | Format all files with Prettier              |
 | `bunx @astrojs/upgrade` | Upgrade Astro to the latest version         |
