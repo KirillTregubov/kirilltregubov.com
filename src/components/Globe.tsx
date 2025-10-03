@@ -12,11 +12,14 @@ export default function Globe() {
   useEffect(() => {
     if (!canvasRef.current) return
 
-    let phi = -0.1
+    const phi = -0.1
     let width = 0
-    let devicePixelRatio = window.devicePixelRatio * 2
-    const onResize = () =>
-      canvasRef.current && (width = canvasRef.current.offsetWidth)
+    const devicePixelRatio = window.devicePixelRatio * 2
+    const onResize = () => {
+      if (canvasRef.current) {
+        width = canvasRef.current.offsetWidth
+      }
+    }
     window.addEventListener('resize', onResize)
     onResize()
 
@@ -81,7 +84,7 @@ export default function Globe() {
       window.removeEventListener('resize', onResize)
       window.onbeforeunload = null
     }
-  }, [canvasRef])
+  }, [])
 
   return (
     <div className="relative aspect-[1] w-full max-w-[600px]">

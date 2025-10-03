@@ -9,7 +9,7 @@ import {
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSpring, animated, useReducedMotion } from '@react-spring/three'
-import * as THREE from 'three'
+import type * as THREE from 'three'
 
 function Scene() {
   // source: https://science.nasa.gov/resource/saturn-3d-model/
@@ -72,7 +72,7 @@ function CanvasContent() {
     // state.camera?.rotateX(-0.05)
     state.camera?.rotateZ(-0.3)
   })
-  const lightRef = useRef<any>(null)
+  const lightRef = useRef<THREE.PointLight>(null)
 
   return (
     <>

@@ -5,8 +5,8 @@ const technologies = defineCollection({
   loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/technologies' }),
   schema: z.object({
     name: z.string(),
-    type: z.enum(['technology', 'tool']).default('technology'),
-    order: z.number().default(Infinity),
+    type: z.enum(['technology', 'tool', 'hidden']).default('technology'),
+    order: z.number().default(Number.POSITIVE_INFINITY),
     link: z.string().url().optional()
     // color: z.string()
   })
@@ -24,16 +24,19 @@ const projects = defineCollection({
       alt: z.string()
     }),
     technologies: z.array(reference('technologies')),
-    page: z.string().optional(),
-    pageButton: z.string().optional(),
+    repository: z.string().url().optional(),
+    draft: z.boolean().default(false),
+    featured: z.boolean().default(false),
+    // page: z.string().optional(),
+    // pageButton: z.string().optional(),
+    // buttons
     source: z.string().optional(),
     article: z.string().optional(),
     demo: z.string().optional(),
     download: z.string().url().optional(),
     play: z.string().url().optional(),
-    repository: z.string().url().optional(),
-    draft: z.boolean().default(false),
-    featured: z.boolean().default(false)
+    apple: z.string().url().optional(),
+    google: z.string().url().optional()
   })
 })
 
