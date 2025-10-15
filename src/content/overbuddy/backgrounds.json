@@ -686,7 +686,7 @@
     "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter_2.jpg",
     "title": "Season 18 Mythics (Alternate)",
     "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
-    "keywords": "mythic skin mythic weapon",
+    "keywords": "mythic skin mythic weapon sojourn cassidy",
     "available": true
   },
   {
@@ -694,7 +694,7 @@
     "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter_art.jpg",
     "title": "Season 18 Mythic Art",
     "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
-    "keywords": "mythic skin mythic weapon art",
+    "keywords": "mythic skin mythic weapon art sojourn cassidy",
     "available": true
   },
   {
@@ -711,6 +711,30 @@
     "title": "Anniversary 2025",
     "description": "Anniversary Celebration (Season 18)",
     "keywords": "milestone all heroes art song overture by sam cardon dva d.va Doomfist Hazard Junker Queen Mauga Orisa Ramattra Reinhardt Roadhog Sigma Winston Wrecking Ball Zarya Ashe Bastion Cassidy Echo Freja Genji Hanzo Junkrat Mei Pharah Reaper Sojourn Soldier 76 Sombra Symmetra Torbjorn Tracer Venture Widowmaker Ana Baptiste Brigitte Illari Juno Kiriko lifeweaver lw Lucio Mercy Moira Wuyang Zenyatta",
+    "available": true
+  },
+  {
+    "id": "divine_druid_spirit_keeper",
+    "image": "/assets/projects/overbuddy/divine_druid_spirit_keeper.jpg",
+    "title": "Season 19 Mythics",
+    "description": "Divine Druid and Spirit Keeper (Season 19)",
+    "keywords": "mythic skin mythic weapon lifeweaver kiriko",
+    "available": true
+  },
+  {
+    "id": "divine_druid_spirit_keeper_2",
+    "image": "/assets/projects/overbuddy/divine_druid_spirit_keeper_2.jpg",
+    "title": "Season 19 Mythics (Alternate)",
+    "description": "Divine Druid and Spirit Keeper (Season 19)",
+    "keywords": "mythic skin mythic weapon lifeweaver kiriko",
+    "available": true
+  },
+  {
+    "id": "stadium_gadgets",
+    "image": "/assets/projects/overbuddy/stadium_gadgets.jpg",
+    "title": "Stadium Gadgets",
+    "description": "Gadgets Launch in Stadium (Season 19)",
+    "keywords": "gamemode mode new hazard sojourn torbjorn",
     "available": true
   }
 ]
