@@ -736,5 +736,21 @@
     "description": "Gadgets Launch in Stadium (Season 19)",
     "keywords": "gamemode mode new hazard sojourn torbjorn",
     "available": true
+  },
+  {
+    "id": "haunted_masquerade",
+    "image": "/assets/projects/overbuddy/haunted_masquerade.jpg",
+    "title": "Haunted Masquerade",
+    "description": "Halloween Event (Season 19)",
+    "keywords": "art seasonal",
+    "available": true
+  },
+  {
+    "id": "one_punch_man",
+    "image": "/assets/projects/overbuddy/one_punch_man.jpg",
+    "title": "One-Punch Man",
+    "description": "One-Punch Man Event (Season 19)",
+    "keywords": "collaboration crossover art anime",
+    "available": true
   }
 ]
