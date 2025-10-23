@@ -151,30 +151,3 @@
   opacity: 1;
   transform: translate3d(0, 0.2em, 0);
 }
-
-/* @scroll-timeline fadeScroll {
-  source: selector(.scroll-wrapper);
-  orientation: inline;
-}
-
-.fade-left {
-  animation: fadeOutLeft 1s linear both;
-  animation-timeline: fadeScroll;
-  animation-range: 0% 20%;
-}
-
-.fade-right {
-  animation: fadeInRight 1s linear both;
-  animation-timeline: fadeScroll;
-  animation-range: 80% 100%;
-}
-
-@keyframes fadeOutLeft {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; }
-  to { opacity: 1; }
-} */

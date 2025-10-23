@@ -22,7 +22,7 @@ backgrounds = backgrounds.reverse()
   footerClass="mt-8 motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
   footerContent="All trademarks are the property of their respective owners."
 >
-  <main class="mx-auto flex max-w-[90rem] flex-col space-y-8">
+  <main class="mx-auto flex max-w-360 flex-col space-y-8">
     <ReturnHome>
       <a
         href={projectInfo.data.download!}
@@ -70,23 +70,23 @@ backgrounds = backgrounds.reverse()
       class="min-h-[calc(100vh-11rem)] w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
     >
       <h2
-        class="mb-3 scroll-mt-[4.5rem] text-xl leading-none font-semibold"
+        class="mb-3 scroll-mt-18 text-xl leading-none font-semibold"
         id="gallery"
       >
         Background Gallery
       </h2>
       <div
-        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-gradient-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 sm:flex-row sm:items-center"
+        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 sm:flex-row sm:items-center"
       >
         <input
           id="search"
           type="search"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 transition outline-none placeholder:text-neutral-400 placeholder:select-none focus-visible:!ring-neutral-300 md:max-w-96"
+          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 transition outline-none placeholder:text-neutral-400 placeholder:select-none focus-visible:ring-neutral-300! md:max-w-96"
           autocomplete="off"
         />
         <button
-          class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:!ring-neutral-200 active:border-neutral-600/65 active:bg-neutral-700/65 active:!ring-neutral-300"
+          class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-200! active:border-neutral-600/65 active:bg-neutral-700/65 active:ring-neutral-300!"
           id="sort"
           data-newest="false"
         >
@@ -101,7 +101,7 @@ backgrounds = backgrounds.reverse()
           <!-- TODO: Sort by Relevance -->
         </button>
         <button
-          class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:!ring-neutral-200 active:border-neutral-600/65 active:bg-neutral-700/65 active:!ring-neutral-300"
+          class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-center font-medium transition select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-200! active:border-neutral-600/65 active:bg-neutral-700/65 active:ring-neutral-300!"
           id="filter"
           data-visible="true"
         >
@@ -147,14 +147,14 @@ backgrounds = backgrounds.reverse()
               )}
               <div
                 class:list={[
-                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 !ring-accent-500/90 transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!'
+                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 ring-accent-500/90! transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!'
                 ]}
                 data-detail-button
               >
                 <a
                   href={`/overbuddy/${background.data.id}`}
                   title={`View ${background.data.title} background`}
-                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:!ring-0"
+                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:ring-0!"
                 >
                   <EyeIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
                 </a>
@@ -163,7 +163,7 @@ backgrounds = backgrounds.reverse()
                   download
                   title={`Download the ${background.data.title} background`}
                   data-astro-prefetch="tap"
-                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:!ring-0"
+                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:ring-0!"
                 >
                   <CloudDownloadIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
                 </a>
