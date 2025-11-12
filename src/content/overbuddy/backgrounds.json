@@ -419,7 +419,7 @@
   {
     "id": "ana_midnight_sun",
     "image": "/assets/projects/overbuddy/ana_midnight_sun.jpg",
-    "title": "Ana Midnight Sun",
+    "title": "Midnight Sun",
     "description": "Ana Mythic Weapon (Season 12)",
     "keywords": "weapon mythic ana",
     "available": true
@@ -636,7 +636,7 @@
   {
     "id": "reaper_steel_death",
     "image": "/assets/projects/overbuddy/reaper_steel_death.jpg",
-    "title": "Reaper Steel Death",
+    "title": "Steel Death",
     "description": "Reaper Mythic Weapon (Season 17)",
     "keywords": "weapon mythic art",
     "available": true
@@ -709,7 +709,7 @@
     "id": "anniversary_2025",
     "image": "/assets/projects/overbuddy/anniversary_2025.jpg",
     "title": "Anniversary 2025",
-    "description": "Anniversary Celebration (Season 18)",
+    "description": "Overwatch 2 Anniversary Celebration (Season 18)",
     "keywords": "milestone all heroes art song overture by sam cardon dva d.va Doomfist Hazard Junker Queen Mauga Orisa Ramattra Reinhardt Roadhog Sigma Winston Wrecking Ball Zarya Ashe Bastion Cassidy Echo Freja Genji Hanzo Junkrat Mei Pharah Reaper Sojourn Soldier 76 Sombra Symmetra Torbjorn Tracer Venture Widowmaker Ana Baptiste Brigitte Illari Juno Kiriko lifeweaver lw Lucio Mercy Moira Wuyang Zenyatta",
     "available": true
   },
@@ -751,6 +751,22 @@
     "title": "One-Punch Man",
     "description": "One-Punch Man Event (Season 19)",
     "keywords": "collaboration crossover art anime",
+    "available": true
+  },
+  {
+    "id": "cyber_fuel",
+    "image": "/assets/projects/overbuddy/cyber_fuel.jpg",
+    "title": "Cyber Fuel",
+    "description": "Junkrat Mythic Skin (Season 19)",
+    "keywords": "",
+    "available": true
+  },
+  {
+    "id": "scarlet_flare",
+    "image": "/assets/projects/overbuddy/scarlet_flare.jpg",
+    "title": "Scarlet Flare",
+    "description": "OWCS 2025 World Finals Crowdfunding Bundle",
+    "keywords": "overwatch championship series esports competitive",
     "available": true
   }
 ]
