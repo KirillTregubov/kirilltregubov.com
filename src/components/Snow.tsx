@@ -14,12 +14,11 @@ export default function Snow() {
     )
   }, [])
 
+  const { isMobile } = useIsMobile()
+
   if (!isHolidaySeason) {
     return null
   }
-
-  const { isMobile } = useIsMobile()
-
   return (
     <Snowfall
       changeFrequency={400}

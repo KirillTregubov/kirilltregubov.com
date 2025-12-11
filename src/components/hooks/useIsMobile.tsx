@@ -47,23 +47,13 @@ export const useIsMobile = (): UseIsMobileReturn => {
     // Listen for media query changes
     const mediaQuery = window.matchMedia('(max-width: 768px)')
     const handleChange = () => checkIsMobile()
-
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange)
-    } else {
-      // Fallback for older browsers
-      mediaQuery.addListener(handleChange)
-    }
+    mediaQuery.addEventListener('change', handleChange)
 
     // Listen for window resize
     window.addEventListener('resize', checkIsMobile)
 
     return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleChange)
-      } else {
-        mediaQuery.removeListener(handleChange)
-      }
+      mediaQuery.removeEventListener('change', handleChange)
       window.removeEventListener('resize', checkIsMobile)
     }
   }, [])

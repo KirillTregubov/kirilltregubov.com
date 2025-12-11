@@ -26,9 +26,7 @@ export async function GET({ props }: APIContext) {
   >
     <img
       src="data:image/jpeg;base64,${image}"
-      width="${width}"
-      height="${height}"
-      style="position: absolute; top: 0; left: 0; object-fit: cover;"
+      style="position: absolute; top: 0; left: 0; object-fit: cover; width: ${width}px; height: ${height}px;"
     />
     <div
       id="logo"
@@ -36,8 +34,7 @@ export async function GET({ props }: APIContext) {
     >
       <img
         src="https://raw.githubusercontent.com/KirillTregubov/OverBuddy/refs/heads/main/src-tauri/icons/Square44x44Logo.png"
-        width="44"
-        height="44"
+        style="width: 44px; height: 44px;"
       />
       <div style="font-size: 22px; font-weight: 700; padding-right: 4px;">
         OverBuddy
