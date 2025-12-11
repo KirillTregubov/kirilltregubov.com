@@ -23,12 +23,18 @@ export default function Snow() {
     <Snowfall
       changeFrequency={400}
       opacity={[0.3, 0.8]}
-      radius={[0.5, 10.0]}
-      speed={[0.5, 1.0]}
+      radius={[6.0, 10.0]}
+      speed={[0.5, 0.75]}
+      wind={[-0.5, 1.5]}
       rotationSpeed={[-0.5, 0.5]}
       images={[snowflake]}
-      style={{ zIndex: 999 }}
-      snowflakeCount={isMobile ? 150 : 200}
+      style={{
+        zIndex: 999,
+        position: 'fixed',
+        width: '100vw',
+        height: '100vh'
+      }}
+      snowflakeCount={50}
     />
   )
 }
