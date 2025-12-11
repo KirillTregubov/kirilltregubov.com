@@ -92,7 +92,7 @@
     "image": "/assets/projects/overbuddy/winter_wonderland_2022.jpg",
     "title": "Festive Junkrat & Roadhog",
     "description": "Winter Wonderland 2022 (Season 2)",
-    "keywords": "",
+    "keywords": "christmas holidays",
     "available": true
   },
   {
@@ -767,6 +767,30 @@
     "title": "Scarlet Flare",
     "description": "OWCS 2025 World Finals Crowdfunding Bundle",
     "keywords": "overwatch championship series esports competitive",
+    "available": true
+  },
+  {
+    "id": "vendetta",
+    "image": "/assets/projects/overbuddy/vendetta.jpg",
+    "title": "Vendetta",
+    "description": "Vendetta Release (Season 20)",
+    "keywords": "",
+    "available": true
+  },
+  {
+    "id": "divine_desperado_capsule_cannon",
+    "image": "/assets/projects/overbuddy/divine_desperado_capsule_cannon.jpg",
+    "title": "Season 20 Mythics",
+    "description": "Divine Desperado and Capsule Cannon (Season 20)",
+    "keywords": "mythic skin mythic weapon",
+    "available": true
+  },
+  {
+    "id": "winter_wonderland_2025",
+    "image": "/assets/projects/overbuddy/winter_wonderland_2025.jpg",
+    "title": "Winter Wonderland",
+    "description": "Winter Wonderland 2025 (Season 20)",
+    "keywords": "art juno wuyang ashe bob B.O.B. festive christmas holidays",
     "available": true
   }
 ]
