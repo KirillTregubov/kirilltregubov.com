@@ -35,10 +35,6 @@ if (!image) {
   image = 'banner.jpg'
 }
 
-const today = new Date()
-const isHolidaySeason =
-  today.getMonth() === 11 || (today.getMonth() === 0 && today.getDate() <= 5)
-
 const formattedImage = image.replace('/assets/', '')
 ---
 
@@ -122,7 +118,7 @@ const formattedImage = image.replace('/assets/', '')
       </span>
       {footerContent && <div class="md:inline-block">{footerContent}</div>}
     </footer>
-    {isHolidaySeason && <Snow client:only />}
+    <Snow client:only />
     <!-- Analytics: Simple Analytics - 100% privacy-first analytics-->
     <script
       is:inline
