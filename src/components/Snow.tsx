@@ -28,7 +28,7 @@ export default function Snow() {
       rotationSpeed={[-0.5, 0.5]}
       images={[snowflake]}
       style={{ zIndex: 999 }}
-      snowflakeCount={isMobile ? 150 : 300}
+      snowflakeCount={isMobile ? 150 : 200}
     />
   )
 }
