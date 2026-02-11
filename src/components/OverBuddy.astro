@@ -46,7 +46,7 @@ const { repository, download, showTitle = false } = Astro.props
         OverBuddy is free to use and{' '}
         <MDLink
           href={repository}
-          className="!text-neutral-300 hover:!text-neutral-200 focus-visible:!text-neutral-200 active:!text-neutral-200"
+          className="text-neutral-300! hover:text-neutral-200! focus-visible:text-neutral-200! active:text-neutral-200!"
           >open source</MDLink
         >. It operates independently and is not affiliated with Blizzard
         Entertainment® or Valve®. You can undo the changes it makes at any time
@@ -77,13 +77,13 @@ const { repository, download, showTitle = false } = Astro.props
   </ul>
   <div class="flex flex-wrap gap-3">
     <a
-      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold tracking-wide text-orange-50 uppercase shadow-md !ring-white transition will-change-transform select-none hover:scale-105 hover:rounded-[0.25rem] hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 max-[480px]:w-full"
+      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-10 text-center text-lg font-semibold tracking-wide text-orange-50 uppercase shadow-md ring-white! transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:ring-1! focus-visible:outline-hidden active:scale-95 max-[480px]:w-full"
       href={download}
     >
       Get the App
     </a>
     <a
-      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-neutral-800/40 bg-neutral-700 px-6 text-center text-lg font-semibold tracking-wide text-neutral-100 uppercase shadow-md !ring-white transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:!ring-1 focus-visible:outline-hidden active:scale-95 max-[480px]:w-full"
+      class="inline-flex h-14 items-center justify-center rounded-[0.2rem] border-2 border-neutral-800/40 bg-neutral-700 px-6 text-center text-lg font-semibold tracking-wide text-neutral-100 uppercase shadow-md ring-white! transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-neutral-50 focus-visible:scale-105 focus-visible:border-white focus-visible:ring-1! focus-visible:outline-hidden active:scale-95 max-[480px]:w-full"
       href={repository}
       target="_blank"
       rel="noopener"

@@ -788,9 +788,25 @@
   {
     "id": "magma_titan",
     "image": "/assets/projects/overbuddy/magma_titan.jpg",
-    "title": "Magma Titan Doomfist",
+    "title": "Magma Titan",
     "description": "Doomfist Mythic Skin (Season 20)",
     "keywords": "",
+    "available": true
+  },
+  {
+    "id": "celestial_garden",
+    "image": "/assets/projects/overbuddy/celestial_garden.jpg",
+    "title": "Celestial Garden",
+    "description": "Mercy Mythic Skin (Season 1: Conquest)",
+    "keywords": "mythic skin shop reign of talon",
+    "available": true
+  },
+  {
+    "id": "star_shooter",
+    "image": "/assets/projects/overbuddy/star_shooter.jpg",
+    "title": "Star Shooter",
+    "description": "Juno Mythic Weapon (Season 1: Conquest)",
+    "keywords": "mythic weapon shop reign of talon",
     "available": true
   }
 ]

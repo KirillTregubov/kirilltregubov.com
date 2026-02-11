@@ -19,8 +19,6 @@ export default defineConfig({
     '/linkedin': {
       status: 308,
       destination: 'https://www.linkedin.com/in/kirilltregubov/'
-    },
-    // TEMPORARY REDIRECT
-    '/overbuddy/0x0800000000001345': '/overbuddy/heart_of_hope_juno'
+    }
   }
 })

@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import Snowfall from 'react-snowfall'
-import useIsMobile from './hooks/useIsMobile'
 
 const snowflake = document.createElement('img')
 snowflake.src = '/assets/snowflake.png'
@@ -13,8 +12,6 @@ export default function Snow() {
       (today.getMonth() === 0 && today.getDate() <= 5)
     )
   }, [])
-
-  const { isMobile } = useIsMobile()
 
   if (!isHolidaySeason) {
     return null
