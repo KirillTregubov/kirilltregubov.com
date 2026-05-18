@@ -1,12 +1,39 @@
 {
-  "css.lint.unknownAtRules": "ignore",
-  "[css]": { "editor.defaultFormatter": "bradlc.vscode-tailwindcss" },
-  "editor.formatOnSave": true,
-  "files.associations": {
-    "*.mdx": "markdown"
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[markdown]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-  "files.eol": "\n",
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[html]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
   }
 }
