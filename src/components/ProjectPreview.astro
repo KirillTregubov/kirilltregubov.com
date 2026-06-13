@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets'
 import { getEntries, type CollectionEntry } from 'astro:content'
+import Apple from '@components/icons/Apple.astro'
+import Android from '@components/icons/Android.astro'
 import {
-  AppleIcon,
   BookOpenTextIcon,
-  BotIcon,
   CodeIcon,
   ExternalLinkIcon,
   GamepadIcon,
@@ -94,7 +94,7 @@ const updatedDate =
           // project.data.page ? (
           //   <a
           //     href={project.data.page}
-          //     class="flex items-center !rounded-lg border-2 border-neutral-500 px-2 py-1.5 leading-none text-neutral-700 !ring-neutral-500 transition hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50 dark:hover:!ring-neutral-100 dark:active:border-neutral-100 dark:active:text-neutral-50 dark:active:!ring-neutral-100"
+          //     class="flex items-center rounded-lg! border-2 border-neutral-500 px-2 py-1.5 leading-none text-neutral-700 ring-neutral-500! transition hover:border-neutral-700 hover:text-neutral-900 dark:border-neutral-500 dark:text-neutral-300 dark:hover:border-neutral-100 dark:hover:text-neutral-50 dark:hover:ring-neutral-100! dark:active:border-neutral-100 dark:active:text-neutral-50 dark:active:ring-neutral-100!"
           //   >
           //     <BookOpenTextIcon className="mr-1.5 size-5" aria-hidden="true" />
           //     {project.data.pageButton || 'View Page'}
@@ -146,7 +146,7 @@ const updatedDate =
             href="https://apps.apple.com/ca/app/pollution-reporter/id1476589861"
             external
           >
-            <AppleIcon className="mr-1.5 size-5" aria-hidden="true" />
+            <Apple className="mr-1.5 size-5" aria-hidden="true" />
             App Store
           </ProjectLink>
         )}
@@ -155,7 +155,7 @@ const updatedDate =
             href="https://play.google.com/store/apps/details?id=com.PollutionReporter"
             external
           >
-            <BotIcon className="mr-1.5 size-5" aria-hidden="true" />
+            <Android className="mr-1.5 size-5" aria-hidden="true" />
             Play Store
           </ProjectLink>
         )}

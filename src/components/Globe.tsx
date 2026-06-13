@@ -1,4 +1,5 @@
 import createGlobe from 'cobe'
+import type { Globe as COBEGlobe } from 'cobe'
 import { useEffect, useRef } from 'react'
 
 // const doublePi = Math.PI * 2
@@ -15,15 +16,20 @@ export default function Globe() {
     const phi = -0.1
     let width = 0
     const devicePixelRatio = window.devicePixelRatio * 2
+    let globe: COBEGlobe | undefined
     const onResize = () => {
       if (canvasRef.current) {
         width = canvasRef.current.offsetWidth
+        globe?.update({
+          width: width * devicePixelRatio,
+          height: width * devicePixelRatio
+        })
       }
     }
     window.addEventListener('resize', onResize)
     onResize()
 
-    const globe = createGlobe(canvasRef.current, {
+    globe = createGlobe(canvasRef.current, {
       devicePixelRatio: devicePixelRatio,
       width: width * devicePixelRatio,
       height: width * devicePixelRatio,
@@ -41,37 +47,7 @@ export default function Globe() {
       ],
       // markerColor: [0.1, 0.8, 1],
       glowColor: [0.15, 0.15, 0.15],
-      markers: [{ location: [43.6532, -79.3832], size: 0.05 }],
-      onRender: (state) => {
-        // Called on every animation frame.
-        state.width = width * devicePixelRatio
-        state.height = width * devicePixelRatio
-        // state.phi = phi
-        // if (focusRef.current !== null) {
-        //   const focusPhi = focusRef.current
-        //   const distPositive = (focusPhi - phi + doublePi) % doublePi
-        //   const distNegative = (phi - focusPhi + doublePi) % doublePi
-
-        //   // Control the speed
-        //   let newDiff = 0
-        //   if (distPositive < distNegative) {
-        //     newDiff += distPositive * 0.02
-        //   } else {
-        //     newDiff -= distNegative * 0.02
-        //   }
-        //   phi += newDiff
-
-        //   if (Math.abs(newDiff) < 0.001) {
-        //     focusRef.current = null
-        //   }
-        // } else if (!pointerHovering.current) {
-        //   phi += speed // * direction
-        // }
-
-        // if (phi > doublePi) {
-        //   phi -= doublePi
-        // }
-      }
+      markers: [{ location: [43.6532, -79.3832], size: 0.05 }]
     })
 
     const onUnload = () => {
@@ -87,7 +63,7 @@ export default function Globe() {
   }, [])
 
   return (
-    <div className="relative aspect-[1] w-full max-w-[600px]">
+    <div className="relative aspect-[1] w-full max-w-150">
       <canvas
         ref={canvasRef}
         className="h-full w-full animate-[scaleUp_1.2s_forwards] will-change-transform contain-[layout_paint_size]"

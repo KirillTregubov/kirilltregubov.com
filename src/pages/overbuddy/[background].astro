@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
 
-const { id, title, description, image, available, link } = Astro.props
+const { id, title, description, image, available, link, removed } = Astro.props
 
 const layoutDescription =
   available === true
@@ -70,7 +70,7 @@ const layoutDescription =
           <figcaption class="text-2xl font-bold" data-title>
             {title}
           </figcaption>
-          <div class="mt-1 text-lg text-neutral-400">
+          <div class="text-lg text-neutral-400">
             <p class="inline-block" data-description>
               {description}
               {
@@ -86,6 +86,11 @@ const layoutDescription =
                 )
               }
             </p>
+            {
+              removed && (
+                <p class="text-base font-medium text-amber-400/60">{removed}</p>
+              )
+            }
           </div>
         </div>
 
@@ -107,7 +112,7 @@ const layoutDescription =
                   !available && 'pointer-events-none opacity-60'
                 ]}
                 href={projectInfo.data.download!}
-                title="Install OverBuddy to apply this background"
+                title={removed ?? 'Install OverBuddy to apply this background'}
               >
                 {available ? 'Apply in Game' : 'Removed from Game'}
               </a>
@@ -121,7 +126,7 @@ const layoutDescription =
     >
     </div>
     <section
-      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
+      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10"
     >
       <OverBuddy
         showTitle

@@ -3,12 +3,11 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": ".",
     "paths": {
-      "@layouts/*": ["src/layouts/*"],
-      "@components/*": ["src/components/*"],
-      "@lib/*": ["src/lib/*"],
-      "@styles/*": ["src/styles/*"]
+      "@layouts/*": ["./src/layouts/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

@@ -12,7 +12,8 @@ if (!projectInfo) throw new Error('OverBuddy project not found')
 
 let backgrounds = await getCollection('overbuddy')
 if (!backgrounds) throw new Error('OverBuddy backgrounds not found')
-backgrounds = backgrounds.reverse()
+
+backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
 ---
 
 <Layout
@@ -33,7 +34,7 @@ backgrounds = backgrounds.reverse()
       </a>
     </ReturnHome>
     <section
-      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12"
+      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10"
     >
       <div
         class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center"
@@ -51,7 +52,7 @@ backgrounds = backgrounds.reverse()
           <h1 class="text-2xl leading-none font-bold text-neutral-200">
             {projectInfo.data.name}
           </h1>
-          <p class="my-2 text-neutral-400">
+          <p class="mt-2 text-neutral-400">
             Browse Overwatch™ menu backgrounds.<br class="hidden sm:block" /> Install
             the app to customize your in-game main menu background.
           </p>
@@ -100,6 +101,7 @@ backgrounds = backgrounds.reverse()
           </span>
           <!-- TODO: Sort by Relevance -->
         </button>
+        <!-- Hide unavailable is disabled because every background is now unavailable.
         <button
           class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-center font-medium transition will-change-transform select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-200! active:scale-95 active:border-neutral-600/65 active:bg-neutral-700/65 active:ring-neutral-300!"
           id="filter"
@@ -113,7 +115,7 @@ backgrounds = backgrounds.reverse()
           <span class="[grid-area:1/-1] group-data-[visible=false]:invisible">
             Hide <span class="font-semibold">Unavailable</span>
           </span>
-        </button>
+        </button> -->
       </div>
       <div
         class="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29"
@@ -211,15 +213,12 @@ backgrounds = backgrounds.reverse()
             item.querySelector('[data-description]')?.textContent?.trim() || ''
           const keywords =
             item.querySelector('[data-keywords]')?.textContent?.trim() || ''
-          const isAvailable = item.querySelector('[data-available]') !== null
 
           const element = item as HTMLElement
 
-          return { title, description, keywords, isAvailable, element }
+          return { title, description, keywords, element }
         }
       )
-
-      const availableItems = items.filter((item) => item.isAvailable)
 
       const fuse = new Fuse(items, {
         keys: [
@@ -241,25 +240,12 @@ backgrounds = backgrounds.reverse()
         return
       }
 
-      const filterButton = document.getElementById('filter')
-      if (!filterButton) {
-        console.warn('Filter button not found')
-        return
-      }
-
       const executeSearch = () => {
         const searchTerm = search.value.trim()
         const results = fuse.search(searchTerm)
 
-        const filterAvailable =
-          filterButton.getAttribute('data-visible') !== 'true'
-
         if (results.length === 0) {
-          items.forEach(({ element, isAvailable }) => {
-            if (filterAvailable && !isAvailable) {
-              return
-            }
-
+          items.forEach(({ element }) => {
             element.classList.remove('hidden')
             ;(element as HTMLElement).style.order = '0'
           })
@@ -329,34 +315,9 @@ backgrounds = backgrounds.reverse()
         scrollToFirstItem()
       })
 
-      // Filter button
-      if (filterButton) {
-        filterButton.addEventListener('click', () => {
-          const willBeVisible =
-            filterButton.getAttribute('data-visible') !== 'true'
-
-          filterButton.setAttribute('data-visible', willBeVisible.toString())
-          items.forEach(({ element, isAvailable }) => {
-            if (isAvailable) return
-
-            if (willBeVisible) {
-              element.classList.remove('hidden')
-            } else {
-              element.classList.add('hidden')
-            }
-          })
-
-          const nextItems = willBeVisible ? items : availableItems
-          fuse.setCollection(nextItems)
-          if (search.value.trim() !== '') {
-            executeSearch()
-          }
-
-          scrollToFirstItem()
-        })
-      } else {
-        console.warn('Filter button not found')
-      }
+      // Hide unavailable is disabled because every background is now unavailable.
+      // If availability returns, restore the filter button and filter this list
+      // against each item's data-available marker.
     })
   </script>
 </Layout>

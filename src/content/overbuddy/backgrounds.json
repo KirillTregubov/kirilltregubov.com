@@ -1,812 +1,1014 @@
 [
   {
     "id": "owl",
+    "order": 1,
     "image": "/assets/projects/overbuddy/owl.jpg",
     "title": "Overwatch League",
     "description": "Overwatch League Promo",
     "keywords": "esports competitive zenyatta widowmaker reaper bastion cassidy tracer",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "heroes",
+    "order": 2,
     "image": "/assets/projects/overbuddy/heroes.jpg",
     "title": "Heroes",
     "description": "2022 Alpha Test",
     "keywords": "mei reinhardt tracer lucio mercy",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "sojourn",
+    "order": 3,
     "image": "/assets/projects/overbuddy/sojourn.jpg",
     "title": "Sojourn",
     "description": "2022 PvP Beta",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "kiriko",
+    "order": 4,
     "image": "/assets/projects/overbuddy/kiriko.jpg",
     "title": "Kiriko",
     "description": "Kiriko Release (Season 1)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "zero_hour",
+    "order": 5,
     "image": "/assets/projects/overbuddy/zero_hour.jpg",
     "title": "Zero Hour",
     "description": "Overwatch 2 Launch",
     "keywords": "tracer sojourn genji mercy",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "cyber_demon_genji_green",
+    "order": 6,
     "image": "/assets/projects/overbuddy/cyber_demon_genji_green.jpg",
     "title": "Cyber Demon Genji (Green)",
     "description": "Genji Mythic Skin (Season 1)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed Mid-Season 13 (2024)"
   },
   {
     "id": "cyber_demon_genji_red",
+    "order": 7,
     "image": "/assets/projects/overbuddy/cyber_demon_genji_red.jpg",
     "title": "Cyber Demon Genji (Red)",
     "description": "Genji Mythic Skin (Season 1)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed Mid-Season 13 (2024)"
   },
   {
     "id": "cyber_demon_genji_pink",
+    "order": 8,
     "image": "/assets/projects/overbuddy/cyber_demon_genji_pink.jpg",
     "title": "Cyber Demon Genji (Pink)",
     "description": "Genji Mythic Skin (Season 1)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed Mid-Season 13 (2024)"
   },
   {
     "id": "ramattra",
+    "order": 9,
     "image": "/assets/projects/overbuddy/ramattra.jpg",
     "title": "Ramattra",
     "description": "Ramattra Release (Season 2)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "shambali_monastery",
+    "order": 10,
     "image": "/assets/projects/overbuddy/shambali_monastery.jpg",
     "title": "Shambali Monastery",
     "description": "Shambali Monastery Release (Season 2)",
     "keywords": "map",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "zeus_junker_queen",
+    "order": 11,
     "image": "/assets/projects/overbuddy/zeus_junker_queen.jpg",
     "title": "Zeus Junker Queen",
     "description": "Junker Queen Mythic Skin (Season 2)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "winter_wonderland_2022",
+    "order": 12,
     "image": "/assets/projects/overbuddy/winter_wonderland_2022.jpg",
     "title": "Festive Junkrat & Roadhog",
     "description": "Winter Wonderland 2022 (Season 2)",
     "keywords": "christmas holidays",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "mei_lunar_2023",
+    "order": 13,
     "image": "/assets/projects/overbuddy/mei_lunar_2023.jpg",
     "title": "Festive Mei",
     "description": "Lunar New Year 2023 (Season 2)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "dva_lunar_2023",
+    "order": 14,
     "image": "/assets/projects/overbuddy/dva_lunar_2023.jpg",
     "title": "Palanquin D.Va",
     "description": "Lunar New Year 2023 (Season 2)",
     "keywords": "dva d.va",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "antarctic_peninsula",
+    "order": 15,
     "image": "/assets/projects/overbuddy/antarctic_peninsula.jpg",
     "title": "Antarctic Peninsula",
     "description": "Antarctic Peninsula Release (Season 3)",
     "keywords": "map",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "kiriko_amaterasu",
+    "order": 16,
     "image": "/assets/projects/overbuddy/kiriko_amaterasu.jpg",
     "title": "Amaterasu Kiriko",
     "description": "Kiriko Mythic Skin (Season 3)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "kiriko_amaterasu_art",
+    "order": 17,
     "image": "/assets/projects/overbuddy/kiriko_amaterasu_art.jpg",
     "title": "Amaterasu Kiriko Art",
     "description": "Kiriko Mythic Skin (Season 3)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "cupid_hanzo",
+    "order": 18,
     "image": "/assets/projects/overbuddy/cupid_hanzo.jpg",
     "title": "Cupid Hanzo",
     "description": "Ultimate Valentine 2023 (Season 3)",
     "keywords": "valentine's day february 14 pink",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "one_punch_man_doomfist",
+    "order": 19,
     "image": "/assets/projects/overbuddy/one_punch_man_doomfist.jpg",
     "title": "Saitama Doomfist",
     "description": "One Punch Man Event (Season 3)",
     "keywords": "collaboration crossover anime",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "lifeweaver",
+    "order": 20,
     "image": "/assets/projects/overbuddy/lifeweaver.jpg",
     "title": "Lifeweaver",
     "description": "Lifeweaver Release (Season 4)",
     "keywords": "lw hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "galactic_emperor_sigma",
+    "order": 21,
     "image": "/assets/projects/overbuddy/galactic_emperor_sigma.jpg",
     "title": "Galactic Emperor Sigma",
     "description": "Sigma Mythic Skin (Season 4)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "starwatch_art",
+    "order": 22,
     "image": "/assets/projects/overbuddy/starwatch_art.jpg",
     "title": "Starwatch Art",
     "description": "Starwatch Event (Season 4)",
     "keywords": "sigma sojourn soldier 76 winston mercy doomfist baptiste bastion echo lucio ashe hammond wrecking ball",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "zero_hour_owl",
+    "order": 23,
     "image": "/assets/projects/overbuddy/zero_hour_owl.jpg",
     "title": "Overwatch League Zero Hour",
     "description": "Overwatch League Promo (Season 4)",
     "keywords": "tracer sojourn genji mercy esports competitive",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "questwatch",
+    "order": 24,
     "image": "/assets/projects/overbuddy/questwatch.jpg",
     "title": "Questwatch Art",
     "description": "Questwatch Event (Season 5)",
     "keywords": "orisa reinhardt brigitte lifeweaver lw lucio zenyatta genji",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "summer_games_2023",
+    "order": 25,
     "image": "/assets/projects/overbuddy/summer_games_2023.jpg",
     "title": "Tropical Doomfist",
     "description": "Summer Games 2023 (Season 5)",
     "keywords": "beach",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "illari",
+    "order": 26,
     "image": "/assets/projects/overbuddy/illari.jpg",
     "title": "Illari",
     "description": "Illari Release (Season 6)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "a_7000_wargod_ana",
+    "order": 27,
     "image": "/assets/projects/overbuddy/a_7000_wargod_ana.jpg",
     "title": "A-7000 Wargod Ana",
     "description": "Ana Mythic Skin (Season 6)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "gothenburg_mothership",
+    "order": 28,
     "image": "/assets/projects/overbuddy/gothenburg_mothership.jpg",
     "title": "Gothenburg Mothership",
     "description": "Invasion PvE Event (Season 6)",
     "keywords": "map",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "onryo_hanzo",
+    "order": 29,
     "image": "/assets/projects/overbuddy/onryo_hanzo.jpg",
     "title": "Onryo Hanzo",
     "description": "Hanzo Mythic Skin (Season 7)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "onryo_hanzo_art",
+    "order": 30,
     "image": "/assets/projects/overbuddy/onryo_hanzo_art.jpg",
     "title": "Onryo Hanzo Art",
     "description": "Hanzo Mythic Skin (Season 7)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "lilith_moira",
+    "order": 31,
     "image": "/assets/projects/overbuddy/lilith_moira.jpg",
     "title": "Lilith Moira",
     "description": "Halloween Terror 2023 (Season 7)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "overwatch_world_cup",
+    "order": 32,
     "image": "/assets/projects/overbuddy/overwatch_world_cup.jpg",
     "title": "Overwatch World Cup",
     "description": "Overwatch World Cup 2023 (Season 7)",
     "keywords": "esports competitive",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "le_sserafim",
+    "order": 33,
     "image": "/assets/projects/overbuddy/le_sserafim.jpg",
     "title": "LE SSERAFIM Art",
     "description": "LE SSERAFIM Event (Season 7)",
     "keywords": "k-pop korean pop collaboration crossover kiriko brigitte dva d.va tracer sombra",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "le_sserafim_full",
+    "order": 34,
     "image": "/assets/projects/overbuddy/le_sserafim_full.jpeg",
     "title": "LE SSERAFIM Full Art",
     "description": "From X / @PlayOverwatch",
     "keywords": "external twitter k-pop korean pop collaboration crossover kiriko brigitte dva d.va tracer sombra",
     "link": "https://twitter.com/PlayOverwatch/status/1719042353158332706",
-    "available": "never"
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "mauga",
+    "order": 35,
     "image": "/assets/projects/overbuddy/mauga.jpg",
     "title": "Mauga",
     "description": "Mauga Release (Season 8)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "grand_beast_orisa",
+    "order": 36,
     "image": "/assets/projects/overbuddy/grand_beast_orisa.jpg",
     "title": "Grand Beast Orisa",
     "description": "Orisa Mythic Skin (Season 8)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "winter_wonderland_2023",
+    "order": 37,
     "image": "/assets/projects/overbuddy/winter_wonderland_2023.jpg",
     "title": "Festive Mercy B.O.B. and Genji Art",
     "description": "Winter Wonderland 2023 (Season 8)",
     "keywords": "christmas holidays bob",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 9 (2024)"
   },
   {
     "id": "winter_wonderland_2021",
+    "order": 38,
     "image": "/assets/projects/overbuddy/winter_wonderland_2021.jpg",
     "title": "Festive Mercy Ashe B.O.B. Genji Wrecking Ball Art",
     "description": "Winter Wonderland 2021",
     "keywords": "christmas holidays bob hammond",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "ancient_caller_moira",
+    "order": 39,
     "image": "/assets/projects/overbuddy/ancient_caller_moira.jpg",
     "title": "Ancient Caller Moira Art",
     "description": "Moira Mythic Skin (Season 9)",
     "keywords": "halloween",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "cowboy_bebop",
+    "order": 40,
     "image": "/assets/projects/overbuddy/cowboy_bebop.jpg",
     "title": "Cowboy Bebop Art",
     "description": "Cowboy Bebop Event (Season 9)",
     "keywords": "collaboration crossover anime mauga sombra cassidy ashe",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "venture",
+    "order": 41,
     "image": "/assets/projects/overbuddy/venture.jpg",
     "title": "Venture",
     "description": "Venture Release (Season 10)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "mirrorwatch",
+    "order": 42,
     "image": "/assets/projects/overbuddy/mirrorwatch.jpg",
     "title": "Mirrorwatch",
     "description": "Mirrorwatch Event (Season 10)",
     "keywords": "doomfist mercy",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "mirrorwatch_art",
+    "order": 43,
     "image": "/assets/projects/overbuddy/mirrorwatch_art.jpg",
     "title": "Mirrorwatch Art",
     "description": "Mirrorwatch Event (Season 10)",
     "keywords": "reinhardt mercy ana sombra doomfist widowmaker",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "porsche_dva",
+    "order": 44,
     "image": "/assets/projects/overbuddy/porsche_dva.jpg",
     "title": "Porsche D.Va",
     "description": "Porsche Event (Season 10)",
     "keywords": "dva collaboration crossover car",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "calamity_empress_ashe",
+    "order": 45,
     "image": "/assets/projects/overbuddy/calamity_empress_ashe.jpg",
     "title": "Calamity Empress Ashe",
     "description": "Ashe Mythic Skin (Season 11)",
     "keywords": "B.O.B. roadhog cassidy genji",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 12 (2024)"
   },
   {
     "id": "rose_gold_mercy",
+    "order": 46,
     "image": "/assets/projects/overbuddy/rose_gold_mercy.jpg",
     "title": "Rose Gold Mercy",
     "description": "Breast Cancer Charity Event (Season 11)",
     "keywords": "pink mercy",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "transformers",
+    "order": 47,
     "image": "/assets/projects/overbuddy/transformers.jpg",
     "title": "Optimus Prime Reinhardt",
     "description": "Transformers Event (Season 11)",
     "keywords": "collaboration crossover movies",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 12 (2024)"
   },
   {
     "id": "summer_games_2024",
+    "order": 48,
     "image": "/assets/projects/overbuddy/summer_games_2024.jpg",
     "title": "Lifeguard Lifeweaver & Kiriko",
     "description": "Summer Games 2024 (Season 11)",
     "keywords": "lw beach",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "reinhardt_bound_demon",
+    "order": 49,
     "image": "/assets/projects/overbuddy/reinhardt_bound_demon.jpg",
     "title": "Reinhardt Bound Demon",
     "description": "Reinhardt Mythic Weapon (Season 11)",
     "keywords": "weapon mythic reinhardt",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "juno",
+    "order": 50,
     "image": "/assets/projects/overbuddy/juno.jpg",
     "title": "Juno",
     "description": "Juno Release (Season 12)",
     "keywords": "hero mars",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 13 (2024)"
   },
   {
     "id": "anubis_reaper",
+    "order": 51,
     "image": "/assets/projects/overbuddy/anubis_reaper.jpg",
     "title": "Anubis Reaper Art",
     "description": "Reaper Mythic Skin (Season 12)",
     "keywords": "illari doomfist echo egypt",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "sylvanas_widowmaker",
+    "order": 52,
     "image": "/assets/projects/overbuddy/sylvanas_widowmaker.jpg",
     "title": "Sylvanas Widowmaker",
     "description": "World of Warcraft Event (Season 12)",
     "keywords": "collaboration crossover widowmaker world of warcraft wow",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "ana_midnight_sun",
+    "order": 53,
     "image": "/assets/projects/overbuddy/ana_midnight_sun.jpg",
     "title": "Midnight Sun",
     "description": "Ana Mythic Weapon (Season 12)",
     "keywords": "weapon mythic ana",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "spellbinder_widowmaker",
+    "order": 54,
     "image": "/assets/projects/overbuddy/spellbinder_widowmaker.jpg",
     "title": "Spellbinder Widowmaker",
     "description": "Widowmaker Mythic Skin (Season 13)",
     "keywords": "Widowmaker Spellbinder Magic",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "my_hero_academia",
+    "order": 55,
     "image": "/assets/projects/overbuddy/my_hero_academia.jpg",
     "title": "My Hero Academia",
     "description": "My Hero Academia Event (Season 13)",
     "keywords": "collaboration crossover anime tracer reinhardt juno kiriko reaper",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 14 (2024)"
   },
   {
     "id": "overwatch_classic",
+    "order": 56,
     "image": "/assets/projects/overbuddy/overwatch_classic.jpg",
     "title": "Overwatch Classic",
     "description": "Overwatch Classic Event (Season 13)",
     "keywords": "ow1 1.0 tracer winston reaper dva d.va mercy lucio",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "owcs_finals_2024",
+    "order": 57,
     "image": "/assets/projects/overbuddy/owcs_finals_2024.jpg",
     "title": "OWCS Finals 2024",
     "description": "Overwatch Championship Series Finals 2024",
     "keywords": "esports competitive junkrat tracer mei champions",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "soldier_76_deliverance",
+    "order": 58,
     "image": "/assets/projects/overbuddy/soldier_76_deliverance.jpg",
     "title": "Soldier: 76 Deliverance",
     "description": "Soldier: 76 Mythic Weapon (Season 13)",
     "keywords": "weapon mythic soldier",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "hazard",
+    "order": 59,
     "image": "/assets/projects/overbuddy/hazard.jpg",
     "title": "Hazard",
     "description": "Hazard Release (Season 14)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "thor_reinhardt",
+    "order": 60,
     "image": "/assets/projects/overbuddy/thor_reinhardt.jpg",
     "title": "Thor Reinhardt",
     "description": "Reinhardt Mythic Skin (Season 14)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 15 (2025)"
   },
   {
     "id": "thor_reinhardt_armorless",
+    "order": 61,
     "image": "/assets/projects/overbuddy/thor_reinhardt_armorless.jpg",
     "title": "Thor Reinhardt (Armorless)",
     "description": "Reinhardt Mythic Skin (Season 14)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 15 (2025)"
   },
   {
     "id": "thor_reinhardt_chest_armor",
+    "order": 62,
     "image": "/assets/projects/overbuddy/thor_reinhardt_chest_armor.jpg",
     "title": "Thor Reinhardt (With Chest Armor)",
     "description": "Reinhardt Mythic Skin (Season 14)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 15 (2025)"
   },
   {
     "id": "welcome_home_china",
+    "order": 63,
     "image": "/assets/projects/overbuddy/welcome_home_china.jpg",
     "title": "Welcome Home, China (欢迎回家)",
     "description": "Chinese (NetEase) beta re-release of Overwatch (Season 14)",
     "keywords": "",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "avatar_the_last_airbender",
+    "order": 64,
     "image": "/assets/projects/overbuddy/avatar_the_last_airbender.jpg",
     "title": "Avatar: The Last Airbender",
     "description": "Avatar: The Last Airbender Event (Season 14)",
     "keywords": "collaboration crossover animation",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "ashe_lead_rose",
+    "order": 65,
     "image": "/assets/projects/overbuddy/ashe_lead_rose.jpg",
     "title": "Ashe Lead Rose",
     "description": "Ashe Mythic Weapon (Season 14)",
     "keywords": "weapon mythic ashe",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "celestial_skins",
+    "order": 66,
     "image": "/assets/projects/overbuddy/celestial_skins.jpg",
     "title": "Celestial Skins",
     "description": "Celestial Skin Bundle (Season 14)",
     "keywords": "weapon mythic ashe",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "honor_and_glory",
+    "order": 67,
     "image": "/assets/projects/overbuddy/honor_and_glory.jpg",
     "title": "Honor and Glory",
     "description": "Season 15 Release Art",
     "keywords": "pixiu zenyatta sigma hanzo venture mercy static",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "party_in_china",
+    "order": 68,
     "image": "/assets/projects/overbuddy/party_in_china.jpg",
     "title": "Party in China",
     "description": "Chinese (NetEase) re-release of Overwatch (Season 15)",
     "keywords": "mei illari sojourn juno mauga lifeweaver lw venture kiriko hazard junker queen animated",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "le_sserafim_remix_promo",
+    "order": 69,
     "image": "/assets/projects/overbuddy/le_sserafim_remix_promo.jpg",
     "title": "LE SSERAFIM Homecoming Full Art",
     "description": "From Blizzard News",
     "keywords": "external k-pop korean pop collaboration crossover illari ashe dva d.va mercy juno bob",
     "link": "https://overwatch.blizzard.com/en-us/news/24177860/remix-the-beat-with-overwatch-2-x-le-sserafim/",
-    "available": "never"
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "le_sserafim_homecoming",
+    "order": 70,
     "image": "/assets/projects/overbuddy/le_sserafim_homecoming.jpg",
     "title": "LE SSERAFIM Homecoming",
     "description": "LE SSERAFIM Homecoming Event (Season 15)",
     "keywords": "k-pop korean pop collaboration crossover illari ashe dva d.va mercy juno bob",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "widowmaker_dame_chance_2",
+    "order": 71,
     "image": "/assets/projects/overbuddy/widowmaker_dame_chance_2.jpg",
     "title": "Widowmaker Dame Chance (Alternate)",
     "description": "Widowmaker Mythic Weapon (Season 15)",
     "keywords": "weapon mythic widowmaker",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "widowmaker_dame_chance",
+    "order": 72,
     "image": "/assets/projects/overbuddy/widowmaker_dame_chance.jpg",
     "title": "Widowmaker Dame Chance",
     "description": "Widowmaker Mythic Weapon (Season 15)",
     "keywords": "weapon mythic widowmaker",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "owcs_juno",
+    "order": 73,
     "image": "/assets/projects/overbuddy/owcs_juno.jpg",
     "title": "Ember Juno",
     "description": "2025 Champions Clash Hangzhou Crowdfunding Skin",
     "keywords": "owcs overwatch championship series esports competitive juno",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "stadium",
+    "order": 74,
     "image": "/assets/projects/overbuddy/stadium.jpg",
     "title": "Stadium",
     "description": "Stadium Release (Season 16)",
     "keywords": "gamemode mode new",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "freja",
+    "order": 75,
     "image": "/assets/projects/overbuddy/freja.jpg",
     "title": "Freja",
     "description": "Freja Release (Season 16)",
     "keywords": "hero",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "gundam_wing",
+    "order": 76,
     "image": "/assets/projects/overbuddy/gundam_wing.jpg",
     "title": "Gundam Wing",
     "description": "Gundam Wing Event (Season 16)",
     "keywords": "collaboration crossover anime mech mercy ramattra soldier 76 reaper",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "street_fighter_6",
+    "order": 77,
     "image": "/assets/projects/overbuddy/street_fighter_6.jpg",
     "title": "Street Fighter 6",
     "description": "Street Fighter 6 Event (Season 16)",
     "keywords": "collaboration crossover fighting game juno hanzo zenyatta sigma kiriko widowmaker winston soldier 76",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "mercy_merciful_magitech",
+    "order": 78,
     "image": "/assets/projects/overbuddy/mercy_merciful_magitech.jpg",
     "title": "Mercy Merciful Magitech",
     "description": "Mercy Mythic Weapon (Season 16)",
     "keywords": "weapon mythic mercy cute",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "heart_of_hope_juno",
+    "order": 79,
     "image": "/assets/projects/overbuddy/heart_of_hope_juno.jpg",
     "title": "Heart of Hope Juno",
     "description": "Juno Mythic Skin (Season 16)",
     "keywords": "mythic skin animated art",
-    "available": false
+    "available": false,
+    "removed": "Removed in Season 17 (2025)"
   },
   {
     "id": "reaper_steel_death",
+    "order": 80,
     "image": "/assets/projects/overbuddy/reaper_steel_death.jpg",
     "title": "Steel Death",
     "description": "Reaper Mythic Weapon (Season 17)",
     "keywords": "weapon mythic art",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "gi_joe",
+    "order": 81,
     "image": "/assets/projects/overbuddy/gi_joe.jpg",
     "title": "G.I. Joe",
     "description": "G.I. Joe Event (Season 17)",
     "keywords": "collaboration crossover gi joe reaper genji doomfist freja widowmaker explosion",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "radiant_angel",
+    "order": 82,
     "image": "/assets/projects/overbuddy/radiant_angel.jpg",
     "title": "Radiant Angel Mercy",
     "description": "OWCS 2025 Midseason Championship Crowdfunding Skin",
     "keywords": "overwatch championship series esports competitive",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "nerf",
+    "order": 83,
     "image": "/assets/projects/overbuddy/nerf.jpg",
     "title": "NERF",
     "description": "NERF Collaboration Event (Season 17)",
     "keywords": "collaboration crossover cassidy nerf gun nerfgun guns bow foam dart bullet",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "wuyang",
+    "order": 84,
     "image": "/assets/projects/overbuddy/wuyang.jpg",
     "title": "Wuyang",
     "description": "Wuyang Release (Season 18)",
     "keywords": "art",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "ultraviolet_sentinel_blazing_sunsetter",
+    "order": 85,
     "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter.jpg",
     "title": "Season 18 Mythics",
     "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
     "keywords": "mythic skin mythic weapon",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "ultraviolet_sentinel_blazing_sunsetter_2",
+    "order": 86,
     "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter_2.jpg",
     "title": "Season 18 Mythics (Alternate)",
     "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
     "keywords": "mythic skin mythic weapon sojourn cassidy",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "ultraviolet_sentinel_blazing_sunsetter_art",
+    "order": 87,
     "image": "/assets/projects/overbuddy/ultraviolet_sentinel_blazing_sunsetter_art.jpg",
     "title": "Season 18 Mythic Art",
     "description": "Ultraviolet Sentinel and Blazing Sunsetter (Season 18)",
     "keywords": "mythic skin mythic weapon art sojourn cassidy",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "persona5",
+    "order": 88,
     "image": "/assets/projects/overbuddy/phantom_thieves.jpg",
     "title": "Phantom Thieves",
     "description": "Persona 5 Event (Season 18)",
     "keywords": "collaboration crossover art game wuyang genji dva d.va lifeweaver lw mercy phantom by atlus sound team",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "anniversary_2025",
+    "order": 89,
     "image": "/assets/projects/overbuddy/anniversary_2025.jpg",
     "title": "Anniversary 2025",
     "description": "Overwatch 2 Anniversary Celebration (Season 18)",
     "keywords": "milestone all heroes art song overture by sam cardon dva d.va Doomfist Hazard Junker Queen Mauga Orisa Ramattra Reinhardt Roadhog Sigma Winston Wrecking Ball Zarya Ashe Bastion Cassidy Echo Freja Genji Hanzo Junkrat Mei Pharah Reaper Sojourn Soldier 76 Sombra Symmetra Torbjorn Tracer Venture Widowmaker Ana Baptiste Brigitte Illari Juno Kiriko lifeweaver lw Lucio Mercy Moira Wuyang Zenyatta",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "divine_druid_spirit_keeper",
+    "order": 90,
     "image": "/assets/projects/overbuddy/divine_druid_spirit_keeper.jpg",
     "title": "Season 19 Mythics",
     "description": "Divine Druid and Spirit Keeper (Season 19)",
     "keywords": "mythic skin mythic weapon lifeweaver kiriko",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "divine_druid_spirit_keeper_2",
+    "order": 91,
     "image": "/assets/projects/overbuddy/divine_druid_spirit_keeper_2.jpg",
     "title": "Season 19 Mythics (Alternate)",
     "description": "Divine Druid and Spirit Keeper (Season 19)",
     "keywords": "mythic skin mythic weapon lifeweaver kiriko",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "stadium_gadgets",
+    "order": 92,
     "image": "/assets/projects/overbuddy/stadium_gadgets.jpg",
     "title": "Stadium Gadgets",
     "description": "Gadgets Launch in Stadium (Season 19)",
     "keywords": "gamemode mode new hazard sojourn torbjorn",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "haunted_masquerade",
+    "order": 93,
     "image": "/assets/projects/overbuddy/haunted_masquerade.jpg",
     "title": "Haunted Masquerade",
     "description": "Halloween Event (Season 19)",
     "keywords": "art seasonal",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "one_punch_man",
+    "order": 94,
     "image": "/assets/projects/overbuddy/one_punch_man.jpg",
     "title": "One-Punch Man",
     "description": "One-Punch Man Event (Season 19)",
     "keywords": "collaboration crossover art anime",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "cyber_fuel",
+    "order": 95,
     "image": "/assets/projects/overbuddy/cyber_fuel.jpg",
     "title": "Cyber Fuel",
     "description": "Junkrat Mythic Skin (Season 19)",
     "keywords": "",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "scarlet_flare",
+    "order": 96,
     "image": "/assets/projects/overbuddy/scarlet_flare.jpg",
     "title": "Scarlet Flare",
     "description": "OWCS 2025 World Finals Crowdfunding Bundle",
     "keywords": "overwatch championship series esports competitive",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "vendetta",
+    "order": 97,
     "image": "/assets/projects/overbuddy/vendetta.jpg",
     "title": "Vendetta",
     "description": "Vendetta Release (Season 20)",
     "keywords": "",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "divine_desperado_capsule_cannon",
+    "order": 98,
     "image": "/assets/projects/overbuddy/divine_desperado_capsule_cannon.jpg",
     "title": "Season 20 Mythics",
     "description": "Divine Desperado and Capsule Cannon (Season 20)",
     "keywords": "mythic skin mythic weapon",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "magma_titan",
+    "order": 99,
     "image": "/assets/projects/overbuddy/magma_titan.jpg",
     "title": "Magma Titan",
     "description": "Doomfist Mythic Skin (Season 20)",
     "keywords": "",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "celestial_garden",
+    "order": 100,
     "image": "/assets/projects/overbuddy/celestial_garden.jpg",
     "title": "Celestial Garden",
     "description": "Mercy Mythic Skin (Season 1: Conquest)",
     "keywords": "mythic skin shop reign of talon",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   },
   {
     "id": "star_shooter",
+    "order": 101,
     "image": "/assets/projects/overbuddy/star_shooter.jpg",
     "title": "Star Shooter",
     "description": "Juno Mythic Weapon (Season 1: Conquest)",
     "keywords": "mythic weapon shop reign of talon",
-    "available": true
+    "available": false,
+    "removed": "Removed in Season 2: Summit (2026)"
   }
 ]
