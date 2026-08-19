@@ -39,10 +39,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         class="saturn relative box-content h-[calc(100vw-9rem)] max-h-75 w-full lg:min-w-100 xl:max-h-100 xl:min-w-150 2xl:min-w-175"
         title="My favourite planet, Saturn."
       >
-        <Saturn
-          client:only="react"
-          fallbackClass="max-h-[300px] xl:max-h-[400px]"
-        />
+        <Saturn client:idle fallbackClass="max-h-[300px] xl:max-h-[400px]" />
         <figcaption
           class="absolute bottom-0 w-full pb-2 text-center text-sm font-medium text-neutral-400/80 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6"
           title=""

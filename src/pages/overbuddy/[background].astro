@@ -10,6 +10,8 @@ import { ChevronLeftCircleIcon } from 'lucide-react'
 export async function getStaticPaths() {
   const collection = await getCollection('overbuddy')
   if (!collection) return []
+  const project = await getEntry('projects', 'overbuddy')
+  if (!project) throw new Error('OverBuddy project not found')
 
   return collection.map((background) => ({
     params: {
@@ -17,7 +19,8 @@ export async function getStaticPaths() {
     },
     props: {
       ...background.data
-    }
+    },
+    cacheKey: `${background.digest}:${project.digest}`
   }))
 }
 

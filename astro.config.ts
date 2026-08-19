@@ -7,6 +7,10 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   integrations: [react(), mdx()],
 
+  experimental: {
+    incrementalBuild: true
+  },
+
   vite: {
     plugins: [tailwindcss()]
   },

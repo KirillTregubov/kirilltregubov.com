@@ -3,6 +3,7 @@ import satori from 'satori'
 import { html } from 'satori-html'
 import { Resvg } from '@resvg/resvg-js'
 import fs from 'node:fs'
+import { createHash } from 'node:crypto'
 import { getCollection } from 'astro:content'
 import type { ReactNode } from 'react'
 
@@ -10,6 +11,7 @@ const backgrounds = await getCollection('overbuddy')
 
 // const inter = fs.readFileSync('public/fonts/Inter-Regular.ttf')
 const interBold = fs.readFileSync('public/fonts/Inter-Bold.ttf')
+const interBoldDigest = createHash('sha256').update(interBold).digest()
 // const sourceHanSans = fs.readFileSync('public/fonts/SourceHanSansCN-Bold.otf')
 
 const width = 1200
@@ -82,12 +84,24 @@ export async function GET({ props }: APIContext) {
 export async function getStaticPaths() {
   if (!backgrounds) return []
 
-  return backgrounds.map((background) => ({
-    params: {
-      id: background.id
-    },
-    props: {
-      ...background.data
+  return backgrounds.map((background) => {
+    const sourceImage = fs.readFileSync(
+      `public${background.data.image.replace(/\?.*$/, '')}`
+    )
+    const cacheKey = createHash('sha256')
+      .update(String(background.digest))
+      .update(interBoldDigest)
+      .update(sourceImage)
+      .digest('base64url')
+
+    return {
+      params: {
+        id: background.id
+      },
+      props: {
+        ...background.data
+      },
+      cacheKey
     }
-  }))
+  })
 }
