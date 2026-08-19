@@ -1,37 +1,57 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="background" x1="164" y1="20" x2="999" y2="655" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#11100E"/>
-      <stop offset="1" stop-color="#1C1917"/>
-    </linearGradient>
-    <linearGradient id="screen" x1="798" y1="107" x2="1103" y2="307" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FCD34D" stop-opacity=".35"/>
+    <radialGradient id="amber-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1098 96) rotate(135) scale(410 440)">
+      <stop stop-color="#F59E0B" stop-opacity=".15"/>
+      <stop offset=".48" stop-color="#F59E0B" stop-opacity=".035"/>
       <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hero-border" x1="48" y1="26" x2="1143" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCD34D" stop-opacity=".16"/>
+      <stop offset=".55" stop-color="#FCD34D" stop-opacity=".055"/>
+      <stop offset="1" stop-color="#FCD34D" stop-opacity=".14"/>
     </linearGradient>
-    <filter id="glow" x="640" y="0" width="639" height="441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="38"/>
-    </filter>
+    <pattern id="grid" width="120" height="52" patternUnits="userSpaceOnUse">
+      <path d="M0 51.5H120M119.5 0V52" stroke="#FAFAFA" stroke-opacity=".022"/>
+    </pattern>
+    <clipPath id="hero-clip">
+      <rect x="12.5" y="15.5" width="1175" height="561" rx="24"/>
+    </clipPath>
   </defs>
-  <rect width="1200" height="630" fill="url(#background)"/>
-  <path d="M747 47H1126L1058 345H679L747 47Z" fill="#FBBF24" fill-opacity=".08" filter="url(#glow)"/>
-  <path d="M785 72H1135L1059 300H709L785 72Z" fill="url(#screen)" stroke="#FCD34D" stroke-opacity=".32" stroke-width="2"/>
-  <circle cx="91" cy="99" r="7" fill="#FCD34D"/>
-  <text x="111" y="106" fill="#FCD34D" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="4">TORONTO CINEMA FIELD GUIDE</text>
-  <text x="82" y="195" fill="#FAFAF9" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="-2">Pick the screen,</text>
-  <text x="82" y="258" fill="#FCD34D" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="-2">not just the showtime.</text>
-  <text x="83" y="309" fill="#A8A29E" font-family="Inter, Arial, sans-serif" font-size="22">Toronto + GTA · cinema format reference</text>
-  <rect x="82" y="378" width="1036" height="168" rx="20" fill="#0C0A09" fill-opacity=".78" stroke="#F5F5F4" stroke-opacity=".12"/>
-  <text x="116" y="421" fill="#78716C" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2">SCREEN FORMATS</text>
-  <g font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">
-    <rect x="116" y="446" width="136" height="52" rx="12" fill="#FCD34D" fill-opacity=".12" stroke="#FCD34D" stroke-opacity=".28"/>
-    <text x="144" y="479" fill="#FDE68A">1.85:1</text>
-    <rect x="276" y="446" width="136" height="52" rx="12" fill="#38BDF8" fill-opacity=".1" stroke="#38BDF8" stroke-opacity=".28"/>
-    <text x="304" y="479" fill="#7DD3FC">2.39:1</text>
-    <rect x="436" y="446" width="136" height="52" rx="12" fill="#F87171" fill-opacity=".1" stroke="#F87171" stroke-opacity=".28"/>
-    <text x="479" y="479" fill="#FCA5A5">IMAX</text>
+
+  <rect width="1200" height="630" fill="#171717"/>
+  <g clip-path="url(#hero-clip)">
+    <rect x="12" y="15" width="1176" height="562" rx="25" fill="#090909"/>
+    <rect x="12" y="15" width="1176" height="562" fill="url(#amber-glow)"/>
+    <rect x="610" y="15" width="578" height="562" fill="url(#grid)"/>
   </g>
-  <path d="M750 453H1066" stroke="#57534E" stroke-width="2" stroke-linecap="round"/>
-  <path d="M750 489H974" stroke="#44403C" stroke-width="2" stroke-linecap="round"/>
-  <circle cx="1080" cy="471" r="18" fill="#FCD34D" fill-opacity=".15"/>
-  <path d="M1074 471L1078 475L1087 465" stroke="#FCD34D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="12.5" y="15.5" width="1175" height="561" rx="24.5" stroke="url(#hero-border)"/>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="56" y="83" fill="#FCD34D" font-size="12" font-weight="700" letter-spacing="2.4">TORONTO CINEMA FIELD GUIDE</text>
+
+    <text x="56" y="159" fill="#FAFAFA" font-size="54" font-weight="700" letter-spacing="-2.2">Pick the screen,</text>
+    <text x="56" y="220" fill="#FACC15" font-size="54" font-weight="700" letter-spacing="-2.2">not just the showtime.</text>
+
+    <text x="56" y="278" fill="#D4D4D4" font-size="17">Find the exact Cineplex auditorium that fits your film. Compare screen shape,</text>
+    <text x="56" y="307" fill="#D4D4D4" font-size="17">viewing format, audio configuration, projector technology and more.</text>
+
+    <rect x="56" y="341" width="151" height="41" rx="20.5" fill="#FACC15"/>
+    <text x="75" y="367" fill="#171717" font-size="13" font-weight="700">Explore the directory</text>
+    <text x="224" y="367" fill="#737373" font-size="13">Community-maintained reference</text>
+
+    <path d="M56 425.5H1144" stroke="#FAFAFA" stroke-opacity=".11"/>
+
+    <g fill="#737373" font-size="10.5" letter-spacing=".55">
+      <text x="56" y="463">LOCATIONS</text>
+      <text x="148" y="463">AUDITORIUMS</text>
+      <text x="255" y="463">PREMIUM FORMATS</text>
+      <text x="391" y="463">COVERAGE</text>
+    </g>
+    <g fill="#F5F5F5" font-weight="700">
+      <text x="56" y="492" font-size="21">27</text>
+      <text x="148" y="492" font-size="21">345</text>
+      <text x="255" y="492" font-size="21">7</text>
+      <text x="391" y="490" font-size="16">Greater Toronto Area</text>
+    </g>
+  </g>
 </svg>
