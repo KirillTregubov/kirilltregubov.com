@@ -471,149 +471,157 @@ const getAuditoriumHeading = (auditoriums: string) => {
   <script>
     import Fuse from 'fuse.js'
 
-    const searchInput =
-      document.querySelector<HTMLInputElement>('#theatre-search')
-    const filterButtons = Array.from(
-      document.querySelectorAll<HTMLButtonElement>('.filter-button')
-    )
-    const cards = Array.from(
-      document.querySelectorAll<HTMLElement>('.theatre-card')
-    )
-    const resultCount = document.querySelector<HTMLElement>('#result-count')
-    const noResults = document.querySelector<HTMLElement>('#no-results')
-    const directory = document.querySelector<HTMLElement>('#directory')
-    const locations = cards.map((card) => ({
-      card,
-      name: card.dataset.name ?? '',
-      formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
-      screenShapes: JSON.parse(card.dataset.screenShapes ?? '[]') as string[],
-      auditoriumRows: Array.from(
-        card.querySelectorAll<HTMLElement>('[data-auditorium-formats]')
-      ).map((row) => ({
-        row,
-        formats: JSON.parse(row.dataset.auditoriumFormats ?? '[]') as string[],
-        screenShapes: row.dataset.auditoriumScreenShape
-          ? [row.dataset.auditoriumScreenShape]
-          : []
+    document.addEventListener('astro:page-load', () => {
+      if (window.location.pathname !== '/cineplex-toronto') {
+        return
+      }
+
+      const searchInput =
+        document.querySelector<HTMLInputElement>('#theatre-search')
+      const filterButtons = Array.from(
+        document.querySelectorAll<HTMLButtonElement>('.filter-button')
+      )
+      const cards = Array.from(
+        document.querySelectorAll<HTMLElement>('.theatre-card')
+      )
+      const resultCount = document.querySelector<HTMLElement>('#result-count')
+      const noResults = document.querySelector<HTMLElement>('#no-results')
+      const directory = document.querySelector<HTMLElement>('#directory')
+      const locations = cards.map((card) => ({
+        card,
+        name: card.dataset.name ?? '',
+        formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
+        screenShapes: JSON.parse(card.dataset.screenShapes ?? '[]') as string[],
+        auditoriumRows: Array.from(
+          card.querySelectorAll<HTMLElement>('[data-auditorium-formats]')
+        ).map((row) => ({
+          row,
+          formats: JSON.parse(
+            row.dataset.auditoriumFormats ?? '[]'
+          ) as string[],
+          screenShapes: row.dataset.auditoriumScreenShape
+            ? [row.dataset.auditoriumScreenShape]
+            : []
+        }))
       }))
-    }))
-    const fuse = new Fuse(locations, {
-      keys: [{ name: 'name', weight: 1 }],
-      ignoreLocation: true,
-      threshold: 0.3
-    })
-    let activeFilter:
-      { type: 'format' | 'screen-shape'; value: string } | undefined
-    let animationFrame: number | undefined
-    let hasAutoScrolledToDirectory = false
+      const fuse = new Fuse(locations, {
+        keys: [{ name: 'name', weight: 1 }],
+        ignoreLocation: true,
+        threshold: 0.3
+      })
+      let activeFilter:
+        { type: 'format' | 'screen-shape'; value: string } | undefined
+      let animationFrame: number | undefined
+      let hasAutoScrolledToDirectory = false
 
-    function matchesActiveFilter({
-      formats,
-      screenShapes
-    }: {
-      formats: string[]
-      screenShapes: string[]
-    }) {
-      if (!activeFilter) return true
+      function matchesActiveFilter({
+        formats,
+        screenShapes
+      }: {
+        formats: string[]
+        screenShapes: string[]
+      }) {
+        if (!activeFilter) return true
 
-      return activeFilter.type === 'format'
-        ? formats.includes(activeFilter.value) ||
-            (activeFilter.value === 'IMAX' && formats.includes('IMAX 70mm'))
-        : screenShapes.includes(activeFilter.value)
-    }
+        return activeFilter.type === 'format'
+          ? formats.includes(activeFilter.value) ||
+              (activeFilter.value === 'IMAX' && formats.includes('IMAX 70mm'))
+          : screenShapes.includes(activeFilter.value)
+      }
 
-    function updateFilterButtons() {
-      filterButtons.forEach((button) => {
-        const filterType = button.dataset.filterType
-        const filterValue = button.dataset.filterValue
-        button.setAttribute(
-          'aria-pressed',
-          String(
-            !filterType
-              ? !activeFilter
-              : activeFilter?.type === filterType &&
-                  activeFilter.value === filterValue
+      function updateFilterButtons() {
+        filterButtons.forEach((button) => {
+          const filterType = button.dataset.filterType
+          const filterValue = button.dataset.filterValue
+          button.setAttribute(
+            'aria-pressed',
+            String(
+              !filterType
+                ? !activeFilter
+                : activeFilter?.type === filterType &&
+                    activeFilter.value === filterValue
+            )
           )
-        )
-      })
-    }
-
-    function updateResults({ scrollToDirectory = false } = {}) {
-      const query = searchInput?.value.trim() ?? ''
-      const searchResults = query
-        ? fuse.search(query).map(({ item }) => item)
-        : locations
-      const searchMatches = new Set(searchResults.map(({ card }) => card))
-      let visibleCount = 0
-
-      locations.forEach(({ card, formats, screenShapes, auditoriumRows }) => {
-        const matchesSearch = searchMatches.has(card)
-        const matchesFilter = matchesActiveFilter({ formats, screenShapes })
-        const visible = matchesSearch && matchesFilter
-        if (card.hidden === visible) card.hidden = !visible
-
-        auditoriumRows.forEach(({ row, formats, screenShapes }) => {
-          row.hidden = !matchesActiveFilter({ formats, screenShapes })
-        })
-
-        if (visible) {
-          visibleCount += 1
-        }
-      })
-
-      if (resultCount) {
-        resultCount.textContent =
-          visibleCount === cards.length
-            ? `Showing all ${cards.length} locations`
-            : `Showing ${visibleCount} of ${cards.length} locations`
-      }
-      noResults?.classList.toggle('hidden', visibleCount !== 0)
-
-      if (
-        scrollToDirectory &&
-        visibleCount > 0 &&
-        directory &&
-        !hasAutoScrolledToDirectory
-      ) {
-        hasAutoScrolledToDirectory = true
-        directory.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-          inline: 'start'
         })
       }
-    }
 
-    function scheduleResultsUpdate() {
-      if (animationFrame) cancelAnimationFrame(animationFrame)
-      animationFrame = requestAnimationFrame(() => {
-        animationFrame = undefined
-        updateResults({ scrollToDirectory: true })
-      })
-    }
+      function updateResults({ scrollToDirectory = false } = {}) {
+        const query = searchInput?.value.trim() ?? ''
+        const searchResults = query
+          ? fuse.search(query).map(({ item }) => item)
+          : locations
+        const searchMatches = new Set(searchResults.map(({ card }) => card))
+        let visibleCount = 0
 
-    searchInput?.addEventListener('input', scheduleResultsUpdate)
-    filterButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const filterType = button.dataset.filterType
-        const filterValue = button.dataset.filterValue
+        locations.forEach(({ card, formats, screenShapes, auditoriumRows }) => {
+          const matchesSearch = searchMatches.has(card)
+          const matchesFilter = matchesActiveFilter({ formats, screenShapes })
+          const visible = matchesSearch && matchesFilter
+          if (card.hidden === visible) card.hidden = !visible
 
-        if (!filterType || !filterValue) {
-          activeFilter = undefined
-        } else if (
-          activeFilter?.type === filterType &&
-          activeFilter.value === filterValue
-        ) {
-          activeFilter = undefined
-        } else {
-          activeFilter = {
-            type: filterType as 'format' | 'screen-shape',
-            value: filterValue
+          auditoriumRows.forEach(({ row, formats, screenShapes }) => {
+            row.hidden = !matchesActiveFilter({ formats, screenShapes })
+          })
+
+          if (visible) {
+            visibleCount += 1
           }
-        }
+        })
 
-        updateFilterButtons()
-        updateResults()
+        if (resultCount) {
+          resultCount.textContent =
+            visibleCount === cards.length
+              ? `Showing all ${cards.length} locations`
+              : `Showing ${visibleCount} of ${cards.length} locations`
+        }
+        noResults?.classList.toggle('hidden', visibleCount !== 0)
+
+        if (
+          scrollToDirectory &&
+          visibleCount > 0 &&
+          directory &&
+          !hasAutoScrolledToDirectory
+        ) {
+          hasAutoScrolledToDirectory = true
+          directory.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'start'
+          })
+        }
+      }
+
+      function scheduleResultsUpdate() {
+        if (animationFrame) cancelAnimationFrame(animationFrame)
+        animationFrame = requestAnimationFrame(() => {
+          animationFrame = undefined
+          updateResults({ scrollToDirectory: true })
+        })
+      }
+
+      searchInput?.addEventListener('input', scheduleResultsUpdate)
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filterType = button.dataset.filterType
+          const filterValue = button.dataset.filterValue
+
+          if (!filterType || !filterValue) {
+            activeFilter = undefined
+          } else if (
+            activeFilter?.type === filterType &&
+            activeFilter.value === filterValue
+          ) {
+            activeFilter = undefined
+          } else {
+            activeFilter = {
+              type: filterType as 'format' | 'screen-shape',
+              value: filterValue
+            }
+          }
+
+          updateFilterButtons()
+          updateResults()
+        })
       })
     })
   </script>
