@@ -7,9 +7,9 @@ const { class: className } = Astro.props
 
 <div class:list={['text-lg text-pretty', className]}>
   <p>
-    Hey! I'm <Highlight>Kirill Tregubov</Highlight>, a
-    <Age client:load /> year-old
-    <Highlight>software developer</Highlight> based in <span
+    Hey! I'm <Highlight>Kirill Tregubov</Highlight>, a{' '}<Age client:load />
+    {' '}year-old{' '}
+    <Highlight>software developer</Highlight>{' '}based in <span
       class="whitespace-nowrap"
       ><span class="canadian-flag" aria-hidden>🇨🇦</span>Canada</span
     >. I specialize in TypeScript and spend most of my time building CLI tools
