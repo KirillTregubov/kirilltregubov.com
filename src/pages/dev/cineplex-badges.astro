@@ -1,0 +1,73 @@
+---
+import ExperienceBadge from '@components/cineplex-badges/ExperienceBadge.astro'
+import PageContainer from '@components/PageContainer.astro'
+import Layout from '@layouts/Layout.astro'
+
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/404')
+}
+
+const badges = [
+  '3D',
+  '4DX',
+  '70mm',
+  'Clubhouse',
+  'Closed Caption',
+  'D-BOX',
+  'Described Video',
+  'Dolby Atmos',
+  'Early Access',
+  'Event Pass',
+  'Fan Experience',
+  'HFR',
+  'IMAX',
+  'IMAX 3D',
+  'IMAX 3D HFR',
+  'IMAX 70mm',
+  'IMAX HFR',
+  'Laser Projection',
+  'Last Chance',
+  'Prime Seats',
+  'Recliners',
+  'Regular',
+  'SCREENX',
+  'Sensory Friendly Screening',
+  'Stars and Strollers',
+  'UltraAVX',
+  'UltraAVX HDR by Barco',
+  'VIP 18+',
+  'VIP 19+'
+]
+---
+
+<Layout
+  title="Cineplex badge kitchen sink"
+  description="Development-only Cineplex experience badge viewer."
+>
+  <PageContainer class="max-w-240">
+    <header class="mt-8 border-b border-white/10 pb-6">
+      <p class="text-xs font-bold tracking-[0.2em] text-amber-300 uppercase">
+        Development only
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold tracking-tight text-white">
+        Cineplex badge kitchen sink
+      </h1>
+      <p class="mt-2 text-sm text-neutral-400">
+        {badges.length} local Astro components, rendered at their in-product size.
+      </p>
+    </header>
+
+    <main class="grid grid-cols-1 gap-3 py-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        badges.map((format) => (
+          <article class="flex min-h-25 flex-col justify-between rounded-xl border border-white/10 bg-neutral-950 p-4">
+            <div class="flex min-h-10 items-center">
+              <ExperienceBadge format={format} />
+            </div>
+            <code class="mt-4 block text-xs text-neutral-500">{format}</code>
+          </article>
+        ))
+      }
+    </main>
+  </PageContainer>
+</Layout>

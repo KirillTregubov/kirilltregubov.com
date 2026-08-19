@@ -1,0 +1,103 @@
+---
+import ClosedCaption from './ClosedCaption.astro'
+import Clubhouse from './Clubhouse.astro'
+import DBox from './DBox.astro'
+import DescribedVideo from './DescribedVideo.astro'
+import DolbyAtmos from './DolbyAtmos.astro'
+import EarlyAccess from './EarlyAccess.astro'
+import EventPass from './EventPass.astro'
+import FanExperience from './FanExperience.astro'
+import FourDX from './FourDX.astro'
+import HFR from './HFR.astro'
+import IMAX from './IMAX.astro'
+import IMAX3D from './IMAX3D.astro'
+import IMAX3DHFR from './IMAX3DHFR.astro'
+import IMAX70mm from './IMAX70mm.astro'
+import IMAXHFR from './IMAXHFR.astro'
+import LaserProjection from './LaserProjection.astro'
+import LastChance from './LastChance.astro'
+import PrimeSeats from './PrimeSeats.astro'
+import Recliners from './Recliners.astro'
+import Regular from './Regular.astro'
+import ScreenX from './ScreenX.astro'
+import SensoryFriendly from './SensoryFriendly.astro'
+import SeventyMM from './SeventyMM.astro'
+import StarsAndStrollers from './StarsAndStrollers.astro'
+import ThreeD from './ThreeD.astro'
+import UltraAVX from './UltraAVX.astro'
+import UltraAVXHDR from './UltraAVXHDR.astro'
+import VIP18Plus from './VIP18Plus.astro'
+import VIP19Plus from './VIP19Plus.astro'
+
+interface Props {
+  format: string
+}
+
+const { format } = Astro.props
+const formatKey = format.toLowerCase().replace(/[^a-z0-9]+/g, '')
+const badges = {
+  '3d': ThreeD,
+  '4dx': FourDX,
+  '70mm': SeventyMM,
+  clubhouse: Clubhouse,
+  closedcaption: ClosedCaption,
+  dbox: DBox,
+  describedvideo: DescribedVideo,
+  dolbyatmos: DolbyAtmos,
+  earlyaccess: EarlyAccess,
+  earlyaccessen: EarlyAccess,
+  eventpass: EventPass,
+  fanexperience: FanExperience,
+  hfr: HFR,
+  imax: IMAX,
+  imax3d: IMAX3D,
+  imax3dhfr: IMAX3DHFR,
+  imax70mm: IMAX70mm,
+  imaxhfr: IMAXHFR,
+  laserprojection: LaserProjection,
+  lastchance: LastChance,
+  primeseats: PrimeSeats,
+  recliner: Recliners,
+  recliners: Recliners,
+  regular: Regular,
+  screenx: ScreenX,
+  sensoryfriendly: SensoryFriendly,
+  sensoryfriendlyscreening: SensoryFriendly,
+  starsandstrollers: StarsAndStrollers,
+  ultraavx: UltraAVX,
+  ultraavxhdr: UltraAVXHDR,
+  ultraavxhdrbybarco: UltraAVXHDR,
+  ultraavxhdrbybarconew: UltraAVXHDR,
+  vip: VIP19Plus,
+  vip18: VIP18Plus,
+  vip18plus: VIP18Plus,
+  vip19: VIP19Plus,
+  vip19plus: VIP19Plus
+}
+const Badge = badges[formatKey as keyof typeof badges]
+---
+
+{
+  Badge ? (
+    <span class="badge" role="img" aria-label={format}>
+      <Badge />
+    </span>
+  ) : (
+    <span>{format}</span>
+  )
+}
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .badge :global(svg) {
+    display: block;
+    width: auto;
+    height: 1rem;
+    max-width: 10.75rem;
+  }
+</style>

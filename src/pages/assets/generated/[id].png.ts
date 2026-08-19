@@ -1,11 +1,11 @@
 import type { APIContext } from 'astro'
+import type { ReactNode } from 'react'
+import { createHash } from 'node:crypto'
+import fs from 'node:fs'
+import { Resvg } from '@resvg/resvg-js'
+import { getCollection } from 'astro:content'
 import satori from 'satori'
 import { html } from 'satori-html'
-import { Resvg } from '@resvg/resvg-js'
-import fs from 'node:fs'
-import { createHash } from 'node:crypto'
-import { getCollection } from 'astro:content'
-import type { ReactNode } from 'react'
 
 const backgrounds = await getCollection('overbuddy')
 

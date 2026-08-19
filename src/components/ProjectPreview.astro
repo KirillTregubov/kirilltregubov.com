@@ -1,8 +1,7 @@
 ---
+import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
-import { getEntries, type CollectionEntry } from 'astro:content'
-import Apple from '@components/icons/Apple.astro'
-import Android from '@components/icons/Android.astro'
+import { getEntries } from 'astro:content'
 import {
   BookOpenTextIcon,
   CodeIcon,
@@ -11,6 +10,8 @@ import {
   LinkIcon,
   LockIcon
 } from 'lucide-react'
+import Android from '@components/icons/Android.astro'
+import Apple from '@components/icons/Apple.astro'
 import { formatApproximateDate } from '@lib/time'
 import ProjectLink from './ProjectLink.astro'
 
@@ -74,7 +75,7 @@ const updatedDate =
       {
         technologies &&
           technologies.map((tech) => (
-            <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+            <div class="rounded-sm bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
               {tech.data.name}
             </div>
           ))

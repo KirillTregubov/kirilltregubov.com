@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 
 const SaturnScene = lazy(() => import('./SaturnScene'))
 
@@ -8,7 +8,7 @@ function Fallback({ className }: { className?: string }) {
       <img
         src="/assets/SaturnPlaceholder.jpg"
         alt="Saturn placeholder"
-        className={`object-cover motion-safe:animate-[scaleUp_1s_forwards_0.1s] motion-safe:opacity-0${className ? ` ${className}` : ''}`}
+        className={`object-cover motion-safe:animate-[saturnPlaceholderIn_800ms_ease-out_forwards] motion-safe:opacity-0${className ? ` ${className}` : ''}`}
         loading="eager"
       />
     </div>
@@ -17,6 +17,8 @@ function Fallback({ className }: { className?: string }) {
 
 export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
   const [renderScene, setRenderScene] = useState(false)
+  const [sceneReady, setSceneReady] = useState(false)
+  const handleSceneReady = useCallback(() => setSceneReady(true), [])
 
   useEffect(() => {
     let active = true
@@ -33,11 +35,23 @@ export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
     }
   }, [])
 
-  if (!renderScene) return <Fallback className={fallbackClass} />
-
   return (
-    <Suspense fallback={<Fallback className={fallbackClass} />}>
-      <SaturnScene />
-    </Suspense>
+    <div className="relative h-full w-full">
+      <div
+        className={`absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none ${sceneReady ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+        aria-hidden={sceneReady}
+      >
+        <Fallback className={fallbackClass} />
+      </div>
+      {renderScene && (
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none ${sceneReady ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <Suspense fallback={null}>
+            <SaturnScene onReady={handleSceneReady} />
+          </Suspense>
+        </div>
+      )}
+    </div>
   )
 }

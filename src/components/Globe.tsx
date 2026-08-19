@@ -1,5 +1,5 @@
-import createGlobe from 'cobe'
 import type { Globe as COBEGlobe } from 'cobe'
+import createGlobe from 'cobe'
 import { useEffect, useRef } from 'react'
 
 // const doublePi = Math.PI * 2

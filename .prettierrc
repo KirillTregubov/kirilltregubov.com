@@ -4,7 +4,21 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "none",
-  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+  "plugins": [
+    "prettier-plugin-astro",
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "importOrder": [
+    "<TYPES>^(?![.]|@(?:components|layouts|lib|styles)(?:/|$))",
+    "<BUILTIN_MODULES>",
+    "<THIRD_PARTY_MODULES>",
+    "<TYPES>^@(?:components|layouts|lib|styles)(?:/|$)",
+    "^@(?:components|layouts|lib|styles)(?:/|$)",
+    "<TYPES>^[.]",
+    "^[.]"
+  ],
+  "importOrderTypeScriptVersion": "6.0.3",
   "tailwindAttributes": [
     "class",
     "className",

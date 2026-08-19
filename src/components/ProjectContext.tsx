@@ -1,6 +1,6 @@
-import { atom } from 'nanostores'
 import { useStore } from '@nanostores/react'
 import { ChevronRightIcon } from 'lucide-react'
+import { atom } from 'nanostores'
 
 const showAll = atom(false)
 

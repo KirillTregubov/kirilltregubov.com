@@ -1,17 +1,18 @@
 ---
-import Layout from '@layouts/Layout.astro'
 import { getCollection } from 'astro:content'
-import Saturn from '@components/Saturn'
 import AboutMe from '@components/AboutMe.astro'
-import ProjectPreview from '@components/ProjectPreview.astro'
-import TechStack from '@components/TechStack.astro'
+import PageContainer from '@components/PageContainer.astro'
 import {
   ProjectTitle,
   ProjectToggle,
   ShowAll,
   ShowFeatured
 } from '@components/ProjectContext'
+import ProjectPreview from '@components/ProjectPreview.astro'
+import Saturn from '@components/Saturn'
+import TechStack from '@components/TechStack.astro'
 import ToolStack from '@components/ToolStack.astro'
+import Layout from '@layouts/Layout.astro'
 
 const allProjects = await getCollection('projects').then((projects) =>
   projects
@@ -30,7 +31,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
   title="Kirill Tregubov"
   footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.75s] motion-safe:opacity-0"
 >
-  <main class="mx-auto max-w-360 space-y-8 md:space-y-12">
+  <PageContainer class="space-y-8 md:space-y-12">
     <section
       class="flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6"
     >
@@ -134,7 +135,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
                   'Reanimated',
                   'Airtable'
                 ].map((tech) => (
-                  <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                  <div class=" rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
                     {tech}
                   </div>
                 ))
@@ -193,7 +194,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
                   'Tailwind CSS',
                   'Motion'
                 ].map((tech) => (
-                  <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                  <div class=" rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
                     {tech}
                   </div>
                 ))
@@ -265,7 +266,7 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
                   'Next.js',
                   'Tailwind CSS'
                 ].map((tech) => (
-                  <div class="color-bg-transition rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                  <div class=" rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
                     {tech}
                   </div>
                 ))
@@ -352,5 +353,5 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
       </p>
       <ToolStack />
     </section>
-  </main>
+  </PageContainer>
 </Layout>

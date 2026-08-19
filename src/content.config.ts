@@ -66,9 +66,55 @@ const overbuddy = defineCollection({
   })
 })
 
+const cinemas = defineCollection({
+  loader: file('src/content/cinemas/theatres.json'),
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    area: z.string(),
+    auditoriumCount: z.number().int().positive(),
+    auditoriums: z.array(
+      z.object({
+        auditoriums: z.string(),
+        formats: z
+          .array(
+            z.enum([
+              'Regular',
+              'UltraAVX',
+              'IMAX',
+              'IMAX 70mm',
+              'SCREENX',
+              '4DX',
+              '70mm',
+              'VIP 19+'
+            ])
+          )
+          .min(1),
+        screen: z.object({
+          ratio: z.enum(['1.43:1', '1.85:1', '1.90:1', '2.20:1', '2.39:1'])
+        }),
+        features: z
+          .array(
+            z.enum([
+              'Dolby Atmos',
+              'D-BOX',
+              'Laser Projection',
+              'VIP',
+              'Recliners'
+            ])
+          )
+          .default([]),
+        details: z.string().optional()
+      })
+    ),
+    notes: z.array(z.string()).default([])
+  })
+})
+
 export const collections = {
   technologies,
   projects,
   // blog,
-  overbuddy
+  overbuddy,
+  cinemas
 }

@@ -1,0 +1,644 @@
+[
+  {
+    "id": "yonge-dundas",
+    "name": "Cineplex Cinemas Yonge-Dundas and VIP",
+    "area": "Downtown",
+    "auditoriumCount": 23,
+    "auditoriums": [
+      {
+        "auditoriums": "1, 5, 8, 11, 14, 15, 22",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "2, 3, 9, 10, 12, 13, 23, 24",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" }
+      },
+      {
+        "auditoriums": "VIP 1-5",
+        "formats": ["Regular"],
+        "features": ["VIP"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "7",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "2.39:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      },
+      {
+        "auditoriums": "6",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon"
+      },
+      {
+        "auditoriums": "4",
+        "formats": ["4DX"],
+        "screen": { "ratio": "1.85:1" }
+      }
+    ]
+  },
+  {
+    "id": "scotiabank-toronto",
+    "name": "Scotiabank Theatre Toronto",
+    "area": "Entertainment District",
+    "auditoriumCount": 14,
+    "auditoriums": [
+      {
+        "auditoriums": "1, 3-9, 11, 13, 14",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "2",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX", "Laser Projection"]
+      },
+      {
+        "auditoriums": "10",
+        "formats": ["SCREENX"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "12",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.43:1" },
+        "details": "GT Laser (Dual 4K) | 12-track audio"
+      }
+    ]
+  },
+  {
+    "id": "varsity-vip",
+    "name": "Cineplex Cinemas Varsity and VIP",
+    "area": "Yorkville",
+    "auditoriumCount": 12,
+    "auditoriums": [
+      {
+        "auditoriums": "1-7",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "8",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" }
+      },
+      {
+        "auditoriums": "8",
+        "formats": ["70mm"],
+        "screen": { "ratio": "2.20:1" }
+      },
+      {
+        "auditoriums": "VIP 1-4",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["VIP"]
+      }
+    ]
+  },
+  {
+    "id": "yonge-eglinton",
+    "name": "Cineplex Cinemas Yonge-Eglinton and VIP",
+    "area": "Midtown",
+    "auditoriumCount": 12,
+    "auditoriums": [
+      {
+        "auditoriums": "1-5, 7, 9",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "VIP 1-3",
+        "formats": ["VIP 19+"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Recliners"]
+      },
+      {
+        "auditoriums": "6",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      },
+      {
+        "auditoriums": "8",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon"
+      }
+    ]
+  },
+  {
+    "id": "vip-don-mills",
+    "name": "Cineplex VIP Cinemas Don Mills",
+    "area": "Don Mills",
+    "auditoriumCount": 5,
+    "auditoriums": [
+      {
+        "auditoriums": "1-4",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["VIP", "Laser Projection"]
+      },
+      {
+        "auditoriums": "5",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" },
+        "features": ["VIP", "Laser Projection"]
+      }
+    ]
+  },
+  {
+    "id": "empress-walk",
+    "name": "Cineplex Cinemas Empress Walk",
+    "area": "North York",
+    "auditoriumCount": 10,
+    "auditoriums": [
+      {
+        "auditoriums": "2-3, 5-10",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "4",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      },
+      {
+        "auditoriums": "1",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon"
+      }
+    ]
+  },
+  {
+    "id": "mississauga",
+    "name": "Cineplex Cinemas Mississauga",
+    "area": "Square One",
+    "auditoriumCount": 13,
+    "auditoriums": [
+      {
+        "auditoriums": "1-8",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "9",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      },
+      {
+        "auditoriums": "10",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" }
+      },
+      {
+        "auditoriums": "11-12",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "13",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon for digital presentations"
+      },
+      {
+        "auditoriums": "13",
+        "formats": ["IMAX 70mm"],
+        "screen": { "ratio": "1.43:1" },
+        "details": "SR 15/70mm for film presentations"
+      }
+    ]
+  },
+  {
+    "id": "vaughan",
+    "name": "Cineplex Cinemas Vaughan",
+    "area": "Vaughan",
+    "auditoriumCount": 19,
+    "auditoriums": [
+      {
+        "auditoriums": "2-10, 12-18",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX", "SCREENX"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "11",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      },
+      {
+        "auditoriums": "IMAX",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon for digital presentations"
+      },
+      {
+        "auditoriums": "IMAX",
+        "formats": ["IMAX 70mm"],
+        "screen": { "ratio": "1.43:1" },
+        "details": "SR 15/70mm for film presentations"
+      }
+    ]
+  },
+  {
+    "id": "queensway-vip",
+    "name": "Cineplex Cinemas Queensway and VIP",
+    "area": "Etobicoke",
+    "auditoriumCount": 18,
+    "auditoriums": [
+      {
+        "auditoriums": "2-6, 8, 10-17",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX", "Laser Projection"]
+      },
+      {
+        "auditoriums": "7",
+        "formats": ["SCREENX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Laser Projection"]
+      },
+      {
+        "auditoriums": "9",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      },
+      {
+        "auditoriums": "18",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Laser Projection"]
+      }
+    ]
+  },
+  {
+    "id": "scarborough",
+    "name": "Cineplex Cinemas Scarborough",
+    "area": "Scarborough Town Centre",
+    "auditoriumCount": 12,
+    "auditoriums": [
+      {
+        "auditoriums": "1-7, 9-10, 12",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "8",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      },
+      {
+        "auditoriums": "11",
+        "formats": ["UltraAVX", "SCREENX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX", "Laser Projection"]
+      }
+    ]
+  },
+  {
+    "id": "fairview-mall",
+    "name": "Cineplex Cinemas Fairview Mall",
+    "area": "North York",
+    "auditoriumCount": 9,
+    "auditoriums": [
+      {
+        "auditoriums": "1-5, 7-9",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "6",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "2.39:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "yorkdale",
+    "name": "Cineplex Cinemas Yorkdale",
+    "area": "North York",
+    "auditoriumCount": 10,
+    "auditoriums": [
+      {
+        "auditoriums": "1, 3-8",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "2",
+        "formats": ["SCREENX"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "9",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX", "Laser Projection"]
+      },
+      {
+        "auditoriums": "10",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Laser Projection"]
+      }
+    ]
+  },
+  {
+    "id": "eglinton-town-centre",
+    "name": "Cineplex Odeon Eglinton Town Centre Cinemas",
+    "area": "Scarborough",
+    "auditoriumCount": 16,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "9",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      },
+      {
+        "auditoriums": "16",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon"
+      }
+    ]
+  },
+  {
+    "id": "markham-vip",
+    "name": "Cineplex Cinemas Markham and VIP",
+    "area": "Markham",
+    "auditoriumCount": 13,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon"
+      },
+      {
+        "auditoriums": "2",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "courtney-park",
+    "name": "Cineplex Cinemas Courtney Park",
+    "area": "Mississauga",
+    "auditoriumCount": 16,
+    "auditoriums": [
+      {
+        "auditoriums": "7",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      },
+      {
+        "auditoriums": "9",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "Dual Xenon"
+      }
+    ]
+  },
+  {
+    "id": "junxion-erin-mills",
+    "name": "Cineplex Junxion Erin Mills",
+    "area": "Mississauga",
+    "auditoriumCount": 6,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX", "Laser Projection", "Recliners"]
+      },
+      {
+        "auditoriums": "2, 5-6",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Recliners"]
+      },
+      {
+        "auditoriums": "3-4",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Laser Projection", "Recliners"]
+      }
+    ]
+  },
+  {
+    "id": "aurora",
+    "name": "Cineplex Odeon Aurora",
+    "area": "Aurora",
+    "auditoriumCount": 10,
+    "auditoriums": [
+      {
+        "auditoriums": "5",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "newmarket",
+    "name": "SilverCity Newmarket Cinemas and XSCAPE Entertainment Centre",
+    "area": "East Gwillimbury",
+    "auditoriumCount": 13,
+    "auditoriums": [
+      {
+        "auditoriums": "9",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "richmond-hill",
+    "name": "SilverCity Richmond Hill Cinemas",
+    "area": "Richmond Hill",
+    "auditoriumCount": 14,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX", "Laser Projection"]
+      },
+      {
+        "auditoriums": "2",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX"]
+      },
+      {
+        "auditoriums": "14",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX", "Laser Projection"]
+      }
+    ]
+  },
+  {
+    "id": "oakville-vip",
+    "name": "Cineplex Cinemas Oakville and VIP",
+    "area": "Oakville",
+    "auditoriumCount": 12,
+    "auditoriums": [
+      {
+        "auditoriums": "6",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "winston-churchill-vip",
+    "name": "Cineplex Cinemas Winston Churchill and VIP",
+    "area": "Oakville",
+    "auditoriumCount": 22,
+    "auditoriums": [
+      {
+        "auditoriums": "12",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      },
+      {
+        "auditoriums": "13",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "details": "CoLa (4K Laser) | 12-track audio"
+      },
+      {
+        "auditoriums": "21",
+        "formats": ["4DX"],
+        "screen": { "ratio": "1.85:1" }
+      }
+    ]
+  },
+  {
+    "id": "oshawa",
+    "name": "Cineplex Odeon Oshawa Cinemas",
+    "area": "Oshawa",
+    "auditoriumCount": 10,
+    "auditoriums": [
+      {
+        "auditoriums": "5",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX", "Laser Projection"]
+      }
+    ]
+  },
+  {
+    "id": "pickering-vip",
+    "name": "Cineplex Cinemas Pickering and VIP",
+    "area": "Pickering",
+    "auditoriumCount": 11,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "milton",
+    "name": "Cineplex Cinemas Milton",
+    "area": "Milton",
+    "auditoriumCount": 8,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "D-BOX"]
+      }
+    ]
+  },
+  {
+    "id": "ajax",
+    "name": "Cineplex Odeon Ajax Cinemas",
+    "area": "Ajax",
+    "auditoriumCount": 10,
+    "auditoriums": [
+      {
+        "auditoriums": "1-10",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      }
+    ]
+  },
+  {
+    "id": "morningside",
+    "name": "Cineplex Odeon Morningside Cinemas",
+    "area": "Scarborough",
+    "auditoriumCount": 11,
+    "auditoriums": [
+      {
+        "auditoriums": "1-11",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      }
+    ]
+  },
+  {
+    "id": "brampton",
+    "name": "SilverCity Brampton Cinemas",
+    "area": "Brampton",
+    "auditoriumCount": 16,
+    "auditoriums": [
+      {
+        "auditoriums": "1",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["D-BOX", "Laser Projection"]
+      },
+      {
+        "auditoriums": "16",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Laser Projection"]
+      },
+      {
+        "auditoriums": "?",
+        "formats": ["SCREENX"],
+        "screen": { "ratio": "1.85:1" }
+      }
+    ],
+    "notes": ["The ScreenX auditorium number needs confirmation."]
+  }
+]

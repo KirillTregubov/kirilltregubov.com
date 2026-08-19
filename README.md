@@ -12,12 +12,14 @@ Please install [Bun](https://bun.sh/) and clone this repository.
 
 All commands are run from the root of the project, inside a terminal:
 
-| Command                 | Action                                      |
-| :---------------------- | :------------------------------------------ |
-| `bun install`           | Installs dependencies                       |
-| `bun dev`               | Starts local dev server at `localhost:4321` |
-| `bun run build`         | Build the production site to `./dist/`      |
-| `bun preview`           | Preview the build locally, before deploying |
-| `bun astro`             | Run Astro CLI commands                      |
-| `bun format`            | Format all files with Prettier              |
-| `bunx @astrojs/upgrade` | Upgrade Astro to the latest version         |
+| Command                | Action                                             |
+| :--------------------- | :------------------------------------------------- |
+| `bun install`          | Install dependencies                               |
+| `bun dev`              | Start the local dev server at `localhost:4321`     |
+| `bun run build`        | Check and incrementally build the production site  |
+| `bun run build:clean`  | Check and rebuild the production site from scratch |
+| `bun preview`          | Preview the production build locally               |
+| `bun run check`        | Check Astro and TypeScript files                   |
+| `bun run format`       | Format all files with Prettier                     |
+| `bun run format:check` | Check formatting without modifying files           |
+| `bun run upgrade`      | Upgrade Astro and its integrations                 |

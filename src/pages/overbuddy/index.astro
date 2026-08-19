@@ -1,11 +1,12 @@
 ---
-import Layout from '@layouts/Layout.astro'
-import { getCollection, getEntry } from 'astro:content'
 import { Image } from 'astro:assets'
-import ReturnHome from '@components/ReturnHome.astro'
-import { MonitorDownIcon, EyeIcon, CloudDownloadIcon } from 'lucide-react'
+import { getCollection, getEntry } from 'astro:content'
+import { CloudDownloadIcon, EyeIcon, MonitorDownIcon } from 'lucide-react'
 import MDImage from '@components/markdown/MDImage.astro'
 import OverBuddy from '@components/OverBuddy.astro'
+import PageContainer from '@components/PageContainer.astro'
+import ReturnHome from '@components/ReturnHome.astro'
+import Layout from '@layouts/Layout.astro'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
@@ -23,7 +24,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
   footerClass="mt-8 motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
   footerContent="All trademarks are the property of their respective owners."
 >
-  <main class="mx-auto flex max-w-360 flex-col space-y-8">
+  <PageContainer class="flex flex-col space-y-8">
     <ReturnHome>
       <a
         href={projectInfo.data.download!}
@@ -68,16 +69,16 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
     >
     </div>
     <div
-      class="min-h-[calc(100vh-11rem)] w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
+      class="min-h-[calc(100vh-11rem)] w-full xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
     >
       <h2
-        class="mb-3 scroll-mt-18 text-xl leading-none font-semibold"
+        class="mb-3 scroll-mt-18 text-xl leading-none font-semibold motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
         id="gallery"
       >
         Background Gallery
       </h2>
       <div
-        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] max-xs:top-24 sm:flex-row sm:items-center"
+        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 max-xs:top-24 sm:flex-row sm:items-center"
       >
         <input
           id="search"
@@ -118,7 +119,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         </button> -->
       </div>
       <div
-        class="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29"
+        class="grid grid-cols-1 gap-x-4 gap-y-5 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29"
       >
         {
           backgrounds.map((background) => (
@@ -175,7 +176,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         }
       </div>
     </div>
-  </main>
+  </PageContainer>
 
   <script>
     import Fuse from 'fuse.js'
@@ -248,10 +249,6 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           items.forEach(({ element }) => {
             element.classList.remove('hidden')
             ;(element as HTMLElement).style.order = '0'
-          })
-          items[0].element.scrollIntoView({
-            behavior: 'smooth',
-            inline: 'start'
           })
           return
         }

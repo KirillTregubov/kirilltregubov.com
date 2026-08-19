@@ -1,16 +1,15 @@
+import type * as THREE from 'three'
+import { animated, useReducedMotion, useSpring } from '@react-spring/three'
 import {
   // OrbitControls,
   PerspectiveCamera,
   Preload,
-  useGLTF,
-  useProgress
+  useGLTF
 } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { useSpring, animated, useReducedMotion } from '@react-spring/three'
-import type * as THREE from 'three'
 
-function Scene() {
+function Scene({ onReady }: { onReady: () => void }) {
   // source: https://science.nasa.gov/resource/saturn-3d-model/
   const { scene } = useGLTF('/assets/Saturn.glb')
   const sceneRef = useRef<THREE.Object3D>(null)
@@ -39,6 +38,18 @@ function Scene() {
     return () => setShown(false)
   }, [])
 
+  useEffect(() => {
+    let secondFrame = 0
+    const firstFrame = requestAnimationFrame(() => {
+      secondFrame = requestAnimationFrame(onReady)
+    })
+
+    return () => {
+      cancelAnimationFrame(firstFrame)
+      cancelAnimationFrame(secondFrame)
+    }
+  }, [onReady])
+
   // useEffect(() => {
   //   const ringsTop = scene.getObjectByName('RingsTop')
   //   const ringsBottom = scene.getObjectByName('RingsBottom')
@@ -64,7 +75,7 @@ function Scene() {
   )
 }
 
-function CanvasContent() {
+function CanvasContent({ onReady }: { onReady: () => void }) {
   useThree((state) => {
     state.camera?.lookAt(0, 0, 0)
     // state.camera?.rotateY(-0.1)
@@ -75,7 +86,7 @@ function CanvasContent() {
 
   return (
     <>
-      <Scene />
+      <Scene onReady={onReady} />
       {/* <OrbitControls
         // ref={cameraRef}
         // args={[camera, gl.domElement]}
@@ -118,9 +129,8 @@ function CanvasContent() {
   )
 }
 
-function OuterCanvas() {
+function OuterCanvas({ onReady }: { onReady: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null)
-  const { progress } = useProgress()
 
   useEffect(() => {
     const handler = () => {
@@ -135,17 +145,14 @@ function OuterCanvas() {
   }, [])
 
   return (
-    <Canvas
-      ref={ref}
-      className={`opacity-0 ${progress === 100 ? 'animate-[fadeIn_1s_forwards]' : ''}`}
-    >
+    <Canvas ref={ref}>
       <Suspense fallback={null}>
-        <CanvasContent />
+        <CanvasContent onReady={onReady} />
       </Suspense>
     </Canvas>
   )
 }
 
-export default function SaturnScene() {
-  return <OuterCanvas />
+export default function SaturnScene({ onReady }: { onReady: () => void }) {
+  return <OuterCanvas onReady={onReady} />
 }
