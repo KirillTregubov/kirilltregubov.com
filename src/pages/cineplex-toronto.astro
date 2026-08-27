@@ -75,7 +75,7 @@ const getRatioDiagram = (ratio: string) => {
   const [width = 1, height = 1] = ratio.split(':').map(Number)
   const canvasWidth = 92
   const canvasHeight = 62
-  const screenWidth = 80
+  const screenWidth = 84
   const screenHeight = screenWidth / (width / height)
 
   return {
@@ -92,132 +92,176 @@ const getAuditoriumHeading = (auditoriums: string) => {
 ---
 
 <Layout
-  title="Toronto Cineplex Screen Guide"
-  description="A community-compiled reference to Cineplex viewing formats, Dolby Atmos availability, and screen aspect ratios at theatres in and around Toronto."
-  bodyClass="cinema-guide"
-  footerClass="cinema-footer motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
+  title="Toronto Cineplex Guide"
+  description="A community-compiled reference to Cineplex viewing formats, Dolby Atmos availability, and scrScreeneen aspect ratios at theatres in and around Toronto."
+  bodyClass="bg-[radial-gradient(circle_at_50%_-12rem,rgb(120_53_15_/_0.2),transparent_35rem),#171717]"
+  footerClass="border-t border-white/6 pt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
 >
   <PageContainer>
     <ReturnHome />
 
     <header
-      class="cinema-hero relative mt-2 overflow-hidden rounded-3xl border border-amber-300/15 bg-neutral-950 px-5 py-8 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 sm:px-9 sm:py-11 lg:px-12 lg:py-12 xl:px-14 xl:py-14"
+      class="mt-2 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0"
     >
-      <div class="screen-glow" aria-hidden="true"></div>
-      <div
-        class="relative grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_23rem] xl:gap-14"
-      >
-        <div>
-          <p
-            class="mb-5 flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-amber-300 uppercase"
+      <div class="grid gap-5">
+        <div
+          class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] px-6 py-9 sm:px-10 sm:py-12"
+        >
+          <div
+            class="absolute -top-24 right-[12%] size-72 rounded-full bg-amber-300/15 blur-3xl"
+            aria-hidden="true"
           >
-            <!-- <span
-              class="inline-block size-1.5 rounded-full bg-amber-300 shadow-[0_0_12px_#fcd34d]"
-            ></span> -->
-            Toronto cinema field guide
-          </p>
-          <h1
-            class="max-w-190 text-4xl leading-[0.98] font-bold tracking-[-0.045em] text-white sm:text-6xl lg:text-[4rem] xl:text-7xl"
+          </div>
+          <div
+            class="relative grid items-center gap-9 lg:grid-cols-[minmax(0,1fr)_28rem] lg:gap-12"
           >
-            Pick the screen,<br /><span class="text-amber-300"
-              >not just the showtime.</span
+            <div>
+              <h1
+                class="max-w-2xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl"
+              >
+                The right movie experience starts before showtime.
+              </h1>
+              <p
+                class="mt-3 max-w-xl leading-relaxed text-balance text-stone-300 sm:text-base"
+              >
+                Give your next film the format it deserves. Browse all the
+                auditorium details before you book your escape.
+              </p>
+              <a
+                href="#directory"
+                class="mt-5 inline-flex rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-amber-950 transition hover:bg-amber-200"
+              >
+                Explore the directory
+              </a>
+
+              <dl
+                class="relative mt-6 grid grid-cols-2 gap-x-4 gap-y-5 border-t border-white/10 pt-6 sm:flex sm:grid-cols-3 sm:flex-wrap sm:gap-x-10 lg:mt-6"
+              >
+                <div>
+                  <dt class="text-xs tracking-wider text-neutral-500 uppercase">
+                    Locations
+                  </dt>
+                  <dd
+                    class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl"
+                  >
+                    {theatres.length}
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-xs tracking-wider text-neutral-500 uppercase">
+                    Auditoriums
+                  </dt>
+                  <dd
+                    class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl"
+                  >
+                    {auditoriumCount}
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-xs tracking-wider text-neutral-500 uppercase">
+                    Premium formats
+                  </dt>
+                  <dd
+                    class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl"
+                  >
+                    {premiumFormatCount}
+                  </dd>
+                </div>
+                <!-- <div>
+                  <dt class="text-xs tracking-wider text-neutral-500 uppercase">
+                    Coverage
+                  </dt>
+                  <dd
+                    class="mt-1 text-base font-semibold text-neutral-100 sm:text-lg"
+                  >
+                    Greater Toronto Area
+                  </dd>
+                </div> -->
+              </dl>
+            </div>
+
+            <div
+              class="relative mx-auto hidden w-full max-w-md rotate-2 rounded-2xl bg-amber-200 text-[#261205] shadow-2xl shadow-black/35 transition-transform duration-300 hover:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:block"
             >
-          </h1>
-          <p
-            class="mt-6 max-w-165 text-base leading-relaxed text-neutral-300 sm:text-lg"
-          >
-            Find the exact Cineplex auditorium that fits your film. Compare
-            screen shape, viewing format, audio configuration, projector
-            technology and more.
-          </p>
-          <div class="mt-7 flex flex-wrap items-center gap-3">
-            <a
-              href="#directory"
-              class="rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-amber-200 active:translate-y-0.5"
-            >
-              Explore the directory
-            </a>
-            <span class="text-sm text-neutral-500"
-              >Community-maintained reference</span
-            >
+              <span
+                class="absolute top-[62%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                aria-hidden="true"></span>
+              <span
+                class="absolute top-[62%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                aria-hidden="true"></span>
+              <div class="p-5 sm:p-6">
+                <div
+                  class="flex items-center justify-between text-[9px] font-black tracking-[0.2em] uppercase"
+                >
+                  <span>Cineplex Guide</span><span>Admit One</span>
+                </div>
+                <p
+                  class="mt-6 text-[10px] font-bold tracking-[0.18em] uppercase opacity-55"
+                >
+                  Your next presentation
+                </p>
+                <p class="mt-1 text-3xl font-black tracking-[-0.045em]">
+                  Made for this screen.
+                </p>
+                <div
+                  class="mt-4 grid grid-cols-4 gap-2 border-t border-dashed border-amber-950/30 pt-5 sm:gap-4"
+                >
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Auditorium
+                    </p>
+                    <p class="mt-0.5 text-base font-black">12</p>
+                  </div>
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Presentation
+                    </p>
+                    <p class="mt-0.5 text-base font-black">IMAX</p>
+                  </div>
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Screen
+                    </p>
+                    <p class="mt-0.5 text-base font-black">1.43:1</p>
+                  </div>
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Projection
+                    </p>
+                    <p class="mt-0.5 text-base font-black">Laser</p>
+                  </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between gap-4">
+                  <span
+                    class="text-[9px] font-bold tracking-[0.18em] uppercase opacity-55"
+                    >Greater Toronto Area</span
+                  >
+                  <span
+                    class="h-7 w-20 bg-[repeating-linear-gradient(90deg,#261205_0,#261205_2px,transparent_2px,transparent_4px,#261205_4px,#261205_5px,transparent_5px,transparent_8px)]"
+                    aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- <div class="screen-match" aria-label="Screen ratio quick guide">
-          <div class="screen-match__topline">
-            <span>Screen match</span>
-            <span class="screen-match__status">Quick guide</span>
-          </div>
-          <div class="screen-match__stage" aria-hidden="true">
-            <div class="screen-match__screen">
-              <span>2.39:1</span>
-            </div>
-            <div class="screen-match__seats screen-match__seats--back"></div>
-            <div class="screen-match__seats screen-match__seats--front"></div>
-          </div>
-          <div class="screen-match__comparison">
-            <div>
-              <span class="screen-match__ratio screen-match__ratio--scope"
-              ></span>
-              <span><strong>Scope</strong> 2.39:1</span>
-            </div>
-            <div>
-              <span class="screen-match__ratio screen-match__ratio--flat"
-              ></span>
-              <span><strong>Flat</strong> 1.85:1</span>
-            </div>
-          </div>
-          <p>
-            Match the film’s shape to the auditorium for the best presentation.
-          </p>
-        </div> -->
       </div>
-
-      <dl
-        class="relative mt-9 grid grid-cols-2 gap-x-4 gap-y-5 border-t border-white/10 pt-6 sm:flex sm:flex-wrap sm:gap-x-10 lg:mt-11"
-      >
-        <div>
-          <dt class="text-xs tracking-wider text-neutral-500 uppercase">
-            Locations
-          </dt>
-          <dd class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl">
-            {theatres.length}
-          </dd>
-        </div>
-        <div>
-          <dt class="text-xs tracking-wider text-neutral-500 uppercase">
-            Auditoriums
-          </dt>
-          <dd class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl">
-            {auditoriumCount}
-          </dd>
-        </div>
-        <div>
-          <dt class="text-xs tracking-wider text-neutral-500 uppercase">
-            Premium formats
-          </dt>
-          <dd class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl">
-            {premiumFormatCount}
-          </dd>
-        </div>
-        <div>
-          <dt class="text-xs tracking-wider text-neutral-500 uppercase">
-            Coverage
-          </dt>
-          <dd class="mt-1 text-base font-semibold text-neutral-100 sm:text-lg">
-            Greater Toronto Area
-          </dd>
-        </div>
-      </dl>
     </header>
 
     <section
       id="directory"
-      class="mt-6 scroll-mt-14"
+      class="mt-8 scroll-mt-14"
       aria-labelledby="directory-title"
     >
       <div
-        class="sticky top-14 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
+        class="sticky top-12 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
       >
         <h2 id="directory-title" class="sr-only">Theatre directory</h2>
         <div
@@ -234,16 +278,17 @@ const getAuditoriumHeading = (auditoriums: string) => {
               type="search"
               placeholder="Search theatre or area..."
               autocomplete="off"
-              class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-9 pl-10 text-sm text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
+              class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-sm text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
             />
           </label>
           <div
-            class="flex min-w-0 scrollbar-thin gap-2 overflow-x-auto pb-1 lg:ml-auto lg:w-fit lg:max-w-full lg:pb-0"
+            role="group"
+            class="flex min-w-0 scrollbar-thin [scrollbar-color:var(--color-neutral-500)_transparent] gap-2 overflow-x-auto pb-1 lg:ml-auto lg:w-fit lg:max-w-full lg:pb-0 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-transparent"
             aria-label="Filter by viewing format or screen shape"
           >
             <button
               type="button"
-              class="filter-button shrink-0 rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-400 transition hover:border-white/20 hover:text-white aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950"
+              class="filter-button shrink-0 rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-400 transition hover:border-white/20 hover:text-white focus-visible:ring-1 focus-visible:ring-inset aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:focus-visible:ring-neutral-950"
               data-filter="all"
               aria-pressed="true"
             >
@@ -253,7 +298,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               formatOptions.map((format) => (
                 <button
                   type="button"
-                  class="filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-400 transition hover:border-white/20 hover:text-white aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950"
+                  class="filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-white/20 hover:text-white hover:shadow-xs focus-visible:ring-1 focus-visible:ring-inset active:border-white/20 active:bg-neutral-800 active:text-white active:shadow-2xs aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-amber-200/20 aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-neutral-950 aria-pressed:active:border-amber-200/20 aria-pressed:active:bg-amber-300/70 aria-pressed:active:shadow-amber-200/20"
                   data-filter-type="format"
                   data-filter-value={format}
                   aria-label={`Filter by ${format}`}
@@ -269,7 +314,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               screenShapeOptions.map((shape) => (
                 <button
                   type="button"
-                  class="filter-button shrink-0 rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-400 transition hover:border-white/20 hover:text-white aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950"
+                  class="filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-white/10 px-3 py-2 text-sm font-bold text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-white/20 hover:text-white hover:shadow-xs focus-visible:ring-1 focus-visible:ring-inset active:border-white/20 active:bg-neutral-800 active:text-white active:shadow-2xs aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-amber-200/20 aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-neutral-950 aria-pressed:active:border-amber-200/20 aria-pressed:active:bg-amber-300/70 aria-pressed:active:shadow-amber-200/20"
                   data-filter-type="screen-shape"
                   data-filter-value={shape}
                   aria-label={`Filter by ${shape} screens`}
@@ -294,7 +339,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           Showing all {theatres.length} locations
         </p>
 
-        <div id="theatre-grid" class="mt-3 grid gap-4 lg:grid-cols-2">
+        <ul id="theatre-grid" class="mt-4 grid gap-4 lg:grid-cols-2">
           {
             theatres.map((theatre, index) => {
               const formats = JSON.stringify(theatre.formats)
@@ -311,123 +356,178 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 )
               )
               return (
-                <article
-                  class="theatre-card overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/70 transition duration-200 hover:border-white/20"
-                  data-name={`${theatre.data.name} ${theatre.data.area}`.toLowerCase()}
-                  data-formats={formats}
-                  data-screen-shapes={screenShapes}
-                  style={`--card-delay: ${Math.min(index * 30, 240)}ms`}
-                >
-                  <header class="border-b border-white/8 px-5 py-5 sm:px-6">
-                    <div>
-                      <p class="mb-1 text-xs font-semibold tracking-wider text-amber-300/80 uppercase">
-                        {theatre.data.area}
-                      </p>
-                      <h3 class="text-lg leading-snug font-semibold text-white">
-                        {theatre.data.name}
-                      </h3>
-                    </div>
-                  </header>
+                <li class="h-full">
+                  <article
+                    class="theatre-card h-full overflow-hidden rounded-lg border border-white/10 bg-(--theatre-card-background) transition duration-200"
+                    data-name={`${theatre.data.name} ${theatre.data.area}`.toLowerCase()}
+                    data-formats={formats}
+                    data-screen-shapes={screenShapes}
+                    style={`--card-delay: ${Math.min(index * 30, 240)}ms; --theatre-card-background: oklch(0.1638 0 0)`}
+                  >
+                    <header class="border-b border-white/8 px-5 py-5 sm:px-6">
+                      <div>
+                        <p class="mb-1 text-xs font-semibold tracking-wider text-amber-300/80 uppercase">
+                          {theatre.data.area}
+                        </p>
+                        <h3 class="text-lg leading-snug font-semibold text-white">
+                          {theatre.data.name}
+                        </h3>
+                      </div>
+                    </header>
 
-                  <div class="divide-y divide-white/7">
-                    {theatre.data.auditoriums.map((auditorium) => {
-                      const diagram = getRatioDiagram(auditorium.screen.ratio)
-                      const screenShape = getScreenShape(
-                        auditorium.screen.ratio
-                      )
-                      const right = diagram.x + diagram.width
-                      const bottom = diagram.y + diagram.height
-                      const corner = 6
+                    <ul>
+                      {theatre.data.auditoriums.map((auditorium) => {
+                        const diagram = getRatioDiagram(auditorium.screen.ratio)
+                        const screenShape = getScreenShape(
+                          auditorium.screen.ratio
+                        )
+                        const isScreenX = auditorium.formats.includes('SCREENX')
+                        const right = diagram.x + diagram.width
+                        const bottom = diagram.y + diagram.height
+                        const corner = 6
+                        const screenXDiagram = {
+                          x: 23,
+                          y: Math.max(13, diagram.y),
+                          width: 46,
+                          height: Math.min(32, diagram.height)
+                        }
+                        const screenXRight =
+                          screenXDiagram.x + screenXDiagram.width
+                        const screenXBottom =
+                          screenXDiagram.y + screenXDiagram.height
+                        const screenXLeftEdge = diagram.x
+                        const screenXRightEdge = right
 
-                      return (
-                        <div
-                          class="auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6"
-                          data-auditorium-formats={JSON.stringify(
-                            auditorium.formats
-                          )}
-                          data-auditorium-screen-shape={
-                            screenShape?.filterLabel
-                          }
-                        >
-                          <svg
-                            class="aspect-ratio-diagram w-full text-neutral-500"
-                            viewBox="0 0 92 62"
-                            role="img"
-                            aria-label={`${auditorium.screen.ratio} screen proportions`}
-                          >
-                            <line
-                              x1={diagram.x}
-                              y1={bottom}
-                              x2={right}
-                              y2={diagram.y}
-                              class="aspect-ratio-diagonal"
-                            />
-                            <path
-                              d={`M ${diagram.x} ${diagram.y + corner} V ${diagram.y} H ${diagram.x + corner} M ${right - corner} ${diagram.y} H ${right} V ${diagram.y + corner} M ${right} ${bottom - corner} V ${bottom} H ${right - corner} M ${diagram.x + corner} ${bottom} H ${diagram.x} V ${bottom - corner}`}
-                              class="aspect-ratio-corners"
-                            />
-                          </svg>
-                          <div class="min-w-0">
-                            <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-                              {auditorium.formats.map((format) => (
-                                <span class="inline-flex min-h-8 items-center rounded-md border border-white/10 bg-white/4 px-2.5 py-1">
-                                  <ExperienceBadge format={format} />
-                                </span>
-                              ))}
-                              <p class="text-sm text-neutral-500">
-                                {auditorium.screen.ratio}
-                                {screenShape?.listingLabel && (
-                                  <span class="ml-1">
-                                    ({screenShape.listingLabel})
-                                  </span>
-                                )}
-                              </p>
-                            </div>
-                            <p class="mt-2 text-sm text-neutral-400">
-                              <span class="text-neutral-600">
-                                {getAuditoriumHeading(auditorium.auditoriums)}
-                              </span>{' '}
-                              {auditorium.auditoriums}
-                            </p>
-                            {auditorium.details && (
-                              <p class="mt-1 text-sm leading-snug text-neutral-500">
-                                {auditorium.details}
-                              </p>
+                        return (
+                          <li
+                            class="auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 border-white/7 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6"
+                            data-auditorium-formats={JSON.stringify(
+                              auditorium.formats
                             )}
-                            {auditorium.features.length > 0 && (
-                              <div class="mt-2 flex flex-wrap gap-1.5">
-                                {auditorium.features.map((feature) => (
-                                  <span class="inline-flex min-h-6 items-center rounded-md border border-cyan-300/15 bg-cyan-300/5 px-2 py-0.5">
-                                    <ExperienceBadge format={feature} />
+                            data-auditorium-screen-shape={
+                              screenShape?.filterLabel
+                            }
+                          >
+                            <svg
+                              class:list={[
+                                'w-full overflow-visible text-neutral-500',
+                                isScreenX && 'translate-y-px'
+                              ]}
+                              viewBox="0 0 92 62"
+                              role="img"
+                              aria-label={`${auditorium.screen.ratio} screen proportions`}
+                            >
+                              {isScreenX ? (
+                                <>
+                                  <path
+                                    d={`M ${screenXDiagram.x} ${screenXDiagram.y} L ${screenXLeftEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXDiagram.x} ${screenXBottom} Z M ${screenXRight} ${screenXDiagram.y} L ${screenXRightEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXRight} ${screenXBottom} Z`}
+                                    class="fill-current opacity-[0.07]"
+                                  />
+                                  <path
+                                    d={`M ${screenXDiagram.x} ${screenXDiagram.y} L ${screenXLeftEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXDiagram.x} ${screenXBottom} M ${screenXRight} ${screenXDiagram.y} L ${screenXRightEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXRight} ${screenXBottom} M ${screenXDiagram.x} ${screenXDiagram.y} H ${screenXRight} V ${screenXBottom} H ${screenXDiagram.x} Z`}
+                                    class="stroke-linejoin-round fill-none stroke-current stroke-[1.5] opacity-75 [vector-effect:non-scaling-stroke]"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  <line
+                                    x1={diagram.x + 2}
+                                    y1="31"
+                                    x2={right - 2}
+                                    y2="31"
+                                    class="stroke-current stroke-[1.25] opacity-55 [stroke-dasharray:4_3] [stroke-linecap:round] [vector-effect:non-scaling-stroke]"
+                                  />
+                                  <path
+                                    d={`M ${diagram.x} ${diagram.y + corner} V ${diagram.y} H ${diagram.x + corner} M ${right - corner} ${diagram.y} H ${right} V ${diagram.y + corner} M ${right} ${bottom - corner} V ${bottom} H ${right - corner} M ${diagram.x + corner} ${bottom} H ${diagram.x} V ${bottom - corner}`}
+                                    class="stroke-linecap-round stroke-linejoin-round fill-none stroke-current stroke-[1.5] [vector-effect:non-scaling-stroke]"
+                                  />
+                                </>
+                              )}
+                              <rect
+                                x="26.5"
+                                y="22.5"
+                                width="39"
+                                height="14"
+                                fill="var(--theatre-card-background)"
+                              />
+                              <text
+                                x="46"
+                                y="31"
+                                text-anchor="middle"
+                                dominant-baseline="middle"
+                                class="fill-current text-[13px] font-semibold tracking-[0.02em]"
+                              >
+                                {auditorium.screen.ratio}
+                              </text>
+                            </svg>
+                            <div class="min-w-0">
+                              <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                {auditorium.formats.map((format) => (
+                                  <span class="inline-flex min-h-8 items-center rounded-md border border-white/10 bg-white/4 px-2.5 py-1">
+                                    <ExperienceBadge
+                                      format={format}
+                                      class="text-white"
+                                    />
                                   </span>
                                 ))}
+                                <p class="text-sm text-neutral-500">
+                                  {auditorium.screen.ratio}
+                                  {screenShape?.listingLabel && (
+                                    <span class="ml-1">
+                                      ({screenShape.listingLabel})
+                                    </span>
+                                  )}
+                                </p>
                               </div>
-                            )}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-
-                  {theatre.data.notes.length > 0 && (
-                    <div class="border-t border-amber-300/10 bg-amber-300/4 px-5 py-4 sm:px-6">
-                      <p class="mb-2 text-xs font-semibold tracking-wider text-amber-200/70 uppercase">
-                        Good to know
-                      </p>
-                      <ul class="space-y-1.5 text-sm leading-relaxed text-neutral-400">
-                        {theatre.data.notes.map((note) => (
-                          <li class="pl-3 before:mr-2 before:-ml-3 before:text-amber-300/60 before:content-['•']">
-                            {note}
+                              <p class="mt-2 text-sm text-neutral-400">
+                                <span class="text-neutral-600">
+                                  {getAuditoriumHeading(auditorium.auditoriums)}
+                                </span>{' '}
+                                {auditorium.auditoriums}
+                              </p>
+                              {auditorium.details && (
+                                <p class="mt-1 text-sm leading-snug text-neutral-500">
+                                  {auditorium.details}
+                                </p>
+                              )}
+                              {auditorium.features.length > 0 && (
+                                <div class="mt-2 flex flex-wrap gap-1.5">
+                                  {auditorium.features.map((feature) => (
+                                    <span class="inline-flex min-h-6 items-center rounded-md border border-neutral-500/15 bg-neutral-500/5 px-2 py-0.5">
+                                      <ExperienceBadge
+                                        format={feature}
+                                        class="text-neutral-300"
+                                      />
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
                           </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </article>
+                        )
+                      })}
+                    </ul>
+
+                    {theatre.data.notes.length > 0 && (
+                      <div class="border-t border-amber-300/10 bg-amber-300/4 px-5 py-4 sm:px-6">
+                        <p class="mb-2 text-xs font-semibold tracking-wider text-amber-200/70 uppercase">
+                          Good to know
+                        </p>
+                        <ul class="space-y-1.5 text-sm leading-relaxed text-neutral-400">
+                          {theatre.data.notes.map((note) => (
+                            <li class="pl-3 before:mr-2 before:-ml-3 before:text-amber-300/60 before:content-['•']">
+                              {note}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </article>
+                </li>
               )
             })
           }
-        </div>
+        </ul>
 
         <div
           id="no-results"
@@ -489,6 +589,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
       const directory = document.querySelector<HTMLElement>('#directory')
       const locations = cards.map((card) => ({
         card,
+        listItem: card.parentElement as HTMLLIElement,
         name: card.dataset.name ?? '',
         formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
         screenShapes: JSON.parse(card.dataset.screenShapes ?? '[]') as string[],
@@ -513,6 +614,65 @@ const getAuditoriumHeading = (auditoriums: string) => {
         { type: 'format' | 'screen-shape'; value: string } | undefined
       let animationFrame: number | undefined
       let hasAutoScrolledToDirectory = false
+
+      function applyUrlState() {
+        const params = new URLSearchParams(window.location.search)
+        const format = params.get('format')
+        const screenShape = params.get('screen')
+
+        if (searchInput) {
+          searchInput.value = params.get('q') ?? ''
+        }
+
+        activeFilter = format
+          ? { type: 'format', value: format }
+          : screenShape
+            ? { type: 'screen-shape', value: screenShape }
+            : undefined
+
+        const hasMatchingFilter = filterButtons.some(
+          (button) =>
+            activeFilter &&
+            button.dataset.filterType === activeFilter.type &&
+            button.dataset.filterValue === activeFilter.value
+        )
+
+        if (!hasMatchingFilter) {
+          activeFilter = undefined
+        }
+      }
+
+      function syncUrl({ replace = true } = {}) {
+        const url = new URL(window.location.href)
+        const query = searchInput?.value.trim() ?? ''
+
+        if (query) {
+          url.searchParams.set('q', query)
+        } else {
+          url.searchParams.delete('q')
+        }
+
+        url.searchParams.delete('format')
+        url.searchParams.delete('screen')
+
+        if (activeFilter) {
+          url.searchParams.set(
+            activeFilter.type === 'format' ? 'format' : 'screen',
+            activeFilter.value
+          )
+        }
+
+        const nextUrl = `${url.pathname}${url.search}${url.hash}`
+        const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`
+
+        if (nextUrl !== currentUrl) {
+          window.history[replace ? 'replaceState' : 'pushState'](
+            null,
+            '',
+            nextUrl
+          )
+        }
+      }
 
       function matchesActiveFilter({
         formats,
@@ -545,7 +705,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
         })
       }
 
-      function updateResults({ scrollToDirectory = false } = {}) {
+      function updateResults({
+        scrollToDirectory = false,
+        sync = false,
+        replaceHistory = true
+      } = {}) {
         const query = searchInput?.value.trim() ?? ''
         const searchResults = query
           ? fuse.search(query).map(({ item }) => item)
@@ -553,20 +717,36 @@ const getAuditoriumHeading = (auditoriums: string) => {
         const searchMatches = new Set(searchResults.map(({ card }) => card))
         let visibleCount = 0
 
-        locations.forEach(({ card, formats, screenShapes, auditoriumRows }) => {
-          const matchesSearch = searchMatches.has(card)
-          const matchesFilter = matchesActiveFilter({ formats, screenShapes })
-          const visible = matchesSearch && matchesFilter
-          if (card.hidden === visible) card.hidden = !visible
+        locations.forEach(
+          ({ card, listItem, formats, screenShapes, auditoriumRows }) => {
+            const matchesSearch = searchMatches.has(card)
+            const matchesFilter = matchesActiveFilter({ formats, screenShapes })
+            const visible = matchesSearch && matchesFilter
+            if (listItem.hidden === visible) listItem.hidden = !visible
 
-          auditoriumRows.forEach(({ row, formats, screenShapes }) => {
-            row.hidden = !matchesActiveFilter({ formats, screenShapes })
-          })
+            const visibleAuditoriumRows = auditoriumRows.filter(
+              ({ row, formats, screenShapes }) => {
+                const rowIsVisible = matchesActiveFilter({
+                  formats,
+                  screenShapes
+                })
+                row.hidden = !rowIsVisible
+                return rowIsVisible
+              }
+            )
 
-          if (visible) {
-            visibleCount += 1
+            visibleAuditoriumRows.forEach(({ row }, index) => {
+              row.classList.toggle(
+                'border-b',
+                index < visibleAuditoriumRows.length - 1
+              )
+            })
+
+            if (visible) {
+              visibleCount += 1
+            }
           }
-        })
+        )
 
         if (resultCount) {
           resultCount.textContent =
@@ -575,6 +755,10 @@ const getAuditoriumHeading = (auditoriums: string) => {
               : `Showing ${visibleCount} of ${cards.length} locations`
         }
         noResults?.classList.toggle('hidden', visibleCount !== 0)
+
+        if (sync) {
+          syncUrl({ replace: replaceHistory })
+        }
 
         if (
           scrollToDirectory &&
@@ -595,9 +779,13 @@ const getAuditoriumHeading = (auditoriums: string) => {
         if (animationFrame) cancelAnimationFrame(animationFrame)
         animationFrame = requestAnimationFrame(() => {
           animationFrame = undefined
-          updateResults({ scrollToDirectory: true })
+          updateResults({ scrollToDirectory: true, sync: true })
         })
       }
+
+      applyUrlState()
+      updateFilterButtons()
+      updateResults()
 
       searchInput?.addEventListener('input', scheduleResultsUpdate)
       filterButtons.forEach((button) => {
@@ -620,232 +808,15 @@ const getAuditoriumHeading = (auditoriums: string) => {
           }
 
           updateFilterButtons()
-          updateResults()
+          updateResults({ sync: true, replaceHistory: false })
         })
+      })
+
+      window.addEventListener('popstate', () => {
+        applyUrlState()
+        updateFilterButtons()
+        updateResults()
       })
     })
   </script>
 </Layout>
-
-<style>
-  :global(.cinema-guide) {
-    background:
-      radial-gradient(
-        circle at 50% -12rem,
-        rgb(120 53 15 / 0.2),
-        transparent 35rem
-      ),
-      #171717;
-  }
-
-  :global(.cinema-guide > footer) {
-    border-top: 1px solid rgb(255 255 255 / 0.06);
-    padding-top: 1.5rem;
-  }
-
-  .screen-glow {
-    position: absolute;
-    top: -10rem;
-    right: -8rem;
-    width: 34rem;
-    height: 34rem;
-    border-radius: 9999px;
-    background: radial-gradient(
-      circle,
-      rgb(245 158 11 / 0.16),
-      rgb(245 158 11 / 0.04) 42%,
-      transparent 68%
-    );
-    filter: blur(4px);
-  }
-
-  .cinema-hero::after {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: linear-gradient(
-      rgb(255 255 255 / 0.022) 1px,
-      transparent 1px
-    );
-    background-size: 100% 4rem;
-    mask-image: linear-gradient(to right, transparent 35%, black);
-    content: '';
-  }
-
-  .screen-match {
-    position: relative;
-    z-index: 1;
-    border: 1px solid rgb(255 255 255 / 0.11);
-    border-radius: 1.25rem;
-    background: rgb(10 10 10 / 0.8);
-    box-shadow:
-      0 1.5rem 4rem rgb(0 0 0 / 0.35),
-      inset 0 1px rgb(255 255 255 / 0.04);
-    padding: 1rem;
-    backdrop-filter: blur(12px);
-  }
-
-  .screen-match__topline {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: rgb(212 212 212);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .screen-match__status {
-    border: 1px solid rgb(252 211 77 / 0.2);
-    border-radius: 9999px;
-    background: rgb(252 211 77 / 0.08);
-    padding: 0.25rem 0.5rem;
-    color: rgb(252 211 77);
-    font-size: 0.6rem;
-  }
-
-  .screen-match__stage {
-    position: relative;
-    height: 10.5rem;
-    margin-top: 0.85rem;
-    overflow: hidden;
-    border: 1px solid rgb(255 255 255 / 0.07);
-    border-radius: 0.85rem;
-    background:
-      radial-gradient(
-        circle at 50% 15%,
-        rgb(252 211 77 / 0.08),
-        transparent 55%
-      ),
-      linear-gradient(to bottom, #111 0 62%, #080808 62%);
-  }
-
-  .screen-match__screen {
-    position: absolute;
-    top: 1.25rem;
-    left: 50%;
-    display: grid;
-    width: 78%;
-    aspect-ratio: 2.39;
-    translate: -50% 0;
-    place-items: center;
-    border: 1px solid rgb(252 211 77 / 0.4);
-    background:
-      linear-gradient(135deg, rgb(252 211 77 / 0.15), transparent 55%), #171717;
-    box-shadow:
-      0 0 2rem rgb(245 158 11 / 0.13),
-      inset 0 0 1.5rem rgb(252 211 77 / 0.05);
-    color: rgb(252 211 77 / 0.75);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-  }
-
-  .screen-match__seats {
-    position: absolute;
-    left: 50%;
-    height: 1rem;
-    translate: -50% 0;
-    border-top: 0.45rem dotted rgb(82 82 82);
-    border-radius: 50%;
-  }
-
-  .screen-match__seats--back {
-    bottom: 2.15rem;
-    width: 68%;
-  }
-
-  .screen-match__seats--front {
-    bottom: 0.65rem;
-    width: 88%;
-    border-color: rgb(115 115 115);
-  }
-
-  .screen-match__comparison {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
-    margin-top: 0.75rem;
-  }
-
-  .screen-match__comparison > div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 1px solid rgb(255 255 255 / 0.07);
-    border-radius: 0.65rem;
-    padding: 0.55rem;
-    color: rgb(163 163 163);
-    font-size: 0.68rem;
-  }
-
-  .screen-match__comparison strong {
-    color: rgb(229 229 229);
-    font-weight: 600;
-  }
-
-  .screen-match__ratio {
-    display: block;
-    flex: none;
-    width: 1.8rem;
-    border: 1px solid rgb(252 211 77 / 0.55);
-    background: rgb(252 211 77 / 0.08);
-  }
-
-  .screen-match__ratio--scope {
-    aspect-ratio: 2.39;
-  }
-
-  .screen-match__ratio--flat {
-    width: 1.55rem;
-    aspect-ratio: 1.85;
-  }
-
-  .screen-match > p {
-    margin: 0.75rem 0.15rem 0;
-    color: rgb(115 115 115);
-    font-size: 0.68rem;
-    line-height: 1.5;
-  }
-
-  @media (max-width: 63.999rem) {
-    .screen-match {
-      width: min(100%, 24rem);
-    }
-  }
-
-  @media (max-width: 30rem) {
-    .screen-match__comparison {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .aspect-ratio-diagram {
-    overflow: visible;
-  }
-
-  .aspect-ratio-diagonal {
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-dasharray: 9 6;
-    opacity: 0.6;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .aspect-ratio-corners {
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.5;
-    vector-effect: non-scaling-stroke;
-  }
-
-  @keyframes card-in {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-  }
-</style>

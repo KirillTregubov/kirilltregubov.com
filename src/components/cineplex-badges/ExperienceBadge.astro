@@ -31,9 +31,10 @@ import VIP19Plus from './VIP19Plus.astro'
 
 interface Props {
   format: string
+  class?: string
 }
 
-const { format } = Astro.props
+const { format, class: className } = Astro.props
 const formatKey = format.toLowerCase().replace(/[^a-z0-9]+/g, '')
 const badges = {
   '3d': ThreeD,
@@ -79,7 +80,7 @@ const Badge = badges[formatKey as keyof typeof badges]
 
 {
   Badge ? (
-    <span class="badge" role="img" aria-label={format}>
+    <span class:list={['badge', className]} role="img" aria-label={format}>
       <Badge />
     </span>
   ) : (
