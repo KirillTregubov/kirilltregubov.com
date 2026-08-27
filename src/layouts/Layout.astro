@@ -22,7 +22,7 @@ let {
   image,
   bodyClass,
   footerClass,
-  footerContent = null
+  footerContent = null,
 } = Astro.props
 const { pathname } = Astro.url
 if (!description) {
@@ -94,7 +94,7 @@ const formattedImage = image.replace('/assets/', '')
   <body
     class:list={[
       'dark relative min-h-dvh overflow-x-clip bg-neutral-900 p-4 text-neutral-300 xs:p-6 md:p-12 md:pb-6',
-      bodyClass
+      bodyClass,
     ]}
   >
     <slot />
@@ -102,10 +102,10 @@ const formattedImage = image.replace('/assets/', '')
     <footer
       class:list={[
         'mt-8 text-center text-sm text-neutral-500 sm:text-base md:mt-12',
-        footerClass
+        footerClass,
       ]}
     >
-      &copy; {new Date().getFullYear()} Kirill Tregubov.
+      <span>&copy; {new Date().getFullYear()} Kirill Tregubov.</span>{' '}
       <span class="whitespace-nowrap">
         This site is{' '}
         <a

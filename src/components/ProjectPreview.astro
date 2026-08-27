@@ -8,7 +8,7 @@ import {
   ExternalLinkIcon,
   GamepadIcon,
   LinkIcon,
-  LockIcon
+  LockIcon,
 } from 'lucide-react'
 import Android from '@components/icons/Android.astro'
 import Apple from '@components/icons/Apple.astro'
@@ -26,7 +26,7 @@ const technologies = await getEntries(project.data.technologies)
 
 const publishDate = formatApproximateDate(
   project.data.pubDate,
-  project.data.updatedDate
+  project.data.updatedDate,
 )
 const fullPublishDate = formatApproximateDate(project.data.pubDate)
 const updatedDate =

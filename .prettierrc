@@ -1,0 +1,15 @@
+{
+  "printWidth": 80,
+  "semi": false,
+  "singleQuote": true,
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+  "tailwindAttributes": [
+    "class",
+    "className",
+    "containerClass",
+    "bodyClass",
+    "footerClass",
+    "fallbackClass"
+  ],
+  "tailwindStylesheet": "./src/styles/global.css"
+}

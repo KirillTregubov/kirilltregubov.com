@@ -44,7 +44,7 @@ const imgAlt = alt || title || 'Placeholder image'
       class:list={[
         'relative select-none',
         className,
-        !!title && title.length > 0 && 'mb-0'
+        !!title && title.length > 0 && 'mb-0',
       ]}
       onerror="this.src='/assets/projects/placeholder.jpg'; void src; this.onerror=null; void onerror;"
       draggable="false"
@@ -56,7 +56,7 @@ const imgAlt = alt || title || 'Placeholder image'
       <figcaption
         class:list={[
           'text-center',
-          !!description && 'mt-3 text-lg leading-6 font-semibold'
+          !!description && 'mt-3 text-lg leading-6 font-semibold',
         ]}
         data-title
       >

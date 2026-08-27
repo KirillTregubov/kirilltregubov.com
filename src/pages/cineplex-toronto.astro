@@ -10,20 +10,20 @@ const theatres = (await getCollection('cinemas'))
   .map((theatre) => ({
     ...theatre,
     formats: Array.from(
-      new Set(theatre.data.auditoriums.flatMap(({ formats }) => formats))
-    )
+      new Set(theatre.data.auditoriums.flatMap(({ formats }) => formats)),
+    ),
   }))
   .sort((a, b) => a.data.name.localeCompare(b.data.name))
 
 const auditoriumCount = theatres.reduce(
   (total, theatre) => total + theatre.data.auditoriumCount,
-  0
+  0,
 )
 
 const premiumFormatCount = new Set(
   theatres.flatMap((theatre) =>
-    theatre.formats.filter((format) => format !== 'Regular')
-  )
+    theatre.formats.filter((format) => format !== 'Regular'),
+  ),
 ).size
 
 const formatPriority: Record<string, number> = {
@@ -34,15 +34,15 @@ const formatPriority: Record<string, number> = {
   '70mm': 4,
   'VIP 19+': 5,
   '4DX': 6,
-  Regular: 7
+  Regular: 7,
 }
 
 const formatOptions = Array.from(
-  new Set(theatres.flatMap((theatre) => theatre.formats))
+  new Set(theatres.flatMap((theatre) => theatre.formats)),
 ).sort(
   (a, b) =>
     (formatPriority[a] ?? Number.POSITIVE_INFINITY) -
-      (formatPriority[b] ?? Number.POSITIVE_INFINITY) || a.localeCompare(b)
+      (formatPriority[b] ?? Number.POSITIVE_INFINITY) || a.localeCompare(b),
 )
 
 type ScreenShape = {
@@ -55,7 +55,7 @@ const screenShapeByRatio = new Map<string, ScreenShape>([
   ['1.90:1', { filterLabel: 'IMAX 1.90', listingLabel: 'Digital' }],
   ['2.20:1', { filterLabel: '70mm' }],
   ['1.85:1', { filterLabel: 'Flat', listingLabel: 'Flat' }],
-  ['2.39:1', { filterLabel: 'Scope', listingLabel: 'Scope' }]
+  ['2.39:1', { filterLabel: 'Scope', listingLabel: 'Scope' }],
 ])
 
 const getScreenShape = (ratio: string) => screenShapeByRatio.get(ratio)
@@ -65,9 +65,9 @@ const screenShapeOptions = Array.from(screenShapeByRatio.values())
     theatres.some((theatre) =>
       theatre.data.auditoriums.some(
         ({ screen }) =>
-          getScreenShape(screen.ratio)?.filterLabel === filterLabel
-      )
-    )
+          getScreenShape(screen.ratio)?.filterLabel === filterLabel,
+      ),
+    ),
   )
   .map(({ filterLabel }) => filterLabel)
 
@@ -82,7 +82,7 @@ const getRatioDiagram = (ratio: string) => {
     x: (canvasWidth - screenWidth) / 2,
     y: (canvasHeight - screenHeight) / 2,
     width: screenWidth,
-    height: screenHeight
+    height: screenHeight,
   }
 }
 
@@ -93,9 +93,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
 <Layout
   title="Toronto Cineplex Guide"
-  description="A community-compiled reference to Cineplex viewing formats, Dolby Atmos availability, and scrScreeneen aspect ratios at theatres in and around Toronto."
+  description="A reference to Cineplex viewing formats, auditorium formats, and screen aspect ratios at theatres in the Greater Toronto Area."
   bodyClass="bg-[radial-gradient(circle_at_50%_-12rem,rgb(120_53_15_/_0.2),transparent_35rem),#171717]"
-  footerClass="border-t border-white/6 pt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
+  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
 >
   <PageContainer>
     <ReturnHome />
@@ -105,13 +105,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
     >
       <div class="grid gap-5">
         <div
-          class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] px-6 py-9 sm:px-10 sm:py-12"
+          class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem)] px-6 py-9 sm:px-10 sm:py-12"
         >
-          <div
+          <!-- class="relative rounded-3xl border border-amber-200/16 bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem),#160d08] px-6 py-9 sm:px-10 sm:py-12" -->
+          <!-- <div
             class="absolute -top-24 right-[12%] size-72 rounded-full bg-amber-300/15 blur-3xl"
             aria-hidden="true"
           >
-          </div>
+          </div> -->
           <div
             class="relative grid items-center gap-9 lg:grid-cols-[minmax(0,1fr)_28rem] lg:gap-12"
           >
@@ -257,7 +258,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
     <section
       id="directory"
-      class="mt-8 scroll-mt-14"
+      class="mt-6 scroll-mt-14"
       aria-labelledby="directory-title"
     >
       <div
@@ -278,12 +279,13 @@ const getAuditoriumHeading = (auditoriums: string) => {
               type="search"
               placeholder="Search theatre or area..."
               autocomplete="off"
-              class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-sm text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
+              class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-base text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
             />
           </label>
           <div
+            id="format-filter-scroller"
             role="group"
-            class="flex min-w-0 scrollbar-thin [scrollbar-color:var(--color-neutral-500)_transparent] gap-2 overflow-x-auto pb-1 lg:ml-auto lg:w-fit lg:max-w-full lg:pb-0 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-button]:hidden [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-transparent"
+            class="flex min-w-0 cursor-grab scrollbar-none gap-1.5 overflow-x-auto select-none [-ms-overflow-style:none] active:cursor-grabbing lg:ml-auto lg:w-fit lg:max-w-full [&::-webkit-scrollbar]:hidden"
             aria-label="Filter by viewing format or screen shape"
           >
             <button
@@ -349,11 +351,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     theatre.data.auditoriums
                       .map(
                         ({ screen }) =>
-                          getScreenShape(screen.ratio)?.filterLabel
+                          getScreenShape(screen.ratio)?.filterLabel,
                       )
-                      .filter(Boolean)
-                  )
-                )
+                      .filter(Boolean),
+                  ),
+                ),
               )
               return (
                 <li class="h-full">
@@ -379,7 +381,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                       {theatre.data.auditoriums.map((auditorium) => {
                         const diagram = getRatioDiagram(auditorium.screen.ratio)
                         const screenShape = getScreenShape(
-                          auditorium.screen.ratio
+                          auditorium.screen.ratio,
                         )
                         const isScreenX = auditorium.formats.includes('SCREENX')
                         const right = diagram.x + diagram.width
@@ -389,7 +391,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                           x: 23,
                           y: Math.max(13, diagram.y),
                           width: 46,
-                          height: Math.min(32, diagram.height)
+                          height: Math.min(32, diagram.height),
                         }
                         const screenXRight =
                           screenXDiagram.x + screenXDiagram.width
@@ -402,7 +404,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                           <li
                             class="auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 border-white/7 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6"
                             data-auditorium-formats={JSON.stringify(
-                              auditorium.formats
+                              auditorium.formats,
                             )}
                             data-auditorium-screen-shape={
                               screenShape?.filterLabel
@@ -411,7 +413,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                             <svg
                               class:list={[
                                 'w-full overflow-visible text-neutral-500',
-                                isScreenX && 'translate-y-px'
+                                isScreenX && 'translate-y-px',
                               ]}
                               viewBox="0 0 92 62"
                               role="img"
@@ -578,11 +580,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
       const searchInput =
         document.querySelector<HTMLInputElement>('#theatre-search')
+      const filterScroller = document.querySelector<HTMLElement>(
+        '#format-filter-scroller',
+      )
       const filterButtons = Array.from(
-        document.querySelectorAll<HTMLButtonElement>('.filter-button')
+        document.querySelectorAll<HTMLButtonElement>('.filter-button'),
       )
       const cards = Array.from(
-        document.querySelectorAll<HTMLElement>('.theatre-card')
+        document.querySelectorAll<HTMLElement>('.theatre-card'),
       )
       const resultCount = document.querySelector<HTMLElement>('#result-count')
       const noResults = document.querySelector<HTMLElement>('#no-results')
@@ -594,21 +599,21 @@ const getAuditoriumHeading = (auditoriums: string) => {
         formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
         screenShapes: JSON.parse(card.dataset.screenShapes ?? '[]') as string[],
         auditoriumRows: Array.from(
-          card.querySelectorAll<HTMLElement>('[data-auditorium-formats]')
+          card.querySelectorAll<HTMLElement>('[data-auditorium-formats]'),
         ).map((row) => ({
           row,
           formats: JSON.parse(
-            row.dataset.auditoriumFormats ?? '[]'
+            row.dataset.auditoriumFormats ?? '[]',
           ) as string[],
           screenShapes: row.dataset.auditoriumScreenShape
             ? [row.dataset.auditoriumScreenShape]
-            : []
-        }))
+            : [],
+        })),
       }))
       const fuse = new Fuse(locations, {
         keys: [{ name: 'name', weight: 1 }],
         ignoreLocation: true,
-        threshold: 0.3
+        threshold: 0.3,
       })
       let activeFilter:
         { type: 'format' | 'screen-shape'; value: string } | undefined
@@ -634,7 +639,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           (button) =>
             activeFilter &&
             button.dataset.filterType === activeFilter.type &&
-            button.dataset.filterValue === activeFilter.value
+            button.dataset.filterValue === activeFilter.value,
         )
 
         if (!hasMatchingFilter) {
@@ -658,7 +663,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
         if (activeFilter) {
           url.searchParams.set(
             activeFilter.type === 'format' ? 'format' : 'screen',
-            activeFilter.value
+            activeFilter.value,
           )
         }
 
@@ -669,14 +674,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
           window.history[replace ? 'replaceState' : 'pushState'](
             null,
             '',
-            nextUrl
+            nextUrl,
           )
         }
       }
 
       function matchesActiveFilter({
         formats,
-        screenShapes
+        screenShapes,
       }: {
         formats: string[]
         screenShapes: string[]
@@ -699,8 +704,8 @@ const getAuditoriumHeading = (auditoriums: string) => {
               !filterType
                 ? !activeFilter
                 : activeFilter?.type === filterType &&
-                    activeFilter.value === filterValue
-            )
+                    activeFilter.value === filterValue,
+            ),
           )
         })
       }
@@ -708,7 +713,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
       function updateResults({
         scrollToDirectory = false,
         sync = false,
-        replaceHistory = true
+        replaceHistory = true,
       } = {}) {
         const query = searchInput?.value.trim() ?? ''
         const searchResults = query
@@ -728,24 +733,24 @@ const getAuditoriumHeading = (auditoriums: string) => {
               ({ row, formats, screenShapes }) => {
                 const rowIsVisible = matchesActiveFilter({
                   formats,
-                  screenShapes
+                  screenShapes,
                 })
                 row.hidden = !rowIsVisible
                 return rowIsVisible
-              }
+              },
             )
 
             visibleAuditoriumRows.forEach(({ row }, index) => {
               row.classList.toggle(
                 'border-b',
-                index < visibleAuditoriumRows.length - 1
+                index < visibleAuditoriumRows.length - 1,
               )
             })
 
             if (visible) {
               visibleCount += 1
             }
-          }
+          },
         )
 
         if (resultCount) {
@@ -770,7 +775,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           directory.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
-            inline: 'start'
+            inline: 'start',
           })
         }
       }
@@ -788,6 +793,60 @@ const getAuditoriumHeading = (auditoriums: string) => {
       updateResults()
 
       searchInput?.addEventListener('input', scheduleResultsUpdate)
+      if (filterScroller) {
+        let pointerId: number | undefined
+        let startX = 0
+        let startScrollLeft = 0
+        let hasDragged = false
+        const dragThreshold = 6
+
+        filterScroller.addEventListener('pointerdown', (event) => {
+          if (event.pointerType === 'touch' || event.button !== 0) return
+
+          pointerId = event.pointerId
+          startX = event.clientX
+          startScrollLeft = filterScroller.scrollLeft
+          hasDragged = false
+        })
+
+        filterScroller.addEventListener('pointermove', (event) => {
+          if (event.pointerId !== pointerId) return
+
+          const distance = event.clientX - startX
+          if (!hasDragged && Math.abs(distance) < dragThreshold) return
+
+          if (!hasDragged) {
+            hasDragged = true
+            filterScroller.setPointerCapture(event.pointerId)
+          }
+
+          event.preventDefault()
+          filterScroller.scrollLeft = startScrollLeft - distance
+        })
+
+        const stopDragging = (event: PointerEvent) => {
+          if (event.pointerId !== pointerId) return
+
+          if (filterScroller.hasPointerCapture(event.pointerId)) {
+            filterScroller.releasePointerCapture(event.pointerId)
+          }
+          pointerId = undefined
+        }
+
+        filterScroller.addEventListener('pointerup', stopDragging)
+        filterScroller.addEventListener('pointercancel', stopDragging)
+        filterScroller.addEventListener(
+          'click',
+          (event) => {
+            if (!hasDragged) return
+
+            event.preventDefault()
+            event.stopPropagation()
+            hasDragged = false
+          },
+          true,
+        )
+      }
       filterButtons.forEach((button) => {
         button.addEventListener('click', () => {
           const filterType = button.dataset.filterType
@@ -803,7 +862,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           } else {
             activeFilter = {
               type: filterType as 'format' | 'screen-shape',
-              value: filterValue
+              value: filterValue,
             }
           }
 

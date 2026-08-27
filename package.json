@@ -8,8 +8,8 @@
     "build:clean": "astro check && astro build --force",
     "preview": "astro preview",
     "check": "astro check",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
+    "format": "oxfmt && prettier --write '**/*.astro'",
+    "format:check": "oxfmt --check && prettier --check '**/*.astro'",
     "upgrade": "bunx @astrojs/upgrade"
   },
   "dependencies": {
@@ -48,7 +48,10 @@
     "@astrojs/check": "0.9.10",
     "@types/node": "^26.4.0",
     "@vercel/speed-insights": "^2.0.0",
-    "oxfmt": "^0.65.0"
+    "oxfmt": "^0.65.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.8.1"
   },
   "engines": {
     "node": ">=24"

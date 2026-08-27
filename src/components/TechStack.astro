@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content'
 const technologies = await getCollection('technologies').then((collection) =>
   collection
     .filter((tech) => tech.data.type === 'technology')
-    .sort((a, b) => a.data.order - b.data.order)
+    .sort((a, b) => a.data.order - b.data.order),
 )
 ---
 

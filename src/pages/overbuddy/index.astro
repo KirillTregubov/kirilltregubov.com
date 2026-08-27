@@ -136,7 +136,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
               draggable="false"
               hasDetails
               parentProps={{
-                'data-item': true
+                'data-item': true,
               }}
             >
               {background.data.available === true && (
@@ -150,7 +150,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
               )}
               <div
                 class:list={[
-                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 ring-accent-500/90! transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!'
+                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 ring-accent-500/90! transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!',
                 ]}
                 data-detail-button
               >
@@ -218,23 +218,23 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           const element = item as HTMLElement
 
           return { title, description, keywords, element }
-        }
+        },
       )
 
       const fuse = new Fuse(items, {
         keys: [
           { name: 'title', weight: 4 },
           { name: 'description', weight: 2 },
-          { name: 'keywords', weight: 0.5 }
+          { name: 'keywords', weight: 0.5 },
         ],
         shouldSort: true,
         ignoreLocation: true,
-        threshold: 0.2
+        threshold: 0.2,
       })
 
       // Search
       const search = document.getElementById(
-        'search'
+        'search',
       ) as HTMLInputElement | null
       if (!search) {
         console.warn('Search input not found')
@@ -255,7 +255,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
 
         items.forEach(({ element }) => {
           const index = results.findIndex(
-            (result) => result.item.element === element
+            (result) => result.item.element === element,
           )
           if (index !== -1) {
             element.classList.remove('hidden')
@@ -270,7 +270,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
 
         results[0].item.element.scrollIntoView({
           behavior: 'smooth',
-          inline: 'start'
+          inline: 'start',
         })
       }
       search.addEventListener('input', executeSearch)
@@ -286,13 +286,13 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         const firstVisible =
           sortButton.getAttribute('data-newest') === 'true'
             ? items.findLast(
-                ({ element }) => !element.classList.contains('hidden')
+                ({ element }) => !element.classList.contains('hidden'),
               )
             : items.find(({ element }) => !element.classList.contains('hidden'))
         if (firstVisible) {
           firstVisible.element.scrollIntoView({
             behavior: 'smooth',
-            inline: 'start'
+            inline: 'start',
           })
         }
       }
