@@ -8,21 +8,21 @@ export default defineConfig({
   integrations: [react(), mdx()],
 
   experimental: {
-    incrementalBuild: true
+    incrementalBuild: true,
   },
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
 
   redirects: {
     '/github': {
       status: 308,
-      destination: 'https://github.com/KirillTregubov'
+      destination: 'https://github.com/KirillTregubov',
     },
     '/linkedin': {
       status: 308,
-      destination: 'https://www.linkedin.com/in/kirilltregubov/'
-    }
-  }
+      destination: 'https://www.linkedin.com/in/kirilltregubov/',
+    },
+  },
 })

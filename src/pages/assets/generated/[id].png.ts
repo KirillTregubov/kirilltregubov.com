@@ -1,9 +1,10 @@
-import type { APIContext } from 'astro'
-import type { ReactNode } from 'react'
 import { createHash } from 'node:crypto'
 import fs from 'node:fs'
+
 import { Resvg } from '@resvg/resvg-js'
+import type { APIContext } from 'astro'
 import { getCollection } from 'astro:content'
+import type { ReactNode } from 'react'
 import satori from 'satori'
 import { html } from 'satori-html'
 
@@ -20,7 +21,7 @@ const height = 630
 export async function GET({ props }: APIContext) {
   // const { title, description } = props
   const image = fs.readFileSync(`public${props.image.replace(/\?.*$/, '')}`, {
-    encoding: 'base64'
+    encoding: 'base64',
   })
 
   const markup = html` <div
@@ -60,14 +61,14 @@ export async function GET({ props }: APIContext) {
       {
         name: 'Inter',
         data: interBold,
-        weight: 700
-      }
+        weight: 700,
+      },
       // {
       //   name: 'Source Han Sans',
       //   data: sourceHanSans,
       //   weight: 700
       // }
-    ]
+    ],
   })
 
   const resvg = new Resvg(svg)
@@ -76,8 +77,8 @@ export async function GET({ props }: APIContext) {
 
   return new Response(pngBuffer as Buffer<ArrayBuffer>, {
     headers: {
-      'Content-Type': 'image/png'
-    }
+      'Content-Type': 'image/png',
+    },
   })
 }
 
@@ -86,7 +87,7 @@ export async function getStaticPaths() {
 
   return backgrounds.map((background) => {
     const sourceImage = fs.readFileSync(
-      `public${background.data.image.replace(/\?.*$/, '')}`
+      `public${background.data.image.replace(/\?.*$/, '')}`,
     )
     const cacheKey = createHash('sha256')
       .update(String(background.digest))
@@ -96,12 +97,12 @@ export async function getStaticPaths() {
 
     return {
       params: {
-        id: background.id
+        id: background.id,
       },
       props: {
-        ...background.data
+        ...background.data,
       },
-      cacheKey
+      cacheKey,
     }
   })
 }

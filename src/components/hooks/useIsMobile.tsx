@@ -26,11 +26,11 @@ export const useIsMobile = (): UseIsMobileReturn => {
         'ipod',
         'blackberry',
         'windows phone',
-        'mobile'
+        'mobile',
       ]
 
       const isMobileUA = mobileKeywords.some((keyword) =>
-        userAgent.includes(keyword)
+        userAgent.includes(keyword),
       )
 
       // Combine both checks - prioritize media query but consider user agent
@@ -60,7 +60,7 @@ export const useIsMobile = (): UseIsMobileReturn => {
 
   return {
     isMobile,
-    isLoading
+    isLoading,
   }
 }
 

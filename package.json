@@ -1,19 +1,15 @@
 {
   "name": "personal-site",
-  "type": "module",
   "version": "1.0.0",
-  "packageManager": "bun@1.4.0",
-  "engines": {
-    "node": ">=22.12.0"
-  },
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
     "build:clean": "astro check && astro build --force",
     "preview": "astro preview",
     "check": "astro check",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "upgrade": "bunx @astrojs/upgrade"
   },
   "dependencies": {
@@ -50,13 +46,14 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
-    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@types/node": "^26.4.0",
     "@vercel/speed-insights": "^2.0.0",
-    "prettier": "^3.9.6",
-    "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.8.1"
+    "oxfmt": "^0.65.0"
   },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "bun@1.4.0",
   "trustedDependencies": [
     "@tailwindcss/oxide",
     "@vercel/speed-insights",

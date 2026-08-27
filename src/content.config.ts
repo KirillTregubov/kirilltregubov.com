@@ -1,6 +1,6 @@
-import { defineCollection, reference } from 'astro:content'
 import { file, glob } from 'astro/loaders'
 import { z } from 'astro/zod'
+import { defineCollection, reference } from 'astro:content'
 
 const technologies = defineCollection({
   loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/technologies' }),
@@ -8,9 +8,9 @@ const technologies = defineCollection({
     name: z.string(),
     type: z.enum(['technology', 'tool', 'hidden']).default('technology'),
     order: z.number().default(Number.POSITIVE_INFINITY),
-    link: z.url().optional()
+    link: z.url().optional(),
     // color: z.string()
-  })
+  }),
 })
 
 const projects = defineCollection({
@@ -22,7 +22,7 @@ const projects = defineCollection({
     updatedDate: z.coerce.date().optional(),
     image: z.object({
       url: z.string(),
-      alt: z.string()
+      alt: z.string(),
     }),
     technologies: z.array(reference('technologies')),
     repository: z.url().optional(),
@@ -37,8 +37,8 @@ const projects = defineCollection({
     download: z.url().optional(),
     play: z.url().optional(),
     apple: z.url().optional(),
-    google: z.url().optional()
-  })
+    google: z.url().optional(),
+  }),
 })
 
 // const blog = defineCollection({
@@ -62,8 +62,8 @@ const overbuddy = defineCollection({
     keywords: z.string(),
     link: z.string().optional(),
     available: z.boolean().or(z.literal('never')),
-    removed: z.string()
-  })
+    removed: z.string(),
+  }),
 })
 
 const cinemas = defineCollection({
@@ -86,12 +86,12 @@ const cinemas = defineCollection({
               'SCREENX',
               '4DX',
               '70mm',
-              'VIP 19+'
-            ])
+              'VIP 19+',
+            ]),
           )
           .min(1),
         screen: z.object({
-          ratio: z.enum(['1.43:1', '1.85:1', '1.90:1', '2.20:1', '2.39:1'])
+          ratio: z.enum(['1.43:1', '1.85:1', '1.90:1', '2.20:1', '2.39:1']),
         }),
         features: z
           .array(
@@ -100,15 +100,15 @@ const cinemas = defineCollection({
               'D-BOX',
               'Laser Projection',
               'VIP',
-              'Recliners'
-            ])
+              'Recliners',
+            ]),
           )
           .default([]),
-        details: z.string().optional()
-      })
+        details: z.string().optional(),
+      }),
     ),
-    notes: z.array(z.string()).default([])
-  })
+    notes: z.array(z.string()).default([]),
+  }),
 })
 
 export const collections = {
@@ -116,5 +116,5 @@ export const collections = {
   projects,
   // blog,
   overbuddy,
-  cinemas
+  cinemas,
 }

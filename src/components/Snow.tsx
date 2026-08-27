@@ -29,7 +29,7 @@ export default function Snow() {
         zIndex: 999,
         position: 'fixed',
         width: '100vw',
-        height: '100vh'
+        height: '100vh',
       }}
       snowflakeCount={50}
     />

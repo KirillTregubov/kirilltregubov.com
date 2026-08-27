@@ -1,13 +1,13 @@
-import type * as THREE from 'three'
 import { animated, useReducedMotion, useSpring } from '@react-spring/three'
 import {
   // OrbitControls,
   PerspectiveCamera,
   Preload,
-  useGLTF
+  useGLTF,
 } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef, useState } from 'react'
+import type * as THREE from 'three'
 
 function Scene({ onReady }: { onReady: () => void }) {
   // source: https://science.nasa.gov/resource/saturn-3d-model/
@@ -17,7 +17,7 @@ function Scene({ onReady }: { onReady: () => void }) {
   const reducedMotion = useReducedMotion()
   const { scale } = useSpring({
     scale: reducedMotion || shown ? [0.1, 0.1, 0.1] : [0.06, 0.06, 0.06],
-    config: { mass: 2, tension: 280, friction: 60 }
+    config: { mass: 2, tension: 280, friction: 60 },
   })
   // const camera = useThree((state) => state.camera)
 

@@ -22,7 +22,7 @@ export default function Globe() {
         width = canvasRef.current.offsetWidth
         globe?.update({
           width: width * devicePixelRatio,
-          height: width * devicePixelRatio
+          height: width * devicePixelRatio,
         })
       }
     }
@@ -43,11 +43,11 @@ export default function Globe() {
       markerColor: [234, 88, 12].map((c) => c / 255) as [
         number,
         number,
-        number
+        number,
       ],
       // markerColor: [0.1, 0.8, 1],
       glowColor: [0.15, 0.15, 0.15],
-      markers: [{ location: [43.6532, -79.3832], size: 0.05 }]
+      markers: [{ location: [43.6532, -79.3832], size: 0.05 }],
     })
 
     const onUnload = () => {

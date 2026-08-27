@@ -10,7 +10,7 @@ const Teams = [
   'Williams Mercedes',
   'RB Honda RBPT',
   'Kick Sauber Ferrari',
-  'Haas Ferrari'
+  'Haas Ferrari',
 ] as const
 
 type Team = (typeof Teams)[number]
@@ -44,162 +44,162 @@ const currentDrivers: Driver[] = [
     name: 'Max Verstappen',
     nationality: 'NED',
     team: 'Red Bull Racing Honda RBPT',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 4,
     name: 'Lando Norris',
     nationality: 'GBR',
     team: 'McLaren Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 16,
     name: 'Charles Leclerc',
     nationality: 'MON',
     team: 'Ferrari',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 81,
     name: 'Oscar Piastri',
     nationality: 'AUS',
     team: 'McLaren Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 55,
     name: 'Carlos Sainz',
     nationality: 'ESP',
     team: 'Ferrari',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 44,
     name: 'Lewis Hamilton',
     nationality: 'GBR',
     team: 'Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 63,
     name: 'George Russell',
     nationality: 'GBR',
     team: 'Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 11,
     name: 'Sergio Perez',
     nationality: 'MEX',
     team: 'Red Bull Racing Honda RBPT',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 14,
     name: 'Fernando Alonso',
     nationality: 'ESP',
     team: 'Aston Martin Aramco Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 27,
     name: 'Nico Hulkenberg',
     nationality: 'GER',
     team: 'Haas Ferrari',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 18,
     name: 'Lance Stroll',
     nationality: 'CAN',
     team: 'Aston Martin Aramco Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 22,
     name: 'Yuki Tsunoda',
     nationality: 'JPN',
     team: 'RB Honda RBPT',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 20,
     name: 'Kevin Magnussen',
     nationality: 'DEN',
     team: 'Haas Ferrari',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 23,
     name: 'Alexander Albon',
     nationality: 'THA',
     team: 'Williams Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 3,
     name: 'Daniel Ricciardo',
     nationality: 'AUS',
     team: 'RB Honda RBPT',
-    isReserve: true
+    isReserve: true,
   },
   {
     id: 10,
     name: 'Pierre Gasly',
     nationality: 'FRA',
     team: 'Alpine Renault',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 8,
     name: 'Oliver Bearman',
     nationality: 'GBR',
     team: 'Haas Ferrari',
-    isReserve: true
+    isReserve: true,
   },
   {
     id: 2,
     name: 'Franco Colapinto',
     nationality: 'ARG',
     team: 'Williams Mercedes',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 31,
     name: 'Esteban Ocon',
     nationality: 'FRA',
     team: 'Alpine Renault',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 40,
     name: 'Liam Lawson',
     nationality: 'NZL',
     team: 'RB Honda RBPT',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 24,
     name: 'Zhou Guanyu',
     nationality: 'CHN',
     team: 'Kick Sauber Ferrari',
-    isReserve: false
+    isReserve: false,
   },
   {
     id: 6,
     name: 'Logan Sargeant',
     nationality: 'USA',
     team: 'Williams Mercedes',
-    isReserve: true
+    isReserve: true,
   },
   {
     id: 77,
     name: 'Valtteri Bottas',
     nationality: 'FIN',
     team: 'Kick Sauber Ferrari',
-    isReserve: false
-  }
+    isReserve: false,
+  },
 ]
 
 const currentStandings: ChampionshipResult[] = [
@@ -225,7 +225,7 @@ const currentStandings: ChampionshipResult[] = [
   { driver: 40, points: 4 },
   { driver: 24, points: 0 },
   { driver: 6, points: 0 },
-  { driver: 77, points: 0 }
+  { driver: 77, points: 0 },
 ]
 
 const topDrivers = currentStandings.slice(0, 3).map((entry) => {
@@ -245,22 +245,22 @@ const remainingRaces = [
     location: 'Las Vegas',
     date: '2024-11-24',
     circuit: 'Las Vegas Street Circuit',
-    hasSprint: false
+    hasSprint: false,
   },
   {
     name: 'Qatar Grand Prix',
     location: 'Lusail',
     date: '2024-12-01',
     circuit: 'Lusail International Circuit',
-    hasSprint: true
+    hasSprint: true,
   },
   {
     name: 'Abu Dhabi Grand Prix',
     location: 'Yas Marina',
     date: '2024-12-08',
     circuit: 'Yas Marina Circuit',
-    hasSprint: false
-  }
+    hasSprint: false,
+  },
 ] as const satisfies Race[]
 
 const NUMBER_OF_DRIVERS = 20 as const
@@ -277,7 +277,7 @@ const uniformProbabilityModel: raceModel = (drivers: Driver[]) => {
   return drivers.map((driver, index) => {
     return {
       ...driver!,
-      position: newPositions[index]
+      position: newPositions[index],
     }
   })
 }
@@ -296,7 +296,7 @@ const getRecentPositionsForDriver = (driverId: DriverID): number[] => {
 }
 
 const calculateWeightedAveragePosition = (
-  recentPositions: number[]
+  recentPositions: number[],
 ): number => {
   const weights = [
     1.0,
@@ -318,19 +318,19 @@ const calculateWeightedAveragePosition = (
     0.5,
     0.5,
     0.5,
-    0.5
+    0.5,
   ]
   const totalWeight = weights.reduce((sum, weight) => sum + weight, 0)
   const weightedSum = recentPositions.reduce(
     (sum, pos, index) => sum + pos * weights[index],
-    0
+    0,
   )
   return weightedSum / totalWeight
 }
 
 const adjustProbability = (
   recentPositions: number[],
-  baseProbabilities: number[]
+  baseProbabilities: number[],
 ): number[] => {
   const weightedAvg = calculateWeightedAveragePosition(recentPositions)
 
@@ -350,7 +350,7 @@ const adjustProbability = (
 
 const performanceBasedRaceModel: raceModel = (drivers: Driver[]) => {
   const baseProbabilities: number[] = Array(NUMBER_OF_DRIVERS).fill(
-    1 / NUMBER_OF_DRIVERS
+    1 / NUMBER_OF_DRIVERS,
   ) // Uniform probability for each position
 
   // Generate adjusted probabilities based on drivers' recent performance
@@ -374,18 +374,18 @@ const performanceBasedRaceModel: raceModel = (drivers: Driver[]) => {
         acc[i] = prob + (acc[i - 1] || 0)
         return acc
       },
-      [] as number[]
+      [] as number[],
     )
 
     // Draw a random position based on it
     const rand = Math.random()
     const position = cumulativeProbabilities.findIndex(
-      (cumProb) => cumProb > rand
+      (cumProb) => cumProb > rand,
     )
 
     return {
       ...driver,
-      position
+      position,
     }
   })
 }
@@ -406,7 +406,7 @@ const randomFastestLap: fastestLapModel = (drivers: Driver[]) => {
 const simulateRace = (
   drivers: Driver[],
   raceModel: raceModel,
-  fastestLapModel: fastestLapModel
+  fastestLapModel: fastestLapModel,
 ) => {
   const raceResult = raceModel(drivers)
 
@@ -425,7 +425,7 @@ const simulateRace = (
     result.push({
       driverID: driver.id,
       points,
-      fastestLap: false
+      fastestLap: false,
     })
   })
 
@@ -445,7 +445,7 @@ function runSimulation(
   currentStandings: ChampionshipResult[],
   raceModel: raceModel,
   fastestLapModel: fastestLapModel,
-  numSimulations: number
+  numSimulations: number,
 ) {
   console.log(`> Running simulation with ${drivers.length} drivers`)
 
@@ -458,7 +458,7 @@ function runSimulation(
         acc[driver.id] = 0
         return acc
       },
-      {} as { [id: number]: number }
+      {} as { [id: number]: number },
     )
 
     // Simulate each race
@@ -485,8 +485,8 @@ function runSimulation(
         points:
           points +
           (currentStandings.find(
-            (standing) => standing.driver === Number(driverId)
-          )?.points || 0)
+            (standing) => standing.driver === Number(driverId),
+          )?.points || 0),
       }))
       .sort((a, b) => b.points - a.points)
 
@@ -494,21 +494,21 @@ function runSimulation(
   }
 
   console.log(
-    `> Scheduled ${numSimulations} ${numSimulations > 1 ? 'simulations' : 'simulation'}, Completed ${results.length} ${results.length > 1 ? 'simulations' : 'simulation'}`
+    `> Scheduled ${numSimulations} ${numSimulations > 1 ? 'simulations' : 'simulation'}, Completed ${results.length} ${results.length > 1 ? 'simulations' : 'simulation'}`,
   )
 
   const driverFinishes = drivers.map((driver) => ({
     id: driver.id,
     name: driver.name,
     P1: 0,
-    P2: 0
+    P2: 0,
   }))
   results.forEach((result) => {
     const firstPlaceDriver = driverFinishes.find(
-      (entry) => entry.id === result[0].driver
+      (entry) => entry.id === result[0].driver,
     )
     const secondPlaceDriver = driverFinishes.find(
-      (entry) => entry.id === result[1].driver
+      (entry) => entry.id === result[1].driver,
     )
 
     if (firstPlaceDriver) firstPlaceDriver.P1 += 1
@@ -520,27 +520,27 @@ function runSimulation(
     const driver = currentDrivers.find((d) => d.id === id)
     console.log(`> ${driver?.name}:`)
     console.log(
-      `   P1: ${P1} times (${((P1 / results.length) * 100).toFixed(2)} out of 100)`
+      `   P1: ${P1} times (${((P1 / results.length) * 100).toFixed(2)} out of 100)`,
     )
     console.log(
-      `   P2: ${P2} times (${((P2 / results.length) * 100).toFixed(2)} out of 100)`
+      `   P2: ${P2} times (${((P2 / results.length) * 100).toFixed(2)} out of 100)`,
     )
     const other = results.length - P1 - P2
     console.log(
-      `   P3+: ${other} times (${((other / results.length) * 100).toFixed(2)} out of 100)`
+      `   P3+: ${other} times (${((other / results.length) * 100).toFixed(2)} out of 100)`,
     )
   })
 }
 
 function analyzeStandings(
   standings: ChampionshipResult[],
-  driversInContention: number
+  driversInContention: number,
 ) {
   const topDrivers = standings.slice(0, driversInContention).map((entry) => {
     const driver = currentDrivers.find((driver) => driver.id === entry.driver)!
     return {
       ...driver,
-      points: entry.points
+      points: entry.points,
     }
   })
 
@@ -548,7 +548,7 @@ function analyzeStandings(
   const topDriverPoints = topDrivers[0].points
   const differencesToTop = topDrivers.slice(1).map((driver) => ({
     driver: driver.name,
-    difference: topDriverPoints - driver.points
+    difference: topDriverPoints - driver.points,
   }))
 
   // Points of top drivers
@@ -561,13 +561,13 @@ function analyzeStandings(
   console.log('> Differences between top contenders:')
   differencesToTop.forEach(({ driver, difference }, index) => {
     console.log(
-      `   P1 (${topDrivers[0].name}) to P${index + 2} (${driver}): ${difference}`
+      `   P1 (${topDrivers[0].name}) to P${index + 2} (${driver}): ${difference}`,
     )
   })
 
   const [secondToLastDriver, lastDriver] = topDrivers.slice(-2)
   console.log(
-    `   P${driversInContention - 1} (${lastDriver.name}) to P${driversInContention} (${secondToLastDriver.name}): ${secondToLastDriver.points - lastDriver.points}`
+    `   P${driversInContention - 1} (${lastDriver.name}) to P${driversInContention} (${secondToLastDriver.name}): ${secondToLastDriver.points - lastDriver.points}`,
   )
 }
 
@@ -583,7 +583,7 @@ runSimulation(
   // uniformProbabilityModel,
   performanceBasedRaceModel,
   randomFastestLap,
-  1_000_000
+  1_000_000,
 )
 
 /* Analysis
