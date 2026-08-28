@@ -72,6 +72,21 @@ const cinemas = defineCollection({
     id: z.string(),
     name: z.string(),
     area: z.string(),
+    location: z
+      .object({
+        address: z.object({
+          streetAddress: z.string(),
+          addressLocality: z.string(),
+          addressRegion: z.string(),
+          postalCode: z.string(),
+          addressCountry: z.string(),
+        }),
+        coordinates: z.object({
+          latitude: z.number().min(-90).max(90),
+          longitude: z.number().min(-180).max(180),
+        }),
+      })
+      .optional(),
     auditoriumCount: z.number().int().positive(),
     auditoriums: z.array(
       z.object({

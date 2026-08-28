@@ -3,6 +3,16 @@
     "id": "yonge-dundas",
     "name": "Cineplex Cinemas Yonge-Dundas and VIP",
     "area": "Downtown",
+    "location": {
+      "address": {
+        "streetAddress": "10 Dundas Street East, Suite 402",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M5B 2G9",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.6566724, "longitude": -79.3804743 }
+    },
     "auditoriumCount": 23,
     "auditoriums": [
       {
@@ -44,6 +54,19 @@
     "id": "scotiabank-toronto",
     "name": "Scotiabank Theatre Toronto",
     "area": "Entertainment District",
+    "location": {
+      "address": {
+        "streetAddress": "259 Richmond Street West",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M5V 3M6",
+        "addressCountry": "CA"
+      },
+      "coordinates": {
+        "latitude": 43.6485875,
+        "longitude": -79.3913729
+      }
+    },
     "auditoriumCount": 14,
     "auditoriums": [
       {
@@ -74,6 +97,16 @@
     "id": "varsity-vip",
     "name": "Cineplex Cinemas Varsity and VIP",
     "area": "Yorkville",
+    "location": {
+      "address": {
+        "streetAddress": "55 Bloor Street West",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M4W 1A5",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.6696176, "longitude": -79.3887161 }
+    },
     "auditoriumCount": 12,
     "auditoriums": [
       {
@@ -103,6 +136,16 @@
     "id": "yonge-eglinton",
     "name": "Cineplex Cinemas Yonge-Eglinton and VIP",
     "area": "Midtown",
+    "location": {
+      "address": {
+        "streetAddress": "2300 Yonge Street",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M4P 1E4",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7071559, "longitude": -79.3990834 }
+    },
     "auditoriumCount": 12,
     "auditoriums": [
       {
@@ -134,6 +177,16 @@
     "id": "vip-don-mills",
     "name": "Cineplex VIP Cinemas Don Mills",
     "area": "Don Mills",
+    "location": {
+      "address": {
+        "streetAddress": "Shops at Don Mills, 12 Marie Labatte Road, Unit B7",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M3C 0H9",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7341124, "longitude": -79.3462394 }
+    },
     "auditoriumCount": 5,
     "auditoriums": [
       {
@@ -154,6 +207,16 @@
     "id": "empress-walk",
     "name": "Cineplex Cinemas Empress Walk",
     "area": "North York",
+    "location": {
+      "address": {
+        "streetAddress": "5095 Yonge St., 3rd Floor",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M2N 6Z4",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7686938, "longitude": -79.4121785 }
+    },
     "auditoriumCount": 10,
     "auditoriums": [
       {
@@ -179,6 +242,16 @@
     "id": "mississauga",
     "name": "Cineplex Cinemas Mississauga",
     "area": "Square One",
+    "location": {
+      "address": {
+        "streetAddress": "309 Rathburn Road West",
+        "addressLocality": "Mississauga",
+        "addressRegion": "ON",
+        "postalCode": "L5B 4C1",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.5921963, "longitude": -79.6513869 }
+    },
     "auditoriumCount": 13,
     "auditoriums": [
       {
@@ -220,6 +293,16 @@
     "id": "vaughan",
     "name": "Cineplex Cinemas Vaughan",
     "area": "Vaughan",
+    "location": {
+      "address": {
+        "streetAddress": "3555 Highway 7 West",
+        "addressLocality": "Vaughan",
+        "addressRegion": "ON",
+        "postalCode": "L4L 6B1",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7886534, "longitude": -79.5429059 }
+    },
     "auditoriumCount": 19,
     "auditoriums": [
       {
@@ -256,6 +339,16 @@
     "id": "queensway-vip",
     "name": "Cineplex Cinemas Queensway and VIP",
     "area": "Etobicoke",
+    "location": {
+      "address": {
+        "streetAddress": "1025 The Queensway",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M8Z 6C7",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.6208582, "longitude": -79.5154489 }
+    },
     "auditoriumCount": 18,
     "auditoriums": [
       {
@@ -293,6 +386,16 @@
     "id": "scarborough",
     "name": "Cineplex Cinemas Scarborough",
     "area": "Scarborough Town Centre",
+    "location": {
+      "address": {
+        "streetAddress": "Scarborough Town Centre, 300 Borough Drive",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M1P 4P5",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7755285, "longitude": -79.2557111 }
+    },
     "auditoriumCount": 12,
     "auditoriums": [
       {
@@ -318,6 +421,16 @@
     "id": "fairview-mall",
     "name": "Cineplex Cinemas Fairview Mall",
     "area": "North York",
+    "location": {
+      "address": {
+        "streetAddress": "1800 Sheppard Avenue East, Unit Y007",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M2J 5A7",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7785298, "longitude": -79.3441682 }
+    },
     "auditoriumCount": 9,
     "auditoriums": [
       {
@@ -337,6 +450,16 @@
     "id": "yorkdale",
     "name": "Cineplex Cinemas Yorkdale",
     "area": "North York",
+    "location": {
+      "address": {
+        "streetAddress": "Yorkdale Shopping Centre, 3401 Dufferin Street",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M6A 2T9",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.7269522, "longitude": -79.450578 }
+    },
     "auditoriumCount": 10,
     "auditoriums": [
       {
@@ -367,6 +490,16 @@
     "id": "eglinton-town-centre",
     "name": "Cineplex Odeon Eglinton Town Centre Cinemas",
     "area": "Scarborough",
+    "location": {
+      "address": {
+        "streetAddress": "22 Lebovic Avenue",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M1L 4V9",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.722235, "longitude": -79.2919845 }
+    },
     "auditoriumCount": 16,
     "auditoriums": [
       {
@@ -392,6 +525,16 @@
     "id": "markham-vip",
     "name": "Cineplex Cinemas Markham and VIP",
     "area": "Markham",
+    "location": {
+      "address": {
+        "streetAddress": "179 Enterprise Blvd., Suite 169",
+        "addressLocality": "Markham",
+        "addressRegion": "ON",
+        "postalCode": "L6G 0E7",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.8492064, "longitude": -79.3233669 }
+    },
     "auditoriumCount": 13,
     "auditoriums": [
       {
@@ -412,6 +555,16 @@
     "id": "courtney-park",
     "name": "Cineplex Cinemas Courtney Park",
     "area": "Mississauga",
+    "location": {
+      "address": {
+        "streetAddress": "110 Courtneypark Dr E",
+        "addressLocality": "Mississauga",
+        "addressRegion": "ON",
+        "postalCode": "L5T 2Y3",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.6379178, "longitude": -79.6905106 }
+    },
     "auditoriumCount": 16,
     "auditoriums": [
       {
@@ -432,6 +585,16 @@
     "id": "junxion-erin-mills",
     "name": "Cineplex Junxion Erin Mills",
     "area": "Mississauga",
+    "location": {
+      "address": {
+        "streetAddress": "5100 Erin Mills Pkwy, Unit #Y002",
+        "addressLocality": "Mississauga",
+        "addressRegion": "ON",
+        "postalCode": "L5M 4Z5",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.5569665, "longitude": -79.7120226 }
+    },
     "auditoriumCount": 6,
     "auditoriums": [
       {
@@ -458,6 +621,16 @@
     "id": "aurora",
     "name": "Cineplex Odeon Aurora",
     "area": "Aurora",
+    "location": {
+      "address": {
+        "streetAddress": "15460 Bayview Avenue",
+        "addressLocality": "Aurora",
+        "addressRegion": "ON",
+        "postalCode": "L4G 7J1",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 44.0094321, "longitude": -79.4479955 }
+    },
     "auditoriumCount": 10,
     "auditoriums": [
       {
@@ -472,6 +645,16 @@
     "id": "newmarket",
     "name": "SilverCity Newmarket Cinemas and XSCAPE Entertainment Centre",
     "area": "East Gwillimbury",
+    "location": {
+      "address": {
+        "streetAddress": "18195 Yonge Street",
+        "addressLocality": "East Gwillimbury",
+        "addressRegion": "ON",
+        "postalCode": "L9N 0H9",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 44.0715821, "longitude": -79.4813472 }
+    },
     "auditoriumCount": 13,
     "auditoriums": [
       {
@@ -486,6 +669,16 @@
     "id": "richmond-hill",
     "name": "SilverCity Richmond Hill Cinemas",
     "area": "Richmond Hill",
+    "location": {
+      "address": {
+        "streetAddress": "8725 Yonge Street",
+        "addressLocality": "Richmond Hill",
+        "addressRegion": "ON",
+        "postalCode": "L4C 6Z1",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.8408086, "longitude": -79.4270681 }
+    },
     "auditoriumCount": 14,
     "auditoriums": [
       {
@@ -512,6 +705,16 @@
     "id": "oakville-vip",
     "name": "Cineplex Cinemas Oakville and VIP",
     "area": "Oakville",
+    "location": {
+      "address": {
+        "streetAddress": "3531 Wyecroft Road",
+        "addressLocality": "Oakville",
+        "addressRegion": "ON",
+        "postalCode": "L6L 0B7",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.39357, "longitude": -79.7514605 }
+    },
     "auditoriumCount": 12,
     "auditoriums": [
       {
@@ -526,6 +729,16 @@
     "id": "winston-churchill-vip",
     "name": "Cineplex Cinemas Winston Churchill and VIP",
     "area": "Oakville",
+    "location": {
+      "address": {
+        "streetAddress": "2081 Winston Park Dr.",
+        "addressLocality": "Oakville",
+        "addressRegion": "ON",
+        "postalCode": "L6H 6P5",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.5095514, "longitude": -79.6695094 }
+    },
     "auditoriumCount": 22,
     "auditoriums": [
       {
@@ -551,6 +764,16 @@
     "id": "oshawa",
     "name": "Cineplex Odeon Oshawa Cinemas",
     "area": "Oshawa",
+    "location": {
+      "address": {
+        "streetAddress": "1351 Grandview Street North",
+        "addressLocality": "Oshawa",
+        "addressRegion": "ON",
+        "postalCode": "L1K 0G1",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.9415285, "longitude": -78.8368006 }
+    },
     "auditoriumCount": 10,
     "auditoriums": [
       {
@@ -565,6 +788,16 @@
     "id": "pickering-vip",
     "name": "Cineplex Cinemas Pickering and VIP",
     "area": "Pickering",
+    "location": {
+      "address": {
+        "streetAddress": "1355 Kingston Road, Pickering Town Centre",
+        "addressLocality": "Pickering",
+        "addressRegion": "ON",
+        "postalCode": "L1V 1B8",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.8347842, "longitude": -79.0878912 }
+    },
     "auditoriumCount": 11,
     "auditoriums": [
       {
@@ -579,6 +812,16 @@
     "id": "milton",
     "name": "Cineplex Cinemas Milton",
     "area": "Milton",
+    "location": {
+      "address": {
+        "streetAddress": "1175 Maple Avenue",
+        "addressLocality": "Milton",
+        "addressRegion": "ON",
+        "postalCode": "L9T 0A5",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.5375857, "longitude": -79.8705289 }
+    },
     "auditoriumCount": 8,
     "auditoriums": [
       {
@@ -593,6 +836,16 @@
     "id": "ajax",
     "name": "Cineplex Odeon Ajax Cinemas",
     "area": "Ajax",
+    "location": {
+      "address": {
+        "streetAddress": "248 Kingston Road East, Highway 2",
+        "addressLocality": "Ajax",
+        "addressRegion": "ON",
+        "postalCode": "L1S 1G1",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.8665723, "longitude": -79.0165191 }
+    },
     "auditoriumCount": 10,
     "auditoriums": [
       {
@@ -606,6 +859,16 @@
     "id": "morningside",
     "name": "Cineplex Odeon Morningside Cinemas",
     "area": "Scarborough",
+    "location": {
+      "address": {
+        "streetAddress": "785 Milner Avenue",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "postalCode": "M1B 3C3",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.797468, "longitude": -79.2035754 }
+    },
     "auditoriumCount": 11,
     "auditoriums": [
       {
@@ -619,6 +882,16 @@
     "id": "brampton",
     "name": "SilverCity Brampton Cinemas",
     "area": "Brampton",
+    "location": {
+      "address": {
+        "streetAddress": "50 Great Lakes Drive",
+        "addressLocality": "Brampton",
+        "addressRegion": "ON",
+        "postalCode": "L6R 2K7",
+        "addressCountry": "CA"
+      },
+      "coordinates": { "latitude": 43.733006, "longitude": -79.7680397 }
+    },
     "auditoriumCount": 16,
     "auditoriums": [
       {

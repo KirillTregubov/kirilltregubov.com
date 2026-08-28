@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import { SearchIcon } from 'lucide-react'
+import { LocateFixedIcon, SearchIcon, XIcon } from 'lucide-react'
 import ExperienceBadge from '@components/cineplex-badges/ExperienceBadge.astro'
 import PageContainer from '@components/PageContainer.astro'
 import ReturnHome from '@components/ReturnHome.astro'
@@ -20,11 +20,13 @@ const auditoriumCount = theatres.reduce(
   0,
 )
 
-const premiumFormatCount = new Set(
-  theatres.flatMap((theatre) =>
-    theatre.formats.filter((format) => format !== 'Regular'),
-  ),
-).size
+const formats = new Set(theatres.flatMap((theatre) => theatre.formats))
+
+const formatCount = formats.size
+
+// const premiumFormatCount = [...formats].filter(
+//   (format) => format !== 'Regular',
+// ).length
 
 const formatPriority: Record<string, number> = {
   'IMAX 70mm': 0,
@@ -114,14 +116,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
           >
           </div> -->
           <div
-            class="relative grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_25rem] lg:gap-8"
+            class="relative grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-8"
           >
             <div>
-              <p
+              <!-- <p
                 class="mb-4 inline-block border-y border-stone-700 py-1.5 font-serif text-base tracking-wide text-stone-100 italic"
               >
                 The Toronto Cineplex Guide
-              </p>
+              </p> -->
               <h1
                 class="max-w-2xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl"
               >
@@ -135,21 +137,19 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </p>
               <a
                 href="#directory"
-                class="mt-5 inline-flex rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-amber-950 transition hover:bg-amber-200 active:bg-amber-200"
+                class="mt-5 inline-flex rounded-full border border-amber-300/30 bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:border-amber-200/20 hover:bg-amber-300/85 active:border-amber-200/20 active:bg-amber-300/70"
               >
                 Explore theatres
               </a>
 
               <dl
-                class="relative mt-6 grid grid-cols-2 gap-x-4 gap-y-5 border-t border-white/10 pt-6 sm:flex sm:grid-cols-3 sm:flex-wrap sm:gap-x-10 lg:mt-6"
+                class="relative mt-6 hidden flex-wrap gap-x-10 border-t border-white/10 pt-6 lg:flex"
               >
                 <div>
                   <dt class="text-xs tracking-wider text-neutral-500 uppercase">
                     Locations
                   </dt>
-                  <dd
-                    class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl"
-                  >
+                  <dd class="mt-1 text-2xl font-semibold text-neutral-100">
                     {theatres.length}
                   </dd>
                 </div>
@@ -157,20 +157,16 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   <dt class="text-xs tracking-wider text-neutral-500 uppercase">
                     Auditoriums
                   </dt>
-                  <dd
-                    class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl"
-                  >
+                  <dd class="mt-1 text-2xl font-semibold text-neutral-100">
                     {auditoriumCount}
                   </dd>
                 </div>
                 <div>
                   <dt class="text-xs tracking-wider text-neutral-500 uppercase">
-                    Premium formats
+                    Formats
                   </dt>
-                  <dd
-                    class="mt-1 text-xl font-semibold text-neutral-100 sm:text-2xl"
-                  >
-                    {premiumFormatCount}
+                  <dd class="mt-1 text-2xl font-semibold text-neutral-100">
+                    {formatCount}
                   </dd>
                 </div>
                 <!-- <div>
@@ -187,23 +183,84 @@ const getAuditoriumHeading = (auditoriums: string) => {
             </div>
 
             <div
-              class="relative mx-auto hidden w-full max-w-xs rotate-2 touch-manipulation rounded-xl bg-amber-200 text-[#261205] shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 xs:block sm:max-w-sm sm:rounded-2xl"
+              class="relative mr-auto w-full max-w-sm -rotate-2 touch-manipulation rounded-xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:hidden"
             >
               <span
-                class="absolute top-[62%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[55%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"></span>
               <span
-                class="absolute top-[62%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[55%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"></span>
-              <div class="p-3 sm:p-6">
+              <div class="p-4 sm:p-6">
                 <div
                   class="flex items-center justify-between text-[9px] font-black tracking-[0.2em] uppercase"
                 >
                   <span>Cineplex Guide</span><span>Admit One</span>
                 </div>
-                <div class="hidden lg:block">
+                <div
+                  class="mt-4 grid grid-cols-3 gap-3 border-t border-dashed border-amber-950/30 pt-4"
+                >
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Locations
+                    </p>
+                    <p class="mt-0.5 text-xl font-black sm:text-2xl">
+                      {theatres.length}
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Auditoriums
+                    </p>
+                    <p class="mt-0.5 text-xl font-black sm:text-2xl">
+                      {auditoriumCount}
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                    >
+                      Formats
+                    </p>
+                    <p class="mt-0.5 text-xl font-black sm:text-2xl">
+                      {formatCount}
+                    </p>
+                  </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between gap-4">
+                  <span
+                    class="text-[9px] font-bold tracking-[0.18em] uppercase opacity-55"
+                    >Greater Toronto Area</span
+                  >
+                  <span
+                    class="h-7 w-20 bg-[repeating-linear-gradient(90deg,#261205_0,#261205_2px,transparent_2px,transparent_4px,#261205_4px,#261205_5px,transparent_5px,transparent_8px)]"
+                    aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative mx-auto hidden w-full max-w-md rotate-2 touch-manipulation rounded-2xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:block"
+            >
+              <span
+                class="absolute top-[67%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                aria-hidden="true"></span>
+              <span
+                class="absolute top-[67%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                aria-hidden="true"></span>
+              <div class="p-6">
+                <div
+                  class="flex items-center justify-between text-[9px] font-black tracking-[0.2em] uppercase"
+                >
+                  <span>Cineplex Guide</span><span>Admit One</span>
+                </div>
+                <div>
                   <p
-                    class="text-[10px] font-bold tracking-[0.18em] uppercase opacity-55 sm:mt-4"
+                    class="mt-4 text-[10px] font-bold tracking-[0.18em] uppercase opacity-55"
                   >
                     Your next presentation
                   </p>
@@ -212,11 +269,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </p>
                 </div>
                 <div
-                  class="mt-2 flex justify-between gap-2 border-t border-dashed border-amber-950/30 pt-3 sm:mt-3 sm:gap-4 sm:pt-4"
+                  class="mt-3 flex justify-between gap-4 border-t border-dashed border-amber-950/30 pt-4"
                 >
                   <div class="flex-1">
                     <p
-                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                      class="text-[9px] font-bold tracking-wider uppercase opacity-50"
                     >
                       Auditorium
                     </p>
@@ -224,7 +281,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </div>
                   <div class="flex-1">
                     <p
-                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                      class="text-[9px] font-bold tracking-wider uppercase opacity-50"
                     >
                       Presentation
                     </p>
@@ -232,7 +289,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </div>
                   <div class="flex-1">
                     <p
-                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                      class="text-[9px] font-bold tracking-wider uppercase opacity-50"
                     >
                       Screen
                     </p>
@@ -240,7 +297,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </div>
                   <div class="flex-1">
                     <p
-                      class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
+                      class="text-[9px] font-bold tracking-wider uppercase opacity-50"
                     >
                       Projection
                     </p>
@@ -275,20 +332,32 @@ const getAuditoriumHeading = (auditoriums: string) => {
         <div
           class="flex flex-col gap-2 md:gap-2.5 lg:grid lg:grid-cols-[minmax(15rem,25rem)_minmax(0,1fr)] lg:items-center lg:gap-4"
         >
-          <label class="relative block">
-            <span class="sr-only">Search theatres or areas</span>
-            <SearchIcon
-              className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500"
-              aria-hidden="true"
-            />
-            <input
-              id="theatre-search"
-              type="search"
-              placeholder="Search theatre or area..."
-              autocomplete="off"
-              class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-base text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
-            />
-          </label>
+          <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
+            <label class="relative block">
+              <span class="sr-only">Search theatres or areas</span>
+              <SearchIcon
+                className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500"
+                aria-hidden="true"
+              />
+              <input
+                id="theatre-search"
+                type="search"
+                placeholder="Search theatre or area..."
+                autocomplete="off"
+                class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-base text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
+              />
+            </label>
+            <button
+              id="sort-by-distance"
+              type="button"
+              class="inline-flex items-center justify-center gap-2 rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:bg-neutral-700 hover:text-white focus-visible:ring-1 focus-visible:ring-neutral-300 disabled:cursor-wait disabled:opacity-60"
+              aria-describedby="location-status"
+            >
+              <LocateFixedIcon className="size-4" aria-hidden="true" />
+              <span class="hidden sm:inline">Near me</span>
+              <span class="sr-only sm:hidden">Sort by distance</span>
+            </button>
+          </div>
           <div
             id="format-filter-scroller"
             role="group"
@@ -340,18 +409,44 @@ const getAuditoriumHeading = (auditoriums: string) => {
       <div
         class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
       >
-        <p
-          id="result-count"
-          class="mt-2 text-sm text-neutral-500"
-          aria-live="polite"
+        <div
+          class="mt-2 flex flex-col gap-y-0.5 text-sm text-neutral-500 sm:flex-row sm:gap-x-2"
         >
-          Showing all {theatres.length} locations
-        </p>
+          <p id="result-count" class="sm:whitespace-nowrap" aria-live="polite">
+            Showing all {theatres.length} locations
+          </p>
+          <div class="flex items-center gap-1">
+            <p
+              id="location-status"
+              class="before:mr-2 before:hidden before:content-['·'] empty:hidden sm:whitespace-nowrap sm:before:inline"
+              aria-live="polite"
+            >
+            </p>
+            <button
+              id="clear-distance-sort"
+              type="button"
+              class="hidden rounded-sm p-0.5 text-neutral-500 transition hover:bg-neutral-800 hover:text-neutral-200 focus-visible:ring-1 focus-visible:ring-neutral-400"
+              aria-label="Clear distance sorting"
+              title="Clear distance sorting"
+            >
+              <XIcon className="size-3.5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
 
         <ul id="theatre-grid" class="mt-4 grid gap-4 lg:grid-cols-2">
           {
             theatres.map((theatre, index) => {
               const formats = JSON.stringify(theatre.formats)
+              const searchableAddress = theatre.data.location
+                ? Object.values(theatre.data.location.address).join(' ')
+                : ''
+              const googleMapsUrl = theatre.data.location
+                ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${theatre.data.name}, ${searchableAddress}`)}`
+                : undefined
+              const appleMapsUrl = theatre.data.location
+                ? `https://maps.apple.com/?q=${encodeURIComponent(`${theatre.data.name}, ${searchableAddress}`)}`
+                : undefined
               const screenShapes = JSON.stringify(
                 Array.from(
                   new Set(
@@ -365,22 +460,54 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 ),
               )
               return (
-                <li class="h-full">
+                <li class="h-full" data-theatre-id={theatre.data.id}>
                   <article
                     class="theatre-card h-full overflow-hidden rounded-lg border border-white/10 bg-(--theatre-card-background) transition duration-200"
-                    data-name={`${theatre.data.name} ${theatre.data.area}`.toLowerCase()}
+                    data-name={`${theatre.data.name} ${theatre.data.area} ${searchableAddress}`.toLowerCase()}
                     data-formats={formats}
                     data-screen-shapes={screenShapes}
+                    data-latitude={theatre.data.location?.coordinates.latitude}
+                    data-longitude={
+                      theatre.data.location?.coordinates.longitude
+                    }
                     style={`--card-delay: ${Math.min(index * 30, 240)}ms; --theatre-card-background: oklch(0.1638 0 0)`}
                   >
                     <header class="border-b border-white/8 px-5 py-5 sm:px-6">
                       <div>
-                        <p class="mb-1 text-xs font-semibold tracking-wider text-amber-300/80 uppercase">
-                          {theatre.data.area}
-                        </p>
+                        <div class="mb-1 flex flex-wrap items-center gap-x-2">
+                          <p class="text-xs font-semibold tracking-wider text-amber-300/80 uppercase">
+                            {theatre.data.area}
+                          </p>
+                          <span
+                            class="distance-label hidden text-xs text-amber-300/80 before:mr-2 before:text-neutral-700 before:content-['•']"
+                            aria-live="polite"
+                          />
+                        </div>
                         <h3 class="text-lg leading-snug font-semibold text-white">
                           {theatre.data.name}
                         </h3>
+                        {theatre.data.location && (
+                          <div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500">
+                            <address class="not-italic">
+                              <a
+                                href={googleMapsUrl}
+                                class="underline decoration-neutral-700 underline-offset-2 transition hover:text-neutral-300"
+                                aria-label={`Open ${theatre.data.name} in Google Maps`}
+                              >
+                                {theatre.data.location.address.streetAddress},{' '}
+                                {theatre.data.location.address.addressLocality},{' '}
+                                {theatre.data.location.address.addressRegion}
+                              </a>
+                            </address>
+                            <a
+                              href={appleMapsUrl}
+                              class="text-xs underline decoration-neutral-700 underline-offset-2 transition hover:text-neutral-300"
+                              aria-label={`Open ${theatre.data.name} in Apple Maps`}
+                            >
+                              Apple Maps
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </header>
 
@@ -549,6 +676,18 @@ const getAuditoriumHeading = (auditoriums: string) => {
             Try another search or screen format.
           </p>
         </div>
+
+        <p class="mt-4 text-xs text-neutral-600">
+          Location data ©{' '}
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noopener"
+            class="underline decoration-neutral-700 underline-offset-2 transition hover:text-neutral-400"
+          >
+            OpenStreetMap contributors
+          </a>.
+        </p>
       </div>
     </section>
 
@@ -587,6 +726,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
       const searchInput =
         document.querySelector<HTMLInputElement>('#theatre-search')
+      const sortByDistanceButton =
+        document.querySelector<HTMLButtonElement>('#sort-by-distance')
+      const clearDistanceSortButton = document.querySelector<HTMLButtonElement>(
+        '#clear-distance-sort',
+      )
       const filterScroller = document.querySelector<HTMLElement>(
         '#format-filter-scroller',
       )
@@ -597,26 +741,46 @@ const getAuditoriumHeading = (auditoriums: string) => {
         document.querySelectorAll<HTMLElement>('.theatre-card'),
       )
       const resultCount = document.querySelector<HTMLElement>('#result-count')
+      const locationStatus =
+        document.querySelector<HTMLElement>('#location-status')
       const noResults = document.querySelector<HTMLElement>('#no-results')
       const directory = document.querySelector<HTMLElement>('#directory')
-      const locations = cards.map((card) => ({
-        card,
-        listItem: card.parentElement as HTMLLIElement,
-        name: card.dataset.name ?? '',
-        formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
-        screenShapes: JSON.parse(card.dataset.screenShapes ?? '[]') as string[],
-        auditoriumRows: Array.from(
-          card.querySelectorAll<HTMLElement>('[data-auditorium-formats]'),
-        ).map((row) => ({
-          row,
-          formats: JSON.parse(
-            row.dataset.auditoriumFormats ?? '[]',
+      const theatreGrid = document.querySelector<HTMLElement>('#theatre-grid')
+      const locations = cards.map((card, originalIndex) => {
+        const latitude = Number(card.dataset.latitude)
+        const longitude = Number(card.dataset.longitude)
+
+        return {
+          card,
+          listItem: card.parentElement as HTMLLIElement,
+          originalIndex,
+          latitude:
+            card.dataset.latitude && Number.isFinite(latitude)
+              ? latitude
+              : undefined,
+          longitude:
+            card.dataset.longitude && Number.isFinite(longitude)
+              ? longitude
+              : undefined,
+          distance: undefined as number | undefined,
+          name: card.dataset.name ?? '',
+          formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
+          screenShapes: JSON.parse(
+            card.dataset.screenShapes ?? '[]',
           ) as string[],
-          screenShapes: row.dataset.auditoriumScreenShape
-            ? [row.dataset.auditoriumScreenShape]
-            : [],
-        })),
-      }))
+          auditoriumRows: Array.from(
+            card.querySelectorAll<HTMLElement>('[data-auditorium-formats]'),
+          ).map((row) => ({
+            row,
+            formats: JSON.parse(
+              row.dataset.auditoriumFormats ?? '[]',
+            ) as string[],
+            screenShapes: row.dataset.auditoriumScreenShape
+              ? [row.dataset.auditoriumScreenShape]
+              : [],
+          })),
+        }
+      })
       const fuse = new Fuse(locations, {
         keys: [{ name: 'name', weight: 1 }],
         ignoreLocation: true,
@@ -626,6 +790,85 @@ const getAuditoriumHeading = (auditoriums: string) => {
         { type: 'format' | 'screen-shape'; value: string } | undefined
       let animationFrame: number | undefined
       let hasAutoScrolledToDirectory = false
+
+      function distanceInKilometres(
+        fromLatitude: number,
+        fromLongitude: number,
+        toLatitude: number,
+        toLongitude: number,
+      ) {
+        const toRadians = (degrees: number) => (degrees * Math.PI) / 180
+        const latitudeDelta = toRadians(toLatitude - fromLatitude)
+        const longitudeDelta = toRadians(toLongitude - fromLongitude)
+        const fromLatitudeRadians = toRadians(fromLatitude)
+        const toLatitudeRadians = toRadians(toLatitude)
+        const haversine =
+          Math.sin(latitudeDelta / 2) ** 2 +
+          Math.cos(fromLatitudeRadians) *
+            Math.cos(toLatitudeRadians) *
+            Math.sin(longitudeDelta / 2) ** 2
+
+        return (
+          6371 * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine))
+        )
+      }
+
+      function formatDistance(distance: number) {
+        return distance < 1
+          ? `${Math.round(distance * 1000)} m away`
+          : `${distance.toFixed(distance < 10 ? 1 : 0)} km away`
+      }
+
+      function sortByDistance(latitude: number, longitude: number) {
+        locations.forEach((location) => {
+          location.distance =
+            location.latitude !== undefined && location.longitude !== undefined
+              ? distanceInKilometres(
+                  latitude,
+                  longitude,
+                  location.latitude,
+                  location.longitude,
+                )
+              : undefined
+
+          const distanceLabel =
+            location.card.querySelector<HTMLElement>('.distance-label')
+          if (distanceLabel && location.distance !== undefined) {
+            distanceLabel.textContent = formatDistance(location.distance)
+            distanceLabel.classList.remove('hidden')
+          }
+        })
+
+        const sortedLocations = [...locations].sort(
+          (a, b) =>
+            (a.distance ?? Number.POSITIVE_INFINITY) -
+              (b.distance ?? Number.POSITIVE_INFINITY) ||
+            a.originalIndex - b.originalIndex,
+        )
+        theatreGrid?.append(...sortedLocations.map(({ listItem }) => listItem))
+      }
+
+      function clearDistanceSort() {
+        locations.forEach((location) => {
+          location.distance = undefined
+          const distanceLabel =
+            location.card.querySelector<HTMLElement>('.distance-label')
+          if (distanceLabel) {
+            distanceLabel.textContent = ''
+            distanceLabel.classList.add('hidden')
+          }
+        })
+
+        const originalLocations = [...locations].sort(
+          (a, b) => a.originalIndex - b.originalIndex,
+        )
+        theatreGrid?.append(
+          ...originalLocations.map(({ listItem }) => listItem),
+        )
+        sortByDistanceButton?.setAttribute('aria-pressed', 'false')
+        clearDistanceSortButton?.classList.add('hidden')
+        if (locationStatus) locationStatus.textContent = ''
+      }
 
       function applyUrlState() {
         const params = new URLSearchParams(window.location.search)
@@ -800,6 +1043,51 @@ const getAuditoriumHeading = (auditoriums: string) => {
       updateResults()
 
       searchInput?.addEventListener('input', scheduleResultsUpdate)
+      sortByDistanceButton?.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          if (locationStatus) {
+            locationStatus.textContent =
+              'Location is unavailable in this browser.'
+          }
+          return
+        }
+
+        sortByDistanceButton.disabled = true
+        sortByDistanceButton.setAttribute('aria-busy', 'true')
+        if (locationStatus) locationStatus.textContent = 'Sorting by distance…'
+
+        navigator.geolocation.getCurrentPosition(
+          ({ coords }) => {
+            sortByDistance(coords.latitude, coords.longitude)
+            sortByDistanceButton.disabled = false
+            sortByDistanceButton.removeAttribute('aria-busy')
+            sortByDistanceButton.setAttribute('aria-pressed', 'true')
+            if (locationStatus) {
+              // const locatedCount = locations.filter(
+              //   ({ distance }) => distance !== undefined,
+              // ).length
+              locationStatus.textContent = `Sorted by distance` //  · ${locatedCount} of ${locations.length} theatres located
+            }
+            clearDistanceSortButton?.classList.remove('hidden')
+          },
+          (error) => {
+            sortByDistanceButton.disabled = false
+            sortByDistanceButton.removeAttribute('aria-busy')
+            if (locationStatus) {
+              locationStatus.textContent =
+                error.code === error.PERMISSION_DENIED
+                  ? 'Location permission was not granted.'
+                  : 'Your location could not be determined.'
+            }
+          },
+          {
+            enableHighAccuracy: false,
+            timeout: 10_000,
+            maximumAge: 300_000,
+          },
+        )
+      })
+      clearDistanceSortButton?.addEventListener('click', clearDistanceSort)
       if (filterScroller) {
         let pointerId: number | undefined
         let startX = 0
