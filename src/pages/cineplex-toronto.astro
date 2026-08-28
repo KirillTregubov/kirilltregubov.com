@@ -920,13 +920,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
       function searchAuditoriums(term: string, targetsAuditorium: boolean) {
         if (!term) return auditoriumRows
 
-        if (targetsAuditorium) {
-          const exactNumberMatches = auditoriumRows.filter(
-            ({ auditoriumNumber }) =>
-              includesAuditoriumNumber(auditoriumNumber, term),
-          )
-          if (exactNumberMatches.length > 0) return exactNumberMatches
-        }
+        const exactNumberMatches = auditoriumRows.filter(
+          ({ auditoriumNumber }) =>
+            includesAuditoriumNumber(auditoriumNumber, term),
+        )
+        if (exactNumberMatches.length > 0) return exactNumberMatches
 
         return (targetsAuditorium ? auditoriumNumberFuse : auditoriumFuse)
           .search(term)
