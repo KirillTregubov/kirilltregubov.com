@@ -13,6 +13,10 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // SaturnScene is deliberately lazy-loaded after the GPU capability check.
+      chunkSizeWarningLimit: 1000,
+    },
   },
 
   redirects: {

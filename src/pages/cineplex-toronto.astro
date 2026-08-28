@@ -105,7 +105,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
     >
       <div class="grid gap-5">
         <div
-          class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem)] px-6 py-9 sm:px-10 sm:py-12"
+          class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem)] px-6 py-8 sm:px-10"
         >
           <!-- class="relative rounded-3xl border border-amber-200/16 bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem),#160d08] px-6 py-9 sm:px-10 sm:py-12" -->
           <!-- <div
@@ -114,9 +114,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
           >
           </div> -->
           <div
-            class="relative grid items-center gap-9 lg:grid-cols-[minmax(0,1fr)_28rem] lg:gap-12"
+            class="relative grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_25rem] lg:gap-8"
           >
             <div>
+              <p
+                class="mb-4 inline-block border-y border-stone-700 py-1.5 font-serif text-base tracking-wide text-stone-100 italic"
+              >
+                The Toronto Cineplex Guide
+              </p>
               <h1
                 class="max-w-2xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl"
               >
@@ -130,9 +135,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </p>
               <a
                 href="#directory"
-                class="mt-5 inline-flex rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-amber-950 transition hover:bg-amber-200"
+                class="mt-5 inline-flex rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-amber-950 transition hover:bg-amber-200 active:bg-amber-200"
               >
-                Explore the directory
+                Explore theatres
               </a>
 
               <dl
@@ -182,7 +187,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
             </div>
 
             <div
-              class="relative mx-auto hidden w-full max-w-md rotate-2 rounded-2xl bg-amber-200 text-[#261205] shadow-2xl shadow-black/35 transition-transform duration-300 hover:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:block"
+              class="relative mx-auto hidden w-full max-w-xs rotate-2 touch-manipulation rounded-xl bg-amber-200 text-[#261205] shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 xs:block sm:max-w-sm sm:rounded-2xl"
             >
               <span
                 class="absolute top-[62%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
@@ -190,24 +195,26 @@ const getAuditoriumHeading = (auditoriums: string) => {
               <span
                 class="absolute top-[62%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"></span>
-              <div class="p-5 sm:p-6">
+              <div class="p-3 sm:p-6">
                 <div
                   class="flex items-center justify-between text-[9px] font-black tracking-[0.2em] uppercase"
                 >
                   <span>Cineplex Guide</span><span>Admit One</span>
                 </div>
-                <p
-                  class="mt-6 text-[10px] font-bold tracking-[0.18em] uppercase opacity-55"
-                >
-                  Your next presentation
-                </p>
-                <p class="mt-1 text-3xl font-black tracking-[-0.045em]">
-                  Made for this screen.
-                </p>
+                <div class="hidden lg:block">
+                  <p
+                    class="text-[10px] font-bold tracking-[0.18em] uppercase opacity-55 sm:mt-4"
+                  >
+                    Your next presentation
+                  </p>
+                  <p class="mt-0.5 text-3xl font-black tracking-[-0.045em]">
+                    Made for this screen.
+                  </p>
+                </div>
                 <div
-                  class="mt-4 grid grid-cols-4 gap-2 border-t border-dashed border-amber-950/30 pt-5 sm:gap-4"
+                  class="mt-2 flex justify-between gap-2 border-t border-dashed border-amber-950/30 pt-3 sm:mt-3 sm:gap-4 sm:pt-4"
                 >
-                  <div>
+                  <div class="flex-1">
                     <p
                       class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
                     >
@@ -215,7 +222,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     </p>
                     <p class="mt-0.5 text-base font-black">12</p>
                   </div>
-                  <div>
+                  <div class="flex-1">
                     <p
                       class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
                     >
@@ -223,7 +230,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     </p>
                     <p class="mt-0.5 text-base font-black">IMAX</p>
                   </div>
-                  <div>
+                  <div class="flex-1">
                     <p
                       class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
                     >
@@ -231,7 +238,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     </p>
                     <p class="mt-0.5 text-base font-black">1.43:1</p>
                   </div>
-                  <div>
+                  <div class="flex-1">
                     <p
                       class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]"
                     >
@@ -266,7 +273,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
       >
         <h2 id="directory-title" class="sr-only">Theatre directory</h2>
         <div
-          class="flex flex-col gap-3 lg:grid lg:grid-cols-[minmax(15rem,25rem)_minmax(0,1fr)] lg:items-center lg:gap-5"
+          class="flex flex-col gap-2 md:gap-2.5 lg:grid lg:grid-cols-[minmax(15rem,25rem)_minmax(0,1fr)] lg:items-center lg:gap-4"
         >
           <label class="relative block">
             <span class="sr-only">Search theatres or areas</span>
