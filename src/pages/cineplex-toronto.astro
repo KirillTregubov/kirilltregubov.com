@@ -334,7 +334,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
         >
           <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
             <label class="relative block">
-              <span class="sr-only">Search theatres or areas</span>
+              <span class="sr-only">
+                Search theatres, formats, or auditoriums
+              </span>
               <SearchIcon
                 className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500"
                 aria-hidden="true"
@@ -342,7 +344,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               <input
                 id="theatre-search"
                 type="search"
-                placeholder="Search theatre or area..."
+                placeholder="Search theatre, format, or auditorium..."
                 autocomplete="off"
                 class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-base text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
               />
@@ -537,9 +539,15 @@ const getAuditoriumHeading = (auditoriums: string) => {
                         return (
                           <li
                             class="auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 border-white/7 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6"
+                            data-auditorium-number={auditorium.auditoriums}
                             data-auditorium-formats={JSON.stringify(
                               auditorium.formats,
                             )}
+                            data-auditorium-features={JSON.stringify(
+                              auditorium.features,
+                            )}
+                            data-auditorium-ratio={auditorium.screen.ratio}
+                            data-auditorium-details={auditorium.details}
                             data-auditorium-screen-shape={
                               screenShape?.filterLabel
                             }
@@ -770,22 +778,81 @@ const getAuditoriumHeading = (auditoriums: string) => {
           ) as string[],
           auditoriumRows: Array.from(
             card.querySelectorAll<HTMLElement>('[data-auditorium-formats]'),
-          ).map((row) => ({
-            row,
-            formats: JSON.parse(
+          ).map((row) => {
+            const formats = JSON.parse(
               row.dataset.auditoriumFormats ?? '[]',
-            ) as string[],
-            screenShapes: row.dataset.auditoriumScreenShape
+            ) as string[]
+            const features = JSON.parse(
+              row.dataset.auditoriumFeatures ?? '[]',
+            ) as string[]
+            const screenShapes = row.dataset.auditoriumScreenShape
               ? [row.dataset.auditoriumScreenShape]
-              : [],
-          })),
+              : []
+            const auditoriumNumber = row.dataset.auditoriumNumber ?? ''
+            const ratio = row.dataset.auditoriumRatio ?? ''
+            const details = row.dataset.auditoriumDetails ?? ''
+
+            return {
+              row,
+              auditoriumNumber,
+              formats,
+              features,
+              screenShapes,
+              ratio,
+              details,
+              searchText: [
+                auditoriumNumber,
+                ...formats,
+                ...features,
+                ...screenShapes,
+                ratio,
+                details,
+              ].join(' '),
+            }
+          }),
         }
       })
-      const fuse = new Fuse(locations, {
+      const theatreFuse = new Fuse(locations, {
         keys: [{ name: 'name', weight: 1 }],
         ignoreLocation: true,
         threshold: 0.3,
       })
+      const auditoriumRows = locations.flatMap((location) =>
+        location.auditoriumRows.map((auditorium) => ({
+          ...auditorium,
+          card: location.card,
+        })),
+      )
+      const auditoriumFuse = new Fuse(auditoriumRows, {
+        keys: [
+          { name: 'auditoriumNumber', weight: 0.35 },
+          { name: 'formats', weight: 0.3 },
+          { name: 'features', weight: 0.2 },
+          { name: 'ratio', weight: 0.1 },
+          { name: 'details', weight: 0.05 },
+        ],
+        ignoreLocation: true,
+        threshold: 0.3,
+      })
+      const auditoriumNumberFuse = new Fuse(auditoriumRows, {
+        keys: [
+          { name: 'auditoriumNumber', weight: 0.9 },
+          { name: 'searchText', weight: 0.1 },
+        ],
+        ignoreLocation: true,
+        threshold: 0.2,
+      })
+      const auditoriumPrefixes = new Set([
+        'a',
+        'au',
+        'aud',
+        'audi',
+        'audit',
+        'audito',
+        'auditor',
+        'auditori',
+        'auditorium',
+      ])
       let activeFilter:
         { type: 'format' | 'screen-shape'; value: string } | undefined
       let animationFrame: number | undefined
@@ -817,6 +884,53 @@ const getAuditoriumHeading = (auditoriums: string) => {
         return distance < 1
           ? `${Math.round(distance * 1000)} m away`
           : `${distance.toFixed(distance < 10 ? 1 : 0)} km away`
+      }
+
+      function parseSearchQuery(query: string) {
+        const auditoriumQuery = query.match(
+          /^([a-z]+)(?:(?:\s+|\s*[:#-]\s*)(.*))?$/i,
+        )
+        const targetsAuditorium = auditoriumPrefixes.has(
+          auditoriumQuery?.[1]?.toLowerCase() ?? '',
+        )
+
+        return {
+          term: targetsAuditorium
+            ? (auditoriumQuery?.[2]?.trim().replace(/^[:#-]\s*/, '') ?? '')
+            : query,
+          targetsAuditorium,
+        }
+      }
+
+      function includesAuditoriumNumber(label: string, query: string) {
+        const number = Number(query.match(/^\s*(?:vip\s*)?(\d+)\s*$/i)?.[1])
+        if (!Number.isInteger(number)) return false
+
+        return Array.from(label.matchAll(/(\d+)(?:\s*-\s*(\d+))?/g)).some(
+          ([, startValue, endValue]) => {
+            const start = Number(startValue)
+            const end = endValue ? Number(endValue) : start
+            return (
+              number >= Math.min(start, end) && number <= Math.max(start, end)
+            )
+          },
+        )
+      }
+
+      function searchAuditoriums(term: string, targetsAuditorium: boolean) {
+        if (!term) return auditoriumRows
+
+        if (targetsAuditorium) {
+          const exactNumberMatches = auditoriumRows.filter(
+            ({ auditoriumNumber }) =>
+              includesAuditoriumNumber(auditoriumNumber, term),
+          )
+          if (exactNumberMatches.length > 0) return exactNumberMatches
+        }
+
+        return (targetsAuditorium ? auditoriumNumberFuse : auditoriumFuse)
+          .search(term)
+          .map(({ item }) => item)
       }
 
       function sortByDistance(latitude: number, longitude: number) {
@@ -966,25 +1080,38 @@ const getAuditoriumHeading = (auditoriums: string) => {
         replaceHistory = true,
       } = {}) {
         const query = searchInput?.value.trim() ?? ''
-        const searchResults = query
-          ? fuse.search(query).map(({ item }) => item)
-          : locations
-        const searchMatches = new Set(searchResults.map(({ card }) => card))
+        const { term, targetsAuditorium } = parseSearchQuery(query)
+        const hasSearchTerm = Boolean(term)
+        const theatreSearchMatches = new Set(
+          hasSearchTerm && !targetsAuditorium
+            ? theatreFuse.search(query).map(({ item }) => item.card)
+            : [],
+        )
+        const auditoriumSearchMatches = new Set(
+          searchAuditoriums(term, targetsAuditorium).map(({ row }) => row),
+        )
         let visibleCount = 0
 
         locations.forEach(
           ({ card, listItem, formats, screenShapes, auditoriumRows }) => {
-            const matchesSearch = searchMatches.has(card)
+            const matchesTheatreSearch = theatreSearchMatches.has(card)
+            const matchesSearch =
+              !hasSearchTerm ||
+              matchesTheatreSearch ||
+              auditoriumRows.some(({ row }) => auditoriumSearchMatches.has(row))
             const matchesFilter = matchesActiveFilter({ formats, screenShapes })
             const visible = matchesSearch && matchesFilter
             if (listItem.hidden === visible) listItem.hidden = !visible
 
             const visibleAuditoriumRows = auditoriumRows.filter(
               ({ row, formats, screenShapes }) => {
-                const rowIsVisible = matchesActiveFilter({
-                  formats,
-                  screenShapes,
-                })
+                const rowMatchesSearch =
+                  !hasSearchTerm ||
+                  matchesTheatreSearch ||
+                  auditoriumSearchMatches.has(row)
+                const rowIsVisible =
+                  rowMatchesSearch &&
+                  matchesActiveFilter({ formats, screenShapes })
                 row.hidden = !rowIsVisible
                 return rowIsVisible
               },
