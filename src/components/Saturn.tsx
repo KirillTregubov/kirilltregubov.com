@@ -23,15 +23,17 @@ export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
   useEffect(() => {
     let active = true
 
-    void import('detect-gpu')
+    void import('@pmndrs/detect-gpu')
       .then(async ({ getGPUTier }) => {
-        const { tier } = await getGPUTier()
+        const { tier, device } = await getGPUTier()
         if (!active) return
 
         if (tier >= 2) {
           setRenderScene(true)
         } else {
-          console.info(`[Saturn] Skipping 3D scene (GPU tier: ${tier})`)
+          console.info(
+            `[Saturn] Skipping 3D scene (Device: ${device}, GPU tier: ${tier})`,
+          )
         }
       })
       .catch(() => {})

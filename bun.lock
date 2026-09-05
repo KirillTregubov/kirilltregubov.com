@@ -9,6 +9,7 @@
         "@astrojs/react": "6.0.5",
         "@fontsource-variable/inter": "^5.3.0",
         "@nanostores/react": "^2.0.1",
+        "@pmndrs/detect-gpu": "^6.0.20",
         "@react-spring/three": "^10.1.2",
         "@react-three/drei": "^10.7.8",
         "@react-three/fiber": "^9.7.0",
@@ -22,7 +23,6 @@
         "astro-heroicons": "^2.1.5-1",
         "cobe": "^2.0.1",
         "date-fns": "^4.4.0",
-        "detect-gpu": "^5.0.70",
         "fuse.js": "^7.5.0",
         "lucide-react": "^1.41.0",
         "motion": "^13.2.0",
@@ -349,6 +349,8 @@
     "@oxfmt/binding-win32-ia32-msvc": ["@oxfmt/binding-win32-ia32-msvc@0.66.0", "", { "os": "win32", "cpu": "ia32" }, "sha512-YCPi23uRIEYuIKTZohAkKbPFpujQ5QBuUM5iDv+UqbCmTPAkaFsxjsSuB8xlBpRT0G7eP/4HMF+cPDSqHtOD9A=="],
 
     "@oxfmt/binding-win32-x64-msvc": ["@oxfmt/binding-win32-x64-msvc@0.66.0", "", { "os": "win32", "cpu": "x64" }, "sha512-bwTQcv/JVRPkOqQtMF0X7vpvpncDQiBcXHxZ9S2hR12Hlo8bvBdUR5x5XnxzDZ3kM0qoZw1rv7KaD66Ly+pFWA=="],
+
+    "@pmndrs/detect-gpu": ["@pmndrs/detect-gpu@6.0.20", "", {}, "sha512-XavJbHaxPOMwSjxVUt0zpEzxxDQ2nPu1pqnyrHKqV3CZHFhkUSz9h86NcoyX7ImemqgayyKWyttU8/rMzxJ7Ig=="],
 
     "@react-spring/animated": ["@react-spring/animated@10.1.2", "", { "dependencies": { "@react-spring/shared": "~10.1.2", "@react-spring/types": "~10.1.2" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-yAsQ/bbp6+vko7WNCI1M00c6KLE9XKTGCrgRhQqS4JcK3oF5qBV4rHYrQEprvEvYXxt+1H5FsLS2eVValEPfFw=="],
 
