@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content'
 import AboutMe from '@components/AboutMe.astro'
 import PageContainer from '@components/PageContainer.astro'
 import {
+  ProjectList,
   ProjectTitle,
   ProjectToggle,
-  ShowAll,
-  ShowFeatured,
 } from '@components/ProjectContext'
 import ProjectPreview from '@components/ProjectPreview.astro'
 import Saturn from '@components/Saturn'
@@ -23,8 +22,6 @@ const allProjects = await getCollection('projects').then((projects) =>
         (a.data.updatedDate?.getTime() ?? a.data.pubDate.getTime()),
     ),
 )
-
-const featuredProjects = allProjects.filter((project) => project.data.featured)
 ---
 
 <Layout
@@ -304,32 +301,22 @@ const featuredProjects = allProjects.filter((project) => project.data.featured)
         <ProjectTitle client:load />
         <ProjectToggle client:load />
       </div>
-      <ShowFeatured client:load>
-        <ul
-          class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10"
-        >
-          {
-            featuredProjects.map((project) => (
-              <li>
-                <ProjectPreview project={project} featured />
-              </li>
-            ))
-          }
-        </ul>
-      </ShowFeatured>
-      <ShowAll client:load>
+      <ProjectList client:load>
         <ul
           class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10"
         >
           {
             allProjects.map((project) => (
-              <li>
-                <ProjectPreview project={project} />
+              <li data-featured={project.data.featured || undefined}>
+                <ProjectPreview
+                  project={project}
+                  featured={project.data.featured}
+                />
               </li>
             ))
           }
         </ul>
-      </ShowAll>
+      </ProjectList>
     </section>
     <section
       id="tech-stack"

@@ -36,6 +36,16 @@ if (!image) {
 }
 
 const formattedImage = image.replace('/assets/', '')
+
+const devOverflowToggleScript = `
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'F8') return
+
+    event.preventDefault()
+    document.body.style.overflow =
+      document.body.style.overflow === 'hidden' ? '' : 'hidden'
+  })
+`
 ---
 
 <!doctype html>
@@ -119,6 +129,12 @@ const formattedImage = image.replace('/assets/', '')
       {footerContent && <div class="md:inline-block">{footerContent}</div>}
     </footer>
     <Snow client:only />
+    <!-- Overflow toggle for development -->
+    {
+      import.meta.env.DEV && (
+        <script is:inline set:html={devOverflowToggleScript} />
+      )
+    }
     <!-- Analytics: Simple Analytics - 100% privacy-first analytics-->
     <script
       is:inline
