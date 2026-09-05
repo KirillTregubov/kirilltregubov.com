@@ -26,7 +26,13 @@ export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
     void import('detect-gpu')
       .then(async ({ getGPUTier }) => {
         const { tier } = await getGPUTier()
-        if (active && tier >= 2) setRenderScene(true)
+        if (!active) return
+
+        if (tier >= 2) {
+          setRenderScene(true)
+        } else {
+          console.info(`[Saturn] Skipping 3D scene (GPU tier: ${tier})`)
+        }
       })
       .catch(() => {})
 
