@@ -23,7 +23,7 @@ const { class: className } = Astro.props
     passionate about <span class="whitespace-nowrap">open-source</span>{' '}
     software, interface design, science fiction and astronomy. I use arch btw.
   </p>
-  <script is:inline>
+  <script>
     function isCanadianFlagSupported() {
       const emoji = '🇨🇦'
       const c = document.createElement('canvas')
@@ -51,12 +51,10 @@ const { class: className } = Astro.props
     }
 
     document.addEventListener('astro:page-load', () => {
-      if (window.location.pathname !== '/') {
-        return
-      }
+      const flags = document.querySelectorAll('.canadian-flag')
+      if (flags.length === 0) return
 
       const showFlag = isCanadianFlagSupported()
-      const flags = document.querySelectorAll('.canadian-flag')
       flags.forEach((button) => {
         if (!showFlag) {
           button.textContent = ''

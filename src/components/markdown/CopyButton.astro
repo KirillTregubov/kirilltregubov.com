@@ -1,0 +1,137 @@
+---
+interface Props {
+  /** Visual variant. `button` preserves the InstallCommand icon-button styling. */
+  variant?: 'button' | 'icon'
+  /** Static text to copy. Omit when copying dynamic content via `from`. */
+  text?: string
+  /** Selector resolved at click time, scoped to the closest `[data-copy-scope]` (or `[data-install-tabs]`) container. Useful for dynamic content like the active install tab. */
+  from?: string
+  /** Accessible label before copying. */
+  label?: string
+  /** Accessible label while the check is shown. */
+  copiedLabel?: string
+  /** How long (ms) to show the check before reverting. */
+  duration?: number
+  /** Additional classes merged after the variant styles (e.g. positioning). */
+  class?: string
+}
+
+const {
+  variant = 'button',
+  text,
+  from,
+  label = 'Copy to clipboard',
+  copiedLabel = 'Copied',
+  duration = 1500,
+  class: className,
+} = Astro.props
+
+const baseClasses =
+  'rounded-md p-2 text-neutral-400 transition hover:bg-neutral-800 hover:text-neutral-100 focus-visible:text-neutral-100 focus-visible:ring-inset'
+
+const variantClasses =
+  variant === 'button' ? 'absolute top-1/2 right-3 -translate-y-1/2' : ''
+---
+
+<button
+  type="button"
+  class:list={[baseClasses, variantClasses, className]}
+  aria-label={label}
+  data-copy-button
+  data-copy-text={text}
+  data-copy-from={from}
+  data-copy-label={label}
+  data-copy-copied-label={copiedLabel}
+  data-copy-duration={duration}
+>
+  <span class="grid place-items-center" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      class="size-4 scale-100 fill-none stroke-current stroke-2 opacity-100 blur-none transition duration-200 will-change-transform [grid-area:1/1]"
+      data-copy-icon
+      ><rect x="9" y="9" width="11" height="11" rx="2"></rect><path
+        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+    >
+    <svg
+      viewBox="0 0 24 24"
+      class="size-4 scale-50 fill-none stroke-current stroke-2 opacity-0 blur-[2px] transition duration-200 [grid-area:1/1]"
+      data-check-icon><path d="M20 6 9 17l-5-5"></path></svg
+    >
+  </span>
+</button>
+
+<script>
+  const SHOW_CLASSES = ['opacity-0', 'scale-50', 'blur-[2px]'] as const
+  const HIDE_CLASSES = ['opacity-100', 'scale-100', 'blur-none'] as const
+  const timers = new WeakMap<HTMLButtonElement, number>()
+
+  const resolveText = (button: HTMLButtonElement): string | undefined => {
+    const from = button.dataset.copyFrom
+    if (from) {
+      const scope =
+        button.closest('[data-copy-scope], [data-install-tabs]') ?? document
+      const target = scope.querySelector<HTMLElement>(from)
+      const dynamic = target?.textContent?.trim()
+      if (dynamic) return dynamic
+    }
+    return button.dataset.copyText?.trim() || undefined
+  }
+
+  const setCopied = (button: HTMLButtonElement, copied: boolean) => {
+    const copyIcon = button.querySelector<SVGElement>('[data-copy-icon]')
+    const checkIcon = button.querySelector<SVGElement>('[data-check-icon]')
+    if (!copyIcon || !checkIcon) return
+
+    for (const icon of [copyIcon, checkIcon]) {
+      icon.classList.remove(...SHOW_CLASSES, ...HIDE_CLASSES)
+    }
+    if (copied) {
+      copyIcon.classList.add(...SHOW_CLASSES)
+      checkIcon.classList.add(...HIDE_CLASSES)
+      button.setAttribute(
+        'aria-label',
+        button.dataset.copyCopiedLabel ?? 'Copied',
+      )
+    } else {
+      copyIcon.classList.add(...HIDE_CLASSES)
+      checkIcon.classList.add(...SHOW_CLASSES)
+      button.setAttribute('aria-label', button.dataset.copyLabel ?? 'Copy')
+    }
+  }
+
+  const copyText = async (text: string): Promise<boolean> => {
+    try {
+      if (!navigator.clipboard?.writeText) return false
+      await navigator.clipboard.writeText(text)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  const initCopyButtons = () => {
+    document
+      .querySelectorAll<HTMLButtonElement>('[data-copy-button]')
+      .forEach((button) => {
+        if (button.dataset.copyInit !== undefined) return
+        button.dataset.copyInit = ''
+
+        button.addEventListener('click', async () => {
+          const text = resolveText(button)
+          if (!text) return
+          const ok = await copyText(text)
+          if (!ok) return
+
+          window.clearTimeout(timers.get(button))
+          setCopied(button, true)
+          const duration = Number(button.dataset.copyDuration ?? 1500)
+          timers.set(
+            button,
+            window.setTimeout(() => setCopied(button, false), duration),
+          )
+        })
+      })
+  }
+
+  document.addEventListener('astro:page-load', initCopyButtons)
+</script>

@@ -745,9 +745,8 @@ const getAuditoriumHeading = (auditoriums: string) => {
     import Fuse from 'fuse.js'
 
     document.addEventListener('astro:page-load', () => {
-      if (window.location.pathname !== '/cineplex-toronto') {
-        return
-      }
+      const directory = document.querySelector<HTMLElement>('#directory')
+      if (!directory) return
 
       const searchInput =
         document.querySelector<HTMLInputElement>('#theatre-search')
@@ -783,7 +782,6 @@ const getAuditoriumHeading = (auditoriums: string) => {
       const locationStatus =
         document.querySelector<HTMLElement>('#location-status')
       const noResults = document.querySelector<HTMLElement>('#no-results')
-      const directory = document.querySelector<HTMLElement>('#directory')
       const theatreGrid = document.querySelector<HTMLElement>('#theatre-grid')
       const locations = cards.map((card, originalIndex) => {
         const latitude = Number(card.dataset.latitude)

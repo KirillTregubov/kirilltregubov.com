@@ -1,4 +1,7 @@
 ---
+import CopyButton from '@components/markdown/CopyButton.astro'
+import { codeToHtml } from 'shiki'
+
 export type PackageManager = 'npm' | 'pnpm' | 'nub' | 'bun' | 'deno' | 'vite+'
 export interface InstallTab {
   label: string
@@ -22,7 +25,7 @@ interface Props {
 
 const {
   package: packageName,
-  devDependency: dev = false,
+  devDependency = false,
   managers = ['npm', 'pnpm', 'nub', 'bun', 'deno', 'vite+'],
   defaultManager = managers[0] ?? 'npm',
   commands = {},
@@ -30,12 +33,12 @@ const {
 } = Astro.props
 
 const generatedCommands: Record<PackageManager, string> = {
-  npm: `npm install${dev ? ' --save-dev' : ''} ${packageName}`,
-  pnpm: `pnpm add${dev ? ' --save-dev' : ''} ${packageName}`,
-  nub: `nub add${dev ? ' --save-dev' : ''} ${packageName}`,
-  bun: `bun add${dev ? ' --dev' : ''} ${packageName}`,
-  deno: `deno add${dev ? ' --dev' : ''} ${packageName}`,
-  'vite+': `vp add${dev ? ' -D' : ''} ${packageName}`,
+  npm: `npm install${devDependency ? ' --save-dev' : ''} ${packageName}`,
+  pnpm: `pnpm add${devDependency ? ' --save-dev' : ''} ${packageName}`,
+  nub: `nub add${devDependency ? ' --save-dev' : ''} ${packageName}`,
+  bun: `bun add${devDependency ? ' --dev' : ''} ${packageName}`,
+  deno: `deno add${devDependency ? ' --dev' : ''} ${packageName}`,
+  'vite+': `vp add${devDependency ? ' -D' : ''} ${packageName}`,
 }
 
 const installTabs =
@@ -48,6 +51,18 @@ const selectedManager = installTabs.some((tab) => tab.label === defaultManager)
   ? defaultManager
   : (installTabs[0]?.label ?? 'npm')
 const tabId = `install-${crypto.randomUUID()}`
+const highlightedCommands = Object.fromEntries(
+  await Promise.all(
+    installTabs.map(async (tab) => {
+      const html = await codeToHtml(tab.command, {
+        lang: 'shellscript',
+        theme: 'github-dark',
+      })
+
+      return [tab.label, html.match(/<code>([\s\S]*)<\/code>/)?.[1]] as const
+    }),
+  ),
+)
 ---
 
 <div
@@ -55,7 +70,7 @@ const tabId = `install-${crypto.randomUUID()}`
   data-install-tabs
 >
   <div
-    class="flex overflow-x-auto border-b border-neutral-700 px-2"
+    class="relative flex overflow-x-auto border-b border-neutral-700 px-1 py-1 after:absolute after:bottom-0 after:left-(--indicator-left,0px) after:h-0.5 after:w-(--indicator-width,0px) after:rounded-full after:bg-orange-400 after:transition-all after:duration-200 after:content-[''] motion-reduce:after:transition-none"
     role="tablist"
     aria-label="Package manager"
   >
@@ -64,10 +79,10 @@ const tabId = `install-${crypto.randomUUID()}`
         <button
           id={`${tabId}-tab-${tab.label}`}
           class:list={[
-            'shrink-0 border-b-2 px-3 py-2.5 text-sm font-medium transition-colors focus-visible:z-10',
+            'relative shrink-0 cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-neutral-800 hover:text-neutral-100 focus-visible:z-10 focus-visible:ring-inset',
             tab.label === selectedManager
-              ? 'border-orange-400 text-neutral-100'
-              : 'border-transparent text-neutral-400 hover:text-neutral-200',
+              ? 'text-neutral-100'
+              : 'text-neutral-400',
           ]}
           type="button"
           role="tab"
@@ -95,99 +110,115 @@ const tabId = `install-${crypto.randomUUID()}`
             tab.label !== selectedManager && 'hidden',
           ]}
           data-install-command={tab.label}
-        >
-          {tab.command}
-        </code>
+          set:html={highlightedCommands[tab.label]}
+        />
       ))
     }
-    <button
-      class="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-2 text-neutral-400 transition hover:bg-neutral-800 hover:text-neutral-100 focus-visible:text-neutral-100"
-      type="button"
-      aria-label="Copy install command"
-      data-copy-command
-    >
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        class="size-4 fill-none stroke-current stroke-2"
-        ><rect x="9" y="9" width="11" height="11" rx="2"></rect><path
-          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-        ></path></svg
-      >
-    </button>
+    <CopyButton
+      variant="button"
+      from="[data-install-command]:not(.hidden)"
+      label="Copy install command"
+      copiedLabel="Install command copied"
+    />
   </div>
 </div>
 
 <script>
-  document
-    .querySelectorAll<HTMLElement>('[data-install-tabs]')
-    .forEach((container) => {
-      const tabs = Array.from(
-        container.querySelectorAll<HTMLButtonElement>('[data-install-tab]'),
-      )
-      const commands = Array.from(
-        container.querySelectorAll<HTMLElement>('[data-install-command]'),
-      )
-      const panel = container.querySelector<HTMLElement>('[data-install-panel]')
-      const copyButton = container.querySelector<HTMLButtonElement>(
-        '[data-copy-command]',
-      )
+  const setupInstallTabs = (container: HTMLElement) => {
+    if (container.dataset.installInit !== undefined) return
+    container.dataset.installInit = ''
 
-      const select = (manager: string) => {
-        tabs.forEach((tab) => {
-          const selected = tab.dataset.installTab === manager
-          tab.setAttribute('aria-selected', String(selected))
-          tab.classList.toggle('border-orange-400', selected)
-          tab.classList.toggle('text-neutral-100', selected)
-          tab.classList.toggle('border-transparent', !selected)
-          tab.classList.toggle('text-neutral-400', !selected)
-        })
-        commands.forEach((command) =>
-          command.classList.toggle(
-            'hidden',
-            command.dataset.installCommand !== manager,
-          ),
-        )
-        const tab = tabs.find((item) => item.dataset.installTab === manager)
-        if (panel && tab) {
-          panel.id = tab.getAttribute('aria-controls') ?? panel.id
-          panel.setAttribute('aria-labelledby', tab.id)
-        }
-      }
+    const tabs = Array.from(
+      container.querySelectorAll<HTMLButtonElement>('[data-install-tab]'),
+    )
+    const commands = Array.from(
+      container.querySelectorAll<HTMLElement>('[data-install-command]'),
+    )
+    const panel = container.querySelector<HTMLElement>('[data-install-panel]')
+    const tablist = container.querySelector<HTMLElement>('[role="tablist"]')
 
-      tabs.forEach((tab, index) => {
-        tab.addEventListener('click', () =>
-          select(tab.dataset.installTab ?? ''),
-        )
-        tab.addEventListener('keydown', (event) => {
-          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key))
-            return
-          event.preventDefault()
-          const nextIndex =
-            event.key === 'Home'
-              ? 0
-              : event.key === 'End'
-                ? tabs.length - 1
-                : (index +
-                    (event.key === 'ArrowRight' ? 1 : -1) +
-                    tabs.length) %
-                  tabs.length
-          tabs[nextIndex]?.focus()
-          select(tabs[nextIndex]?.dataset.installTab ?? '')
-        })
+    const moveIndicator = (active: HTMLButtonElement | undefined) => {
+      if (!tablist || !active) return
+      tablist.style.setProperty('--indicator-left', `${active.offsetLeft}px`)
+      tablist.style.setProperty('--indicator-width', `${active.offsetWidth}px`)
+    }
+
+    const select = (manager: string) => {
+      tabs.forEach((tab) => {
+        const selected = tab.dataset.installTab === manager
+        tab.setAttribute('aria-selected', String(selected))
+        tab.classList.toggle('text-neutral-100', selected)
+        tab.classList.toggle('text-neutral-400', !selected)
       })
+      commands.forEach((command) =>
+        command.classList.toggle(
+          'hidden',
+          command.dataset.installCommand !== manager,
+        ),
+      )
+      const tab = tabs.find((item) => item.dataset.installTab === manager)
+      if (panel && tab) {
+        panel.id = tab.getAttribute('aria-controls') ?? panel.id
+        panel.setAttribute('aria-labelledby', tab.id)
+      }
+      moveIndicator(tab)
+    }
 
-      copyButton?.addEventListener('click', async () => {
-        const activeCommand = commands
-          .find((command) => !command.classList.contains('hidden'))
-          ?.textContent?.trim()
-        if (!activeCommand || !navigator.clipboard) return
-        await navigator.clipboard.writeText(activeCommand)
-        copyButton.setAttribute('aria-label', 'Install command copied')
-        window.setTimeout(
-          () => copyButton.setAttribute('aria-label', 'Copy install command'),
-          1500,
-        )
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(tab.dataset.installTab ?? ''))
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key))
+          return
+        event.preventDefault()
+        const nextIndex =
+          event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? tabs.length - 1
+              : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) %
+                tabs.length
+        tabs[nextIndex]?.focus()
+        select(tabs[nextIndex]?.dataset.installTab ?? '')
       })
     })
+
+    const placeIndicator = () =>
+      moveIndicator(
+        tabs.find((tab) => tab.getAttribute('aria-selected') === 'true'),
+      )
+    requestAnimationFrame(placeIndicator)
+    document.fonts?.ready.then(placeIndicator).catch(() => {})
+  }
+
+  const repositionIndicators = () => {
+    document
+      .querySelectorAll<HTMLElement>('[data-install-tabs]')
+      .forEach((container) => {
+        const tablist = container.querySelector<HTMLElement>('[role="tablist"]')
+        const active = container.querySelector<HTMLButtonElement>(
+          '[data-install-tab][aria-selected="true"]',
+        )
+        if (!tablist || !active) return
+        tablist.style.setProperty('--indicator-left', `${active.offsetLeft}px`)
+        tablist.style.setProperty(
+          '--indicator-width',
+          `${active.offsetWidth}px`,
+        )
+      })
+  }
+
+  const initInstallTabs = () => {
+    document
+      .querySelectorAll<HTMLElement>('[data-install-tabs]')
+      .forEach(setupInstallTabs)
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initInstallTabs()
+
+    if (!document.documentElement.hasAttribute('data-install-resize')) {
+      document.documentElement.setAttribute('data-install-resize', '')
+      window.addEventListener('resize', repositionIndicators)
+    }
+  })
 </script>
