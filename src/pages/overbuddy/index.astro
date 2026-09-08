@@ -166,9 +166,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
     import Fuse from 'fuse.js'
 
     document.addEventListener('astro:page-load', () => {
-      if (window.location.pathname !== '/overbuddy') {
-        return
-      }
+      if (!document.querySelector('#gallery')) return
 
       // Mobile detail buttons
       const buttons = document.querySelectorAll('[data-detail-button]')
