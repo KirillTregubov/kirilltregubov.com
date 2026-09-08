@@ -1,11 +1,13 @@
 ---
-import { HomeIcon } from 'lucide-react'
+import { ArrowLeftIcon, HomeIcon } from 'lucide-react'
 
 interface Props {
   containerClass?: string
+  href?: string
+  label?: string
 }
 
-const { containerClass, ...props } = Astro.props
+const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
 ---
 
 <menu
@@ -16,11 +18,17 @@ const { containerClass, ...props } = Astro.props
   {...props}
 >
   <a
-    href="/"
+    {href}
     class="-ml-1 inline-flex w-auto grow-0 items-center gap-1 rounded-sm px-1 font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
   >
-    <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
-    <span>Home</span>
+    {
+      href === '/' ? (
+        <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
+      ) : (
+        <ArrowLeftIcon className="mr-1.5 size-5" aria-hidden="true" />
+      )
+    }
+    <span>{label}</span>
   </a>
   <slot />
 </menu>

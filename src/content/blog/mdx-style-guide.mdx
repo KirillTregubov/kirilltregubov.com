@@ -1,0 +1,145 @@
+---
+title: 'MDX Style Guide'
+description: 'A private reference page showing the content elements available to blog posts.'
+pubDate: 'Sep 7 2026'
+image:
+  url: '/assets/projects/placeholder.jpg'
+  alt: 'Placeholder artwork for the MDX style guide'
+tags:
+  - Reference
+  - MDX
+hidden: true
+archived: false
+---
+
+import Image from '@components/markdown/MDImage.astro'
+import InstallCommand from '@components/markdown/InstallCommand.astro'
+import Link from '@components/markdown/MDLink.astro'
+
+## Text styles
+
+This is a regular paragraph. It can contain **bold text**, _italic text_, ~~struck text~~, and `inline code`. Use [internal links](/blog) for this site and the custom <Link href="https://docs.astro.build/en/guides/integrations-guide/mdx/">Link component</Link> for external destinations.
+
+> Blockquotes are useful for a quotation, a key observation, or a short aside that deserves more visual weight.
+
+---
+
+## Headings
+
+The post title is the only level-one heading. Sections begin at level two.
+
+### Level-three heading
+
+Use a level-three heading to split a section into smaller ideas.
+
+#### Level-four heading
+
+Level four works for a small subsection, but deeply nested documents are usually harder to scan.
+
+## Lists
+
+Unordered lists work well when order does not matter:
+
+- A concise first point
+- A second point with **emphasis**
+  - A nested supporting point
+- A final point
+
+Ordered lists communicate a sequence:
+
+1. Define the problem
+2. Build the smallest useful version
+3. Test and refine it
+
+## Code
+
+Inline commands such as `bun run build` stay within a sentence. Fenced blocks support syntax highlighting:
+
+```ts
+type Post = {
+  title: string
+  publishedAt: Date
+}
+
+const isPublished = (post: Post) => post.publishedAt <= new Date()
+```
+
+## Install commands
+
+Use the install command component when readers can choose their package manager. It shows npm, pnpm, Bun, Nub, and Vite+ by default; authors can limit the tabs or provide custom commands for generators.
+
+<InstallCommand package="zod" />
+
+For a dev dependency, set the `devDependency` prop to `true`.
+
+<InstallCommand package="@astrojs/mdx" devDependency />
+
+You can also provide custom commands for each package manager. This is useful for project scaffolding commands.
+
+<InstallCommand
+  package="my-app"
+  tabs={[
+    { label: 'npm', command: 'npm create vite@latest my-app' },
+    { label: 'pnpm', command: 'pnpm create vite my-app' },
+    { label: 'bun', command: 'bun create vite my-app' },
+    { label: 'nub', command: 'nubx create-vite@latest my-app' },
+    { label: 'deno', command: 'deno create --template vite my-app' },
+    { label: 'vite+', command: 'vp dlx create-vite my-app' },
+  ]}
+/>
+
+## Tables
+
+| Element   | Best used for              | Avoid when                            |
+| --------- | -------------------------- | ------------------------------------- |
+| Paragraph | Explanations and narrative | A short list scans better             |
+| List      | Steps and related points   | Items need substantial context        |
+| Table     | Comparing repeated fields  | Reading on narrow screens is critical |
+
+## Images and captions
+
+Use the shared image component for optimized output, accessible alternative text, and an optional caption.
+
+<Image
+  src="/assets/projects/raiven/architecture_plan.jpg"
+  alt="Architecture diagram connecting the RAIVEN mobile app, API, database, and computer vision services"
+  width={800}
+  height={560}
+  title="Images can include a visible caption"
+/>
+
+Two images can be composed with regular HTML and Tailwind utilities when the article needs a custom layout:
+
+<div class="grid grid-cols-2 gap-3">
+  <Image
+    src="/assets/projects/raiven/use_case1.jpg"
+    alt="RAIVEN use case one wireframe"
+    width={400}
+    height={550}
+  />
+  <Image
+    src="/assets/projects/raiven/use_case3.jpg"
+    alt="RAIVEN use case three wireframe"
+    width={400}
+    height={550}
+  />
+</div>
+
+## Custom callouts
+
+<aside class="not-prose rounded-xl border border-orange-800/70 bg-orange-950/40 p-5 text-orange-100">
+  <strong class="block font-semibold">Custom MDX content</strong>
+  <p class="mt-1 text-orange-200/80">
+    MDX supports components and HTML alongside Markdown. The{' '}
+    <code>not-prose</code> class lets a custom element opt out of Typography
+    styles.
+  </p>
+</aside>
+
+## Disclosure
+
+<details>
+  <summary>Expandable details</summary>
+  This content stays collapsed until a reader asks for it. It is useful for
+  optional implementation notes or lengthy supporting details.
+</details>

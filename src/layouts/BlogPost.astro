@@ -1,0 +1,122 @@
+---
+import type { MarkdownHeading } from 'astro'
+import { Image } from 'astro:assets'
+import ReturnHome from '@components/ReturnHome.astro'
+import Layout from '@layouts/Layout.astro'
+
+interface Props {
+  title: string
+  description: string
+  pubDate: Date
+  updatedDate?: Date
+  image: {
+    url: string
+    alt: string
+  }
+  tags: string[]
+  headings: MarkdownHeading[]
+}
+
+const { title, description, pubDate, updatedDate, image, tags, headings } =
+  Astro.props
+
+const tableOfContents = headings.filter(
+  (heading) => heading.depth === 2 || heading.depth === 3,
+)
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+---
+
+<Layout
+  title={`${title} - Kirill Tregubov`}
+  {description}
+  type="article"
+  image={image.url}
+  publishedDate={pubDate}
+  {updatedDate}
+  bodyClass="flex flex-col"
+  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
+>
+  <main class="mx-auto w-full max-w-200 grow md:space-y-8">
+    <ReturnHome href="/blog" label="Blog" />
+    <header
+      class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
+    >
+      <div class="mb-6 overflow-hidden rounded-xl bg-neutral-800">
+        <Image
+          class="unblur aspect-[1200/630] w-full object-cover select-none"
+          src={image.url}
+          alt={image.alt}
+          width={1200}
+          height={630}
+          loading="eager"
+        />
+      </div>
+      <h1
+        class="text-3xl leading-tight font-semibold text-neutral-100 sm:text-4xl"
+      >
+        {title}
+      </h1>
+      <p class="mt-3 text-lg text-neutral-300">{description}</p>
+      <div
+        class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-neutral-500"
+      >
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {
+          updatedDate && (
+            <>
+              <span aria-hidden="true">·</span>
+              <time datetime={updatedDate.toISOString()}>
+                Updated {formatDate(updatedDate)}
+              </time>
+            </>
+          )
+        }
+        {
+          tags.length > 0 && (
+            <>
+              <span aria-hidden="true">·</span>
+              <ul class="flex flex-wrap gap-2" aria-label="Tags">
+                {tags.map((tag) => (
+                  <li class="rounded-sm bg-neutral-800 px-2 py-0.5 text-neutral-400">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </div>
+    </header>
+    <article
+      class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-a:text-white prose-img:rounded-xl"
+    >
+      {
+        tableOfContents.length > 1 && (
+          <nav
+            aria-labelledby="table-of-contents"
+            class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
+          >
+            <h2 id="table-of-contents">Table of contents</h2>
+            <ol>
+              {tableOfContents.map((heading) => (
+                <li class:list={[heading.depth === 3 && 'ml-5']}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+      <div
+        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
+      >
+        <slot />
+      </div>
+    </article>
+  </main>
+</Layout>

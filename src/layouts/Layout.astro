@@ -10,6 +10,8 @@ interface Props {
   description?: string
   type?: string
   image?: string
+  publishedDate?: Date
+  updatedDate?: Date
   bodyClass?: string
   footerClass?: string
   footerContent?: string
@@ -20,6 +22,8 @@ let {
   description,
   type,
   image,
+  publishedDate,
+  updatedDate,
   bodyClass,
   footerClass,
   footerContent = null,
@@ -90,6 +94,22 @@ const devOverflowToggleScript = `
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
+    {
+      publishedDate && (
+        <meta
+          property="article:published_time"
+          content={publishedDate.toISOString()}
+        />
+      )
+    }
+    {
+      updatedDate && (
+        <meta
+          property="article:modified_time"
+          content={updatedDate.toISOString()}
+        />
+      )
+    }
     <meta property="og:locale" content="en_US" />
     <meta
       property="og:image"

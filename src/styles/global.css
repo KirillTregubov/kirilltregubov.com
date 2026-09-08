@@ -4,6 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @source './**/*.astro';
+@source '../content/**/*.mdx';
 
 :root {
   color-scheme: dark;
@@ -73,6 +74,10 @@
   to {
     opacity: 1;
   }
+}
+
+.archive-details[data-closing] .archive-chevron {
+  rotate: 0deg;
 }
 
 .social-buttons a {

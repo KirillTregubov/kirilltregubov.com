@@ -1,0 +1,123 @@
+---
+import { getCollection } from 'astro:content'
+import ArticlePreview from '@components/ArticlePreview.astro'
+import ReturnHome from '@components/ReturnHome.astro'
+import Layout from '@layouts/Layout.astro'
+import { ChevronRightIcon } from 'lucide-react'
+
+const visiblePosts = await getCollection('blog').then((posts) =>
+  posts
+    .filter(
+      (post) =>
+        (import.meta.env.DEV || !post.data.hidden) &&
+        (import.meta.env.DEV || post.data.draft !== true),
+    )
+    .sort(
+      (a, b) =>
+        (b.data.updatedDate ?? b.data.pubDate).getTime() -
+        (a.data.updatedDate ?? a.data.pubDate).getTime(),
+    ),
+)
+
+const articles = visiblePosts.filter((post) => !post.data.archived)
+const archivedArticles = visiblePosts.filter((post) => post.data.archived)
+---
+
+<Layout
+  title="Blog - Kirill Tregubov"
+  description="Articles by Kirill Tregubov about software development, projects, and the decisions behind them."
+  bodyClass="flex flex-col"
+>
+  <main class="mx-auto w-full max-w-240 grow">
+    <ReturnHome />
+    <header
+      class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
+    >
+      <h1 class="text-3xl font-semibold text-neutral-100">Blog</h1>
+      <p class="mt-3 max-w-180 text-lg text-neutral-400">
+        Notes on software development, interface design, and the projects I’ve
+        built.
+      </p>
+    </header>
+    <ul class="mt-8 space-y-6">
+      {
+        articles.map((article, index) => (
+          <li
+            class="motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0"
+            style={`animation-delay: ${0.3 + index * 0.1}s`}
+          >
+            <ArticlePreview article={article} eager={index === 0} />
+          </li>
+        ))
+      }
+    </ul>
+    {
+      archivedArticles.length > 0 && (
+        <details
+          class="archive-details group/archive mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0"
+          style={`animation-delay: ${0.3 + articles.length * 0.1}s`}
+        >
+          <summary class="flex w-fit cursor-pointer items-center gap-2 text-lg font-semibold text-neutral-300 transition select-none marker:content-none hover:text-white focus-visible:text-white">
+            Archive
+            <span class="text-sm font-normal text-neutral-500">
+              ({archivedArticles.length})
+            </span>
+            <ChevronRightIcon
+              className="archive-chevron size-4 text-neutral-500 transition-transform duration-75 group-open/archive:rotate-90"
+              aria-hidden="true"
+            />
+          </summary>
+          <ul class="archive-list mt-2 space-y-6">
+            {archivedArticles.map((article) => (
+              <li>
+                <ArticlePreview article={article} />
+              </li>
+            ))}
+          </ul>
+        </details>
+      )
+    }
+  </main>
+</Layout>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+  document
+    .querySelectorAll<HTMLDetailsElement>('.archive-details')
+    .forEach((details) => {
+      const summary = details.querySelector('summary')
+      const list = details.querySelector<HTMLElement>('.archive-list')
+
+      if (!summary || !list) return
+
+      summary.addEventListener('click', async (event) => {
+        if (reducedMotion.matches) return
+
+        event.preventDefault()
+        if (details.dataset.animating !== undefined) return
+
+        const opening = !details.open
+        details.dataset.animating = ''
+
+        if (opening) details.open = true
+        else details.dataset.closing = ''
+
+        const hiddenState = { opacity: 0 }
+        const visibleState = { opacity: 1 }
+
+        const animation = list.animate(
+          opening ? [hiddenState, visibleState] : [visibleState, hiddenState],
+          { duration: 200, easing: 'ease-out' },
+        )
+
+        try {
+          await animation.finished
+          if (!opening) details.open = false
+        } finally {
+          delete details.dataset.animating
+          delete details.dataset.closing
+        }
+      })
+    })
+</script>
