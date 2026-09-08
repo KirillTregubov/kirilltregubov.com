@@ -20,6 +20,10 @@ export default defineConfig({
   },
 
   redirects: {
+    '/raiven': {
+      status: 308,
+      destination: '/blog/raiven',
+    },
     '/github': {
       status: 308,
       destination: 'https://github.com/KirillTregubov',

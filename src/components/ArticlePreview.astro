@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import { ArrowRightIcon } from 'lucide-react'
+
+interface Props {
+  article: CollectionEntry<'blog'>
+  eager?: boolean
+}
+
+const { article, eager = false } = Astro.props
+const href = `/blog/${article.id}`
+
+const displayDate = article.data.updatedDate ?? article.data.pubDate
+const formattedDate = displayDate.toLocaleDateString('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+---
+
+<article
+  class="group overflow-hidden rounded-xl border border-neutral-800 bg-neutral-800/30 transition focus-within:border-neutral-600 focus-within:bg-neutral-800/60 hover:border-neutral-700 hover:bg-neutral-800/60"
+>
+  <a href={href} class="grid rounded-xl md:grid-cols-[minmax(15rem,2fr)_3fr]">
+    <div class="bg-neutral-800 p-2">
+      <Image
+        class="unblur aspect-[1200/630] h-full w-full rounded-lg object-cover transition duration-300 will-change-transform group-focus-within:scale-[1.02] group-hover:scale-[1.02]"
+        src={article.data.image.url}
+        alt={article.data.image.alt}
+        width={1200}
+        height={630}
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </div>
+    <div class="flex flex-col justify-center p-5 sm:p-6">
+      <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+        <time datetime={displayDate.toISOString()}>
+          {article.data.updatedDate ? 'Updated ' : ''}{formattedDate}
+        </time>
+        {
+          import.meta.env.DEV && article.data.hidden && (
+            <span class="rounded-sm bg-violet-950 px-1.5 py-0.5 text-violet-300">
+              Development only
+            </span>
+          )
+        }
+        {
+          import.meta.env.DEV && article.data.draft && (
+            <span class="rounded-sm bg-amber-950 px-1.5 py-0.5 text-amber-300">
+              Draft
+            </span>
+          )
+        }
+      </div>
+      <h2 class="mt-1 text-xl font-semibold text-neutral-200">
+        {article.data.title}
+      </h2>
+      <p class="mt-2 text-neutral-400">{article.data.description}</p>
+      <span
+        class="mt-4 inline-flex items-center gap-1.5 font-medium text-neutral-300 transition group-focus-within:text-white group-hover:text-white"
+      >
+        Read article
+        <ArrowRightIcon
+          className="size-4 transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
+      </span>
+    </div>
+  </a>
+</article>

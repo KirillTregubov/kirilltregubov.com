@@ -31,7 +31,9 @@ export function ProjectToggle() {
       className="-mx-3 -my-1 inline-flex shrink-0 cursor-pointer items-center rounded-sm px-3 py-1 pr-1 font-medium transition select-none hover:text-neutral-400 active:text-neutral-400"
     >
       {$showAll ? 'Show Featured' : 'Show All'}
-      <ChevronRightIcon className="size-6" />
+      <ChevronRightIcon
+        className={`size-6 transition-transform ${$showAll ? 'rotate-90' : ''}`}
+      />
     </button>
   )
 }
