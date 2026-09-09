@@ -53,21 +53,20 @@ const badges = [
         Cineplex badge kitchen sink
       </h1>
       <p class="mt-2 text-sm text-neutral-400">
-        {badges.length} local Astro components, rendered at their in-product size.
+        {badges.length} local Astro components, rendered at their in-product
+        size.
       </p>
     </header>
 
     <main class="grid grid-cols-1 gap-3 py-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        badges.map((format) => (
-          <article class="flex min-h-25 flex-col justify-between rounded-xl border border-white/10 bg-neutral-950 p-4">
-            <div class="flex min-h-10 items-center">
-              <ExperienceBadge format={format} />
-            </div>
-            <code class="mt-4 block text-xs text-neutral-500">{format}</code>
-          </article>
-        ))
-      }
+      {badges.map((format) => (
+        <article class="flex min-h-25 flex-col justify-between rounded-xl border border-white/10 bg-neutral-950 p-4">
+          <div class="flex min-h-10 items-center">
+            <ExperienceBadge format={format} />
+          </div>
+          <code class="mt-4 block text-xs text-neutral-500">{format}</code>
+        </article>
+      ))}
     </main>
   </PageContainer>
 </Layout>

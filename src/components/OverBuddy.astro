@@ -12,9 +12,7 @@ export interface Props {
 const { repository, download, showTitle = false } = Astro.props
 ---
 
-<aside
-  class="col-span-full rounded-md border border-amber-300/30 bg-amber-300/10 p-4 text-amber-100"
->
+<aside class="col-span-full rounded-md border border-amber-300/30 bg-amber-300/10 p-4 text-amber-100">
   <div class="flex items-center gap-2 font-semibold text-amber-200/80">
     <AlertTriangleIcon className="size-5 shrink-0" aria-hidden="true" />
     <span>Warning</span>
@@ -32,24 +30,22 @@ const { repository, download, showTitle = false } = Astro.props
   </div>
 </aside>
 <div class="flex flex-col justify-center gap-6">
-  {
-    showTitle && (
-      <div class="flex items-center justify-start gap-3">
-        <Image
-          class="select-none"
-          src={`/assets/projects/overbuddy/icon.png`}
-          alt="OverBuddy icon"
-          width={48}
-          height={48}
-          loading="eager"
-          draggable="false"
-        />
-        <h1 class="text-2xl leading-none font-bold text-neutral-200">
-          OverBuddy
-        </h1>
-      </div>
-    )
-  }
+  {showTitle && (
+    <div class="flex items-center justify-start gap-3">
+      <Image
+        class="select-none"
+        src={`/assets/projects/overbuddy/icon.png`}
+        alt="OverBuddy icon"
+        width={48}
+        height={48}
+        loading="eager"
+        draggable="false"
+      />
+      <h1 class="text-2xl leading-none font-bold text-neutral-200">
+        OverBuddy
+      </h1>
+    </div>
+  )}
   <ul class="flex flex-col gap-3 text-neutral-400">
     <li>
       <h3 class="-mr-0.5 text-lg font-medium text-neutral-200">
@@ -68,8 +64,10 @@ const { repository, download, showTitle = false } = Astro.props
         <MDLink
           href={repository}
           className="text-neutral-300! hover:text-neutral-200! focus-visible:text-neutral-200! active:text-neutral-200!"
-          >open source</MDLink
-        >. It operated independently and is not affiliated with Blizzard
+        >
+          open source
+        </MDLink>
+        . It operated independently and is not affiliated with Blizzard
         Entertainment® or Valve®. You could undo the changes it made at any time
         by reverting to the default background.
       </p>
@@ -82,8 +80,8 @@ const { repository, download, showTitle = false } = Astro.props
         To change the menu background, OverBuddy needed to read and write your
         Battle.net® and/or Steam® configuration files. It did
         <span class="font-semibold">NOT</span> modify any game files and did
-        <span class="font-semibold">NOT</span> collect your personal data. Your game
-        client(s) were automatically restarted to apply the changes.
+        <span class="font-semibold">NOT</span> collect your personal data. Your
+        game client(s) were automatically restarted to apply the changes.
       </p>
     </li>
     <li>

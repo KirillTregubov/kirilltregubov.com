@@ -19,12 +19,8 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
 >
   <main class="mx-auto max-w-200 md:space-y-8">
     <ReturnHome />
-    <section
-      class="mt-6! motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
-    >
-      <div
-        class="mb-6 w-fit overflow-clip rounded-xl bg-neutral-800 object-contain py-2"
-      >
+    <section class="mt-6! motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
+      <div class="mb-6 w-fit overflow-clip rounded-xl bg-neutral-800 object-contain py-2">
         <!-- @ts-expect-error no-unused-vars -->
         <Image
           class="unblur select-none"
@@ -40,46 +36,34 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 3)
       <h1 class="text-2xl leading-none font-semibold">
         {projectInfo.data.name}
       </h1>
-      <p class="my-3 text-lg">
-        {projectInfo.data.description}
-      </p>
+      <p class="my-3 text-lg">{projectInfo.data.description}</p>
       <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-lg text-neutral-400">
         <h3 class="font-medium">Built with</h3>
-        {
-          technologies &&
-            technologies.map((tech) => (
-              <div class="rounded-sm bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
-                {tech.data.name}
-              </div>
-            ))
-        }
+        {technologies &&
+          technologies.map((tech) => (
+            <div class="rounded-sm bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+              {tech.data.name}
+            </div>
+          ))}
       </div>
     </section>
-    <article
-      class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-h3:scroll-mt-16 prose-h3:text-xl prose-h4:font-medium"
-    >
-      <nav
-        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
-      >
+    <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-h3:scroll-mt-16 prose-h3:text-xl prose-h4:font-medium">
+      <nav class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
         <h3>Table of Contents</h3>
         <ul class="flex list-none flex-col gap-1.5 p-0">
-          {
-            filteredHeadings.map((heading) => (
-              <li class="m-0 p-0">
-                <a
-                  href={`#${heading.slug}`}
-                  class="-mx-1 -my-0.5 rounded-sm px-1 py-0.5 text-inherit transition hover:text-white focus-visible:text-white focus-visible:ring-white! active:text-white"
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))
-          }
+          {filteredHeadings.map((heading) => (
+            <li class="m-0 p-0">
+              <a
+                href={`#${heading.slug}`}
+                class="-mx-1 -my-0.5 rounded-sm px-1 py-0.5 text-inherit transition hover:text-white focus-visible:text-white focus-visible:ring-white! active:text-white"
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
-      <div
-        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
-      >
+      <div class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0">
         <Content />
       </div>
     </article>

@@ -34,12 +34,8 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         <span>Download OverBuddy</span>
       </a>
     </ReturnHome>
-    <section
-      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10"
-    >
-      <div
-        class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center"
-      >
+    <section class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
+      <div class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center">
         <Image
           class="fade-in select-none max-md:size-28 max-sm:size-24"
           src={`/assets/projects/overbuddy/icon.png`}
@@ -54,8 +50,9 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
             {projectInfo.data.name}
           </h1>
           <p class="mt-2 text-neutral-400">
-            Browse Overwatch™ menu backgrounds.<br class="hidden sm:block" /> Install
-            the app to customize your in-game main menu background.
+            Browse Overwatch™ menu backgrounds.
+            <br class="hidden sm:block" /> Install the app to customize your
+            in-game main menu background.
           </p>
         </div>
       </div>
@@ -64,22 +61,15 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         download={projectInfo.data.download!}
       />
     </section>
-    <div
-      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
-    >
-    </div>
-    <div
-      class="min-h-[calc(100vh-11rem)] w-full xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]"
-    >
+    <div class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"></div>
+    <div class="min-h-[calc(100vh-11rem)] w-full xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]">
       <h2
         class="mb-3 scroll-mt-18 text-xl leading-none font-semibold motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
         id="gallery"
       >
         Background Gallery
       </h2>
-      <div
-        class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 max-xs:top-24 sm:flex-row sm:items-center"
-      >
+      <div class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 max-xs:top-24 sm:flex-row sm:items-center">
         <input
           id="search"
           type="search"
@@ -92,9 +82,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           id="sort"
           data-newest="false"
         >
-          <span
-            class="invisible [grid-area:1/-1] group-data-[newest=true]:visible"
-          >
+          <span class="invisible [grid-area:1/-1] group-data-[newest=true]:visible">
             Sort by <span class="font-semibold">Newest</span>
           </span>
           <span class="[grid-area:1/-1] group-data-[newest=true]:invisible">
@@ -118,62 +106,58 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           </span>
         </button> -->
       </div>
-      <div
-        class="grid grid-cols-1 gap-x-4 gap-y-5 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29"
-      >
-        {
-          backgrounds.map((background) => (
-            <MDImage
-              id={background.data.id}
-              src={background.data.image}
-              width={472}
-              height={265}
-              title={background.data.title}
-              description={background.data.description}
-              keywords={background.data.keywords}
-              link={background.data.link}
-              className="fade-in w-full rounded-lg shadow-lg"
-              draggable="false"
-              hasDetails
-              parentProps={{
-                'data-item': true,
-              }}
-            >
-              {background.data.available === true && (
-                <div
-                  class="absolute top-2 right-2 z-10 flex cursor-help items-center gap-1 rounded-[0.1875rem] border border-amber-200/60 bg-amber-300 px-1 pt-px text-xs font-bold tracking-wide text-yellow-950 uppercase shadow shadow-amber-700 select-none"
-                  title="Available in game"
-                  data-available
-                >
-                  Available
-                </div>
-              )}
+      <div class="grid grid-cols-1 gap-x-4 gap-y-5 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29">
+        {backgrounds.map((background) => (
+          <MDImage
+            id={background.data.id}
+            src={background.data.image}
+            width={472}
+            height={265}
+            title={background.data.title}
+            description={background.data.description}
+            keywords={background.data.keywords}
+            link={background.data.link}
+            className="fade-in w-full rounded-lg shadow-lg"
+            draggable="false"
+            hasDetails
+            parentProps={{
+              'data-item': true,
+            }}
+          >
+            {background.data.available === true && (
               <div
-                class:list={[
-                  'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 ring-accent-500/90! transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!',
-                ]}
-                data-detail-button
+                class="absolute top-2 right-2 z-10 flex cursor-help items-center gap-1 rounded-[0.1875rem] border border-amber-200/60 bg-amber-300 px-1 pt-px text-xs font-bold tracking-wide text-yellow-950 uppercase shadow shadow-amber-700 select-none"
+                title="Available in game"
+                data-available
               >
-                <a
-                  href={`/overbuddy/${background.data.id}`}
-                  title={`View ${background.data.title} background`}
-                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:ring-0!"
-                >
-                  <EyeIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
-                </a>
-                <a
-                  href={background.data.image}
-                  download
-                  title={`Download the ${background.data.title} background`}
-                  data-astro-prefetch="tap"
-                  class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:ring-0!"
-                >
-                  <CloudDownloadIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
-                </a>
+                Available
               </div>
-            </MDImage>
-          ))
-        }
+            )}
+            <div
+              class:list={[
+                'group/parent absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center gap-4 rounded-lg bg-neutral-950/60 opacity-0 ring-accent-500/90! transition-opacity focus-within:opacity-100 hover:opacity-100 focus-visible:opacity-100 active:opacity-100 data-detail-active:opacity-100 data-detail-active:*:pointer-events-auto!',
+              ]}
+              data-detail-button
+            >
+              <a
+                href={`/overbuddy/${background.data.id}`}
+                title={`View ${background.data.title} background`}
+                class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:ring-0!"
+              >
+                <EyeIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+              </a>
+              <a
+                href={background.data.image}
+                download
+                title={`Download the ${background.data.title} background`}
+                data-astro-prefetch="tap"
+                class="group pointer-events-none p-2 group-focus-within/parent:pointer-events-auto group-hover/parent:pointer-events-auto focus-visible:ring-0!"
+              >
+                <CloudDownloadIcon className="size-10 rounded-sm transition group-hover:scale-110 group-hover:text-neutral-400 group-focus-visible:scale-110 group-focus-visible:text-neutral-400 group-active:scale-100 active:text-neutral-400" />
+              </a>
+            </div>
+          </MDImage>
+        ))}
       </div>
     </div>
   </PageContainer>

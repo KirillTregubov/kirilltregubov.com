@@ -51,43 +51,37 @@ const imgAlt = alt || title || 'Placeholder image'
     />
     {hasDetails && <slot />}
   </div>
-  {
-    !!title && title.length > 0 && (
-      <figcaption
-        class:list={[
-          'text-center',
-          !!description && 'mt-3 text-lg leading-6 font-semibold',
-        ]}
-        data-title
-      >
-        {title}
-      </figcaption>
-    )
-  }
-  {
-    !!description && description.length > 0 && (
-      <div class="text-center text-neutral-400">
-        <p class="inline-block" data-description>
-          {description}
-        </p>
-        {link && URL.canParse(link) && (
-          <a
-            href={link}
-            rel="noopener"
-            target="_blank"
-            class="-m-0.5 p-0.5 ring-white! transition hover:text-white focus-visible:text-white active:text-white"
-          >
-            (<span class="underline">Link</span>)
-          </a>
-        )}
-      </div>
-    )
-  }
-  {
-    !!keywords && keywords.length > 0 && (
-      <p class="hidden" data-keywords>
-        {keywords}
+  {!!title && title.length > 0 && (
+    <figcaption
+      class:list={[
+        'text-center',
+        !!description && 'mt-3 text-lg leading-6 font-semibold',
+      ]}
+      data-title
+    >
+      {title}
+    </figcaption>
+  )}
+  {!!description && description.length > 0 && (
+    <div class="text-center text-neutral-400">
+      <p class="inline-block" data-description>
+        {description}
       </p>
-    )
-  }
+      {link && URL.canParse(link) && (
+        <a
+          href={link}
+          rel="noopener"
+          target="_blank"
+          class="-m-0.5 p-0.5 ring-white! transition hover:text-white focus-visible:text-white active:text-white"
+        >
+          (<span class="underline">Link</span>)
+        </a>
+      )}
+    </div>
+  )}
+  {!!keywords && keywords.length > 0 && (
+    <p class="hidden" data-keywords>
+      {keywords}
+    </p>
+  )}
 </figure>

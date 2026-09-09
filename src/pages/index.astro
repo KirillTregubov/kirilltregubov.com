@@ -29,9 +29,7 @@ const allProjects = await getCollection('projects').then((projects) =>
   footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.75s] motion-safe:opacity-0"
 >
   <PageContainer class="space-y-8 md:space-y-12">
-    <section
-      class="flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6"
-    >
+    <section class="flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6">
       <AboutMe class="animate-[fadeUp_0.6s_forwards] lg:text-balance" />
       <figure
         class="saturn relative box-content h-[calc(100vw-9rem)] max-h-75 w-full lg:min-w-100 xl:max-h-100 xl:min-w-150 2xl:min-w-175"
@@ -42,17 +40,19 @@ const allProjects = await getCollection('projects').then((projects) =>
           class="absolute bottom-0 w-full pb-2 text-center text-sm font-medium text-neutral-400/80 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6"
           title=""
         >
-          My favourite planet, Saturn. <a
+          My favourite planet, Saturn.{' '}
+          <a
             class="-m-0.5 rounded-sm p-0.5 underline transition select-none hover:text-neutral-600 focus-visible:outline-hidden active:text-neutral-600"
             href="https://science.nasa.gov/resource/saturn-3d-model/"
             target="_blank"
-            rel="noopener">Source</a
+            rel="noopener"
           >
+            Source
+          </a>
         </figcaption>
       </figure>
     </section>
-    {
-      /* <section
+    {/* <section
       id="experience"
       class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
     >
@@ -288,33 +288,26 @@ const allProjects = await getCollection('projects').then((projects) =>
           </div>
         </div>
       </div>
-    </section> */
-    }
+    </section> */}
 
     <section
       id="projects"
       class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
     >
-      <div
-        class="sticky top-0 z-10 -mx-4 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 px-4 pt-4 pb-2 after:pointer-events-none after:absolute after:-bottom-3.5 after:left-0 after:h-3.5 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:-mx-6 xs:flex-row xs:px-6 md:-mx-12 md:px-12 md:pb-2.5"
-      >
+      <div class="sticky top-0 z-10 -mx-4 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 px-4 pt-4 pb-2 after:pointer-events-none after:absolute after:-bottom-3.5 after:left-0 after:h-3.5 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:-mx-6 xs:flex-row xs:px-6 md:-mx-12 md:px-12 md:pb-2.5">
         <ProjectTitle client:load />
         <ProjectToggle client:load />
       </div>
       <ProjectList client:load>
-        <ul
-          class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10"
-        >
-          {
-            allProjects.map((project) => (
-              <li data-featured={project.data.featured || undefined}>
-                <ProjectPreview
-                  project={project}
-                  featured={project.data.featured}
-                />
-              </li>
-            ))
-          }
+        <ul class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10">
+          {allProjects.map((project) => (
+            <li data-featured={project.data.featured || undefined}>
+              <ProjectPreview
+                project={project}
+                featured={project.data.featured}
+              />
+            </li>
+          ))}
         </ul>
       </ProjectList>
     </section>

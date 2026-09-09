@@ -55,9 +55,7 @@ const layoutDescription =
         <span>Back to Gallery</span>
       </a>
     </menu>
-    <section
-      class="w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
-    >
+    <section class="w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
       <MDImage
         id={id}
         src={image}
@@ -75,24 +73,20 @@ const layoutDescription =
           <div class="text-lg text-neutral-400">
             <p class="inline-block" data-description>
               {description}
-              {
-                link && URL.canParse(link) && (
-                  <a
-                    href={link}
-                    rel="noopener"
-                    target="_blank"
-                    class="-m-0.5 p-0.5 ring-white! transition hover:text-neutral-200 focus-visible:text-neutral-200 active:text-neutral-200"
-                  >
-                    (<span class="underline">Link</span>)
-                  </a>
-                )
-              }
+              {link && URL.canParse(link) && (
+                <a
+                  href={link}
+                  rel="noopener"
+                  target="_blank"
+                  class="-m-0.5 p-0.5 ring-white! transition hover:text-neutral-200 focus-visible:text-neutral-200 active:text-neutral-200"
+                >
+                  (<span class="underline">Link</span>)
+                </a>
+              )}
             </p>
-            {
-              removed && (
-                <p class="text-base font-medium text-amber-400/60">{removed}</p>
-              )
-            }
+            {removed && (
+              <p class="text-base font-medium text-amber-400/60">{removed}</p>
+            )}
           </div>
         </div>
 
@@ -106,30 +100,23 @@ const layoutDescription =
           >
             Download
           </a>
-          {
-            available !== 'never' && (
-              <a
-                class:list={[
-                  'inline-flex h-12 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold tracking-wide text-orange-50 uppercase shadow-md ring-white! transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:ring-1! focus-visible:outline-hidden active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
-                  !available && 'pointer-events-none opacity-60',
-                ]}
-                href={projectInfo.data.download!}
-                title={removed ?? 'Install OverBuddy to apply this background'}
-              >
-                {available ? 'Apply in Game' : 'Removed from Game'}
-              </a>
-            )
-          }
+          {available !== 'never' && (
+            <a
+              class:list={[
+                'inline-flex h-12 items-center justify-center rounded-[0.2rem] border-2 border-orange-800/40 bg-orange-500 px-4 text-center font-semibold tracking-wide text-orange-50 uppercase shadow-md ring-white! transition will-change-transform select-none hover:scale-105 hover:rounded-sm hover:border-orange-50 focus-visible:scale-105 focus-visible:border-white focus-visible:ring-1! focus-visible:outline-hidden active:scale-95 lg:h-14 lg:px-6 lg:text-lg',
+                !available && 'pointer-events-none opacity-60',
+              ]}
+              href={projectInfo.data.download!}
+              title={removed ?? 'Install OverBuddy to apply this background'}
+            >
+              {available ? 'Apply in Game' : 'Removed from Game'}
+            </a>
+          )}
         </div>
       </div>
     </section>
-    <div
-      class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
-    >
-    </div>
-    <section
-      class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10"
-    >
+    <div class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"></div>
+    <section class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
       <OverBuddy
         showTitle
         repository={projectInfo.data.repository!}

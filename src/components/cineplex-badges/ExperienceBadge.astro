@@ -78,15 +78,13 @@ const badges = {
 const Badge = badges[formatKey as keyof typeof badges]
 ---
 
-{
-  Badge ? (
-    <span class:list={['badge', className]} role="img" aria-label={format}>
-      <Badge />
-    </span>
-  ) : (
-    <span>{format}</span>
-  )
-}
+{Badge ? (
+  <span class:list={['badge', className]} role="img" aria-label={format}>
+    <Badge />
+  </span>
+) : (
+  <span>{format}</span>
+)}
 
 <style>
   .badge {
