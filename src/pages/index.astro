@@ -9,8 +9,7 @@ import {
 } from '@components/ProjectContext'
 import ProjectPreview from '@components/ProjectPreview.astro'
 import Saturn from '@components/Saturn'
-import TechStack from '@components/TechStack.astro'
-import ToolStack from '@components/ToolStack.astro'
+import TechnologyStack from '@components/TechnologyStack.astro'
 import Layout from '@layouts/Layout.astro'
 
 const allProjects = await getCollection('projects').then((projects) =>
@@ -320,7 +319,7 @@ const allProjects = await getCollection('projects').then((projects) =>
         Technologies and programming languages that I enjoy using, and have
         worked with in the past.
       </p>
-      <TechStack />
+      <TechnologyStack type="technology" />
     </section>
     <section
       id="tech-stack"
@@ -331,7 +330,7 @@ const allProjects = await getCollection('projects').then((projects) =>
         Tools and services that I enjoy using regularly and have experience
         with.
       </p>
-      <ToolStack />
+      <TechnologyStack type="tool" />
     </section>
   </PageContainer>
 </Layout>

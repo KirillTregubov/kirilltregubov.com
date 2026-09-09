@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content'
+
+interface Props {
+  type: 'technology' | 'tool'
+}
+
+const { type } = Astro.props
+const items = await getCollection('technologies').then((collection) =>
+  collection
+    .filter((item) => item.data.type === type)
+    .sort((a, b) => a.data.order - b.data.order),
+)
+---
+
+<div class="group flex flex-wrap gap-2">
+  {
+    items.map((item) =>
+      item.data.link ? (
+        <a
+          href={item.data.link}
+          target="_blank"
+          rel="noopener"
+          class="tech-transition pressable flex items-center justify-center gap-1.5 rounded-lg! border border-neutral-300 bg-transparent px-2.5 py-2 transition hover:bg-neutral-200 motion-safe:group-has-focus-visible:opacity-60 motion-safe:hover:opacity-100! motion-safe:focus-visible:opacity-100! dark:border-neutral-700 dark:hover:bg-neutral-700 dark:focus-visible:border-transparent dark:active:bg-neutral-700"
+        >
+          <div
+            set:html={item.body}
+            class="color-transition size-6 shrink-0 text-neutral-800 dark:text-neutral-300"
+            aria-hidden="true"
+          />
+          <p>{item.data.name}</p>
+        </a>
+      ) : (
+        <div class="tech-transition flex items-center justify-center gap-1.5 rounded-lg border border-neutral-300 px-2.5 py-2 motion-safe:hover:opacity-100! dark:border-neutral-700">
+          <div
+            set:html={item.body}
+            class="color-transition size-6 shrink-0 text-neutral-800 dark:text-neutral-300"
+            aria-hidden="true"
+          />
+          <p>{item.data.name}</p>
+        </div>
+      ),
+    )
+  }
+  <!-- Fill the last row without making its trailing space dim the group. -->
+  <span class="hover-spacer -ml-2 flex-1" aria-hidden="true" />
+</div>
+
+<style>
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .group:hover:not(:has(> .hover-spacer:hover)) > .tech-transition {
+      opacity: 0.6;
+    }
+  }
+</style>
