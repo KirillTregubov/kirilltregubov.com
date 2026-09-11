@@ -18,9 +18,22 @@ const interBoldDigest = createHash('sha256').update(interBold).digest()
 const width = 1200
 const height = 630
 
+const logoSize = 44
+const logo = fs.readFileSync('public/assets/overbuddy-logo.png', {
+  encoding: 'base64',
+})
+
+function mimeTypeFor(path: string): string {
+  const ext = path.replace(/\?.*$/, '').split('.').pop()?.toLowerCase()
+  if (ext === 'png') return 'image/png'
+  if (ext === 'webp') return 'image/webp'
+  if (ext === 'gif') return 'image/gif'
+  return 'image/jpeg'
+}
+
 export async function GET({ props }: APIContext) {
-  // const { title, description } = props
-  const image = fs.readFileSync(`public${props.image.replace(/\?.*$/, '')}`, {
+  const imagePath = props.image.replace(/\?.*$/, '')
+  const image = fs.readFileSync(`public${imagePath}`, {
     encoding: 'base64',
   })
 
@@ -28,7 +41,9 @@ export async function GET({ props }: APIContext) {
     style="color: white; background-color: #171717; width: ${width}px; height: ${height}px; display: flex; flex-direction: column; box-sizing: border-box;"
   >
     <img
-      src="data:image/jpeg;base64,${image}"
+      src="data:${mimeTypeFor(imagePath)};base64,${image}"
+      width="${width}"
+      height="${height}"
       style="position: absolute; top: 0; left: 0; object-fit: cover; width: ${width}px; height: ${height}px;"
     />
     <div
@@ -36,8 +51,10 @@ export async function GET({ props }: APIContext) {
       style="background-color: rgba(9, 9, 11, 0.6); box-sizing: border-box; border-radius: 32px; margin: 24px; padding: 8px 10px; display: flex; gap: 8px; align-items: center; position: absolute; bottom: 0; right: 0;"
     >
       <img
-        src="https://raw.githubusercontent.com/KirillTregubov/OverBuddy/refs/heads/main/src-tauri/icons/Square44x44Logo.png"
-        style="width: 44px; height: 44px;"
+        src="data:image/png;base64,${logo}"
+        width="${logoSize}"
+        height="${logoSize}"
+        style="width: ${logoSize}px; height: ${logoSize}px;"
       />
       <div style="font-size: 22px; font-weight: 700; padding-right: 4px;">
         OverBuddy
