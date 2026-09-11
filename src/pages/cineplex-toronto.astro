@@ -4,13 +4,28 @@ import { LocateFixedIcon, SearchIcon, XIcon } from 'lucide-react'
 import ExperienceBadge from '@components/cineplex-badges/ExperienceBadge.astro'
 import PageContainer from '@components/PageContainer.astro'
 import ReturnHome from '@components/ReturnHome.astro'
+import { pluralize } from '@lib/pluralize'
 import Layout from '@layouts/Layout.astro'
+
+const manuallyClassifiedFeatures = new Set<string>(['Clubhouse'])
 
 const theatres = (await getCollection('cinemas'))
   .map((theatre) => ({
     ...theatre,
     formats: Array.from(
-      new Set(theatre.data.auditoriums.flatMap(({ formats }) => formats)),
+      new Set(
+        theatre.data.auditoriums.flatMap(({ formats }) =>
+          formats.filter((format) => !manuallyClassifiedFeatures.has(format)),
+        ),
+      ),
+    ),
+    features: Array.from(
+      new Set(
+        theatre.data.auditoriums.flatMap(({ formats, features }) => [
+          ...features,
+          ...formats.filter((format) => manuallyClassifiedFeatures.has(format)),
+        ]),
+      ),
     ),
   }))
   .sort((a, b) => a.data.name.localeCompare(b.data.name))
@@ -20,7 +35,7 @@ const auditoriumCount = theatres.reduce(
   0,
 )
 
-const formats = new Set(theatres.flatMap((theatre) => theatre.formats))
+const formats = new Set<string>(theatres.flatMap((theatre) => theatre.formats))
 
 const formatCount = formats.size
 
@@ -47,6 +62,15 @@ const formatOptions = Array.from(
       (formatPriority[b] ?? Number.POSITIVE_INFINITY) || a.localeCompare(b),
 )
 
+const featureOptions = Array.from(
+  new Set(theatres.flatMap((theatre) => theatre.features)),
+)
+  .filter((feature) => !formats.has(feature))
+  .sort((a, b) => a.localeCompare(b))
+
+const filterButtonClass =
+  'filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-neutral-700 px-3 py-2 text-sm font-semibold text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-neutral-600 hover:text-white hover:shadow-xs active:border-neutral-500 active:bg-neutral-800 active:text-white active:shadow-xs aria-pressed:border-transparent aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-transparent aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-2 aria-pressed:focus-visible:ring-amber-200! aria-pressed:focus-visible:ring-offset-2 aria-pressed:focus-visible:ring-offset-neutral-900 aria-pressed:active:border-transparent aria-pressed:active:bg-amber-300/75 aria-pressed:active:shadow-amber-200/20 data-[soft-selected=true]:border-amber-300/35 data-[soft-selected=true]:bg-amber-300/14 data-[soft-selected=true]:text-amber-200 data-[soft-selected=true]:hover:border-yellow-400/45 data-[soft-selected=true]:hover:bg-yellow-400/20 data-[soft-selected=true]:hover:text-yellow-100 data-[soft-selected=true]:focus-visible:ring-2 data-[soft-selected=true]:focus-visible:ring-amber-200! data-[soft-selected=true]:focus-visible:ring-offset-2 data-[soft-selected=true]:focus-visible:ring-offset-neutral-900 data-[soft-selected=true]:active:border-yellow-500/55 data-[soft-selected=true]:active:bg-yellow-500/25 data-[soft-selected=true]:active:text-yellow-100 disabled:cursor-not-allowed disabled:border-neutral-800 disabled:text-neutral-600 disabled:shadow-none disabled:ring-0'
+
 type ScreenShape = {
   filterLabel: string
   listingLabel?: string
@@ -55,7 +79,7 @@ type ScreenShape = {
 const screenShapeByRatio = new Map<string, ScreenShape>([
   ['1.43:1', { filterLabel: 'IMAX 1.43' }],
   ['1.90:1', { filterLabel: 'IMAX 1.90', listingLabel: 'Digital' }],
-  ['2.20:1', { filterLabel: '70mm' }],
+  ['2.20:1', { filterLabel: 'Panavision', listingLabel: 'Panavision' }],
   ['1.85:1', { filterLabel: 'Flat', listingLabel: 'Flat' }],
   ['2.39:1', { filterLabel: 'Scope', listingLabel: 'Scope' }],
 ])
@@ -127,7 +151,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </p>
               <a
                 href="#directory"
-                class="mt-5 inline-flex rounded-full border border-amber-300/30 bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:border-amber-200/20 hover:bg-amber-300/85 active:border-amber-200/20 active:bg-amber-300/70"
+                class="mt-5 inline-flex rounded-full border border-amber-300/30 bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:border-amber-200/20 hover:bg-amber-300/85 focus-visible:ring-2 focus-visible:ring-amber-200! focus-visible:ring-offset-2 focus-visible:ring-offset-[#160d08] active:border-amber-200/20 active:bg-amber-300/70"
               >
                 Explore theatres
               </a>
@@ -143,18 +167,18 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 </div>
                 <div>
                   <dt class="text-xs tracking-wider text-neutral-500 uppercase">
-                    Auditoriums
-                  </dt>
-                  <dd class="mt-1 text-2xl font-semibold text-neutral-100">
-                    {auditoriumCount}
-                  </dd>
-                </div>
-                <div>
-                  <dt class="text-xs tracking-wider text-neutral-500 uppercase">
                     Formats
                   </dt>
                   <dd class="mt-1 text-2xl font-semibold text-neutral-100">
                     {formatCount}
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-xs tracking-wider text-neutral-500 uppercase">
+                    Auditoriums
+                  </dt>
+                  <dd class="mt-1 text-2xl font-semibold text-neutral-100">
+                    {auditoriumCount}
                   </dd>
                 </div>
                 <!-- <div>
@@ -170,16 +194,16 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </dl>
             </div>
 
-            <div class="relative mr-auto w-full max-w-sm -rotate-2 touch-manipulation rounded-xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:hidden">
+            <div class="relative mr-auto w-full max-w-[20rem] -rotate-2 touch-manipulation rounded-xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:hidden">
               <span
-                class="absolute top-[55%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[55%] -left-3 size-5 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"
               ></span>
               <span
-                class="absolute top-[55%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[55%] -right-3 size-5 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"
               ></span>
-              <div class="p-4 lg:p-6">
+              <div class="p-5 py-4 lg:p-6">
                 <div class="flex items-center justify-between text-[9px] font-black tracking-[0.2em] uppercase">
                   <span>Cineplex Guide</span>
                   <span>Admit One</span>
@@ -195,18 +219,18 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </div>
                   <div>
                     <p class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]">
-                      Auditoriums
-                    </p>
-                    <p class="mt-0.5 text-xl font-black sm:text-2xl">
-                      {auditoriumCount}
-                    </p>
-                  </div>
-                  <div>
-                    <p class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]">
                       Formats
                     </p>
                     <p class="mt-0.5 text-xl font-black sm:text-2xl">
                       {formatCount}
+                    </p>
+                  </div>
+                  <div>
+                    <p class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]">
+                      Auditoriums
+                    </p>
+                    <p class="mt-0.5 text-xl font-black sm:text-2xl">
+                      {auditoriumCount}
                     </p>
                   </div>
                 </div>
@@ -241,7 +265,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     Your next presentation
                   </p>
                   <p class="mt-0.5 text-3xl font-black tracking-[-0.045em]">
-                    Made for this screen.
+                    Made for the big screen.
                   </p>
                 </div>
                 <div class="mt-3 flex justify-between gap-4 border-t border-dashed border-amber-950/30 pt-4">
@@ -288,35 +312,36 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
     <section
       id="directory"
-      class="mt-4 scroll-mt-14"
+      class="mt-4 scroll-mt-12 xs:scroll-mt-13"
       aria-labelledby="directory-title"
     >
-      <div class="sticky top-12 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
+      <div class="sticky top-12 xs:top-13 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
         <h2 id="directory-title" class="sr-only">
           Theatre directory
         </h2>
-        <div class="flex flex-col gap-2 md:gap-2.5 lg:grid lg:grid-cols-[minmax(15rem,25rem)_minmax(0,1fr)] lg:items-center lg:gap-4">
+        <div class="flex flex-col gap-2 md:gap-3 lg:grid lg:grid-cols-[minmax(18rem,30rem)_minmax(0,1fr)] lg:items-center lg:gap-3">
           <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
-            <label class="relative block">
+            <label class="relative block group">
               <span class="sr-only">
                 Search theatres, formats, or auditoriums
               </span>
               <SearchIcon
-                className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500"
+                className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-neutral-500 transition-colors group-hover:text-neutral-400 group-active:text-neutral-400"
                 aria-hidden="true"
               />
               <input
                 id="theatre-search"
                 type="search"
-                placeholder="Search theatre, format, or auditorium..."
+                placeholder="Search..."
                 autocomplete="off"
-                class="w-full rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-9 text-base text-neutral-200 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300!"
+                class="w-full peer rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-8 text-base text-neutral-100 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 active:border-neutral-500 active:bg-neutral-600 selection:bg-neutral-300 selection:text-neutral-950"
               />
             </label>
             <button
               id="sort-by-distance"
               type="button"
-              class="inline-flex items-center justify-center gap-2 rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:bg-neutral-700 hover:text-white focus-visible:ring-1 focus-visible:ring-neutral-300 disabled:cursor-wait disabled:opacity-60"
+              class="inline-flex items-center justify-center gap-2 rounded-md border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:bg-neutral-700 hover:text-neutral-100 focus-visible:ring-1 focus-visible:ring-neutral-300 active:border-neutral-500 active:bg-neutral-600 active:text-neutral-100 aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:hover:border-amber-200/20 aria-pressed:hover:bg-amber-300/85 aria-pressed:focus-visible:ring-2 aria-pressed:focus-visible:ring-amber-200! aria-pressed:focus-visible:ring-offset-2 aria-pressed:focus-visible:ring-offset-neutral-900 aria-pressed:active:border-amber-200/20 aria-pressed:active:bg-amber-300/70 disabled:cursor-wait disabled:opacity-60"
+              aria-pressed="false"
               aria-describedby="location-status"
             >
               <LocateFixedIcon className="size-4" aria-hidden="true" />
@@ -328,17 +353,17 @@ const getAuditoriumHeading = (auditoriums: string) => {
             id="format-filter-viewport"
             data-at-start="true"
             data-at-end="false"
-            class="relative -my-1 overflow-hidden before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:z-10 before:w-6 before:bg-linear-to-r before:from-neutral-900 before:to-transparent before:opacity-0 before:transition-opacity before:duration-150 before:content-[''] after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-6 after:bg-linear-to-l after:from-neutral-900 after:to-transparent after:transition-opacity after:duration-150 after:content-[''] data-[at-end=true]:after:opacity-0 data-[at-start=false]:before:opacity-100 lg:my-0 lg:w-fit lg:max-w-full"
+            class="relative -m-1 overflow-hidden before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:z-10 before:w-7 before:bg-linear-to-r before:from-neutral-900 before:from-[0.25rem] before:to-transparent before:opacity-0 before:transition-opacity before:duration-150 before:content-[''] after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-7 after:bg-linear-to-l after:from-neutral-900 after:from-[0.25rem] after:to-transparent after:transition-opacity after:duration-150 after:content-[''] data-[at-end=true]:after:opacity-0 data-[at-start=false]:before:opacity-100 lg:w-fit lg:max-w-full"
           >
             <div
               id="format-filter-scroller"
               role="group"
-              class="flex min-w-0 cursor-grab scrollbar-none gap-1.5 overflow-x-auto py-1 select-none [-ms-overflow-style:none] active:cursor-grabbing lg:py-0 [&::-webkit-scrollbar]:hidden"
-              aria-label="Filter by viewing format or screen shape"
+              class="flex min-w-0 cursor-grab scroll-px-28 scrollbar-none gap-1.5 overflow-x-auto p-1 select-none [-ms-overflow-style:none] active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+              aria-label="Filter by viewing format, screen shape, or auditorium feature"
             >
               <button
                 type="button"
-                class="filter-button shrink-0 rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-400 transition hover:border-white/20 hover:text-white focus-visible:ring-1 focus-visible:ring-inset aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:focus-visible:ring-neutral-950"
+                class={filterButtonClass}
                 data-filter="all"
                 aria-pressed="true"
               >
@@ -347,7 +372,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               {formatOptions.map((format) => (
                 <button
                   type="button"
-                  class="filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-white/20 hover:text-white hover:shadow-xs focus-visible:ring-1 focus-visible:ring-inset active:border-white/20 active:bg-neutral-800 active:text-white active:shadow-2xs aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-amber-200/20 aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-neutral-950 aria-pressed:active:border-amber-200/20 aria-pressed:active:bg-amber-300/70 aria-pressed:active:shadow-amber-200/20"
+                  class={filterButtonClass}
                   data-filter-type="format"
                   data-filter-value={format}
                   aria-label={`Filter by ${format}`}
@@ -363,13 +388,29 @@ const getAuditoriumHeading = (auditoriums: string) => {
               {screenShapeOptions.map((shape) => (
                 <button
                   type="button"
-                  class="filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-white/10 px-3 py-2 text-sm font-bold text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-white/20 hover:text-white hover:shadow-xs focus-visible:ring-1 focus-visible:ring-inset active:border-white/20 active:bg-neutral-800 active:text-white active:shadow-2xs aria-pressed:border-amber-300/30 aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-amber-200/20 aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-neutral-950 aria-pressed:active:border-amber-200/20 aria-pressed:active:bg-amber-300/70 aria-pressed:active:shadow-amber-200/20"
+                  class={filterButtonClass}
                   data-filter-type="screen-shape"
                   data-filter-value={shape}
                   aria-label={`Filter by ${shape} screens`}
                   aria-pressed="false"
                 >
                   {shape}
+                </button>
+              ))}
+              <span
+                class="my-1 w-px shrink-0 bg-white/15"
+                aria-hidden="true"
+              ></span>
+              {featureOptions.map((feature) => (
+                <button
+                  type="button"
+                  class={filterButtonClass}
+                  data-filter-type="feature"
+                  data-filter-value={feature}
+                  aria-label={`Filter by ${feature}`}
+                  aria-pressed="false"
+                >
+                  <ExperienceBadge format={feature} />
                 </button>
               ))}
             </div>
@@ -391,7 +432,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
             <button
               id="clear-distance-sort"
               type="button"
-              class="hidden rounded-sm p-0.5 text-neutral-500 transition hover:bg-neutral-800 hover:text-neutral-200 focus-visible:ring-1 focus-visible:ring-neutral-400"
+              class="hidden rounded-sm p-0.5 text-neutral-500 transition hover:bg-neutral-800 focus-visible:text-neutral-300 hover:text-neutral-300 active:bg-neutral-700/65 active:text-neutral-100"
               aria-label="Clear distance sorting"
               title="Clear distance sorting"
             >
@@ -403,6 +444,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
         <ul id="theatre-grid" class="mt-4 grid gap-4 lg:grid-cols-2">
           {theatres.map((theatre, index) => {
             const formats = JSON.stringify(theatre.formats)
+            const features = JSON.stringify(theatre.features)
             const searchableAddress = theatre.data.location
               ? Object.values(theatre.data.location.address).join(' ')
               : ''
@@ -429,6 +471,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   class="theatre-card h-full overflow-hidden rounded-lg border border-white/10 bg-(--theatre-card-background) transition duration-200"
                   data-name={`${theatre.data.name} ${theatre.data.area} ${searchableAddress}`.toLowerCase()}
                   data-formats={formats}
+                  data-features={features}
                   data-screen-shapes={screenShapes}
                   data-latitude={theatre.data.location?.coordinates.latitude}
                   data-longitude={theatre.data.location?.coordinates.longitude}
@@ -449,11 +492,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
                         {theatre.data.name}
                       </h3>
                       {theatre.data.location && (
-                        <div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500">
+                        <div class="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-neutral-500">
                           <address class="not-italic">
                             <a
                               href={googleMapsUrl}
-                              class="underline decoration-neutral-700 underline-offset-2 transition hover:text-neutral-300"
+                              class="underline decoration-neutral-700 underline-offset-2 -m-0.5 p-0.5 rounded-sm transition hover:text-neutral-300"
                               aria-label={`Open ${theatre.data.name} in Google Maps`}
                             >
                               {theatre.data.location.address.streetAddress},{' '}
@@ -463,7 +506,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                           </address>
                           <a
                             href={appleMapsUrl}
-                            class="text-xs underline decoration-neutral-700 underline-offset-2 transition hover:text-neutral-300"
+                            class="text-xs underline decoration-neutral-700 underline-offset-2 transition -m-0.5 p-0.5 rounded-sm hover:text-neutral-300"
                             aria-label={`Open ${theatre.data.name} in Apple Maps`}
                           >
                             Apple Maps
@@ -475,11 +518,22 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
                   <ul>
                     {theatre.data.auditoriums.map((auditorium) => {
+                      const auditoriumFormats = auditorium.formats.filter(
+                        (format) => !manuallyClassifiedFeatures.has(format),
+                      )
+                      const auditoriumFeatures = Array.from(
+                        new Set([
+                          ...auditorium.features,
+                          ...auditorium.formats.filter((format) =>
+                            manuallyClassifiedFeatures.has(format),
+                          ),
+                        ]),
+                      )
                       const diagram = getRatioDiagram(auditorium.screen.ratio)
                       const screenShape = getScreenShape(
                         auditorium.screen.ratio,
                       )
-                      const isScreenX = auditorium.formats.includes('SCREENX')
+                      const isScreenX = auditoriumFormats.includes('SCREENX')
                       const right = diagram.x + diagram.width
                       const bottom = diagram.y + diagram.height
                       const corner = 6
@@ -495,16 +549,18 @@ const getAuditoriumHeading = (auditoriums: string) => {
                         screenXDiagram.y + screenXDiagram.height
                       const screenXLeftEdge = diagram.x
                       const screenXRightEdge = right
+                      const screenXOuterTop = screenXDiagram.y - 3.5
+                      const screenXOuterBottom = screenXBottom + 3.5
 
                       return (
                         <li
                           class="auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 border-white/7 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6"
                           data-auditorium-number={auditorium.auditoriums}
                           data-auditorium-formats={JSON.stringify(
-                            auditorium.formats,
+                            auditoriumFormats,
                           )}
                           data-auditorium-features={JSON.stringify(
-                            auditorium.features,
+                            auditoriumFeatures,
                           )}
                           data-auditorium-ratio={auditorium.screen.ratio}
                           data-auditorium-details={auditorium.details}
@@ -524,11 +580,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
                             {isScreenX ? (
                               <>
                                 <path
-                                  d={`M ${screenXDiagram.x} ${screenXDiagram.y} L ${screenXLeftEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXDiagram.x} ${screenXBottom} Z M ${screenXRight} ${screenXDiagram.y} L ${screenXRightEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXRight} ${screenXBottom} Z`}
+                                  d={`M ${screenXDiagram.x} ${screenXDiagram.y} L ${screenXLeftEdge} ${screenXOuterTop} V ${screenXOuterBottom} L ${screenXDiagram.x} ${screenXBottom} Z M ${screenXRight} ${screenXDiagram.y} L ${screenXRightEdge} ${screenXOuterTop} V ${screenXOuterBottom} L ${screenXRight} ${screenXBottom} Z`}
                                   class="fill-current opacity-[0.07]"
                                 />
                                 <path
-                                  d={`M ${screenXDiagram.x} ${screenXDiagram.y} L ${screenXLeftEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXDiagram.x} ${screenXBottom} M ${screenXRight} ${screenXDiagram.y} L ${screenXRightEdge} ${screenXDiagram.y - 4} V ${screenXBottom + 5} L ${screenXRight} ${screenXBottom} M ${screenXDiagram.x} ${screenXDiagram.y} H ${screenXRight} V ${screenXBottom} H ${screenXDiagram.x} Z`}
+                                  d={`M ${screenXDiagram.x} ${screenXDiagram.y} L ${screenXLeftEdge} ${screenXOuterTop} V ${screenXOuterBottom} L ${screenXDiagram.x} ${screenXBottom} M ${screenXRight} ${screenXDiagram.y} L ${screenXRightEdge} ${screenXOuterTop} V ${screenXOuterBottom} L ${screenXRight} ${screenXBottom} M ${screenXDiagram.x} ${screenXDiagram.y} H ${screenXRight} V ${screenXBottom} H ${screenXDiagram.x} Z`}
                                   class="stroke-linejoin-round fill-none stroke-current stroke-[1.5] opacity-75 [vector-effect:non-scaling-stroke]"
                                 />
                               </>
@@ -566,7 +622,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                           </svg>
                           <div class="min-w-0">
                             <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-                              {auditorium.formats.map((format) => (
+                              {auditoriumFormats.map((format) => (
                                 <span class="inline-flex min-h-8 items-center rounded-md border border-white/10 bg-white/4 px-2.5 py-1">
                                   <ExperienceBadge
                                     format={format}
@@ -594,9 +650,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
                                 {auditorium.details}
                               </p>
                             )}
-                            {auditorium.features.length > 0 && (
+                            {auditoriumFeatures.length > 0 && (
                               <div class="mt-2 flex flex-wrap gap-1.5">
-                                {auditorium.features.map((feature) => (
+                                {auditoriumFeatures.map((feature) => (
                                   <span class="inline-flex min-h-6 items-center rounded-md border border-neutral-500/15 bg-neutral-500/5 px-2 py-0.5">
                                     <ExperienceBadge
                                       format={feature}
@@ -615,7 +671,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   {theatre.data.notes.length > 0 && (
                     <div class="border-t border-amber-300/10 bg-amber-300/4 px-5 py-4 sm:px-6">
                       <p class="mb-2 text-xs font-semibold tracking-wider text-amber-200/70 uppercase">
-                        Good to know
+                        {pluralize(theatre.data.notes.length, 'note')}
                       </p>
                       <ul class="space-y-1.5 text-sm leading-relaxed text-neutral-400">
                         {theatre.data.notes.map((note) => (
@@ -634,13 +690,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
         <div
           id="no-results"
-          class="mt-4 hidden rounded-2xl border border-dashed border-white/15 px-6 py-14 text-center"
+          class="mt-4 hidden rounded-2xl border border-dashed border-white/15 px-6 py-14 text-center flex-col items-center"
         >
           <p class="font-medium text-neutral-300">
             No matching theatres found.
           </p>
-          <p class="mt-1 text-sm text-neutral-500">
-            Try another search or screen format.
+          <p class="mt-1 text-sm text-neutral-500 max-w-md text-pretty">
+            Try another search. You can search by theatre details, available
+            format, auditorium number, and aspect ratio.
           </p>
         </div>
 
@@ -650,7 +707,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
             href="https://www.openstreetmap.org/copyright"
             target="_blank"
             rel="noopener"
-            class="underline decoration-neutral-700 underline-offset-2 transition hover:text-neutral-400"
+            class="underline decoration-neutral-700 underline-offset-2 transition -m-0.5 p-0.5 rounded-sm hover:text-neutral-400"
           >
             OpenStreetMap contributors
           </a>
@@ -694,6 +751,17 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
       const searchInput =
         document.querySelector<HTMLInputElement>('#theatre-search')
+      const largeViewport = window.matchMedia('(min-width: 30rem)') // 40rem
+      const updateSearchPlaceholder = () => {
+        if (!searchInput) return
+
+        searchInput.placeholder = largeViewport.matches
+          ? 'Search theatre, format, or auditorium...'
+          : 'Search...'
+      }
+      updateSearchPlaceholder()
+      largeViewport.addEventListener('change', updateSearchPlaceholder)
+
       const sortByDistanceButton =
         document.querySelector<HTMLButtonElement>('#sort-by-distance')
       const clearDistanceSortButton = document.querySelector<HTMLButtonElement>(
@@ -736,6 +804,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           distance: undefined as number | undefined,
           name: card.dataset.name ?? '',
           formats: JSON.parse(card.dataset.formats ?? '[]') as string[],
+          features: JSON.parse(card.dataset.features ?? '[]') as string[],
           screenShapes: JSON.parse(
             card.dataset.screenShapes ?? '[]',
           ) as string[],
@@ -816,8 +885,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
         'auditori',
         'auditorium',
       ])
-      let activeFilter:
-        { type: 'format' | 'screen-shape'; value: string } | undefined
+      type FilterType = 'format' | 'screen-shape' | 'feature'
+      type FilterSelection = { type: FilterType; value: string }
+      let activeFilters: FilterSelection[] = []
       let animationFrame: number | undefined
       let hasAutoScrolledToDirectory = false
 
@@ -947,29 +1017,37 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
       function applyUrlState() {
         const params = new URLSearchParams(window.location.search)
-        const format = params.get('format')
-        const screenShape = params.get('screen')
 
         if (searchInput) {
           searchInput.value = params.get('q') ?? ''
         }
 
-        activeFilter = format
-          ? { type: 'format', value: format }
-          : screenShape
-            ? { type: 'screen-shape', value: screenShape }
-            : undefined
+        const requestedFilters: FilterSelection[] = [
+          ...params
+            .getAll('format')
+            .map((value) => ({ type: 'format' as const, value })),
+          ...params
+            .getAll('screen')
+            .map((value) => ({ type: 'screen-shape' as const, value })),
+          ...params
+            .getAll('feature')
+            .map((value) => ({ type: 'feature' as const, value })),
+        ]
 
-        const hasMatchingFilter = filterButtons.some(
-          (button) =>
-            activeFilter &&
-            button.dataset.filterType === activeFilter.type &&
-            button.dataset.filterValue === activeFilter.value,
-        )
+        activeFilters = []
+        requestedFilters.forEach((filter) => {
+          const nextFilters = [...activeFilters, filter]
+          const hasMatchingButton = filterButtons.some(
+            (button) =>
+              button.dataset.filterType === filter.type &&
+              button.dataset.filterValue === filter.value,
+          )
+          const hasOverlap = auditoriumRows.some((auditorium) =>
+            matchesFilters(auditorium, nextFilters),
+          )
 
-        if (!hasMatchingFilter) {
-          activeFilter = undefined
-        }
+          if (hasMatchingButton && hasOverlap) activeFilters = nextFilters
+        })
       }
 
       function syncUrl({ replace = true } = {}) {
@@ -984,13 +1062,13 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
         url.searchParams.delete('format')
         url.searchParams.delete('screen')
+        url.searchParams.delete('feature')
 
-        if (activeFilter) {
-          url.searchParams.set(
-            activeFilter.type === 'format' ? 'format' : 'screen',
-            activeFilter.value,
-          )
-        }
+        activeFilters.forEach((filter) => {
+          const parameter =
+            filter.type === 'screen-shape' ? 'screen' : filter.type
+          url.searchParams.append(parameter, filter.value)
+        })
 
         const nextUrl = `${url.pathname}${url.search}${url.hash}`
         const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`
@@ -1004,34 +1082,88 @@ const getAuditoriumHeading = (auditoriums: string) => {
         }
       }
 
-      function matchesActiveFilter({
-        formats,
-        screenShapes,
-      }: {
-        formats: string[]
-        screenShapes: string[]
-      }) {
-        if (!activeFilter) return true
+      function matchesFilters(
+        {
+          formats,
+          screenShapes,
+          features,
+        }: {
+          formats: string[]
+          screenShapes: string[]
+          features: string[]
+        },
+        filters = activeFilters,
+      ) {
+        return filters.every((filter) => {
+          if (filter.type === 'format') {
+            return (
+              formats.includes(filter.value) ||
+              (filter.value === 'IMAX' && formats.includes('IMAX 70mm'))
+            )
+          }
 
-        return activeFilter.type === 'format'
-          ? formats.includes(activeFilter.value) ||
-              (activeFilter.value === 'IMAX' && formats.includes('IMAX 70mm'))
-          : screenShapes.includes(activeFilter.value)
+          if (filter.type === 'screen-shape') {
+            return screenShapes.includes(filter.value)
+          }
+
+          return features.includes(filter.value)
+        })
       }
 
       function updateFilterButtons() {
+        const matchingAuditoriums = auditoriumRows.filter((auditorium) =>
+          matchesFilters(auditorium),
+        )
+
         filterButtons.forEach((button) => {
-          const filterType = button.dataset.filterType
+          const filterType = button.dataset.filterType as FilterType | undefined
           const filterValue = button.dataset.filterValue
+          const candidate =
+            filterType && filterValue
+              ? { type: filterType, value: filterValue }
+              : undefined
+          const isSelected = activeFilters.some(
+            (filter) =>
+              filter.type === filterType && filter.value === filterValue,
+          )
+          const isSoftSelected =
+            activeFilters.length > 0 &&
+            !isSelected &&
+            Boolean(candidate) &&
+            matchingAuditoriums.length > 0 &&
+            matchingAuditoriums.every((auditorium) =>
+              matchesFilters(auditorium, [candidate!]),
+            )
+          const hasOverlap =
+            !candidate ||
+            isSelected ||
+            auditoriumRows.some((auditorium) =>
+              matchesFilters(auditorium, [...activeFilters, candidate]),
+            )
+
           button.setAttribute(
             'aria-pressed',
-            String(
-              !filterType
-                ? !activeFilter
-                : activeFilter?.type === filterType &&
-                    activeFilter.value === filterValue,
-            ),
+            String(candidate ? isSelected : activeFilters.length === 0),
           )
+          button.disabled = !hasOverlap
+          button.dataset.softSelected = String(isSoftSelected)
+          if (hasOverlap) {
+            if (isSoftSelected) {
+              button.setAttribute(
+                'aria-description',
+                'Implied by the current selections.',
+              )
+            } else {
+              button.removeAttribute('aria-description')
+            }
+            button.removeAttribute('title')
+          } else {
+            button.setAttribute(
+              'aria-description',
+              'No auditorium matches this combination.',
+            )
+            button.title = 'No auditorium matches this combination'
+          }
         })
       }
 
@@ -1053,43 +1185,35 @@ const getAuditoriumHeading = (auditoriums: string) => {
         )
         let visibleCount = 0
 
-        locations.forEach(
-          ({ card, listItem, formats, screenShapes, auditoriumRows }) => {
-            const matchesTheatreSearch = theatreSearchMatches.has(card)
-            const matchesSearch =
-              !hasSearchTerm ||
-              matchesTheatreSearch ||
-              auditoriumRows.some(({ row }) => auditoriumSearchMatches.has(row))
-            const matchesFilter = matchesActiveFilter({ formats, screenShapes })
-            const visible = matchesSearch && matchesFilter
-            if (listItem.hidden === visible) listItem.hidden = !visible
+        locations.forEach(({ card, listItem, auditoriumRows }) => {
+          const matchesTheatreSearch = theatreSearchMatches.has(card)
+          const visibleAuditoriumRows = auditoriumRows.filter(
+            ({ row, formats, features, screenShapes }) => {
+              const rowMatchesSearch =
+                !hasSearchTerm ||
+                matchesTheatreSearch ||
+                auditoriumSearchMatches.has(row)
+              const rowIsVisible =
+                rowMatchesSearch &&
+                matchesFilters({ formats, features, screenShapes })
+              row.hidden = !rowIsVisible
+              return rowIsVisible
+            },
+          )
+          const visible = visibleAuditoriumRows.length > 0
+          if (listItem.hidden === visible) listItem.hidden = !visible
 
-            const visibleAuditoriumRows = auditoriumRows.filter(
-              ({ row, formats, screenShapes }) => {
-                const rowMatchesSearch =
-                  !hasSearchTerm ||
-                  matchesTheatreSearch ||
-                  auditoriumSearchMatches.has(row)
-                const rowIsVisible =
-                  rowMatchesSearch &&
-                  matchesActiveFilter({ formats, screenShapes })
-                row.hidden = !rowIsVisible
-                return rowIsVisible
-              },
+          visibleAuditoriumRows.forEach(({ row }, index) => {
+            row.classList.toggle(
+              'border-b',
+              index < visibleAuditoriumRows.length - 1,
             )
+          })
 
-            visibleAuditoriumRows.forEach(({ row }, index) => {
-              row.classList.toggle(
-                'border-b',
-                index < visibleAuditoriumRows.length - 1,
-              )
-            })
-
-            if (visible) {
-              visibleCount += 1
-            }
-          },
-        )
+          if (visible) {
+            visibleCount += 1
+          }
+        })
 
         if (resultCount) {
           resultCount.textContent =
@@ -1097,7 +1221,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
               ? `Showing all ${cards.length} locations`
               : `Showing ${visibleCount} of ${cards.length} locations`
         }
-        noResults?.classList.toggle('hidden', visibleCount !== 0)
+        const noResultsCondition = visibleCount !== 0
+        noResults?.classList.toggle('hidden', noResultsCondition)
+        noResults?.classList.toggle('flex', !noResultsCondition)
 
         if (sync) {
           syncUrl({ replace: replaceHistory })
@@ -1132,6 +1258,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
       searchInput?.addEventListener('input', scheduleResultsUpdate)
       sortByDistanceButton?.addEventListener('click', () => {
+        if (sortByDistanceButton.getAttribute('aria-pressed') === 'true') {
+          clearDistanceSort()
+          return
+        }
+
         if (!navigator.geolocation) {
           if (locationStatus) {
             locationStatus.textContent =
@@ -1176,7 +1307,25 @@ const getAuditoriumHeading = (auditoriums: string) => {
         )
       })
       clearDistanceSortButton?.addEventListener('click', clearDistanceSort)
+
       if (filterScroller) {
+        const scrollFilterIntoView = (event: FocusEvent | PointerEvent) => {
+          const button = (event.target as Element).closest('.filter-button')
+          button?.scrollIntoView({
+            block: 'nearest',
+            inline: 'nearest',
+            behavior: 'smooth',
+          })
+        }
+
+        filterScroller.addEventListener('focusin', (event) => {
+          if ((event.target as Element).matches(':focus-visible')) {
+            console.log('focusin')
+            scrollFilterIntoView(event)
+          }
+        })
+        filterScroller.addEventListener('pointerup', scrollFilterIntoView)
+
         let edgeUpdateScheduled = false
         const updateScrollerEdges = () => {
           edgeUpdateScheduled = false
@@ -1231,6 +1380,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
         filterScroller.addEventListener('pointermove', (event) => {
           if (event.pointerId !== pointerId) return
 
+          // A pointer released outside the scroller may not dispatch pointerup
+          // here if capture had not started yet. Do not keep dragging when the
+          // pointer comes back with its primary button already released.
+          if ((event.buttons & 1) === 0) {
+            pointerId = undefined
+            return
+          }
+
           const distance = event.clientX - startX
           if (!hasDragged && Math.abs(distance) < dragThreshold) return
 
@@ -1252,8 +1409,8 @@ const getAuditoriumHeading = (auditoriums: string) => {
           pointerId = undefined
         }
 
-        filterScroller.addEventListener('pointerup', stopDragging)
-        filterScroller.addEventListener('pointercancel', stopDragging)
+        window.addEventListener('pointerup', stopDragging)
+        window.addEventListener('pointercancel', stopDragging)
         filterScroller.addEventListener(
           'click',
           (event) => {
@@ -1268,20 +1425,21 @@ const getAuditoriumHeading = (auditoriums: string) => {
       }
       filterButtons.forEach((button) => {
         button.addEventListener('click', () => {
-          const filterType = button.dataset.filterType
+          const filterType = button.dataset.filterType as FilterType | undefined
           const filterValue = button.dataset.filterValue
 
           if (!filterType || !filterValue) {
-            activeFilter = undefined
-          } else if (
-            activeFilter?.type === filterType &&
-            activeFilter.value === filterValue
-          ) {
-            activeFilter = undefined
+            activeFilters = []
           } else {
-            activeFilter = {
-              type: filterType as 'format' | 'screen-shape',
-              value: filterValue,
+            const selectedIndex = activeFilters.findIndex(
+              (filter) =>
+                filter.type === filterType && filter.value === filterValue,
+            )
+
+            if (selectedIndex >= 0) {
+              activeFilters.splice(selectedIndex, 1)
+            } else {
+              activeFilters.push({ type: filterType, value: filterValue })
             }
           }
 

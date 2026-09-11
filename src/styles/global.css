@@ -5,8 +5,6 @@
 
 @source './**/*.astro';
 
-/* @source '../components'; */
-
 :root {
   color-scheme: dark;
 }

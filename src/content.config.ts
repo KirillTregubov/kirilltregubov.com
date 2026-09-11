@@ -102,19 +102,27 @@ const cinemas = defineCollection({
               '4DX',
               '70mm',
               'VIP 19+',
+              'Clubhouse',
             ]),
           )
           .min(1),
         screen: z.object({
-          ratio: z.enum(['1.43:1', '1.85:1', '1.90:1', '2.20:1', '2.39:1']),
+          ratio: z.enum([
+            '1.43:1',
+            '1.85:1',
+            '1.90:1',
+            '2.20:1',
+            '2.39:1',
+            'N/A',
+          ]),
         }),
         features: z
           .array(
             z.enum([
+              '3D',
+              'Laser Projection',
               'Dolby Atmos',
               'D-BOX',
-              'Laser Projection',
-              'VIP',
               'Recliners',
             ]),
           )
