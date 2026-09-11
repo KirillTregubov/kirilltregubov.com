@@ -588,7 +588,7 @@
       {
         "auditoriums": "2-8, 10-15",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "9",
@@ -602,8 +602,7 @@
         "screen": { "ratio": "1.90:1" },
         "details": "Dual Xenon"
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "markham-vip",
@@ -636,15 +635,14 @@
       {
         "auditoriums": "3-10",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "VIP 1-3",
         "formats": ["VIP 19+"],
         "screen": { "ratio": "1.85:1" }
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "courtney-park",
@@ -663,7 +661,12 @@
     "auditoriumCount": 16,
     "auditoriums": [
       {
-        "auditoriums": "1-6, 8, 10-16",
+        "auditoriums": "1, 16",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "2-6",
         "formats": ["Regular"],
         "screen": { "ratio": "N/A" }
       },
@@ -674,10 +677,20 @@
         "features": ["3D", "D-BOX"]
       },
       {
+        "auditoriums": "8",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" }
+      },
+      {
         "auditoriums": "9",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
         "details": "Dual Xenon"
+      },
+      {
+        "auditoriums": "10-15",
+        "formats": ["Regular"],
+        "screen": { "ratio": "N/A" }
       }
     ],
     "notes": ["Some auditorium aspect ratios require confirmation."]
@@ -743,7 +756,7 @@
       {
         "auditoriums": "1-4, 7-10",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "5",
@@ -754,11 +767,10 @@
       {
         "auditoriums": "6",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "newmarket",
@@ -779,12 +791,12 @@
       {
         "auditoriums": "1-7, 10-13",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "8",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
       },
       {
@@ -793,8 +805,7 @@
         "screen": { "ratio": "1.85:1" },
         "features": ["D-BOX"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "richmond-hill",
@@ -827,7 +838,7 @@
       {
         "auditoriums": "3-13",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "14",
@@ -857,12 +868,12 @@
       {
         "auditoriums": "1-4, 7-9",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "5",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
       },
       {
@@ -874,10 +885,9 @@
       {
         "auditoriums": "VIP 1-3",
         "formats": ["VIP 19+"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "winston-churchill-vip",
@@ -896,7 +906,7 @@
     "auditoriumCount": 22,
     "auditoriums": [
       {
-        "auditoriums": "8-11, 15-20, 22-24",
+        "auditoriums": "8-11, 15-19, 22-24",
         "formats": ["Regular"],
         "screen": { "ratio": "N/A" }
       },
@@ -919,9 +929,14 @@
         "features": ["3D"]
       },
       {
+        "auditoriums": "20",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" }
+      },
+      {
         "auditoriums": "21",
         "formats": ["4DX"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "2.39:1" }
       },
       {
         "auditoriums": "VIP 1-5",
@@ -951,7 +966,7 @@
       {
         "auditoriums": "1-4, 7-10",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["Recliners"]
       },
       {
@@ -994,28 +1009,27 @@
       {
         "auditoriums": "2",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["3D", "Recliners"]
       },
       {
         "auditoriums": "3-6",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["Recliners"]
       },
       {
         "auditoriums": "7",
         "formats": ["Clubhouse"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "VIP 1-4",
         "formats": ["VIP 19+"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["Recliners"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "milton",
@@ -1042,16 +1056,15 @@
       {
         "auditoriums": "2",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" },
+        "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
       },
       {
         "auditoriums": "3-8",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "ajax",
@@ -1136,7 +1149,7 @@
       {
         "auditoriums": "2-11, 13-15",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "12",
@@ -1149,7 +1162,6 @@
         "screen": { "ratio": "1.85:1" },
         "features": ["3D", "Laser Projection", "Dolby Atmos", "D-BOX"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   }
 ]

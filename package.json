@@ -33,7 +33,7 @@
     "cobe": "^2.0.1",
     "date-fns": "^4.4.0",
     "fuse.js": "^7.5.0",
-    "lucide-react": "^1.44.0",
+    "lucide-react": "^1.45.0",
     "motion": "^13.2.0",
     "nanostores": "^1.5.3",
     "react": "^19.3.0",

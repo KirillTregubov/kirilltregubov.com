@@ -9,5 +9,16 @@
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["cineplex"]
+  "cSpell.words": [
+    "cineplex",
+    "Courtneypark",
+    "Grandview",
+    "Gwillimbury",
+    "Junxion",
+    "Labatte",
+    "Milner",
+    "morningside",
+    "Rathburn",
+    "Wyecroft"
+  ]
 }
