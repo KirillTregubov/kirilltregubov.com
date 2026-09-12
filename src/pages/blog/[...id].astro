@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { getCollection, render } from 'astro:content'
+import { resolveBlogSeries } from '@lib/series'
 import BlogPost from '@layouts/BlogPost.astro'
 
 export async function getStaticPaths() {
@@ -10,18 +11,19 @@ export async function getStaticPaths() {
 
   return posts.map((post) => ({
     params: { id: post.id },
-    props: { post },
+    props: { post, series: resolveBlogSeries(post, posts) },
   }))
 }
 
 interface Props {
   post: CollectionEntry<'blog'>
+  series: ReturnType<typeof resolveBlogSeries>
 }
 
-const { post } = Astro.props
+const { post, series } = Astro.props
 const { Content, headings } = await render(post)
 ---
 
-<BlogPost {...post.data} {headings}>
+<BlogPost {...post.data} {headings} {series}>
   <Content />
 </BlogPost>
