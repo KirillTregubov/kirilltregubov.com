@@ -53,6 +53,18 @@ const blog = defineCollection({
       alt: z.string(),
     }),
     tags: z.array(z.string()).default([]),
+    series: z
+      .object({
+        id: z
+          .string()
+          .regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            'Series id must contain lowercase alphanumeric segments separated by hyphens',
+          ),
+        title: z.string().min(1),
+        order: z.number().int().positive(),
+      })
+      .optional(),
     draft: z.boolean().default(false),
     hidden: z.boolean().default(false),
     archived: z.boolean().default(false),
