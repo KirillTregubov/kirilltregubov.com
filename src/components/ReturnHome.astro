@@ -21,13 +21,11 @@ const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
     {href}
     class="-ml-1 inline-flex w-auto grow-0 items-center gap-1 rounded-sm px-1 font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
   >
-    {
-      href === '/' ? (
-        <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
-      ) : (
-        <ArrowLeftIcon className="mr-1.5 size-5" aria-hidden="true" />
-      )
-    }
+    {href === '/' ? (
+      <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
+    ) : (
+      <ArrowLeftIcon className="mr-1.5 size-5" aria-hidden="true" />
+    )}
     <span>{label}</span>
   </a>
   <slot />

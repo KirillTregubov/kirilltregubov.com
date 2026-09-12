@@ -30,34 +30,27 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
 >
   <main class="mx-auto w-full max-w-240 grow">
     <ReturnHome />
-    <header
-      class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
-    >
+    <header class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
       <h1 class="text-3xl font-semibold text-neutral-100">Blog</h1>
       <p class="mt-3 max-w-180 text-lg text-neutral-400">
         Notes on software development, interface design, and the projects I’ve
         built.
       </p>
     </header>
-    <ul class="mt-3 space-y-6">
-      {
-        articles.map((article, index) => (
-          <li
-            class="motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0"
-            style={`animation-delay: ${0.3 + index * 0.1}s`}
-          >
-            <ArticlePreview article={article} eager={index === 0} />
+    <div class="article-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 sm:-mx-6">
+      <ul class="mt-6">
+        {articles.map((article) => (
+          <li class="article-row">
+            <ArticlePreview article={article} />
           </li>
-        ))
-      }
-    </ul>
-    {
-      archivedArticles.length > 0 && (
+        ))}
+      </ul>
+      {archivedArticles.length > 0 && (
         <details
-          class="archive-details group/archive mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0"
+          class="archive-details group/archive mx-3 mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 sm:mx-6"
           style={`animation-delay: ${0.3 + articles.length * 0.1}s`}
         >
-          <summary class="flex w-fit cursor-pointer items-center gap-2 text-lg font-semibold text-neutral-300 transition select-none marker:content-none hover:text-white focus-visible:text-white">
+          <summary class="relative z-1 flex w-fit cursor-pointer items-center gap-2 text-lg font-semibold text-neutral-300 transition select-none marker:content-none hover:text-white focus-visible:text-white">
             Archive
             <span class="text-sm font-normal text-neutral-500">
               ({archivedArticles.length})
@@ -67,21 +60,139 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
               aria-hidden="true"
             />
           </summary>
-          <ul class="archive-list mt-2 space-y-6">
+          <ul class="archive-list -mx-3 mt-3 sm:-mx-6">
             {archivedArticles.map((article) => (
-              <li>
+              <li class="article-row">
                 <ArticlePreview article={article} />
               </li>
             ))}
           </ul>
         </details>
-      )
-    }
+      )}
+    </div>
   </main>
 </Layout>
 
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+  const setupArticleHighlights = () => {
+    document
+      .querySelectorAll<HTMLElement>('.article-list-region')
+      .forEach((region) => {
+        if (region.dataset.highlightInit !== undefined) return
+        region.dataset.highlightInit = ''
+
+        const rows = region.querySelectorAll<HTMLElement>('.article-row')
+        const controller = new AbortController()
+        const { signal } = controller
+        let activeRow: HTMLElement | null = null
+        let resetTimer: number | undefined
+
+        const moveTo = (row: HTMLElement) => {
+          const inset = 4
+          const regionRect = region.getBoundingClientRect()
+          const rowRect = row.getBoundingClientRect()
+          const wasVisible = region.dataset.highlightVisible !== undefined
+
+          window.clearTimeout(resetTimer)
+          if (!wasVisible) region.dataset.highlightPositioning = ''
+
+          activeRow = row
+          region.style.setProperty(
+            '--highlight-y',
+            `${rowRect.top - regionRect.top + inset}px`,
+          )
+          region.style.setProperty(
+            '--highlight-height',
+            `${Math.max(0, rowRect.height - inset * 2)}px`,
+          )
+
+          if (!wasVisible) {
+            void region.offsetWidth
+            delete region.dataset.highlightPositioning
+          }
+
+          region.dataset.highlightVisible = ''
+        }
+
+        const hide = () => {
+          delete region.dataset.highlightVisible
+          activeRow = null
+          window.clearTimeout(resetTimer)
+          resetTimer = window.setTimeout(() => {
+            if (region.dataset.highlightVisible !== undefined) return
+
+            region.dataset.highlightPositioning = ''
+            region.style.setProperty('--highlight-y', '0px')
+            region.style.setProperty('--highlight-height', '0px')
+            void region.offsetWidth
+            delete region.dataset.highlightPositioning
+          }, 150)
+        }
+
+        const hasKeyboardFocus = () => {
+          const focusedElement = document.activeElement
+
+          return (
+            focusedElement instanceof HTMLElement &&
+            region.contains(focusedElement) &&
+            focusedElement.matches(':focus-visible')
+          )
+        }
+
+        const hideIfInactive = () => {
+          if (!region.matches(':hover') && !hasKeyboardFocus()) hide()
+        }
+
+        rows.forEach((row) => {
+          row.addEventListener('pointerenter', () => moveTo(row))
+          row.addEventListener('focusin', () => moveTo(row))
+        })
+
+        region.addEventListener('pointerleave', hideIfInactive)
+
+        region.addEventListener('focusout', () => {
+          requestAnimationFrame(() => {
+            const focusedRow =
+              document.activeElement?.closest<HTMLElement>('.article-row')
+
+            if (focusedRow && region.contains(focusedRow)) moveTo(focusedRow)
+            else hideIfInactive()
+          })
+        })
+
+        const reconcileAfterPointer = () => {
+          requestAnimationFrame(hideIfInactive)
+        }
+
+        window.addEventListener('pointerup', reconcileAfterPointer, { signal })
+        window.addEventListener('pointercancel', reconcileAfterPointer, {
+          signal,
+        })
+        window.addEventListener('blur', hide, { signal })
+        document.addEventListener(
+          'visibilitychange',
+          () => {
+            if (document.hidden) hide()
+          },
+          { signal },
+        )
+        document.addEventListener(
+          'astro:before-swap',
+          () => controller.abort(),
+          { once: true, signal },
+        )
+
+        const resizeObserver = new ResizeObserver(() => {
+          if (activeRow && region.dataset.highlightVisible !== undefined) {
+            moveTo(activeRow)
+          }
+        })
+
+        rows.forEach((row) => resizeObserver.observe(row))
+      })
+  }
 
   const setupArchiveDetails = () => {
     document
@@ -126,5 +237,56 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
       })
   }
 
-  document.addEventListener('astro:page-load', setupArchiveDetails)
+  document.addEventListener('astro:page-load', () => {
+    setupArticleHighlights()
+    setupArchiveDetails()
+  })
 </script>
+
+<style>
+  .article-list-region {
+    --highlight-y: 0px;
+    --highlight-height: 0px;
+    position: relative;
+  }
+
+  .article-list-region::before {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--highlight-height);
+    border-radius: 0.75rem;
+    background: color-mix(in oklab, var(--color-neutral-800) 60%, transparent);
+    content: '';
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(0, var(--highlight-y), 0);
+    transition:
+      transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      height 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 150ms ease-out;
+    will-change: transform, height, opacity;
+  }
+
+  .article-list-region[data-highlight-visible]::before {
+    opacity: 1;
+  }
+
+  .article-list-region[data-highlight-positioning]::before {
+    transition: none;
+  }
+
+  .article-row {
+    position: relative;
+    z-index: 1;
+    padding-block: 0.25rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-list-region::before {
+      transition: opacity 150ms ease-out;
+    }
+  }
+</style>

@@ -1,14 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { Image } from 'astro:assets'
 import { ArrowRightIcon } from 'lucide-react'
 
 interface Props {
   article: CollectionEntry<'blog'>
-  eager?: boolean
 }
 
-const { article, eager = false } = Astro.props
+const { article } = Astro.props
 const href = `/blog/${article.id}`
 
 const displayDate = article.data.updatedDate ?? article.data.pubDate
@@ -19,50 +17,40 @@ const formattedDate = displayDate.toLocaleDateString('en-CA', {
 })
 ---
 
-<article
-  class="group overflow-hidden rounded-xl border border-neutral-800 bg-neutral-800/30 transition focus-within:border-neutral-600 focus-within:bg-neutral-800/60 hover:border-neutral-700 hover:bg-neutral-800/60"
->
-  <a href={href} class="grid rounded-xl md:grid-cols-[minmax(15rem,2fr)_3fr]">
-    <div class="bg-neutral-800 p-2">
-      <Image
-        class="unblur aspect-[1200/630] h-full w-full rounded-lg object-cover transition duration-300 will-change-transform group-focus-within:scale-[1.02] group-hover:scale-[1.02]"
-        src={article.data.image.url}
-        alt={article.data.image.alt}
-        width={1200}
-        height={630}
-        loading={eager ? 'eager' : 'lazy'}
-      />
-    </div>
-    <div class="flex flex-col justify-center p-5 sm:p-6">
+<article class="group rounded-xl">
+  <a
+    href={href}
+    class="grid min-h-32 grid-cols-[minmax(0,1fr)_auto] rounded-xl"
+  >
+    <div class="flex min-w-0 flex-col justify-center px-3 py-6 sm:px-6">
       <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
         <time datetime={displayDate.toISOString()}>
-          {article.data.updatedDate ? 'Updated ' : ''}{formattedDate}
+          {article.data.updatedDate ? 'Updated ' : ''}
+          {formattedDate}
         </time>
-        {
-          import.meta.env.DEV && article.data.hidden && (
-            <span class="rounded-sm bg-violet-950 px-1.5 py-0.5 text-violet-300">
-              Development only
-            </span>
-          )
-        }
-        {
-          import.meta.env.DEV && article.data.draft && (
-            <span class="rounded-sm bg-amber-950 px-1.5 py-0.5 text-amber-300">
-              Draft
-            </span>
-          )
-        }
+        {import.meta.env.DEV && article.data.hidden && (
+          <span class="rounded-sm bg-violet-950 px-1.5 py-0.5 text-violet-300">
+            Development only
+          </span>
+        )}
+        {import.meta.env.DEV && article.data.draft && (
+          <span class="rounded-sm bg-amber-950 px-1.5 py-0.5 text-amber-300">
+            Draft
+          </span>
+        )}
       </div>
-      <h2 class="mt-1 text-xl font-semibold text-neutral-200">
+      <h2 class="mt-1 text-lg font-semibold text-neutral-200 sm:text-xl">
         {article.data.title}
       </h2>
-      <p class="mt-2 text-neutral-400">{article.data.description}</p>
-      <span
-        class="mt-4 inline-flex items-center gap-1.5 font-medium text-neutral-300 transition group-focus-within:text-white group-hover:text-white"
-      >
-        Read article
+      <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-neutral-400 sm:text-base">
+        {article.data.description}
+      </p>
+    </div>
+    <div class="flex items-center pr-3 pl-3 sm:pr-6 sm:pl-5">
+      <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2 text-sm font-medium text-neutral-400 transition group-focus-within:text-white group-hover:text-white sm:px-3">
+        <span class="sr-only sm:not-sr-only">Read article</span>
         <ArrowRightIcon
-          className="size-4 transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5"
+          className="size-4 transition-transform group-focus-within:translate-x-0.5 group-hover:translate-x-0.5 will-change-transform"
           aria-hidden="true"
         />
       </span>

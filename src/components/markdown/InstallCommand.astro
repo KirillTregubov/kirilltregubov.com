@@ -74,26 +74,24 @@ const highlightedCommands = Object.fromEntries(
     role="tablist"
     aria-label="Package manager"
   >
-    {
-      installTabs.map((tab) => (
-        <button
-          id={`${tabId}-tab-${tab.label}`}
-          class:list={[
-            'relative shrink-0 cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-neutral-800 hover:text-neutral-100 focus-visible:z-10 focus-visible:ring-inset',
-            tab.label === selectedManager
-              ? 'text-neutral-100'
-              : 'text-neutral-400',
-          ]}
-          type="button"
-          role="tab"
-          aria-selected={tab.label === selectedManager ? 'true' : 'false'}
-          aria-controls={`${tabId}-panel-${tab.label}`}
-          data-install-tab={tab.label}
-        >
-          {tab.label}
-        </button>
-      ))
-    }
+    {installTabs.map((tab) => (
+      <button
+        id={`${tabId}-tab-${tab.label}`}
+        class:list={[
+          'relative shrink-0 cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-neutral-800 hover:text-neutral-100 focus-visible:z-10 focus-visible:ring-inset',
+          tab.label === selectedManager
+            ? 'text-neutral-100'
+            : 'text-neutral-400',
+        ]}
+        type="button"
+        role="tab"
+        aria-selected={tab.label === selectedManager ? 'true' : 'false'}
+        aria-controls={`${tabId}-panel-${tab.label}`}
+        data-install-tab={tab.label}
+      >
+        {tab.label}
+      </button>
+    ))}
   </div>
   <div
     class="relative"
@@ -102,18 +100,16 @@ const highlightedCommands = Object.fromEntries(
     aria-labelledby={`${tabId}-tab-${selectedManager}`}
     data-install-panel
   >
-    {
-      installTabs.map((tab) => (
-        <code
-          class:list={[
-            'block overflow-x-auto px-4 py-4 font-mono text-sm leading-6 text-neutral-100',
-            tab.label !== selectedManager && 'hidden',
-          ]}
-          data-install-command={tab.label}
-          set:html={highlightedCommands[tab.label]}
-        />
-      ))
-    }
+    {installTabs.map((tab) => (
+      <code
+        class:list={[
+          'block overflow-x-auto px-4 py-4 font-mono text-sm leading-6 text-neutral-100',
+          tab.label !== selectedManager && 'hidden',
+        ]}
+        data-install-command={tab.label}
+        set:html={highlightedCommands[tab.label]}
+      />
+    ))}
     <CopyButton
       variant="button"
       from="[data-install-command]:not(.hidden)"
