@@ -24,3 +24,5 @@ pnpm-debug.log*
 .idea/
 
 .vercel
+
+/TODO.md

@@ -53,12 +53,12 @@ const formatDate = (date: Date) =>
   bodyClass="flex flex-col"
   footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
 >
-  <main class="mx-auto w-full max-w-200 grow md:space-y-8">
+  <main class="mx-auto w-full max-w-200 grow space-y-8">
     <ReturnHome href="/blog" label="Blog" />
     <header class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
       <div class="mb-6 overflow-hidden rounded-xl bg-neutral-800">
         <Image
-          class="unblur aspect-[1200/630] w-full object-cover select-none"
+          class="unblur aspect-1200/630 w-full object-cover select-none"
           src={image.url}
           alt={image.alt}
           width={1200}

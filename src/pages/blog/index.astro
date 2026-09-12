@@ -37,7 +37,7 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
         built.
       </p>
     </header>
-    <div class="article-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 sm:-mx-6">
+    <div class="article-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 lg:-mx-6">
       <ul class="mt-6">
         {articles.map((article) => (
           <li class="article-row">
@@ -46,28 +46,34 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
         ))}
       </ul>
       {archivedArticles.length > 0 && (
-        <details
-          class="archive-details group/archive mx-3 mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 sm:mx-6"
-          style={`animation-delay: ${0.3 + articles.length * 0.1}s`}
-        >
-          <summary class="relative z-1 flex w-fit cursor-pointer items-center gap-2 text-lg font-semibold text-neutral-300 transition select-none marker:content-none hover:text-white focus-visible:text-white">
-            Archive
-            <span class="text-sm font-normal text-neutral-500">
-              ({archivedArticles.length})
-            </span>
-            <ChevronRightIcon
-              className="archive-chevron size-4 text-neutral-500 transition-transform duration-75 group-open/archive:rotate-90"
-              aria-hidden="true"
-            />
-          </summary>
-          <ul class="archive-list -mx-3 mt-3 sm:-mx-6">
-            {archivedArticles.map((article) => (
-              <li class="article-row">
-                <ArticlePreview article={article} />
-              </li>
-            ))}
-          </ul>
-        </details>
+        <div class="mx-3 mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 lg:mx-6">
+          <details
+            class="archive-details group/archive"
+            style={`animation-delay: ${0.3 + articles.length * 0.1}s`}
+          >
+            <summary class="relative z-1 px-2 py-1 -mx-2 -my-1 rounded-lg flex w-full cursor-pointer items-center gap-2 text-lg font-semibold text-neutral-300 select-none marker:content-none group">
+              <span class="flex items-baseline gap-1 pt-px">
+                <span class="group-hover:text-white group-focus-visible:text-white group-active:text-white transition">
+                  Archive
+                </span>
+                <span class="text-sm font-normal text-neutral-500">
+                  ({archivedArticles.length})
+                </span>
+              </span>
+              <ChevronRightIcon
+                className="archive-chevron size-4 transition text-neutral-500 group-hover:text-white group-focus-visible:text-white group-active:text-white group-open/archive:rotate-90"
+                aria-hidden="true"
+              />
+            </summary>
+            <ul class="archive-list -mx-3 mt-3 lg:-mx-6">
+              {archivedArticles.map((article) => (
+                <li class="article-row">
+                  <ArticlePreview article={article} />
+                </li>
+              ))}
+            </ul>
+          </details>
+        </div>
       )}
     </div>
   </main>
@@ -75,6 +81,9 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
 
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const supportsHighlightMovement = window.matchMedia(
+    '(hover: hover) and (pointer: fine)',
+  )
 
   const setupArticleHighlights = () => {
     document
@@ -94,9 +103,16 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
           const regionRect = region.getBoundingClientRect()
           const rowRect = row.getBoundingClientRect()
           const wasVisible = region.dataset.highlightVisible !== undefined
+          const shouldReplayOpacity =
+            wasVisible &&
+            !supportsHighlightMovement.matches &&
+            activeRow !== row
 
           window.clearTimeout(resetTimer)
-          if (!wasVisible) region.dataset.highlightPositioning = ''
+          if (!wasVisible || shouldReplayOpacity) {
+            delete region.dataset.highlightVisible
+            region.dataset.highlightPositioning = ''
+          }
 
           activeRow = row
           region.style.setProperty(
@@ -108,7 +124,7 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
             `${Math.max(0, rowRect.height - inset * 2)}px`,
           )
 
-          if (!wasVisible) {
+          if (!wasVisible || shouldReplayOpacity) {
             void region.offsetWidth
             delete region.dataset.highlightPositioning
           }
@@ -263,11 +279,18 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
     opacity: 0;
     pointer-events: none;
     transform: translate3d(0, var(--highlight-y), 0);
-    transition:
-      transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      height 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      opacity 150ms ease-out;
-    will-change: transform, height, opacity;
+    transition: opacity 150ms ease-out;
+    will-change: opacity;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .article-list-region::before {
+      transition:
+        transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        height 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        opacity 150ms ease-out;
+      will-change: transform, height, opacity;
+    }
   }
 
   .article-list-region[data-highlight-visible]::before {
