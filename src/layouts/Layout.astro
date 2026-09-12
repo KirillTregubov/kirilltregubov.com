@@ -94,22 +94,18 @@ const devOverflowToggleScript = `
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
-    {
-      publishedDate && (
-        <meta
-          property="article:published_time"
-          content={publishedDate.toISOString()}
-        />
-      )
-    }
-    {
-      updatedDate && (
-        <meta
-          property="article:modified_time"
-          content={updatedDate.toISOString()}
-        />
-      )
-    }
+    {publishedDate && (
+      <meta
+        property="article:published_time"
+        content={publishedDate.toISOString()}
+      />
+    )}
+    {updatedDate && (
+      <meta
+        property="article:modified_time"
+        content={updatedDate.toISOString()}
+      />
+    )}
     <meta property="og:locale" content="en_US" />
     <meta
       property="og:image"
