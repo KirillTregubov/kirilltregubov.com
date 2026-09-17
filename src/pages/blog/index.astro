@@ -168,6 +168,24 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
 
         region.addEventListener('pointerleave', hideIfInactive)
 
+        region
+          .querySelectorAll<HTMLDetailsElement>('.archive-details')
+          .forEach((details) => {
+            const summary = details.querySelector('summary')
+
+            summary?.addEventListener('pointerenter', hide, { signal })
+            summary?.addEventListener('focusin', hide, { signal })
+            details.addEventListener(
+              'toggle',
+              () => {
+                if (!details.open && activeRow && details.contains(activeRow)) {
+                  hide()
+                }
+              },
+              { signal },
+            )
+          })
+
         region.addEventListener('focusout', () => {
           requestAnimationFrame(() => {
             const focusedRow =

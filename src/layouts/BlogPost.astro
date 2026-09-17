@@ -97,25 +97,25 @@ const formatDate = (date: Date) =>
     {series && (
       <BlogSeriesNavigationComponent series={series} placement="top" />
     )}
-    <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-a:text-white prose-img:rounded-xl">
+    <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-a:-m-0.5 prose-a:rounded-sm prose-a:p-0.5 prose-a:hover:text-neutral-300 prose-a:focus-visible:text-neutral-300 prose-a:active:text-neutral-300 prose-a:transition prose-a:text-white prose-img:rounded-xl">
       {tableOfContents.length > 1 && (
-        <details class="group/toc not-prose overflow-hidden rounded-xl border border-neutral-800 bg-neutral-800/30 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-5 py-4 font-semibold text-neutral-200 transition marker:content-none hover:bg-neutral-800/50 hover:text-white">
+        <details class="toc-details group/toc not-prose rounded-xl border border-neutral-800 transition bg-neutral-800 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
+          <summary class="toc-summary flex cursor-pointer list-none rounded-xl items-center justify-between gap-4 px-5 py-4 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:text-white focus-visible:text-white focus-visible:ring-inset group-open/toc:rounded-b-none group/summary">
             <span>Table of contents</span>
             <ChevronRightIcon
-              className="size-4 shrink-0 text-neutral-500 transition-transform duration-150 group-open/toc:rotate-90"
+              className="size-4 shrink-0 text-neutral-500 transition-transform duration-150 group-hover/summary:text-white group-active/summary:text-white group-focus-visible/summary:text-white group-open/toc:rotate-90"
               aria-hidden="true"
             />
           </summary>
           <nav
             aria-label="Table of contents"
-            class="border-t border-neutral-800 px-5 py-4"
+            class="toc-content border-t border-neutral-800 px-5 py-4"
           >
             <ol class="space-y-2">
               {tableOfContents.map((heading) => (
                 <li class:list={[heading.depth === 3 && 'pl-4']}>
                   <a
-                    class="block rounded-sm text-sm text-neutral-400 transition hover:text-white"
+                    class="block rounded-sm text-base text-neutral-400 transition hover:text-white"
                     href={`#${heading.slug}`}
                   >
                     {heading.text}
@@ -126,7 +126,7 @@ const formatDate = (date: Date) =>
           </nav>
         </details>
       )}
-      <div class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0">
+      <div class="[&_summary]:-m-0.5 [&_summary]:rounded-sm [&_summary]:p-0.5 [&_summary]:transition [&_summary]:cursor-pointer motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0">
         <slot />
       </div>
     </article>
@@ -135,3 +135,83 @@ const formatDate = (date: Date) =>
     )}
   </main>
 </Layout>
+
+<script>
+  const setupTableOfContents = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    document
+      .querySelectorAll<HTMLDetailsElement>('.toc-details')
+      .forEach((details) => {
+        if (details.dataset.tocInit !== undefined) return
+        details.dataset.tocInit = ''
+
+        const summary = details.querySelector<HTMLElement>('.toc-summary')
+        const content = details.querySelector<HTMLElement>('.toc-content')
+
+        if (!summary || !content) return
+
+        summary.addEventListener('click', async (event) => {
+          if (reducedMotion.matches) return
+
+          event.preventDefault()
+          if (details.dataset.animating !== undefined) return
+
+          const opening = !details.open
+          const startHeight = details.getBoundingClientRect().height
+          details.dataset.animating = ''
+
+          if (opening) details.open = true
+          else details.dataset.closing = ''
+
+          const borderHeight = details.offsetHeight - details.clientHeight
+          const endHeight = opening
+            ? details.scrollHeight + borderHeight
+            : summary.getBoundingClientRect().height + borderHeight
+
+          const heightAnimation = details.animate(
+            [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
+            {
+              duration: 240,
+              easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+              fill: 'forwards',
+            },
+          )
+          const contentAnimation = content.animate(
+            opening
+              ? [
+                  { opacity: 0, transform: 'translateY(-0.25rem)' },
+                  { opacity: 1, transform: 'translateY(0)' },
+                ]
+              : [
+                  { opacity: 1, transform: 'translateY(0)' },
+                  { opacity: 0, transform: 'translateY(-0.25rem)' },
+                ],
+            { duration: 180, easing: 'ease-out', fill: 'forwards' },
+          )
+
+          try {
+            await Promise.all([
+              heightAnimation.finished,
+              contentAnimation.finished,
+            ])
+            if (!opening) details.open = false
+          } finally {
+            heightAnimation.cancel()
+            contentAnimation.cancel()
+            delete details.dataset.animating
+            delete details.dataset.closing
+          }
+        })
+      })
+  }
+
+  document.addEventListener('astro:page-load', setupTableOfContents)
+</script>
+
+<style>
+  .toc-details[data-closing] > .toc-summary {
+    border-bottom-right-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+  }
+</style>
