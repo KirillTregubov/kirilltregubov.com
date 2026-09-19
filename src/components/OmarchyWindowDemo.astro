@@ -1,0 +1,904 @@
+---
+import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
+---
+
+<section class="omarchy-demo not-prose" aria-labelledby="omarchy-demo-title">
+  <div class="demo-heading">
+    <div>
+      <p class="eyebrow">Interactive workspace</p>
+      <h2 id="omarchy-demo-title">See the layout take shape</h2>
+    </div>
+
+    <div class="layout-switcher" role="group" aria-label="Window layout">
+      <button type="button" data-layout-button="dwindle" aria-pressed="true">
+        <LayoutGridIcon aria-hidden="true" />
+        Dwindle
+      </button>
+      <button type="button" data-layout-button="scrolling" aria-pressed="false">
+        <MoveHorizontalIcon aria-hidden="true" />
+        Scrolling
+      </button>
+    </div>
+  </div>
+
+  <div class="desktop-experience">
+    <div class="monitor-shell">
+      <div
+        class="screen"
+        role="group"
+        data-layout="dwindle"
+        data-window-count="1"
+        aria-label="Workspace 1, 1 window, dwindle layout"
+      >
+        <div class="wallpaper" aria-hidden="true"></div>
+
+        <div class="topbar">
+          <div class="topbar-left">
+            <svg
+              class="omarchy-logo"
+              viewBox="0 0 1200 1200"
+              fill="currentColor"
+              aria-label="Omarchy"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1200 1200H720v-80h400V80H640.004v160h-400v720h720V240h-80v-80H1040v880H640v160H0V0h1200ZM80 1120h480v-80H160l.004-400H80Zm0-560h80.004V160h400V80H80Z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <div class="workspaces" role="group" aria-label="Workspaces">
+              {[1, 2, 3, 4].map((workspace) => (
+                <button
+                  type="button"
+                  class="workspace-button"
+                  data-workspace-button={workspace}
+                  aria-label={`Switch to workspace ${workspace}`}
+                  aria-pressed={workspace === 1 ? 'true' : 'false'}
+                >
+                  <span class="workspace-number">{workspace}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <time class="clock" data-system-time></time>
+          <div class="status-icons" aria-hidden="true">
+            <span>⌁</span>
+            <span>▦</span>
+            <span>◒</span>
+          </div>
+        </div>
+
+        <div class="workspace" aria-live="polite">
+          <div
+            class="window terminal-window"
+            data-app="terminal"
+            data-window="1"
+          ></div>
+          <div
+            class="window browser-window"
+            data-app="browser"
+            data-window="0"
+          ></div>
+          <div
+            class="window editor-window"
+            data-app="editor"
+            data-window="0"
+          ></div>
+        </div>
+      </div>
+      <div class="monitor-chin" aria-hidden="true">
+        <span>OMARCHY</span>
+      </div>
+      <div class="monitor-stand" aria-hidden="true"></div>
+    </div>
+
+    <div class="demo-controls">
+      <div class="demo-copy">
+        <p class="step-copy">Start with one window, then open two more.</p>
+        <p class="mode-copy">Dwindle · workspace 1 · 1 window</p>
+      </div>
+      <div class="action-buttons">
+        <button
+          class="reset-button"
+          type="button"
+          aria-label="Reset demo"
+          disabled
+        >
+          <RotateCcwIcon aria-hidden="true" />
+          Reset
+        </button>
+        <button
+          class="app-button terminal-button"
+          type="button"
+          data-app-button="terminal"
+          aria-pressed="true"
+        >
+          <span class="app-color" aria-hidden="true"></span>
+          Terminal
+        </button>
+        <button
+          class="app-button browser-button"
+          type="button"
+          data-app-button="browser"
+          aria-pressed="false"
+        >
+          <span class="app-color" aria-hidden="true"></span>
+          Browser
+        </button>
+        <button
+          class="app-button editor-button"
+          type="button"
+          data-app-button="editor"
+          aria-pressed="false"
+        >
+          <span class="app-color" aria-hidden="true"></span>
+          Editor
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-disabled">
+    <div class="mobile-monitor" aria-hidden="true">
+      <div>
+        <LayoutGridIcon />
+      </div>
+      <span></span>
+    </div>
+    <p>
+      <strong>Desktop demo</strong>
+    </p>
+    <p>
+      This workspace needs a little more room. Open the article on a desktop to
+      try it.
+    </p>
+  </div>
+</section>
+
+<script>
+  const setupOmarchyDemos = () => {
+    document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
+      if (demo.dataset.initialized !== undefined) return
+      demo.dataset.initialized = ''
+
+      const screen = demo.querySelector<HTMLElement>('.screen')
+      const resetButton = demo.querySelector<HTMLButtonElement>('.reset-button')
+      const modeCopy = demo.querySelector<HTMLElement>('.mode-copy')
+      const stepCopy = demo.querySelector<HTMLElement>('.step-copy')
+      const systemTime =
+        demo.querySelector<HTMLTimeElement>('[data-system-time]')
+      const layoutButtons = demo.querySelectorAll<HTMLButtonElement>(
+        '[data-layout-button]',
+      )
+      const workspaceButtons = demo.querySelectorAll<HTMLButtonElement>(
+        '[data-workspace-button]',
+      )
+      const appButtons =
+        demo.querySelectorAll<HTMLButtonElement>('[data-app-button]')
+      const appWindows = demo.querySelectorAll<HTMLElement>('[data-app]')
+
+      if (!screen || !resetButton || !modeCopy || !stepCopy || !systemTime)
+        return
+
+      const appIds = ['terminal', 'browser', 'editor'] as const
+      type DemoApp = (typeof appIds)[number]
+
+      const workspaceApps: DemoApp[][] = [['terminal'], [], [], []]
+      let activeWorkspace = 1
+      let layout: 'dwindle' | 'scrolling' = 'dwindle'
+      let workspaceSwitchVersion = 0
+
+      const timeFormatter = new Intl.DateTimeFormat('en-GB', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })
+
+      const updateSystemTime = () => {
+        const now = new Date()
+        const parts = Object.fromEntries(
+          timeFormatter
+            .formatToParts(now)
+            .filter(({ type }) => type !== 'literal')
+            .map(({ type, value }) => [type, value]),
+        )
+
+        systemTime.dateTime = now.toISOString()
+        systemTime.textContent = `${parts.weekday} ${parts.day} ${parts.month} ${parts.hour}:${parts.minute}`
+      }
+
+      updateSystemTime()
+      const clockInterval = window.setInterval(updateSystemTime, 1000)
+      document.addEventListener(
+        'astro:before-swap',
+        () => window.clearInterval(clockInterval),
+        { once: true },
+      )
+
+      const update = () => {
+        const openApps = workspaceApps[activeWorkspace - 1] ?? []
+        const windowCount = openApps.length
+        screen.dataset.layout = layout
+        screen.dataset.windowCount = String(windowCount)
+        screen.dataset.workspace = String(activeWorkspace)
+        screen.setAttribute(
+          'aria-label',
+          `Workspace ${activeWorkspace}, ${windowCount} ${windowCount === 1 ? 'window' : 'windows'}, ${layout} layout`,
+        )
+        const layoutLabel = layout === 'dwindle' ? 'Dwindle' : 'Scrolling'
+
+        modeCopy.textContent = `${layoutLabel} · workspace ${activeWorkspace} · ${windowCount === 0 ? 'empty' : `${windowCount} ${windowCount === 1 ? 'window' : 'windows'}`}`
+
+        stepCopy.textContent =
+          windowCount === 0
+            ? 'This workspace is empty. Open its first app.'
+            : windowCount === 1
+              ? 'Open two more apps to see the layout take shape.'
+              : windowCount === 2
+                ? 'Open one more app to complete the layout.'
+                : 'This workspace has all three apps open.'
+
+        appWindows.forEach((appWindow) => {
+          const app = appWindow.dataset.app as DemoApp
+          const position = openApps.indexOf(app)
+          const isOpen = position !== -1
+
+          appWindow.dataset.window = isOpen ? String(position + 1) : '0'
+          appWindow.setAttribute('aria-hidden', String(!isOpen))
+        })
+
+        const isInitialState =
+          activeWorkspace === 1 &&
+          layout === 'dwindle' &&
+          workspaceApps.every((apps, index) =>
+            index === 0
+              ? apps.length === 1 && apps[0] === 'terminal'
+              : apps.length === 0,
+          )
+
+        resetButton.disabled = isInitialState
+
+        appButtons.forEach((button) => {
+          const app = button.dataset.appButton as DemoApp
+          const isOpen = openApps.includes(app)
+          const appName = `${app.charAt(0).toUpperCase()}${app.slice(1)}`
+
+          button.setAttribute('aria-pressed', String(isOpen))
+          button.setAttribute(
+            'aria-label',
+            `${isOpen ? 'Close' : 'Open'} ${appName}`,
+          )
+        })
+
+        layoutButtons.forEach((button) => {
+          button.setAttribute(
+            'aria-pressed',
+            String(button.dataset.layoutButton === layout),
+          )
+        })
+
+        workspaceButtons.forEach((button) => {
+          button.setAttribute(
+            'aria-pressed',
+            String(Number(button.dataset.workspaceButton) === activeWorkspace),
+          )
+        })
+      }
+
+      appButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const app = button.dataset.appButton as DemoApp
+          if (!appIds.includes(app)) return
+
+          const openApps = workspaceApps[activeWorkspace - 1] ?? []
+          const appIndex = openApps.indexOf(app)
+
+          if (appIndex === -1) openApps.push(app)
+          else openApps.splice(appIndex, 1)
+
+          update()
+        })
+      })
+
+      resetButton.addEventListener('click', () => {
+        workspaceApps.splice(0, workspaceApps.length, ['terminal'], [], [], [])
+        activeWorkspace = 1
+        layout = 'dwindle'
+        update()
+      })
+
+      workspaceButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          workspaceSwitchVersion += 1
+          const switchVersion = workspaceSwitchVersion
+          screen.dataset.switchingWorkspace = ''
+          activeWorkspace = Number(button.dataset.workspaceButton) || 1
+          update()
+
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              if (switchVersion === workspaceSwitchVersion)
+                delete screen.dataset.switchingWorkspace
+            })
+          })
+        })
+      })
+
+      layoutButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          layout =
+            button.dataset.layoutButton === 'scrolling'
+              ? 'scrolling'
+              : 'dwindle'
+          update()
+        })
+      })
+
+      update()
+    })
+  }
+
+  document.addEventListener('astro:page-load', setupOmarchyDemos)
+</script>
+
+<style>
+  .omarchy-demo {
+    --orange: #ff8a3d;
+    --focus-blue: #8bd5ff;
+    margin: 2.5rem 0;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: 1.25rem;
+    background: #111116;
+    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.35);
+  }
+
+  .demo-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .eyebrow {
+    margin: 0 0 0.2rem;
+    color: #fb923c;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .demo-heading h2 {
+    margin: 0;
+    color: #f5f5f5;
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  .layout-switcher {
+    display: flex;
+    gap: 0.2rem;
+    padding: 0.22rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 0.65rem;
+    background: #09090d;
+  }
+
+  .layout-switcher button,
+  .demo-controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .layout-switcher button {
+    padding: 0.5rem 0.65rem;
+    border-radius: 0.45rem;
+    background: transparent;
+    color: #8f8f9a;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .layout-switcher button:hover {
+    color: #dedee3;
+  }
+  .layout-switcher button[aria-pressed='true'] {
+    background: #26262e;
+    color: #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+  }
+
+  .layout-switcher svg,
+  .demo-controls svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .desktop-experience {
+    padding: 1.5rem 1.25rem 1.25rem;
+    background: radial-gradient(
+      circle at 50% 0%,
+      #2b1d2c 0,
+      #15141a 38%,
+      #0c0c10 100%
+    );
+  }
+
+  .monitor-shell {
+    width: 100%;
+  }
+
+  .screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 2px solid #363640;
+    border-bottom-width: 1px;
+    border-radius: 0.75rem 0.75rem 0.25rem 0.25rem;
+    background: #150b19;
+    box-shadow: 0 1.6rem 3rem rgb(0 0 0 / 0.5);
+  }
+
+  .wallpaper {
+    position: absolute;
+    inset: -1.5rem;
+    background-image:
+      linear-gradient(rgb(24 8 25 / 0.08), rgb(13 7 18 / 0.18)),
+      url('/assets/blog/quattro.jpg');
+    background-position: center;
+    background-size: cover;
+    transform: scale(1.015);
+  }
+
+  .topbar {
+    position: absolute;
+    z-index: 5;
+    inset: 0 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 5.2%;
+    min-height: 1.25rem;
+    padding: 0 0.55rem;
+    background: rgb(20 20 31 / 0.96);
+    color: #9999ac;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: clamp(0.34rem, 1vw, 0.62rem);
+    box-shadow: 0 1px rgb(255 255 255 / 0.04);
+  }
+
+  .workspaces,
+  .status-icons,
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .status-icons {
+    justify-content: flex-end;
+  }
+  .workspaces {
+    gap: 0.02rem;
+  }
+  .clock {
+    color: #bdbdcc;
+    white-space: nowrap;
+  }
+  .omarchy-logo {
+    width: 0.72rem;
+    height: 0.72rem;
+    color: #dedeea;
+  }
+
+  .workspace-button {
+    position: relative;
+    display: grid;
+    width: 0.85rem;
+    height: 0.85rem;
+    flex: 0 0 0.85rem;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 0.2rem;
+    background: transparent;
+    color: #777789;
+    font: inherit;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      color 140ms ease,
+      background-color 140ms ease;
+  }
+  .workspace-button:hover {
+    background: rgb(255 255 255 / 0.08);
+    color: #d1d1dc;
+  }
+  .workspace-button[aria-pressed='true'] {
+    color: #f1f1f5;
+  }
+  .workspace-button[aria-pressed='true'] .workspace-number {
+    visibility: hidden;
+  }
+  .workspace-button[aria-pressed='true']::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 0.14rem;
+    background: #c6b8e9;
+    content: '';
+    transform: translate(-50%, -50%);
+  }
+
+  .workspace {
+    position: absolute;
+    z-index: 2;
+    inset: 6.2% 0.8% 1.4%;
+    overflow: hidden;
+  }
+
+  .window {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid rgb(255 255 255 / 0.14);
+    border-radius: 0.55rem;
+    background: #050507;
+    box-shadow: 0 0.7rem 2rem rgb(0 0 0 / 0.4);
+    transition:
+      inset 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      left 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 240ms ease,
+      border-color 200ms ease;
+  }
+
+  .terminal-window {
+    background: #050507;
+  }
+  .browser-window {
+    background: #d9ad16;
+  }
+  .editor-window {
+    background: #2563d9;
+  }
+
+  .window[data-window='0'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .screen[data-switching-workspace] .window {
+    transition: none;
+  }
+
+  .screen[data-window-count='1'] .window[data-window='1'],
+  .screen[data-window-count='2'] .window[data-window='2'],
+  .screen[data-window-count='3'] .window[data-window='3'] {
+    border-color: var(--focus-blue);
+    box-shadow:
+      0 0 0 1px rgb(139 213 255 / 0.4),
+      0 0 1.2rem rgb(80 184 255 / 0.22),
+      0 0.7rem 2rem rgb(0 0 0 / 0.55);
+  }
+
+  .screen[data-window-count='0'] .window {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .screen[data-layout='dwindle'][data-window-count='0'] .window {
+    inset: 25%;
+  }
+
+  /* Dwindle: the first split is vertical; the third window splits the right side. */
+  .screen[data-layout='dwindle'] .window {
+    transform: translate(0);
+  }
+  .screen[data-layout='dwindle'][data-window-count='1']
+    .window[data-window='1'] {
+    inset: 0;
+  }
+  .screen[data-layout='dwindle'][data-window-count='1']
+    .window:not([data-window='1']) {
+    inset: 25%;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .screen[data-layout='dwindle'][data-window-count='2']
+    .window[data-window='1'] {
+    inset: 0 50.6% 0 0;
+  }
+  .screen[data-layout='dwindle'][data-window-count='2']
+    .window[data-window='2'] {
+    inset: 0 0 0 50.6%;
+  }
+  .screen[data-layout='dwindle'][data-window-count='2']
+    .window[data-window='3'] {
+    inset: 52% 25% 0 75%;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .screen[data-layout='dwindle'][data-window-count='3']
+    .window[data-window='1'] {
+    inset: 0 50.6% 0 0;
+  }
+  .screen[data-layout='dwindle'][data-window-count='3']
+    .window[data-window='2'] {
+    inset: 0 0 50.8% 50.6%;
+  }
+  .screen[data-layout='dwindle'][data-window-count='3']
+    .window[data-window='3'] {
+    inset: 50.8% 0 0 50.6%;
+  }
+
+  /* Scrolling fills one window, splits two, then becomes a 43%-wide strip. */
+  .screen[data-layout='scrolling'] .window {
+    top: 0;
+    bottom: 0;
+  }
+  .screen[data-layout='scrolling'][data-window-count='1']
+    .window[data-window='1'] {
+    left: 0;
+    width: 100%;
+    transform: translateX(0);
+  }
+  .screen[data-layout='scrolling'][data-window-count='1']
+    .window[data-window='2'] {
+    left: 50.6%;
+    width: 49.4%;
+    transform: translateX(0);
+  }
+  .screen[data-layout='scrolling'][data-window-count='1']
+    .window[data-window='3'] {
+    left: 75%;
+    width: 25%;
+    transform: translateX(0);
+  }
+  .screen[data-layout='scrolling'][data-window-count='2']
+    .window[data-window='1'] {
+    left: 0;
+    width: 49.4%;
+    transform: translateX(0);
+  }
+  .screen[data-layout='scrolling'][data-window-count='2']
+    .window[data-window='2'] {
+    left: 50.6%;
+    width: 49.4%;
+    transform: translateX(0);
+  }
+  .screen[data-layout='scrolling'][data-window-count='2']
+    .window[data-window='3'] {
+    left: 75%;
+    width: 25%;
+    transform: translateX(0);
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'] .window {
+    width: 43%;
+    transform: translateX(-76.75%);
+  }
+  .screen[data-layout='scrolling'][data-window-count='3']
+    .window[data-window='1'] {
+    left: 0;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3']
+    .window[data-window='2'] {
+    left: 45%;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3']
+    .window[data-window='3'] {
+    left: 90%;
+  }
+  .screen[data-layout='scrolling'][data-window-count='1']
+    .window:not([data-window='1']),
+  .screen[data-layout='scrolling'][data-window-count='2']
+    .window[data-window='3'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .monitor-chin {
+    position: relative;
+    height: 1.1rem;
+    border: 1px solid #393942;
+    border-top: 0;
+    border-radius: 0 0 0.65rem 0.65rem;
+    background: linear-gradient(#24242b, #18181e);
+    color: #5e5e68;
+    font-size: 0.42rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+  .monitor-chin span {
+    position: relative;
+    top: 0.18rem;
+  }
+  .monitor-stand {
+    width: 19%;
+    height: 0.55rem;
+    margin: 0 auto;
+    border-radius: 0 0 0.45rem 0.45rem;
+    background: linear-gradient(90deg, #111116, #33333b 50%, #111116);
+    clip-path: polygon(37% 0, 63% 0, 100% 100%, 0 100%);
+  }
+
+  .demo-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .demo-copy {
+    min-width: 0;
+  }
+  .step-copy {
+    margin: 0;
+    color: #92929e;
+    font-size: 0.8rem;
+  }
+  .mode-copy {
+    margin: 0.2rem 0 0;
+    color: #666673;
+    font-size: 0.7rem;
+    text-transform: capitalize;
+  }
+  .action-buttons {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.35rem;
+  }
+  .demo-controls button {
+    min-height: 2.4rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 650;
+    transition:
+      transform 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      opacity 150ms ease;
+  }
+  .demo-controls button:not(:disabled):active {
+    transform: scale(0.97);
+  }
+  .reset-button {
+    background: #292930;
+    color: #c6c6cf;
+  }
+  .reset-button:hover:not(:disabled) {
+    background: #35353e;
+    color: #fff;
+  }
+  .app-button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    background: #24242b;
+    color: #9999a4;
+  }
+  .app-button:hover {
+    background: #303039;
+    color: #e7e7eb;
+  }
+  .app-button[aria-pressed='true'] {
+    background: #3a3a45;
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+  }
+  .app-color {
+    width: 0.55rem;
+    height: 0.55rem;
+    flex: 0 0 0.55rem;
+    border: 1px solid rgb(255 255 255 / 0.24);
+    border-radius: 0.18rem;
+  }
+  .terminal-button .app-color {
+    background: #050507;
+  }
+  .browser-button .app-color {
+    background: #d9ad16;
+  }
+  .editor-button .app-color {
+    background: #2563d9;
+  }
+  .demo-controls button:disabled {
+    cursor: default;
+    opacity: 0.38;
+  }
+
+  .mobile-disabled {
+    display: none;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    background: radial-gradient(circle at 50% 0, #2a1a29, #101014 65%);
+  }
+  .mobile-monitor {
+    width: 6.5rem;
+    margin: 0 auto 1.3rem;
+  }
+  .mobile-monitor div {
+    display: grid;
+    aspect-ratio: 16 / 10;
+    place-items: center;
+    border: 2px solid #555562;
+    border-radius: 0.4rem;
+    background: #1a1a21;
+    color: #fb923c;
+    box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.35);
+  }
+  .mobile-monitor div svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+  .mobile-monitor span {
+    display: block;
+    width: 2.5rem;
+    height: 0.3rem;
+    margin: 0 auto;
+    border-radius: 0 0 0.3rem 0.3rem;
+    background: #555562;
+  }
+  .mobile-disabled p {
+    margin: 0;
+    color: #8e8e99;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .mobile-disabled p + p {
+    max-width: 24rem;
+    margin: 0.35rem auto 0;
+  }
+  .mobile-disabled strong {
+    color: #f3f3f5;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .demo-heading,
+    .desktop-experience {
+      display: none;
+    }
+    .mobile-disabled {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .window,
+    .layout-switcher button,
+    .demo-controls button {
+      transition: none;
+    }
+  }
+</style>

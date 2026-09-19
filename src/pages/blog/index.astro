@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 import ArticlePreview from '@components/ArticlePreview.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import Layout from '@layouts/Layout.astro'
-import { ChevronRightIcon } from 'lucide-react'
+import { ChevronRightIcon, SearchIcon } from 'lucide-react'
 
 const visiblePosts = await getCollection('blog').then((posts) =>
   posts
@@ -37,16 +37,40 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
         built.
       </p>
     </header>
+    <label class="group relative mt-6 block max-w-120 motion-safe:animate-[fadeUp_0.6s_forwards_0.25s] motion-safe:opacity-0">
+      <span class="sr-only">Search blog posts</span>
+      <SearchIcon
+        className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-500 transition-colors group-hover:text-neutral-400 group-focus-within:text-neutral-400"
+        aria-hidden="true"
+      />
+      <input
+        id="blog-search"
+        type="search"
+        placeholder="Search posts..."
+        autocomplete="off"
+        aria-controls="blog-article-list blog-archive-list"
+        class="w-full rounded-lg border border-neutral-700 bg-neutral-800 py-2 pr-3 pl-9 text-base text-neutral-100 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300! active:border-neutral-500 active:bg-neutral-600 selection:bg-neutral-300 selection:text-neutral-950"
+      />
+    </label>
     <div class="article-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 lg:-mx-6">
-      <ul class="mt-6">
+      <ul id="blog-article-list" class="mt-6">
         {articles.map((article) => (
-          <li class="article-row">
+          <li
+            class="article-row"
+            data-search={[
+              article.data.title,
+              article.data.description,
+              ...article.data.tags,
+            ]
+              .join(' ')
+              .toLocaleLowerCase()}
+          >
             <ArticlePreview article={article} />
           </li>
         ))}
       </ul>
       {archivedArticles.length > 0 && (
-        <div class="mx-3 mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 lg:mx-6">
+        <div class="archive-region mx-3 mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 lg:mx-6">
           <details
             class="archive-details group/archive"
             style={`animation-delay: ${0.3 + articles.length * 0.1}s`}
@@ -57,7 +81,7 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
                   Archive
                 </span>
                 <span class="text-sm font-normal text-neutral-500">
-                  ({archivedArticles.length})
+                  (<span class="archive-count">{archivedArticles.length}</span>)
                 </span>
               </span>
               <ChevronRightIcon
@@ -65,9 +89,18 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
                 aria-hidden="true"
               />
             </summary>
-            <ul class="archive-list -mx-3 mt-3 lg:-mx-6">
+            <ul id="blog-archive-list" class="archive-list -mx-3 mt-3 lg:-mx-6">
               {archivedArticles.map((article) => (
-                <li class="article-row">
+                <li
+                  class="article-row"
+                  data-search={[
+                    article.data.title,
+                    article.data.description,
+                    ...article.data.tags,
+                  ]
+                    .join(' ')
+                    .toLocaleLowerCase()}
+                >
                   <ArticlePreview article={article} />
                 </li>
               ))}
@@ -75,6 +108,16 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
           </details>
         </div>
       )}
+      <div
+        class="blog-no-results mx-3 mt-6 hidden rounded-xl border border-dashed border-white/15 px-6 py-12 text-center lg:mx-6"
+        role="status"
+        aria-live="polite"
+      >
+        <p class="font-medium text-neutral-300">No matching posts found.</p>
+        <p class="mt-1 text-sm text-neutral-500">
+          Try another title, topic, or keyword.
+        </p>
+      </div>
     </div>
   </main>
 </Layout>
@@ -271,7 +314,75 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
       })
   }
 
+  const setupArticleSearch = () => {
+    const searchInput = document.querySelector<HTMLInputElement>('#blog-search')
+    if (!searchInput || searchInput.dataset.searchInit !== undefined) return
+    searchInput.dataset.searchInit = ''
+
+    const articleList =
+      document.querySelector<HTMLElement>('#blog-article-list')
+    const archiveList =
+      document.querySelector<HTMLElement>('#blog-archive-list')
+    const archiveRegion = document.querySelector<HTMLElement>('.archive-region')
+    const archiveDetails =
+      archiveRegion?.querySelector<HTMLDetailsElement>('.archive-details')
+    const archiveCount =
+      archiveRegion?.querySelector<HTMLElement>('.archive-count')
+    const noResults = document.querySelector<HTMLElement>('.blog-no-results')
+    const articleRows = Array.from(
+      articleList?.querySelectorAll<HTMLElement>('.article-row') ?? [],
+    )
+    const archiveRows = Array.from(
+      archiveList?.querySelectorAll<HTMLElement>('.article-row') ?? [],
+    )
+    let archiveWasOpen = archiveDetails?.open ?? false
+    let hadQuery = false
+    const controller = new AbortController()
+    const { signal } = controller
+
+    const filterRows = (rows: HTMLElement[], query: string) => {
+      let matches = 0
+
+      rows.forEach((row) => {
+        const matchesQuery = !query || row.dataset.search?.includes(query)
+        row.hidden = !matchesQuery
+        if (matchesQuery) matches += 1
+      })
+
+      return matches
+    }
+
+    const updateResults = () => {
+      const query = searchInput.value.trim().toLocaleLowerCase()
+      if (query && !hadQuery) archiveWasOpen = archiveDetails?.open ?? false
+      const articleMatches = filterRows(articleRows, query)
+      const archiveMatches = filterRows(archiveRows, query)
+
+      if (articleList) articleList.hidden = articleMatches === 0
+      if (archiveRegion) archiveRegion.hidden = archiveMatches === 0
+      if (archiveCount) archiveCount.textContent = String(archiveMatches)
+      if (archiveDetails) {
+        archiveDetails.open = query ? archiveMatches > 0 : archiveWasOpen
+      }
+      if (noResults) {
+        noResults.classList.toggle(
+          'hidden',
+          articleMatches + archiveMatches > 0,
+        )
+      }
+      hadQuery = Boolean(query)
+    }
+
+    searchInput.addEventListener('input', updateResults, { signal })
+    document.addEventListener('astro:before-swap', () => controller.abort(), {
+      once: true,
+      signal,
+    })
+    updateResults()
+  }
+
   document.addEventListener('astro:page-load', () => {
+    setupArticleSearch()
     setupArticleHighlights()
     setupArchiveDetails()
   })
