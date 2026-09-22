@@ -27,8 +27,8 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         class="screen"
         role="group"
         data-layout="dwindle"
-        data-window-count="1"
-        aria-label="Workspace 1, 1 window, dwindle layout"
+        data-window-count="0"
+        aria-label="Workspace 1, 0 windows, dwindle layout"
       >
         <div class="wallpaper" aria-hidden="true"></div>
 
@@ -62,27 +62,48 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
           </div>
           <time class="clock" data-system-time></time>
           <div class="status-icons" aria-hidden="true">
-            <span>⌁</span>
-            <span>▦</span>
-            <span>◒</span>
+            <!--
+              Paths reproduced from the system's JetBrainsMono Nerd Font:
+              Ethernet (f0200), volume-high (f028), and monitor (f0379).
+              Keeping the outlines inline makes the demo match Omarchy without
+              requiring visitors to have the Nerd Font installed.
+            -->
+            <svg class="status-icon ethernet-icon" viewBox="0 0 832 792">
+              <path d="M207 626V500H291V626H375V500H457V626H541V500H625V626H707V250H541V126H291V250H125V626H207ZM98 0H734Q775 0 803.5 30Q832 60 832 100V694Q832 734 803.5 763Q775 792 734 792H98Q57 792 28.5 763Q0 734 0 694V100Q0 60 28.5 30Q57 0 98 0Z"></path>
+            </svg>
+            <svg class="status-icon audio-icon" viewBox="0 0 1154 828">
+              <path d="M962 11Q1052 84 1103 189Q1154 294 1154 414Q1154 534 1103 639Q1052 744 962 817Q948 828 930 826Q912 824 901 811Q890 797 892 779Q894 761 907 750Q982 690 1024 602Q1066 514 1067 414Q1066 314 1024 226Q982 138 907 78Q894 67 892 49Q890 31 901 17Q912 4 930 2Q948 0 962 11ZM853 145Q913 194 947 264Q981 334 981 414Q981 494 947 564Q913 634 853 683Q839 694 821 692Q803 690 792 677Q780 663 782 645Q784 627 798 616Q894 538 894 414Q894 291 798 213Q784 202 782 184Q780 166 792 152Q803 138 821 136Q839 134 853 145ZM744 280Q808 333 808 414Q808 496 744 549Q730 560 712 558Q694 556 683 542Q672 528 674 510Q676 492 689 481Q721 454 721 414Q721 374 689 347Q676 336 674 318Q672 300 683 286Q694 272 712 270Q730 268 744 280ZM543 16Q577 31 577 68V760Q577 798 543 813Q508 828 481 804L238 587H115Q68 588 34 554Q0 520 0 472V357Q0 309 34 275Q68 241 115 241H238L481 25Q508 1 543 16Z"></path>
+            </svg>
+            <svg class="status-icon monitor-icon" viewBox="0 0 918 832">
+              <path d="M834 82V582H84V82H834ZM834 0H84Q49 0 24.5 24.5Q0 49 0 82V582Q0 617 24.5 641.5Q49 666 84 666H375V750H293V832H625V750H543V666H834Q869 666 893.5 641.5Q918 617 918 582V82Q918 49 893.5 24.5Q869 0 834 0Z"></path>
+            </svg>
           </div>
         </div>
 
         <div class="workspace" aria-live="polite">
           <div
-            class="window terminal-window"
-            data-app="terminal"
-            data-window="1"
+            class="window"
+            data-window-slot="0"
+            data-window="0"
+            role="button"
+            tabindex="-1"
+            aria-hidden="true"
           ></div>
           <div
-            class="window browser-window"
-            data-app="browser"
+            class="window"
+            data-window-slot="1"
             data-window="0"
+            role="button"
+            tabindex="-1"
+            aria-hidden="true"
           ></div>
           <div
-            class="window editor-window"
-            data-app="editor"
+            class="window"
+            data-window-slot="2"
             data-window="0"
+            role="button"
+            tabindex="-1"
+            aria-hidden="true"
           ></div>
         </div>
       </div>
@@ -94,8 +115,8 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 
     <div class="demo-controls">
       <div class="demo-copy">
-        <p class="step-copy">Start with one window, then open two more.</p>
-        <p class="mode-copy">Dwindle · workspace 1 · 1 window</p>
+        <p class="step-copy">This workspace is empty. Open its first app.</p>
+        <p class="mode-copy">Dwindle · workspace 1 · empty</p>
       </div>
       <div class="action-buttons">
         <button
@@ -111,7 +132,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
           class="app-button terminal-button"
           type="button"
           data-app-button="terminal"
-          aria-pressed="true"
+          aria-label="Open Terminal"
         >
           <span class="app-color" aria-hidden="true"></span>
           Terminal
@@ -120,7 +141,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
           class="app-button browser-button"
           type="button"
           data-app-button="browser"
-          aria-pressed="false"
+          aria-label="Open Browser"
         >
           <span class="app-color" aria-hidden="true"></span>
           Browser
@@ -129,11 +150,58 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
           class="app-button editor-button"
           type="button"
           data-app-button="editor"
-          aria-pressed="false"
+          aria-label="Open Editor"
         >
           <span class="app-color" aria-hidden="true"></span>
           Editor
         </button>
+      </div>
+    </div>
+
+    <div class="shortcut-panel">
+      <div class="shortcut-header">
+        <div>
+          <p class="shortcut-title">Keyboard shortcuts</p>
+          <p class="shortcut-hint" data-shortcut-hint>
+            Super may be captured by your desktop. Switch to Alt to try them.
+          </p>
+        </div>
+
+        <label class="shortcut-toggle">
+          <input type="checkbox" data-shortcuts-toggle checked />
+          <span class="toggle-track" aria-hidden="true">
+            <span></span>
+          </span>
+          <span data-shortcuts-status>On</span>
+        </label>
+      </div>
+
+      <div class="shortcut-controls">
+        <div
+          class="modifier-switcher"
+          role="group"
+          aria-label="Shortcut modifier"
+        >
+          <button
+            type="button"
+            data-shortcut-modifier="Meta"
+            aria-pressed="true"
+          >
+            Super
+          </button>
+          <button
+            type="button"
+            data-shortcut-modifier="Alt"
+            aria-pressed="false"
+          >
+            Alt
+          </button>
+        </div>
+        <ul
+          class="shortcut-list"
+          data-shortcut-list
+          aria-label="Demo shortcuts"
+        ></ul>
       </div>
     </div>
   </div>
@@ -156,10 +224,14 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 </section>
 
 <script>
+  import { tinykeys } from 'tinykeys'
+
   const setupOmarchyDemos = () => {
     document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
       if (demo.dataset.initialized !== undefined) return
       demo.dataset.initialized = ''
+      const lifecycleController = new AbortController()
+      const listenerOptions = { signal: lifecycleController.signal }
 
       const screen = demo.querySelector<HTMLElement>('.screen')
       const resetButton = demo.querySelector<HTMLButtonElement>('.reset-button')
@@ -175,18 +247,110 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
       )
       const appButtons =
         demo.querySelectorAll<HTMLButtonElement>('[data-app-button]')
-      const appWindows = demo.querySelectorAll<HTMLElement>('[data-app]')
+      const appWindows =
+        demo.querySelectorAll<HTMLElement>('[data-window-slot]')
+      const shortcutsToggle = demo.querySelector<HTMLInputElement>(
+        '[data-shortcuts-toggle]',
+      )
+      const shortcutsStatus = demo.querySelector<HTMLElement>(
+        '[data-shortcuts-status]',
+      )
+      const shortcutHint = demo.querySelector<HTMLElement>(
+        '[data-shortcut-hint]',
+      )
+      const shortcutList = demo.querySelector<HTMLUListElement>(
+        '[data-shortcut-list]',
+      )
+      const modifierButtons = demo.querySelectorAll<HTMLButtonElement>(
+        '[data-shortcut-modifier]',
+      )
 
-      if (!screen || !resetButton || !modeCopy || !stepCopy || !systemTime)
+      if (
+        !screen ||
+        !resetButton ||
+        !modeCopy ||
+        !stepCopy ||
+        !systemTime ||
+        !shortcutsToggle ||
+        !shortcutsStatus ||
+        !shortcutHint ||
+        !shortcutList
+      )
         return
 
       const appIds = ['terminal', 'browser', 'editor'] as const
       type DemoApp = (typeof appIds)[number]
+      type LayoutMode = 'dwindle' | 'scrolling'
+      type DemoWindow = { id: number; app: DemoApp; slot: number }
 
-      const workspaceApps: DemoApp[][] = [['terminal'], [], [], []]
+      const appLabels: Record<DemoApp, string> = {
+        terminal: 'Terminal',
+        browser: 'Browser',
+        editor: 'Editor',
+      }
+      const workspaceWindows: DemoWindow[][] = [[], [], [], []]
+      const workspaceFocus: (number | null)[] = [null, null, null, null]
+      const workspaceLayouts: LayoutMode[] = [
+        'dwindle',
+        'dwindle',
+        'dwindle',
+        'dwindle',
+      ]
+      let nextWindowId = 1
       let activeWorkspace = 1
-      let layout: 'dwindle' | 'scrolling' = 'dwindle'
       let workspaceSwitchVersion = 0
+      let shortcutModifier: 'Meta' | 'Alt' = 'Meta'
+      let unsubscribeShortcuts: (() => void) | undefined
+      const windowAnimations = new Map<HTMLElement, Animation>()
+
+      const cancelWindowAnimation = (appWindow: HTMLElement) => {
+        windowAnimations.get(appWindow)?.cancel()
+        delete appWindow.dataset.opening
+        windowAnimations.delete(appWindow)
+      }
+
+      const cancelWindowAnimations = () => {
+        for (const appWindow of windowAnimations.keys())
+          cancelWindowAnimation(appWindow)
+      }
+
+      const animateWindowOpening = (windowId: number) => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+          return
+
+        const appWindow = demo.querySelector<HTMLElement>(
+          `[data-window-id="${windowId}"]`,
+        )
+        if (!appWindow) return
+
+        cancelWindowAnimation(appWindow)
+        appWindow.dataset.opening = ''
+        const animation = appWindow.animate(
+          [
+            { opacity: 0, scale: '0.5' },
+            { opacity: 1, scale: '1' },
+          ],
+          {
+            duration: 480,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          },
+        )
+
+        windowAnimations.set(appWindow, animation)
+        animation.addEventListener(
+          'finish',
+          () => {
+            delete appWindow.dataset.opening
+            windowAnimations.delete(appWindow)
+          },
+          { once: true },
+        )
+        animation.addEventListener(
+          'cancel',
+          () => windowAnimations.delete(appWindow),
+          { once: true },
+        )
+      }
 
       const timeFormatter = new Intl.DateTimeFormat('en-GB', {
         weekday: 'short',
@@ -212,21 +376,28 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 
       updateSystemTime()
       const clockInterval = window.setInterval(updateSystemTime, 1000)
-      document.addEventListener(
-        'astro:before-swap',
-        () => window.clearInterval(clockInterval),
-        { once: true },
-      )
 
       const update = () => {
-        const openApps = workspaceApps[activeWorkspace - 1] ?? []
-        const windowCount = openApps.length
+        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+        const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
+        const windowCount = openWindows.length
+        const focusIndex = activeWorkspace - 1
+        const focusedWindowId = workspaceFocus[focusIndex]
+        if (!openWindows.some(({ id }) => id === focusedWindowId))
+          workspaceFocus[focusIndex] = openWindows.at(-1)?.id ?? null
+        const focusedWindow = openWindows.find(
+          ({ id }) => id === workspaceFocus[focusIndex],
+        )
+
         screen.dataset.layout = layout
         screen.dataset.windowCount = String(windowCount)
         screen.dataset.workspace = String(activeWorkspace)
+        screen.dataset.focusedPosition = String(
+          focusedWindow ? openWindows.indexOf(focusedWindow) + 1 : 0,
+        )
         screen.setAttribute(
           'aria-label',
-          `Workspace ${activeWorkspace}, ${windowCount} ${windowCount === 1 ? 'window' : 'windows'}, ${layout} layout`,
+          `Workspace ${activeWorkspace}, ${windowCount} ${windowCount === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
         )
         const layoutLabel = layout === 'dwindle' ? 'Dwindle' : 'Scrolling'
 
@@ -239,38 +410,60 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
               ? 'Open two more apps to see the layout take shape.'
               : windowCount === 2
                 ? 'Open one more app to complete the layout.'
-                : 'This workspace has all three apps open.'
+                : 'This workspace is full. Close a window to open another.'
 
-        appWindows.forEach((appWindow) => {
-          const app = appWindow.dataset.app as DemoApp
-          const position = openApps.indexOf(app)
-          const isOpen = position !== -1
+        appWindows.forEach((appWindow, slot) => {
+          const demoWindow = openWindows.find((item) => item.slot === slot)
+          const position = demoWindow ? openWindows.indexOf(demoWindow) : -1
+          const isOpen = demoWindow !== undefined
+          const isFocused =
+            isOpen && demoWindow.id === workspaceFocus[focusIndex]
 
           appWindow.dataset.window = isOpen ? String(position + 1) : '0'
+          appWindow.classList.toggle(
+            'terminal-window',
+            demoWindow?.app === 'terminal',
+          )
+          appWindow.classList.toggle(
+            'browser-window',
+            demoWindow?.app === 'browser',
+          )
+          appWindow.classList.toggle(
+            'editor-window',
+            demoWindow?.app === 'editor',
+          )
+          if (demoWindow) {
+            appWindow.dataset.windowId = String(demoWindow.id)
+            appWindow.dataset.app = demoWindow.app
+            appWindow.setAttribute(
+              'aria-label',
+              `Focus ${appLabels[demoWindow.app]} window ${position + 1}`,
+            )
+          } else {
+            delete appWindow.dataset.windowId
+            delete appWindow.dataset.app
+            appWindow.removeAttribute('aria-label')
+          }
+          if (isFocused) appWindow.dataset.focused = ''
+          else delete appWindow.dataset.focused
           appWindow.setAttribute('aria-hidden', String(!isOpen))
+          appWindow.setAttribute('aria-pressed', String(isFocused))
+          appWindow.tabIndex = isOpen ? 0 : -1
         })
 
         const isInitialState =
           activeWorkspace === 1 &&
-          layout === 'dwindle' &&
-          workspaceApps.every((apps, index) =>
-            index === 0
-              ? apps.length === 1 && apps[0] === 'terminal'
-              : apps.length === 0,
+          workspaceWindows.every((windows) => windows.length === 0) &&
+          workspaceLayouts.every(
+            (workspaceLayout) => workspaceLayout === 'dwindle',
           )
 
         resetButton.disabled = isInitialState
 
         appButtons.forEach((button) => {
           const app = button.dataset.appButton as DemoApp
-          const isOpen = openApps.includes(app)
-          const appName = `${app.charAt(0).toUpperCase()}${app.slice(1)}`
-
-          button.setAttribute('aria-pressed', String(isOpen))
-          button.setAttribute(
-            'aria-label',
-            `${isOpen ? 'Close' : 'Open'} ${appName}`,
-          )
+          button.disabled = windowCount >= 3
+          button.setAttribute('aria-label', `Open ${appLabels[app]}`)
         })
 
         layoutButtons.forEach((button) => {
@@ -288,56 +481,385 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         })
       }
 
-      appButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          const app = button.dataset.appButton as DemoApp
-          if (!appIds.includes(app)) return
+      const openApp = (app: DemoApp) => {
+        workspaceSwitchVersion += 1
+        delete screen.dataset.switchingWorkspace
 
-          const openApps = workspaceApps[activeWorkspace - 1] ?? []
-          const appIndex = openApps.indexOf(app)
+        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+        if (openWindows.length >= 3) return
 
-          if (appIndex === -1) openApps.push(app)
-          else openApps.splice(appIndex, 1)
+        const usedSlots = new Set(openWindows.map(({ slot }) => slot))
+        const slot = [0, 1, 2].find((candidate) => !usedSlots.has(candidate))
+        if (slot === undefined) return
 
-          update()
-        })
-      })
-
-      resetButton.addEventListener('click', () => {
-        workspaceApps.splice(0, workspaceApps.length, ['terminal'], [], [], [])
-        activeWorkspace = 1
-        layout = 'dwindle'
+        const demoWindow = { id: nextWindowId++, app, slot }
+        openWindows.push(demoWindow)
+        workspaceFocus[activeWorkspace - 1] = demoWindow.id
         update()
-      })
+        animateWindowOpening(demoWindow.id)
+      }
 
-      workspaceButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          workspaceSwitchVersion += 1
-          const switchVersion = workspaceSwitchVersion
-          screen.dataset.switchingWorkspace = ''
-          activeWorkspace = Number(button.dataset.workspaceButton) || 1
-          update()
+      const closeWindow = (windowId: number) => {
+        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+        const windowIndex = openWindows.findIndex(({ id }) => id === windowId)
+        if (windowIndex === -1) return
 
+        const appWindow = demo.querySelector<HTMLElement>(
+          `[data-window-id="${windowId}"]`,
+        )
+        if (appWindow) cancelWindowAnimation(appWindow)
+        openWindows.splice(windowIndex, 1)
+
+        if (workspaceFocus[activeWorkspace - 1] === windowId)
+          workspaceFocus[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
+        update()
+      }
+
+      const selectWindow = (windowId: number) => {
+        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+        if (!openWindows.some(({ id }) => id === windowId)) return
+
+        workspaceFocus[activeWorkspace - 1] = windowId
+        update()
+      }
+
+      const closeFocusedWindow = () => {
+        const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+        if (focusedWindowId) closeWindow(focusedWindowId)
+      }
+
+      type FocusDirection = 'left' | 'right' | 'up' | 'down'
+      type WindowPoint = { windowId: number; x: number; y: number }
+
+      const getWindowPoints = (openWindows: DemoWindow[]): WindowPoint[] => {
+        if (workspaceLayouts[activeWorkspace - 1] === 'scrolling')
+          return openWindows.map(({ id }, index) => ({
+            windowId: id,
+            x: index,
+            y: 0,
+          }))
+
+        const positions =
+          openWindows.length === 3
+            ? [
+                [0, 0.5],
+                [1, 0],
+                [1, 1],
+              ]
+            : openWindows.length === 2
+              ? [
+                  [0, 0],
+                  [1, 0],
+                ]
+              : [[0, 0]]
+
+        return openWindows.map(({ id }, index) => ({
+          windowId: id,
+          x: positions[index]?.[0] ?? 0,
+          y: positions[index]?.[1] ?? 0,
+        }))
+      }
+
+      const focusWindow = (direction: FocusDirection) => {
+        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+        const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+        if (!focusedWindowId || openWindows.length < 2) return
+
+        const points = getWindowPoints(openWindows)
+        const current = points.find(
+          ({ windowId }) => windowId === focusedWindowId,
+        )
+        if (!current) return
+
+        const candidates = points
+          .filter((point) => {
+            if (direction === 'left') return point.x < current.x
+            if (direction === 'right') return point.x > current.x
+            if (direction === 'up') return point.y < current.y
+            return point.y > current.y
+          })
+          .map((point) => {
+            const primary =
+              direction === 'left' || direction === 'right'
+                ? Math.abs(point.x - current.x)
+                : Math.abs(point.y - current.y)
+            const secondary =
+              direction === 'left' || direction === 'right'
+                ? Math.abs(point.y - current.y)
+                : Math.abs(point.x - current.x)
+            return { ...point, distance: primary + secondary * 1.5 }
+          })
+          .sort((a, b) => a.distance - b.distance)
+
+        const next = candidates[0]
+        if (next) selectWindow(next.windowId)
+      }
+
+      const setLayout = (nextLayout: LayoutMode) => {
+        workspaceLayouts[activeWorkspace - 1] = nextLayout
+        update()
+      }
+
+      const toggleLayout = () => {
+        setLayout(
+          workspaceLayouts[activeWorkspace - 1] === 'dwindle'
+            ? 'scrolling'
+            : 'dwindle',
+        )
+      }
+
+      const switchWorkspace = (workspace: number) => {
+        cancelWindowAnimations()
+        workspaceSwitchVersion += 1
+        const switchVersion = workspaceSwitchVersion
+        screen.dataset.switchingWorkspace = ''
+        activeWorkspace = workspace
+        update()
+
+        window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-              if (switchVersion === workspaceSwitchVersion)
-                delete screen.dataset.switchingWorkspace
-            })
+            if (switchVersion === workspaceSwitchVersion)
+              delete screen.dataset.switchingWorkspace
           })
         })
+      }
+
+      type Keybind = {
+        code: string
+        keys: string[]
+        label: string
+        action: () => void
+      }
+
+      const keybinds: Keybind[] = [
+        ...[1, 2, 3, 4].map((workspace) => ({
+          code: `Digit${workspace}`,
+          keys: [String(workspace)],
+          label: `Workspace ${workspace}`,
+          action: () => switchWorkspace(workspace),
+        })),
+        {
+          code: 'Enter',
+          keys: ['Enter'],
+          label: 'Terminal',
+          action: () => openApp('terminal'),
+        },
+        {
+          code: 'Shift+Enter',
+          keys: ['Shift', 'Enter'],
+          label: 'Browser',
+          action: () => openApp('browser'),
+        },
+        {
+          code: 'Shift+KeyN',
+          keys: ['Shift', 'N'],
+          label: 'Editor',
+          action: () => openApp('editor'),
+        },
+        {
+          code: 'KeyW',
+          keys: ['W'],
+          label: 'Close window',
+          action: closeFocusedWindow,
+        },
+        {
+          code: 'KeyL',
+          keys: ['L'],
+          label: 'Toggle layout',
+          action: toggleLayout,
+        },
+        ...(
+          [
+            ['ArrowLeft', '←', 'left'],
+            ['ArrowDown', '↓', 'down'],
+            ['ArrowUp', '↑', 'up'],
+            ['ArrowRight', '→', 'right'],
+          ] as const
+        ).map(([code, key, direction]) => ({
+          code,
+          keys: [key],
+          label: `Focus ${direction}`,
+          action: () => focusWindow(direction),
+        })),
+      ]
+
+      const renderShortcutList = () => {
+        shortcutList.replaceChildren(
+          ...keybinds.map((keybind) => {
+            const item = document.createElement('li')
+            const keys = document.createElement('span')
+            keys.className = 'shortcut-keys'
+
+            for (const key of [
+              shortcutModifier === 'Meta' ? 'Super' : 'Alt',
+              ...keybind.keys,
+            ]) {
+              const keyElement = document.createElement('kbd')
+              keyElement.textContent = key
+              keys.append(keyElement)
+            }
+
+            const label = document.createElement('span')
+            label.textContent = keybind.label
+            item.append(keys, label)
+            return item
+          }),
+        )
+      }
+
+      const installShortcuts = () => {
+        unsubscribeShortcuts?.()
+        unsubscribeShortcuts = undefined
+
+        if (!shortcutsToggle.checked) return
+
+        const bindings = Object.fromEntries(
+          keybinds.map((keybind) => [
+            `${shortcutModifier}+${keybind.code}`,
+            (event: KeyboardEvent) => {
+              event.preventDefault()
+              keybind.action()
+            },
+          ]),
+        )
+        unsubscribeShortcuts = tinykeys(window, bindings)
+      }
+
+      const updateShortcutControls = () => {
+        const enabled = shortcutsToggle.checked
+        shortcutsStatus.textContent = enabled ? 'On' : 'Off'
+        shortcutHint.textContent = enabled
+          ? shortcutModifier === 'Meta'
+            ? 'Super may be captured by your desktop. Switch to Alt to try them.'
+            : 'Alt mode is active so the browser can receive the shortcuts.'
+          : 'Shortcuts are disabled. Buttons and workspace controls still work.'
+        modifierButtons.forEach((button) => {
+          button.disabled = !enabled
+          button.setAttribute(
+            'aria-pressed',
+            String(button.dataset.shortcutModifier === shortcutModifier),
+          )
+        })
+        renderShortcutList()
+        installShortcuts()
+      }
+
+      appButtons.forEach((button) => {
+        button.addEventListener(
+          'click',
+          () => {
+            const app = button.dataset.appButton as DemoApp
+            if (!appIds.includes(app)) return
+            openApp(app)
+          },
+          listenerOptions,
+        )
+      })
+
+      resetButton.addEventListener(
+        'click',
+        () => {
+          cancelWindowAnimations()
+          workspaceSwitchVersion += 1
+          delete screen.dataset.switchingWorkspace
+          workspaceWindows.splice(0, workspaceWindows.length, [], [], [], [])
+          workspaceFocus.splice(
+            0,
+            workspaceFocus.length,
+            null,
+            null,
+            null,
+            null,
+          )
+          workspaceLayouts.splice(
+            0,
+            workspaceLayouts.length,
+            'dwindle',
+            'dwindle',
+            'dwindle',
+            'dwindle',
+          )
+          nextWindowId = 1
+          activeWorkspace = 1
+          update()
+        },
+        listenerOptions,
+      )
+
+      workspaceButtons.forEach((button) => {
+        button.addEventListener(
+          'click',
+          () => {
+            switchWorkspace(Number(button.dataset.workspaceButton) || 1)
+          },
+          listenerOptions,
+        )
+      })
+
+      appWindows.forEach((appWindow) => {
+        const selectSlotWindow = () => {
+          const windowId = Number(appWindow.dataset.windowId)
+          if (windowId) selectWindow(windowId)
+        }
+
+        appWindow.addEventListener('click', selectSlotWindow, listenerOptions)
+        appWindow.addEventListener('focus', selectSlotWindow, listenerOptions)
+        appWindow.addEventListener(
+          'keydown',
+          (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return
+            event.preventDefault()
+            selectSlotWindow()
+          },
+          listenerOptions,
+        )
       })
 
       layoutButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          layout =
-            button.dataset.layoutButton === 'scrolling'
-              ? 'scrolling'
-              : 'dwindle'
-          update()
-        })
+        button.addEventListener(
+          'click',
+          () => {
+            setLayout(
+              button.dataset.layoutButton === 'scrolling'
+                ? 'scrolling'
+                : 'dwindle',
+            )
+          },
+          listenerOptions,
+        )
       })
 
+      shortcutsToggle.addEventListener(
+        'change',
+        updateShortcutControls,
+        listenerOptions,
+      )
+      modifierButtons.forEach((button) => {
+        button.addEventListener(
+          'click',
+          () => {
+            shortcutModifier =
+              button.dataset.shortcutModifier === 'Alt' ? 'Alt' : 'Meta'
+            updateShortcutControls()
+          },
+          listenerOptions,
+        )
+      })
+
+      document.addEventListener(
+        'astro:before-swap',
+        () => {
+          window.clearInterval(clockInterval)
+          unsubscribeShortcuts?.()
+          cancelWindowAnimations()
+          lifecycleController.abort()
+          delete demo.dataset.initialized
+        },
+        { once: true },
+      )
+
       update()
+      updateShortcutControls()
     })
   }
 
@@ -497,6 +1019,23 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
   .status-icons {
     justify-content: flex-end;
+    gap: 0.45rem;
+  }
+  .status-icon {
+    display: block;
+    width: 0.72rem;
+    height: 0.72rem;
+    overflow: visible;
+    fill: currentColor;
+  }
+  .ethernet-icon {
+    width: 0.72rem;
+  }
+  .audio-icon {
+    width: 0.78rem;
+  }
+  .monitor-icon {
+    width: 0.72rem;
   }
   .workspaces {
     gap: 0.02rem;
@@ -569,14 +1108,22 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     border-radius: 0.55rem;
     background: #050507;
     box-shadow: 0 0.7rem 2rem rgb(0 0 0 / 0.4);
+    cursor: pointer;
     transition:
-      inset 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      top 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      right 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      bottom 480ms cubic-bezier(0.22, 1, 0.36, 1),
       width 480ms cubic-bezier(0.22, 1, 0.36, 1),
       height 480ms cubic-bezier(0.22, 1, 0.36, 1),
       left 480ms cubic-bezier(0.22, 1, 0.36, 1),
       transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 240ms ease,
       border-color 200ms ease;
+  }
+
+  .window:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -5px;
   }
 
   .terminal-window {
@@ -594,13 +1141,15 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     pointer-events: none;
   }
 
+  .window[data-opening] {
+    transition: none;
+  }
+
   .screen[data-switching-workspace] .window {
     transition: none;
   }
 
-  .screen[data-window-count='1'] .window[data-window='1'],
-  .screen[data-window-count='2'] .window[data-window='2'],
-  .screen[data-window-count='3'] .window[data-window='3'] {
+  .window[data-focused] {
     border-color: var(--focus-blue);
     box-shadow:
       0 0 0 1px rgb(139 213 255 / 0.4),
@@ -659,14 +1208,19 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
 
   /* Scrolling fills one window, splits two, then becomes a 43%-wide strip. */
+  /* Clip the strip at the screen edge; its positions provide the anchored inset. */
+  .screen[data-layout='scrolling'] .workspace {
+    right: 0;
+    left: 0;
+  }
   .screen[data-layout='scrolling'] .window {
     top: 0;
     bottom: 0;
   }
   .screen[data-layout='scrolling'][data-window-count='1']
     .window[data-window='1'] {
-    left: 0;
-    width: 100%;
+    left: 0.8%;
+    width: 98.4%;
     transform: translateX(0);
   }
   .screen[data-layout='scrolling'][data-window-count='1']
@@ -683,14 +1237,14 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
   .screen[data-layout='scrolling'][data-window-count='2']
     .window[data-window='1'] {
-    left: 0;
-    width: 49.4%;
+    left: 0.8%;
+    width: 48.6%;
     transform: translateX(0);
   }
   .screen[data-layout='scrolling'][data-window-count='2']
     .window[data-window='2'] {
     left: 50.6%;
-    width: 49.4%;
+    width: 48.6%;
     transform: translateX(0);
   }
   .screen[data-layout='scrolling'][data-window-count='2']
@@ -701,11 +1255,11 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
   .screen[data-layout='scrolling'][data-window-count='3'] .window {
     width: 43%;
-    transform: translateX(-76.75%);
+    transform: translateX(0);
   }
   .screen[data-layout='scrolling'][data-window-count='3']
     .window[data-window='1'] {
-    left: 0;
+    left: 0.8%;
   }
   .screen[data-layout='scrolling'][data-window-count='3']
     .window[data-window='2'] {
@@ -713,7 +1267,19 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
   .screen[data-layout='scrolling'][data-window-count='3']
     .window[data-window='3'] {
-    left: 90%;
+    left: 89.2%;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
+    .window[data-window='1'] {
+    left: -32.2%;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
+    .window[data-window='2'] {
+    left: 12%;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
+    .window[data-window='3'] {
+    left: 56.2%;
   }
   .screen[data-layout='scrolling'][data-window-count='1']
     .window:not([data-window='1']),
@@ -808,11 +1374,6 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     background: #303039;
     color: #e7e7eb;
   }
-  .app-button[aria-pressed='true'] {
-    background: #3a3a45;
-    color: #fff;
-    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
-  }
   .app-color {
     width: 0.55rem;
     height: 0.55rem;
@@ -832,6 +1393,152 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   .demo-controls button:disabled {
     cursor: default;
     opacity: 0.38;
+  }
+
+  .shortcut-panel {
+    margin-top: 1rem;
+    padding: 0.85rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 0.75rem;
+    background: rgb(8 8 12 / 0.72);
+  }
+  .shortcut-header,
+  .shortcut-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .shortcut-title,
+  .shortcut-hint {
+    margin: 0;
+  }
+  .shortcut-title {
+    color: #e7e7eb;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .shortcut-hint {
+    margin-top: 0.16rem;
+    color: #777784;
+    font-size: 0.67rem;
+  }
+  .shortcut-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+    color: #b9b9c2;
+    font-size: 0.72rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .shortcut-toggle input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .toggle-track {
+    position: relative;
+    width: 2rem;
+    height: 1.1rem;
+    border-radius: 999px;
+    background: #393941;
+    transition: background-color 160ms ease;
+  }
+  .toggle-track span {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: #b7b7c1;
+    transition:
+      transform 160ms ease,
+      background-color 160ms ease;
+  }
+  .shortcut-toggle input:checked + .toggle-track {
+    background: #c66024;
+  }
+  .shortcut-toggle input:checked + .toggle-track span {
+    background: #fff;
+    transform: translateX(0.9rem);
+  }
+  .shortcut-toggle input:focus-visible + .toggle-track {
+    outline: 2px solid var(--focus-blue);
+    outline-offset: 2px;
+  }
+  .shortcut-controls {
+    align-items: flex-start;
+    margin-top: 0.75rem;
+  }
+  .modifier-switcher {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.15rem;
+    padding: 0.16rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 0.5rem;
+    background: #111117;
+  }
+  .modifier-switcher button {
+    min-height: auto;
+    padding: 0.35rem 0.5rem;
+    border: 0;
+    border-radius: 0.34rem;
+    background: transparent;
+    color: #777784;
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .modifier-switcher button[aria-pressed='true'] {
+    background: #32323b;
+    color: #f4f4f6;
+  }
+  .modifier-switcher button:disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+  .shortcut-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.45rem 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  :global(.shortcut-list li),
+  :global(.shortcut-keys) {
+    display: inline-flex;
+    align-items: center;
+  }
+  :global(.shortcut-list li) {
+    gap: 0.35rem;
+    color: #898994;
+    font-size: 0.64rem;
+    white-space: nowrap;
+  }
+  :global(.shortcut-keys) {
+    gap: 0.16rem;
+  }
+  :global(.shortcut-keys kbd) {
+    min-width: 1.35rem;
+    padding: 0.2rem 0.32rem;
+    border: 1px solid #40404a;
+    border-bottom-color: #575762;
+    border-radius: 0.3rem;
+    background: #25252c;
+    color: #dadade;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.6rem;
+    line-height: 1;
+    text-align: center;
+    box-shadow: 0 1px 0 #08080a;
   }
 
   .mobile-disabled {
@@ -897,7 +1604,9 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   @media (prefers-reduced-motion: reduce) {
     .window,
     .layout-switcher button,
-    .demo-controls button {
+    .demo-controls button,
+    .toggle-track,
+    .toggle-track span {
       transition: none;
     }
   }
