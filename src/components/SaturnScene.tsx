@@ -1,24 +1,36 @@
 import { animated, useReducedMotion, useSpring } from '@react-spring/three'
 import { PerspectiveCamera, Preload, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import type * as THREE from 'three'
 
 const DRAG_RADIANS_PER_PIXEL = 0.01
 const MAX_DRAG_SPEED = 6
 const MAX_MOMENTUM_SPEED = 2.5
 
-function Scene({ onReady }: { onReady: () => void }) {
+interface SaturnSceneProps {
+  onReady: () => void
+  scale?: number
+}
+
+function Scene({ onReady, scale: targetScale = 0.1 }: SaturnSceneProps) {
   // source: https://science.nasa.gov/resource/saturn-3d-model/
-  const { scene } = useGLTF('/assets/Saturn.glb')
+  const { scene: cachedScene } = useGLTF('/assets/Saturn.glb')
+  // useGLTF caches its scene. Each canvas needs its own Object3D graph because
+  // a Three.js object can only belong to one parent at a time.
+  const scene = useMemo(() => cachedScene.clone(true), [cachedScene])
   const sceneRef = useRef<THREE.Object3D>(null)
   const spinVelocityRef = useRef(0)
   const draggingRef = useRef(false)
   const canvas = useThree((state) => state.gl.domElement)
   const [shown, setShown] = useState(false)
   const reducedMotion = useReducedMotion()
+  const initialScale = targetScale * 0.6
   const { scale } = useSpring({
-    scale: reducedMotion || shown ? [0.1, 0.1, 0.1] : [0.06, 0.06, 0.06],
+    scale:
+      reducedMotion || shown
+        ? [targetScale, targetScale, targetScale]
+        : [initialScale, initialScale, initialScale],
     config: { mass: 2, tension: 280, friction: 60 },
   })
   // const camera = useThree((state) => state.camera)
@@ -154,7 +166,7 @@ function Scene({ onReady }: { onReady: () => void }) {
   )
 }
 
-function CanvasContent({ onReady }: { onReady: () => void }) {
+function CanvasContent({ onReady, scale }: SaturnSceneProps) {
   useThree((state) => {
     state.camera?.lookAt(0, 0, 0)
     // state.camera?.rotateY(-0.1)
@@ -165,7 +177,7 @@ function CanvasContent({ onReady }: { onReady: () => void }) {
 
   return (
     <>
-      <Scene onReady={onReady} />
+      <Scene onReady={onReady} scale={scale} />
       <Preload all />
       <PerspectiveCamera
         makeDefault
@@ -185,7 +197,7 @@ function CanvasContent({ onReady }: { onReady: () => void }) {
   )
 }
 
-function OuterCanvas({ onReady }: { onReady: () => void }) {
+function OuterCanvas({ onReady, scale }: SaturnSceneProps) {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -207,12 +219,12 @@ function OuterCanvas({ onReady }: { onReady: () => void }) {
   return (
     <Canvas ref={ref}>
       <Suspense fallback={null}>
-        <CanvasContent onReady={onReady} />
+        <CanvasContent onReady={onReady} scale={scale} />
       </Suspense>
     </Canvas>
   )
 }
 
-export default function SaturnScene({ onReady }: { onReady: () => void }) {
-  return <OuterCanvas onReady={onReady} />
+export default function SaturnScene({ onReady, scale }: SaturnSceneProps) {
+  return <OuterCanvas onReady={onReady} scale={scale} />
 }

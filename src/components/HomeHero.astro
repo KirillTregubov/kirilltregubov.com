@@ -1,0 +1,162 @@
+---
+import AboutMe from './AboutMe.astro'
+import Saturn from './Saturn'
+
+interface Props {
+  preview?: boolean
+}
+
+const { preview = false } = Astro.props
+---
+
+<section
+  class:list={[
+    preview
+      ? 'home-hero-preview'
+      : 'flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6',
+  ]}
+>
+  <AboutMe
+    static={preview}
+    class={
+      preview
+        ? 'home-hero-preview-copy'
+        : 'animate-[fadeUp_0.6s_forwards] lg:text-balance'
+    }
+  />
+  <figure
+    class:list={[
+      'saturn relative box-content',
+      preview
+        ? 'home-hero-preview-saturn'
+        : 'h-[calc(100vw-9rem)] max-h-75 w-full overflow-hidden sm:max-h-80 lg:max-h-75 lg:min-w-105 xl:max-h-100 xl:min-w-150 2xl:min-w-175',
+    ]}
+    title="My favourite planet, Saturn."
+  >
+    {preview ? (
+      <div class="flex h-full w-full items-center justify-center">
+        <img
+          src="/assets/SaturnPlaceholder.jpg"
+          alt="Saturn placeholder"
+          class="home-hero-preview-fallback object-cover"
+          loading="lazy"
+          draggable="false"
+        />
+      </div>
+    ) : (
+      <Saturn
+        client:idle
+        className="sm:max-lg:h-88 sm:max-lg:-translate-y-8"
+        fallbackClass="max-h-[300px] sm:max-h-[350px] lg:max-h-[300px] xl:h-[440px] xl:max-h-[440px]"
+      />
+    )}
+    <figcaption
+      class:list={[
+        'absolute bottom-0 w-full text-center font-medium text-neutral-400/80',
+        preview
+          ? 'home-hero-preview-caption'
+          : 'pb-2 text-sm motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6',
+      ]}
+      title=""
+    >
+      My favourite planet, Saturn.{' '}
+      <a
+        class="-m-0.5 rounded-sm p-0.5 underline transition select-none hover:text-neutral-600 focus-visible:outline-hidden active:text-neutral-600"
+        href="https://science.nasa.gov/resource/saturn-3d-model/"
+        target="_blank"
+        rel="noopener"
+      >
+        Source
+      </a>
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  .home-hero-preview {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    overflow: hidden;
+    background: #171717;
+    color: #e5e5e5;
+  }
+
+  .home-hero-preview :global(.home-hero-preview-copy) {
+    min-width: 0;
+    padding: 0.65rem 0 0.65rem 0.8rem;
+    color: #d4d4d8;
+    font-size: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .home-hero-preview :global(.home-hero-preview-copy > p) {
+    display: block;
+    margin: 0;
+  }
+
+  .home-hero-preview :global(.home-hero-preview-copy > p + p) {
+    margin-top: 0.34rem;
+  }
+
+  .home-hero-preview :global(.home-hero-preview-copy > div) {
+    gap: 0.28rem;
+    margin-top: 0.45rem;
+  }
+
+  .home-hero-preview :global(.home-hero-preview-copy > div a) {
+    padding: 0.22rem;
+    border-radius: 0.18rem;
+  }
+
+  .home-hero-preview :global(.home-hero-preview-copy > div svg) {
+    width: 0.72rem;
+    height: 0.72rem;
+  }
+
+  .home-hero-preview-saturn {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+  }
+
+  .home-hero-preview-caption {
+    padding-bottom: 0.35rem;
+    font-size: 0.36rem;
+  }
+
+  :global(.home-hero-preview-fallback) {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  @container (max-width: 18rem) {
+    .home-hero-preview {
+      grid-template-columns: 1fr 0.9fr;
+    }
+    .home-hero-preview :global(.home-hero-preview-copy) {
+      padding-left: 0.6rem;
+    }
+  }
+
+  @container (max-width: 28rem) and (min-height: 16rem) {
+    .home-hero-preview {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .home-hero-preview :global(.home-hero-preview-copy) {
+      padding: 0.65rem 0.8rem 0.2rem;
+    }
+
+    .home-hero-preview-saturn {
+      min-height: 0;
+    }
+  }
+</style>

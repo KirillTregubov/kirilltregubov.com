@@ -1,8 +1,12 @@
 ---
 import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
+import OmarchyDummyApps from './OmarchyDummyApps.astro'
 ---
 
-<section class="omarchy-demo not-prose" aria-labelledby="omarchy-demo-title">
+<section
+  class="omarchy-demo not-prose shadow-lg"
+  aria-labelledby="omarchy-demo-title"
+>
   <div class="demo-heading">
     <div>
       <p class="eyebrow">Interactive workspace</p>
@@ -12,11 +16,11 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     <div class="layout-switcher" role="group" aria-label="Window layout">
       <button type="button" data-layout-button="dwindle" aria-pressed="true">
         <LayoutGridIcon aria-hidden="true" />
-        Dwindle
+        <span>Dwindle</span>
       </button>
       <button type="button" data-layout-button="scrolling" aria-pressed="false">
         <MoveHorizontalIcon aria-hidden="true" />
-        Scrolling
+        <span>Scrolling</span>
       </button>
     </div>
   </div>
@@ -88,7 +92,9 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
             role="button"
             tabindex="-1"
             aria-hidden="true"
-          ></div>
+          >
+            <OmarchyDummyApps app="terminal" />
+          </div>
           <div
             class="window"
             data-window-slot="1"
@@ -96,7 +102,9 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
             role="button"
             tabindex="-1"
             aria-hidden="true"
-          ></div>
+          >
+            <OmarchyDummyApps app="browser" />
+          </div>
           <div
             class="window"
             data-window-slot="2"
@@ -104,7 +112,9 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
             role="button"
             tabindex="-1"
             aria-hidden="true"
-          ></div>
+          >
+            <OmarchyDummyApps app="editor" />
+          </div>
         </div>
       </div>
       <div class="monitor-chin" aria-hidden="true">
@@ -163,7 +173,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         <div>
           <p class="shortcut-title">Keyboard shortcuts</p>
           <p class="shortcut-hint" data-shortcut-hint>
-            Super may be captured by your desktop. Switch to Alt to try them.
+            Alt shortcuts are ready to use in the browser.
           </p>
         </div>
 
@@ -185,14 +195,14 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
           <button
             type="button"
             data-shortcut-modifier="Meta"
-            aria-pressed="true"
+            aria-pressed="false"
           >
             Super
           </button>
           <button
             type="button"
             data-shortcut-modifier="Alt"
-            aria-pressed="false"
+            aria-pressed="true"
           >
             Alt
           </button>
@@ -283,6 +293,9 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
       type LayoutMode = 'dwindle' | 'scrolling'
       type DemoWindow = { id: number; app: DemoApp; slot: number }
 
+      // TODO(shipping): Set this to [] to restore the empty production default.
+      const TEMPORARY_PRE_SHIP_DEFAULT_APPS: readonly DemoApp[] = appIds
+
       const appLabels: Record<DemoApp, string> = {
         terminal: 'Terminal',
         browser: 'Browser',
@@ -290,6 +303,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
       }
       const workspaceWindows: DemoWindow[][] = [[], [], [], []]
       const workspaceFocus: (number | null)[] = [null, null, null, null]
+      const workspaceReveal: (number | null)[] = [null, null, null, null]
       const workspaceLayouts: LayoutMode[] = [
         'dwindle',
         'dwindle',
@@ -299,9 +313,18 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
       let nextWindowId = 1
       let activeWorkspace = 1
       let workspaceSwitchVersion = 0
-      let shortcutModifier: 'Meta' | 'Alt' = 'Meta'
+      let layoutTransitionVersion = 0
+      let hoverFocusLocked = false
+      let shortcutModifier: 'Meta' | 'Alt' = 'Alt'
       let unsubscribeShortcuts: (() => void) | undefined
       const windowAnimations = new Map<HTMLElement, Animation>()
+
+      for (const [slot, app] of TEMPORARY_PRE_SHIP_DEFAULT_APPS.entries()) {
+        const demoWindow = { id: nextWindowId++, app, slot }
+        workspaceWindows[0].push(demoWindow)
+        workspaceFocus[0] = demoWindow.id
+        workspaceReveal[0] = demoWindow.id
+      }
 
       const cancelWindowAnimation = (appWindow: HTMLElement) => {
         windowAnimations.get(appWindow)?.cancel()
@@ -312,6 +335,67 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
       const cancelWindowAnimations = () => {
         for (const appWindow of windowAnimations.keys())
           cancelWindowAnimation(appWindow)
+      }
+
+      type WindowRects = Map<HTMLElement, DOMRect>
+
+      const captureWindowRects = (): WindowRects =>
+        new Map(
+          Array.from(appWindows)
+            .filter((appWindow) => appWindow.dataset.window !== '0')
+            .map((appWindow) => [appWindow, appWindow.getBoundingClientRect()]),
+        )
+
+      const animateWindowLayout = (previousRects: WindowRects) => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+          return []
+
+        const animations: Animation[] = []
+        for (const [appWindow, previousRect] of previousRects) {
+          if (appWindow.dataset.window === '0') continue
+
+          const nextRect = appWindow.getBoundingClientRect()
+          const translateX = previousRect.left - nextRect.left
+          const translateY = previousRect.top - nextRect.top
+          const scaleX = previousRect.width / nextRect.width
+          const scaleY = previousRect.height / nextRect.height
+          const positionChanged =
+            Math.abs(translateX) > 0.5 || Math.abs(translateY) > 0.5
+          const sizeChanged =
+            Math.abs(scaleX - 1) > 0.005 || Math.abs(scaleY - 1) > 0.005
+          if (!positionChanged && !sizeChanged) continue
+
+          cancelWindowAnimation(appWindow)
+          const animation = appWindow.animate(
+            [
+              {
+                translate: `${translateX}px ${translateY}px`,
+                scale: `${scaleX} ${scaleY}`,
+                transformOrigin: 'top left',
+              },
+              {
+                translate: '0 0',
+                scale: '1 1',
+                transformOrigin: 'top left',
+              },
+            ],
+            {
+              duration: 480,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            },
+          )
+
+          windowAnimations.set(appWindow, animation)
+          animations.push(animation)
+          const clearAnimation = () => {
+            if (windowAnimations.get(appWindow) === animation)
+              windowAnimations.delete(appWindow)
+          }
+          animation.addEventListener('finish', clearAnimation, { once: true })
+          animation.addEventListener('cancel', clearAnimation, { once: true })
+        }
+
+        return animations
       }
 
       const animateWindowOpening = (windowId: number) => {
@@ -385,15 +469,21 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         const focusedWindowId = workspaceFocus[focusIndex]
         if (!openWindows.some(({ id }) => id === focusedWindowId))
           workspaceFocus[focusIndex] = openWindows.at(-1)?.id ?? null
+        const revealedWindowId = workspaceReveal[focusIndex]
+        if (!openWindows.some(({ id }) => id === revealedWindowId))
+          workspaceReveal[focusIndex] = openWindows.at(-1)?.id ?? null
         const focusedWindow = openWindows.find(
           ({ id }) => id === workspaceFocus[focusIndex],
+        )
+        const revealedWindow = openWindows.find(
+          ({ id }) => id === workspaceReveal[focusIndex],
         )
 
         screen.dataset.layout = layout
         screen.dataset.windowCount = String(windowCount)
         screen.dataset.workspace = String(activeWorkspace)
         screen.dataset.focusedPosition = String(
-          focusedWindow ? openWindows.indexOf(focusedWindow) + 1 : 0,
+          revealedWindow ? openWindows.indexOf(revealedWindow) + 1 : 0,
         )
         screen.setAttribute(
           'aria-label',
@@ -462,7 +552,8 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 
         appButtons.forEach((button) => {
           const app = button.dataset.appButton as DemoApp
-          button.disabled = windowCount >= 3
+          button.disabled =
+            windowCount >= 3 || openWindows.some((item) => item.app === app)
           button.setAttribute('aria-label', `Open ${appLabels[app]}`)
         })
 
@@ -481,21 +572,47 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         })
       }
 
+      const updateFocusState = () => {
+        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+        const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
+        const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+        const focusedWindow = openWindows.find(
+          ({ id }) => id === focusedWindowId,
+        )
+
+        screen.setAttribute(
+          'aria-label',
+          `Workspace ${activeWorkspace}, ${openWindows.length} ${openWindows.length === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
+        )
+        appWindows.forEach((appWindow) => {
+          const isFocused =
+            Number(appWindow.dataset.windowId) === focusedWindowId
+          if (isFocused) appWindow.dataset.focused = ''
+          else delete appWindow.dataset.focused
+          appWindow.setAttribute('aria-pressed', String(isFocused))
+        })
+      }
+
       const openApp = (app: DemoApp) => {
         workspaceSwitchVersion += 1
         delete screen.dataset.switchingWorkspace
 
         const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        if (openWindows.length >= 3) return
+        if (
+          openWindows.length >= appIds.length ||
+          openWindows.some((item) => item.app === app)
+        )
+          return
 
-        const usedSlots = new Set(openWindows.map(({ slot }) => slot))
-        const slot = [0, 1, 2].find((candidate) => !usedSlots.has(candidate))
-        if (slot === undefined) return
+        const previousRects = captureWindowRects()
+        const slot = appIds.indexOf(app)
 
         const demoWindow = { id: nextWindowId++, app, slot }
         openWindows.push(demoWindow)
         workspaceFocus[activeWorkspace - 1] = demoWindow.id
+        workspaceReveal[activeWorkspace - 1] = demoWindow.id
         update()
+        animateWindowLayout(previousRects)
         animateWindowOpening(demoWindow.id)
       }
 
@@ -503,6 +620,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
         const windowIndex = openWindows.findIndex(({ id }) => id === windowId)
         if (windowIndex === -1) return
+        const previousRects = captureWindowRects()
 
         const appWindow = demo.querySelector<HTMLElement>(
           `[data-window-id="${windowId}"]`,
@@ -512,15 +630,31 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 
         if (workspaceFocus[activeWorkspace - 1] === windowId)
           workspaceFocus[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
+        if (workspaceReveal[activeWorkspace - 1] === windowId)
+          workspaceReveal[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
         update()
+        animateWindowLayout(previousRects)
       }
 
-      const selectWindow = (windowId: number) => {
+      const selectWindow = (windowId: number, reveal = true) => {
         const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
         if (!openWindows.some(({ id }) => id === windowId)) return
 
-        workspaceFocus[activeWorkspace - 1] = windowId
-        update()
+        const workspaceIndex = activeWorkspace - 1
+        const focusChanged = workspaceFocus[workspaceIndex] !== windowId
+        const revealChanged =
+          reveal && workspaceReveal[workspaceIndex] !== windowId
+        if (!focusChanged && !revealChanged) return
+
+        const previousRects = revealChanged ? captureWindowRects() : null
+        workspaceFocus[workspaceIndex] = windowId
+        if (reveal) workspaceReveal[workspaceIndex] = windowId
+        if (revealChanged && previousRects) {
+          update()
+          animateWindowLayout(previousRects)
+        } else {
+          updateFocusState()
+        }
       }
 
       const closeFocusedWindow = () => {
@@ -596,8 +730,26 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
       }
 
       const setLayout = (nextLayout: LayoutMode) => {
+        if (workspaceLayouts[activeWorkspace - 1] === nextLayout) return
+
+        const transitionVersion = ++layoutTransitionVersion
+        hoverFocusLocked = true
+        const previousRects = captureWindowRects()
         workspaceLayouts[activeWorkspace - 1] = nextLayout
         update()
+        const layoutAnimations = animateWindowLayout(previousRects)
+
+        if (layoutAnimations.length === 0) {
+          hoverFocusLocked = false
+          return
+        }
+
+        void Promise.allSettled(
+          layoutAnimations.map((animation) => animation.finished),
+        ).then(() => {
+          if (transitionVersion === layoutTransitionVersion)
+            hoverFocusLocked = false
+        })
       }
 
       const toggleLayout = () => {
@@ -771,6 +923,14 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
             null,
             null,
           )
+          workspaceReveal.splice(
+            0,
+            workspaceReveal.length,
+            null,
+            null,
+            null,
+            null,
+          )
           workspaceLayouts.splice(
             0,
             workspaceLayouts.length,
@@ -802,8 +962,34 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
           if (windowId) selectWindow(windowId)
         }
 
+        const selectSlotWindowOnHover = () => {
+          if (hoverFocusLocked) return
+          const windowId = Number(appWindow.dataset.windowId)
+          if (windowId) selectWindow(windowId, false)
+        }
+
+        const closeSlotWindow = (event: Event) => {
+          event.stopPropagation()
+          const windowId = Number(appWindow.dataset.windowId)
+          if (windowId) closeWindow(windowId)
+        }
+
         appWindow.addEventListener('click', selectSlotWindow, listenerOptions)
         appWindow.addEventListener('focus', selectSlotWindow, listenerOptions)
+        appWindow.addEventListener(
+          'mouseenter',
+          selectSlotWindowOnHover,
+          listenerOptions,
+        )
+        appWindow
+          .querySelectorAll<HTMLElement>('[data-window-close]')
+          .forEach((closeButton) => {
+            closeButton.addEventListener(
+              'click',
+              closeSlotWindow,
+              listenerOptions,
+            )
+          })
         appWindow.addEventListener(
           'keydown',
           (event) => {
@@ -850,6 +1036,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
         'astro:before-swap',
         () => {
           window.clearInterval(clockInterval)
+          layoutTransitionVersion += 1
           unsubscribeShortcuts?.()
           cancelWindowAnimations()
           lifecycleController.abort()
@@ -875,7 +1062,6 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     border: 1px solid rgb(255 255 255 / 0.1);
     border-radius: 1.25rem;
     background: #111116;
-    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.35);
   }
 
   .demo-heading {
@@ -905,11 +1091,12 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
 
   .layout-switcher {
-    display: flex;
-    gap: 0.2rem;
-    padding: 0.22rem;
+    display: grid;
+    grid-template-columns: repeat(2, 6rem);
+    gap: 0.25rem;
+    padding: 0.25rem;
     border: 1px solid rgb(255 255 255 / 0.08);
-    border-radius: 0.65rem;
+    border-radius: 0.625rem;
     background: #09090d;
   }
 
@@ -925,12 +1112,14 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   }
 
   .layout-switcher button {
-    padding: 0.5rem 0.65rem;
-    border-radius: 0.45rem;
+    height: 2.375rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.4375rem;
     background: transparent;
     color: #8f8f9a;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 600;
+    line-height: 1rem;
     transition:
       background-color 160ms ease,
       color 160ms ease,
@@ -948,6 +1137,8 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 
   .layout-switcher svg,
   .demo-controls svg {
+    display: block;
+    flex: none;
     width: 1rem;
     height: 1rem;
     fill: none;
@@ -1002,7 +1193,7 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     align-items: center;
     height: 5.2%;
     min-height: 1.25rem;
-    padding: 0 0.55rem;
+    padding: 0 0.7rem;
     background: rgb(20 20 31 / 0.96);
     color: #9999ac;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -1015,27 +1206,27 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
   .topbar-left {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.4rem;
   }
   .status-icons {
     justify-content: flex-end;
-    gap: 0.45rem;
+    gap: 0.5rem;
   }
   .status-icon {
     display: block;
-    width: 0.72rem;
-    height: 0.72rem;
+    /* width: 0.5rem;
+            height: 0.5rem; */
     overflow: visible;
     fill: currentColor;
   }
   .ethernet-icon {
-    width: 0.72rem;
+    width: 0.6rem;
   }
   .audio-icon {
-    width: 0.78rem;
+    width: 0.6rem;
   }
   .monitor-icon {
-    width: 0.72rem;
+    width: 0.6rem;
   }
   .workspaces {
     gap: 0.02rem;
@@ -1045,16 +1236,16 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     white-space: nowrap;
   }
   .omarchy-logo {
-    width: 0.72rem;
-    height: 0.72rem;
+    width: 0.6rem;
+    height: 0.6rem;
     color: #dedeea;
   }
 
   .workspace-button {
     position: relative;
     display: grid;
-    width: 0.85rem;
-    height: 0.85rem;
+    width: 0.6rem;
+    height: 0.6rem;
     flex: 0 0 0.85rem;
     place-items: center;
     padding: 0;
@@ -1108,17 +1299,12 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     border-radius: 0.55rem;
     background: #050507;
     box-shadow: 0 0.7rem 2rem rgb(0 0 0 / 0.4);
+    contain: layout paint;
     cursor: pointer;
+    container-type: size;
     transition:
-      top 480ms cubic-bezier(0.22, 1, 0.36, 1),
-      right 480ms cubic-bezier(0.22, 1, 0.36, 1),
-      bottom 480ms cubic-bezier(0.22, 1, 0.36, 1),
-      width 480ms cubic-bezier(0.22, 1, 0.36, 1),
-      height 480ms cubic-bezier(0.22, 1, 0.36, 1),
-      left 480ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 240ms ease,
-      border-color 200ms ease;
+      border-color 80ms ease;
   }
 
   .window:focus-visible {
@@ -1130,10 +1316,10 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
     background: #050507;
   }
   .browser-window {
-    background: #d9ad16;
+    background: #050507;
   }
   .editor-window {
-    background: #2563d9;
+    background: #050507;
   }
 
   .window[data-window='0'] {
@@ -1151,10 +1337,6 @@ import { LayoutGridIcon, MoveHorizontalIcon, RotateCcwIcon } from 'lucide-react'
 
   .window[data-focused] {
     border-color: var(--focus-blue);
-    box-shadow:
-      0 0 0 1px rgb(139 213 255 / 0.4),
-      0 0 1.2rem rgb(80 184 255 / 0.22),
-      0 0.7rem 2rem rgb(0 0 0 / 0.55);
   }
 
   .screen[data-window-count='0'] .window {

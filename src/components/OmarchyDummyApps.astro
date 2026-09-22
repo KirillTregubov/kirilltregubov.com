@@ -1,0 +1,710 @@
+---
+import HomeHero from './HomeHero.astro'
+import EditorFileIcon from './icons/EditorFileIcon.astro'
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  RotateCwIcon,
+  XIcon,
+} from 'lucide-react'
+
+interface Props {
+  app: 'terminal' | 'browser' | 'editor'
+}
+
+const { app } = Astro.props
+---
+
+{app === 'terminal' && (
+  <div class="dummy-app dummy-terminal" aria-hidden="true">
+    <div class="terminal-titlebar">
+      <span class="terminal-mark">›_</span>
+      <span>kirill@omarchy:~</span>
+      <button
+        class="window-close"
+        type="button"
+        data-window-close
+        tabindex="-1"
+        aria-label="Close terminal window"
+      >
+        <XIcon aria-hidden="true" />
+      </button>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-commandline">
+        <span class="path">~</span>
+        <span class="prompt">❯</span>
+        <span class="command">fastfetch</span>
+      </div>
+      <div class="fastfetch">
+        <pre class="fastfetch-logo">██████████████████████████████████████████████████████
+██████████████████████████████████████████████████████
+████                     ████                     ████
+████                     ████                     ████
+████    █████████████████████         ████████    ████
+████    █████████████████████         ████████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████████████                              ████    ████
+████████████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ████                              ████    ████
+████    ██████████████████████████████████████    ████
+████    ██████████████████████████████████████    ████
+████                     ████                     ████
+████                     ████                     ████
+█████████████████████████████     ████████████████████
+█████████████████████████████     ████████████████████</pre>
+        <div class="fetch-details">
+          <span>
+            <b>Hardware</b> Ryzen 5 5600X · RTX 4070
+          </span>
+          <span>
+            <b>Software</b> Omarchy · Hyprland · foot
+          </span>
+          <span>
+            <b>Theme</b> Tokyo Night
+          </span>
+        </div>
+      </div>
+      <div class="terminal-commandline terminal-input">
+        <span class="path">~</span>
+        <span class="prompt">❯</span>
+        <span class="cursor"></span>
+      </div>
+    </div>
+  </div>
+)}
+
+{app === 'browser' && (
+  <div class="dummy-app dummy-browser" aria-hidden="true">
+    <div class="browser-toolbar">
+      <div class="browser-nav">
+        <span>
+          <ArrowLeftIcon aria-hidden="true" />
+        </span>
+        <span>
+          <ArrowRightIcon aria-hidden="true" />
+        </span>
+        <span>
+          <RotateCwIcon aria-hidden="true" />
+        </span>
+      </div>
+      <div class="address-bar">
+        <span class="site-lock">●</span>
+        <span>kirilltregubov.com</span>
+      </div>
+      <button
+        class="window-close"
+        type="button"
+        data-window-close
+        tabindex="-1"
+        aria-label="Close browser window"
+      >
+        <XIcon aria-hidden="true" />
+      </button>
+    </div>
+    <div class="browser-page">
+      <HomeHero preview />
+    </div>
+  </div>
+)}
+
+{app === 'editor' && (
+  <div class="dummy-app dummy-editor" aria-hidden="true">
+    <div class="editor-menubar">
+      <span class="editor-appmark">◆</span>
+      <div class="editor-menu">
+        <span>File</span>
+        <span>Edit</span>
+        <span>Selection</span>
+        <span>…</span>
+      </div>
+      <span class="editor-history">←&nbsp;&nbsp;→</span>
+      <span class="command-center">kirilltregubov.com</span>
+      <button
+        class="window-close"
+        type="button"
+        data-window-close
+        tabindex="-1"
+        aria-label="Close editor window"
+      >
+        <XIcon aria-hidden="true" />
+      </button>
+    </div>
+    <div class="editor-workbench">
+      <aside class="editor-sidebar">
+        <div class="activity-rail">
+          <span>▱</span>
+          <span>⌕</span>
+          <span>⑂</span>
+          <span>◇</span>
+          <span>◫</span>
+        </div>
+        <div class="file-tree">
+          <div class="explorer-heading">
+            <span>EXPLORER</span>
+            <span>•••</span>
+          </div>
+          <strong>⌄ KIRILLTREGUBOV.COM</strong>
+          <span class="tree-folder">⌄ src</span>
+          <span class="tree-folder nested">⌄ components</span>
+          <span class="tree-file">
+            <EditorFileIcon type="astro" /> AboutMe.astro
+          </span>
+          <span class="tree-file">
+            <EditorFileIcon type="react" /> Age.tsx
+          </span>
+          <span class="tree-file">
+            <EditorFileIcon type="astro" /> HomeHero.astro
+          </span>
+          <span class="tree-file active">
+            <EditorFileIcon type="astro" /> OmarchyDummyApps.astro
+          </span>
+          <span class="tree-file changed">
+            <EditorFileIcon type="astro" /> OmarchyWindowDemo.astro&nbsp; M
+          </span>
+          <span class="tree-folder">› content</span>
+          <span class="tree-folder">› layouts</span>
+          <span class="tree-folder">› pages</span>
+        </div>
+      </aside>
+      <div class="editor-main">
+        <div class="editor-tabs">
+          <span>
+            <EditorFileIcon type="astro" /> HomeHero.astro&nbsp; ×
+          </span>
+        </div>
+        <div class="breadcrumbs">
+          src › components › <EditorFileIcon type="astro" /> HomeHero.astro
+        </div>
+        <div class="code-pane">
+          <div class="line">
+            <i>1</i>
+            <code>
+              <em>---</em>
+            </code>
+          </div>
+          <div class="line">
+            <i>2</i>
+            <code>
+              <b>import</b> <span class="type">AboutMe</span> <b>from</b>{' '}
+              <q>./AboutMe.astro</q>
+            </code>
+          </div>
+          <div class="line">
+            <i>3</i>
+            <code>
+              <b>import</b> <span class="type">Saturn</span> <b>from</b>{' '}
+              <q>./Saturn</q>
+            </code>
+          </div>
+          <div class="line">
+            <i>4</i>
+            <code></code>
+          </div>
+          <div class="line">
+            <i>5</i>
+            <code>
+              <b>const</b> &#123; <span class="variable">preview</span> ={' '}
+              <span class="constant">false</span> &#125; ={' '}
+              <span class="type">Astro</span>.
+              <span class="variable">props</span>
+            </code>
+          </div>
+          <div class="line">
+            <i>6</i>
+            <code>
+              <em>---</em>
+            </code>
+          </div>
+          <div class="line">
+            <i>7</i>
+            <code></code>
+          </div>
+          <div class="line active-line">
+            <i>8</i>
+            <code>
+              &lt;<span class="tag">section</span>{' '}
+              <span class="attr">class:list</span>=&#123;[...]&#125;&gt;
+            </code>
+          </div>
+          <div class="line">
+            <i>9</i>
+            <code>
+              &nbsp;&nbsp;&lt;<span class="type">AboutMe</span> /&gt;
+            </code>
+          </div>
+          <div class="line">
+            <i>10</i>
+            <code>
+              &nbsp;&nbsp;&lt;<span class="type">Saturn</span>{' '}
+              <span class="attr">client:visible</span> /&gt;
+            </code>
+          </div>
+          <div class="line">
+            <i>11</i>
+            <code>
+              &lt;/<span class="tag">section</span>&gt;
+            </code>
+          </div>
+        </div>
+        <div class="editor-status">
+          <span>⑂ main*</span>
+          <span>Astro&nbsp;&nbsp;UTF-8&nbsp;&nbsp;Ln 8, Col 26</span>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .dummy-app {
+    position: absolute;
+    inset: 0;
+    display: none;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    color: #a9b1d6;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  :global(.window[data-app='terminal']) .dummy-terminal,
+  :global(.window[data-app='browser']) .dummy-browser,
+  :global(.window[data-app='editor']) .dummy-editor {
+    display: flex;
+  }
+
+  .dummy-terminal {
+    flex-direction: column;
+    background: rgb(22 22 30 / 0.98);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .terminal-titlebar {
+    display: grid;
+    min-height: 1.5rem;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0 0.55rem;
+    border-bottom: 1px solid #292b3a;
+    background: #1a1b26;
+    color: #737aa2;
+    font-size: 0.48rem;
+  }
+  .terminal-mark,
+  .prompt {
+    color: #ff9e64;
+  }
+  .window-close {
+    display: grid;
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: 0 0 1.15rem;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #a9b1d6;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  .window-close:hover {
+    background: #4b5068;
+    color: #c0caf5;
+  }
+  .window-close svg {
+    width: 0.7rem;
+    height: 0.7rem;
+    stroke-width: 2;
+  }
+  .terminal-body {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.65rem 0.75rem;
+    overflow: hidden;
+    color: #a9b1d6;
+    font-size: 0.55rem;
+    line-height: 1.35;
+  }
+  .terminal-commandline {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+  .path {
+    color: #7dcfff;
+  }
+  .command {
+    color: #c0caf5;
+  }
+  .fastfetch {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .fastfetch-logo {
+    flex: 0 0 auto;
+    margin: 0;
+    color: #ff9e64;
+    font:
+      700 0.22rem/1 ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      monospace;
+    letter-spacing: -0.04em;
+  }
+  .fetch-details {
+    display: grid;
+    min-width: 0;
+    gap: 0.38rem;
+    color: #9aa5ce;
+    font-size: 0.46rem;
+    white-space: nowrap;
+  }
+  .fetch-details b {
+    display: block;
+    margin-bottom: 0.04rem;
+    color: #bb9af7;
+    font-weight: 650;
+  }
+  .terminal-input {
+    margin-top: 0;
+  }
+  .cursor {
+    width: 0.5em;
+    height: 1em;
+    background: #c0caf5;
+    animation: terminal-blink 1.1s steps(1) infinite;
+  }
+
+  .dummy-browser {
+    flex-direction: column;
+    background: #171717;
+    color: #d4d4d8;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    pointer-events: auto;
+  }
+  .browser-toolbar {
+    display: grid;
+    min-height: 1.45rem;
+    grid-template-columns: auto minmax(2rem, 1fr) auto;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0 0.25rem;
+    border-bottom: 1px solid #292b3a;
+    background: #1a1b26;
+    color: #737aa2;
+    font-size: 0.48rem;
+  }
+  .browser-nav {
+    display: flex;
+    gap: 0.16rem;
+  }
+  .browser-nav span {
+    display: grid;
+    width: 1rem;
+    height: 1rem;
+    place-items: center;
+  }
+  .browser-nav svg {
+    width: 0.62rem;
+    height: 0.62rem;
+    stroke-width: 2;
+  }
+  .address-bar {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.14rem 0.45rem;
+    overflow: hidden;
+    border: 1px solid #34374a;
+    border-radius: 0.32rem;
+    background: #202230;
+    color: #9aa5ce;
+    white-space: nowrap;
+  }
+  .site-lock {
+    color: #9ece6a;
+    font-size: 0.4rem;
+  }
+  .browser-page {
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+    background: #171717;
+  }
+
+  .dummy-editor {
+    flex-direction: column;
+    background: #1a1b26;
+    color: #a9b1d6;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .editor-menubar {
+    display: grid;
+    min-height: 1.4rem;
+    grid-template-columns: auto auto auto minmax(3rem, 1fr) auto;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0 0.25rem;
+    border-bottom: 1px solid #292b3a;
+    background: #16161e;
+    color: #737aa2;
+    font-size: 0.39rem;
+  }
+  .editor-appmark {
+    color: #7aa2f7;
+  }
+  .editor-menu {
+    display: flex;
+    gap: 0.48rem;
+  }
+  .editor-history {
+    white-space: nowrap;
+  }
+  .command-center {
+    justify-self: stretch;
+    padding: 0.1rem 0.4rem;
+    overflow: hidden;
+    border: 1px solid #2f3346;
+    border-radius: 0.25rem;
+    background: #1f2130;
+    color: #565f89;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .editor-workbench {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+  }
+  .editor-sidebar {
+    display: flex;
+    width: 37%;
+    min-width: 5rem;
+    border-right: 1px solid #292b3a;
+    background: #16161e;
+  }
+  .activity-rail {
+    display: flex;
+    width: 1.55rem;
+    flex: 0 0 1.55rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.68rem;
+    padding-top: 0.5rem;
+    border-right: 1px solid #252735;
+    color: #565f89;
+    font-size: 0.66rem;
+  }
+  .activity-rail span:first-child {
+    color: #c0caf5;
+  }
+  .file-tree {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    color: #9aa5ce;
+    font-size: 0.38rem;
+    line-height: 1.65;
+  }
+  .explorer-heading {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.38rem 0.42rem 0.3rem;
+    color: #737aa2;
+  }
+  .file-tree strong {
+    padding: 0 0.35rem;
+    color: #c0caf5;
+    font-weight: 600;
+  }
+  .file-tree > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tree-folder {
+    padding-left: 0.55rem;
+    color: #7dcfff;
+  }
+  .tree-folder.nested {
+    padding-left: 0.85rem;
+  }
+  .tree-file {
+    display: flex;
+    align-items: center;
+    gap: 0.24rem;
+    padding-left: 1.15rem;
+  }
+  .tree-file.active {
+    background: #292e42;
+    color: #c0caf5;
+  }
+  .tree-file.changed {
+    color: #7dcfff;
+  }
+  .editor-main {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+  .editor-tabs {
+    display: flex;
+    min-height: 1.35rem;
+    border-bottom: 1px solid #292b3a;
+    background: #16161e;
+    color: #a9b1d6;
+    font-size: 0.4rem;
+  }
+  .editor-tabs span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.55rem;
+    border-top: 1px solid #bb9af7;
+    background: #1a1b26;
+  }
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.25rem 0.55rem;
+    color: #565f89;
+    font-size: 0.34rem;
+  }
+  .code-pane {
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+    padding-top: 0.15rem;
+    color: #a9b1d6;
+    font-size: 0.42rem;
+    line-height: 1.5;
+  }
+  .line {
+    display: grid;
+    min-height: 1.5em;
+    grid-template-columns: 2.4em minmax(0, 1fr);
+  }
+  .line i {
+    padding-right: 0.7em;
+    color: #3b4261;
+    font-style: normal;
+    text-align: right;
+  }
+  .line code {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .active-line {
+    background: #1f2335;
+  }
+  .code-pane b,
+  .code-pane em {
+    color: #bb9af7;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .code-pane q {
+    color: #9ece6a;
+  }
+  .code-pane q::before,
+  .code-pane q::after {
+    content: "'";
+  }
+  .tag {
+    color: #f7768e;
+  }
+  .attr,
+  .type {
+    color: #7aa2f7;
+  }
+  .variable {
+    color: #e0af68;
+  }
+  .constant {
+    color: #ff9e64;
+  }
+  .editor-status {
+    display: flex;
+    min-height: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.4rem;
+    background: #1f6f9f;
+    color: #e0f2fe;
+    font-size: 0.32rem;
+  }
+
+  @container (max-height: 13rem) {
+    .terminal-body {
+      gap: 0.25rem;
+      padding-block: 0.4rem;
+    }
+    .fetch-details {
+      gap: 0.22rem;
+    }
+    .breadcrumbs,
+    .file-tree > span:nth-of-type(n + 7) {
+      display: none;
+    }
+    .code-pane {
+      padding-top: 0.08rem;
+      font-size: 0.34rem;
+      line-height: 1.3;
+    }
+    .line {
+      min-height: 1.3em;
+    }
+  }
+
+  @container (max-width: 18rem) {
+    .browser-nav span:nth-child(2),
+    .editor-menu,
+    .editor-history,
+    .editor-sidebar {
+      display: none;
+    }
+    .editor-menubar {
+      grid-template-columns: auto minmax(3rem, 1fr) auto;
+    }
+    .fastfetch {
+      gap: 0.45rem;
+    }
+  }
+
+  @keyframes terminal-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor {
+      animation: none;
+    }
+  }
+</style>

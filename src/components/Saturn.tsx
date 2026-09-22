@@ -10,29 +10,47 @@ function Fallback({ className }: { className?: string }) {
         alt="Saturn placeholder"
         className={`object-cover motion-safe:animate-[saturnPlaceholderIn_800ms_ease-out_forwards] motion-safe:opacity-0${className ? ` ${className}` : ''}`}
         loading="eager"
+        draggable="false"
       />
     </div>
   )
 }
 
-export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
+interface SaturnProps {
+  className?: string
+  fallbackClass?: string
+  sceneScale?: number
+  staticOnly?: boolean
+}
+
+export default function Saturn({
+  className,
+  fallbackClass,
+  sceneScale,
+  staticOnly = false,
+}: SaturnProps) {
   const [renderScene, setRenderScene] = useState(false)
   const [sceneReady, setSceneReady] = useState(false)
   const handleSceneReady = useCallback(() => setSceneReady(true), [])
 
   useEffect(() => {
+    if (staticOnly) return
+
     let active = true
 
     void import('@pmndrs/detect-gpu')
       .then(async ({ getGPUTier }) => {
-        const { tier, device } = await getGPUTier()
+        const result = await getGPUTier()
         if (!active) return
 
-        if (tier >= 2) {
+        const detectionWasInconclusive =
+          result.type === 'FALLBACK' || result.type === 'BENCHMARK_FETCH_FAILED'
+
+        if (result.tier >= 2 || detectionWasInconclusive) {
           setRenderScene(true)
         } else {
           console.info(
-            `[Saturn] Skipping 3D scene (Device: ${device}, GPU tier: ${tier})`,
+            `[Saturn] Skipping 3D scene (GPU: ${result.gpu ?? 'unknown'}, tier: ${result.tier}, detection: ${result.type})`,
           )
         }
       })
@@ -41,10 +59,18 @@ export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
     return () => {
       active = false
     }
-  }, [])
+  }, [staticOnly])
+
+  if (staticOnly) {
+    return (
+      <div className={`relative h-full w-full ${className ?? ''}`}>
+        <Fallback className={fallbackClass} />
+      </div>
+    )
+  }
 
   return (
-    <div className="relative h-full w-full">
+    <div className={`relative h-full w-full ${className ?? ''}`}>
       <div
         className={`absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none ${sceneReady ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
         aria-hidden={sceneReady}
@@ -56,7 +82,7 @@ export default function Saturn({ fallbackClass }: { fallbackClass?: string }) {
           className={`absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none ${sceneReady ? 'opacity-100' : 'opacity-0'}`}
         >
           <Suspense fallback={null}>
-            <SaturnScene onReady={handleSceneReady} />
+            <SaturnScene onReady={handleSceneReady} scale={sceneScale} />
           </Suspense>
         </div>
       )}
