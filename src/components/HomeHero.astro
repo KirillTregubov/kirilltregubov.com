@@ -38,7 +38,7 @@ const { preview = false } = Astro.props
         <img
           src="/assets/SaturnPlaceholder.jpg"
           alt="Saturn placeholder"
-          class="home-hero-preview-fallback object-cover"
+          class="w-full max-w-52 max-h-full object-contain"
           loading="lazy"
           draggable="false"
         />
@@ -47,7 +47,7 @@ const { preview = false } = Astro.props
       <Saturn
         client:idle
         className="sm:max-lg:h-88 sm:max-lg:-translate-y-8"
-        fallbackClass="max-h-[300px] sm:max-h-[350px] lg:max-h-[300px] xl:h-[440px] xl:max-h-[440px]"
+        fallbackClass="max-h-75 sm:max-h-87.5 lg:max-h-75 xl:h-110 xl:max-h-110"
       />
     )}
     <figcaption
@@ -117,6 +117,11 @@ const { preview = false } = Astro.props
     height: 0.72rem;
   }
 
+  .home-hero-preview
+    :global(.home-hero-preview-copy a[href^='mailto:']::after) {
+    height: 1px;
+  }
+
   .home-hero-preview-saturn {
     width: 100%;
     height: 100%;
@@ -126,13 +131,6 @@ const { preview = false } = Astro.props
   .home-hero-preview-caption {
     padding-bottom: 0.35rem;
     font-size: 0.36rem;
-  }
-
-  :global(.home-hero-preview-fallback) {
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
   }
 
   @container (max-width: 18rem) {
@@ -147,16 +145,31 @@ const { preview = false } = Astro.props
   @container (max-width: 28rem) and (min-height: 16rem) {
     .home-hero-preview {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-content: center;
       align-items: stretch;
+      row-gap: 0.5rem;
     }
 
     .home-hero-preview :global(.home-hero-preview-copy) {
-      padding: 0.65rem 0.8rem 0.2rem;
+      padding: 0 0.8rem;
     }
 
     .home-hero-preview-saturn {
-      min-height: 0;
+      display: flex;
+      height: auto;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .home-hero-preview-saturn > div {
+      height: auto;
+    }
+
+    .home-hero-preview-caption {
+      position: static;
+      padding-bottom: 0;
     }
   }
 </style>
