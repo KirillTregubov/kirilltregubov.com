@@ -89,7 +89,7 @@ const activityIcons = [
             <b>Hardware</b> Ryzen 5 5600X · RTX 4070
           </span>
           <span>
-            <b>Software</b> Omarchy · Hyprland · foot
+            <b>Software</b> Arch Linux · Omarchy · Hyprland
           </span>
           <span>
             <b>Theme</b> Tokyo Night
@@ -99,7 +99,9 @@ const activityIcons = [
       <div class="terminal-commandline terminal-input flex items-center gap-[0.35rem] whitespace-nowrap mt-0">
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
-        <span class="cursor w-[0.5em] h-[1em] bg-[#c0caf5] animate-[terminal-blink_1.1s_steps(1)_infinite]"></span>
+        <span class="cursor text-[#c0caf5] animate-[terminal-blink_1.1s_steps(1)_infinite]">
+          {'▌'}
+        </span>
       </div>
     </div>
   </div>
@@ -457,6 +459,11 @@ const activityIcons = [
     50% {
       opacity: 0;
     }
+  }
+
+  :global(.window:not([data-focused])) .cursor {
+    animation: none;
+    visibility: hidden;
   }
 
   @media (prefers-reduced-motion: reduce) {
