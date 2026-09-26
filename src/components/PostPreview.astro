@@ -3,13 +3,13 @@ import type { CollectionEntry } from 'astro:content'
 import { ArrowRightIcon } from 'lucide-react'
 
 interface Props {
-  article: CollectionEntry<'blog'>
+  post: CollectionEntry<'blog'>
 }
 
-const { article } = Astro.props
-const href = `/blog/${article.id}`
+const { post } = Astro.props
+const href = `/blog/${post.id}`
 
-const displayDate = article.data.updatedDate ?? article.data.pubDate
+const displayDate = post.data.updatedDate ?? post.data.pubDate
 const formattedDate = displayDate.toLocaleDateString('en-CA', {
   year: 'numeric',
   month: 'long',
@@ -25,30 +25,30 @@ const formattedDate = displayDate.toLocaleDateString('en-CA', {
     <div class="flex min-w-0 flex-col justify-center px-4 py-6 lg:px-6">
       <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
         <time datetime={displayDate.toISOString()}>
-          {article.data.updatedDate ? 'Updated ' : ''}
+          {post.data.updatedDate ? 'Updated ' : ''}
           {formattedDate}
         </time>
-        {import.meta.env.DEV && article.data.hidden && (
+        {import.meta.env.DEV && post.data.hidden && (
           <span class="rounded-sm bg-violet-950 px-1.5 py-0.5 text-violet-300">
             Development only
           </span>
         )}
-        {import.meta.env.DEV && article.data.draft && (
+        {import.meta.env.DEV && post.data.draft && (
           <span class="rounded-sm bg-amber-950 px-1.5 py-0.5 text-amber-300">
             Draft
           </span>
         )}
       </div>
       <h2 class="mt-1 text-lg font-semibold text-neutral-200 sm:text-xl">
-        {article.data.title}
+        {post.data.title}
       </h2>
       <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-neutral-400 sm:text-base">
-        {article.data.description}
+        {post.data.description}
       </p>
     </div>
     <div class="flex items-center pr-3 pl-3 sm:pr-6 sm:pl-5">
       <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2 text-sm font-medium text-neutral-400 transition group-has-focus-visible:text-white group-hover:text-white sm:px-3">
-        <span class="sr-only sm:not-sr-only">Read article</span>
+        <span class="sr-only sm:not-sr-only">Read post</span>
         <ArrowRightIcon
           className="size-4 transition-transform group-has-focus-visible:translate-x-0.5 group-hover:translate-x-0.5 will-change-transform"
           aria-hidden="true"

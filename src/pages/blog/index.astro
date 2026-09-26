@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import ArticlePreview from '@components/ArticlePreview.astro'
+import PostPreview from '@components/PostPreview.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import Layout from '@layouts/Layout.astro'
 import { ChevronRightIcon, SearchIcon } from 'lucide-react'
@@ -19,13 +19,13 @@ const visiblePosts = await getCollection('blog').then((posts) =>
     ),
 )
 
-const articles = visiblePosts.filter((post) => !post.data.archived)
-const archivedArticles = visiblePosts.filter((post) => post.data.archived)
+const posts = visiblePosts.filter((post) => !post.data.archived)
+const archivedPosts = visiblePosts.filter((post) => post.data.archived)
 ---
 
 <Layout
   title="Blog - Kirill Tregubov"
-  description="Articles by Kirill Tregubov about software development, projects, and the decisions behind them."
+  description="Posts by Kirill Tregubov about software development, projects, and the decisions behind them."
   bodyClass="flex flex-col"
 >
   <main class="mx-auto w-full max-w-240 grow">
@@ -48,32 +48,32 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
         type="search"
         placeholder="Search posts..."
         autocomplete="off"
-        aria-controls="blog-article-list blog-archive-list"
+        aria-controls="blog-post-list blog-archive-list"
         class="w-full rounded-lg border border-neutral-700 bg-neutral-800 py-2 pr-3 pl-9 text-base text-neutral-100 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300! active:border-neutral-500 active:bg-neutral-600 selection:bg-neutral-300 selection:text-neutral-950"
       />
     </label>
-    <div class="article-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 lg:-mx-6">
-      <ul id="blog-article-list" class="mt-6">
-        {articles.map((article) => (
+    <div class="post-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 lg:-mx-6">
+      <ul id="blog-post-list" class="mt-6">
+        {posts.map((post) => (
           <li
-            class="article-row"
+            class="post-row"
             data-search={[
-              article.data.title,
-              article.data.description,
-              ...article.data.tags,
+              post.data.title,
+              post.data.description,
+              ...post.data.tags,
             ]
               .join(' ')
               .toLocaleLowerCase()}
           >
-            <ArticlePreview article={article} />
+            <PostPreview post={post} />
           </li>
         ))}
       </ul>
-      {archivedArticles.length > 0 && (
+      {archivedPosts.length > 0 && (
         <div class="archive-region mx-3 mt-10 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 lg:mx-6">
           <details
             class="archive-details group/archive"
-            style={`animation-delay: ${0.3 + articles.length * 0.1}s`}
+            style={`animation-delay: ${0.3 + posts.length * 0.1}s`}
           >
             <summary class="relative z-1 px-2 py-1 -mx-2 -my-1 rounded-lg flex w-full cursor-pointer items-center gap-2 text-lg font-semibold text-neutral-300 select-none marker:content-none group">
               <span class="flex items-baseline gap-1 pt-px">
@@ -81,7 +81,7 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
                   Archive
                 </span>
                 <span class="text-sm font-normal text-neutral-500">
-                  (<span class="archive-count">{archivedArticles.length}</span>)
+                  (<span class="archive-count">{archivedPosts.length}</span>)
                 </span>
               </span>
               <ChevronRightIcon
@@ -90,18 +90,18 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
               />
             </summary>
             <ul id="blog-archive-list" class="archive-list -mx-3 mt-3 lg:-mx-6">
-              {archivedArticles.map((article) => (
+              {archivedPosts.map((post) => (
                 <li
-                  class="article-row"
+                  class="post-row"
                   data-search={[
-                    article.data.title,
-                    article.data.description,
-                    ...article.data.tags,
+                    post.data.title,
+                    post.data.description,
+                    ...post.data.tags,
                   ]
                     .join(' ')
                     .toLocaleLowerCase()}
                 >
-                  <ArticlePreview article={article} />
+                  <PostPreview post={post} />
                 </li>
               ))}
             </ul>
@@ -128,14 +128,14 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
     '(hover: hover) and (pointer: fine)',
   )
 
-  const setupArticleHighlights = () => {
+  const setupPostHighlights = () => {
     document
-      .querySelectorAll<HTMLElement>('.article-list-region')
+      .querySelectorAll<HTMLElement>('.post-list-region')
       .forEach((region) => {
         if (region.dataset.highlightInit !== undefined) return
         region.dataset.highlightInit = ''
 
-        const rows = region.querySelectorAll<HTMLElement>('.article-row')
+        const rows = region.querySelectorAll<HTMLElement>('.post-row')
         const controller = new AbortController()
         const { signal } = controller
         let activeRow: HTMLElement | null = null
@@ -232,7 +232,7 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
         region.addEventListener('focusout', () => {
           requestAnimationFrame(() => {
             const focusedRow =
-              document.activeElement?.closest<HTMLElement>('.article-row')
+              document.activeElement?.closest<HTMLElement>('.post-row')
 
             if (focusedRow && region.contains(focusedRow)) moveTo(focusedRow)
             else hideIfInactive()
@@ -314,13 +314,12 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
       })
   }
 
-  const setupArticleSearch = () => {
+  const setupPostSearch = () => {
     const searchInput = document.querySelector<HTMLInputElement>('#blog-search')
     if (!searchInput || searchInput.dataset.searchInit !== undefined) return
     searchInput.dataset.searchInit = ''
 
-    const articleList =
-      document.querySelector<HTMLElement>('#blog-article-list')
+    const postList = document.querySelector<HTMLElement>('#blog-post-list')
     const archiveList =
       document.querySelector<HTMLElement>('#blog-archive-list')
     const archiveRegion = document.querySelector<HTMLElement>('.archive-region')
@@ -329,11 +328,11 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
     const archiveCount =
       archiveRegion?.querySelector<HTMLElement>('.archive-count')
     const noResults = document.querySelector<HTMLElement>('.blog-no-results')
-    const articleRows = Array.from(
-      articleList?.querySelectorAll<HTMLElement>('.article-row') ?? [],
+    const postRows = Array.from(
+      postList?.querySelectorAll<HTMLElement>('.post-row') ?? [],
     )
     const archiveRows = Array.from(
-      archiveList?.querySelectorAll<HTMLElement>('.article-row') ?? [],
+      archiveList?.querySelectorAll<HTMLElement>('.post-row') ?? [],
     )
     let archiveWasOpen = archiveDetails?.open ?? false
     let hadQuery = false
@@ -355,20 +354,17 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
     const updateResults = () => {
       const query = searchInput.value.trim().toLocaleLowerCase()
       if (query && !hadQuery) archiveWasOpen = archiveDetails?.open ?? false
-      const articleMatches = filterRows(articleRows, query)
+      const postMatches = filterRows(postRows, query)
       const archiveMatches = filterRows(archiveRows, query)
 
-      if (articleList) articleList.hidden = articleMatches === 0
+      if (postList) postList.hidden = postMatches === 0
       if (archiveRegion) archiveRegion.hidden = archiveMatches === 0
       if (archiveCount) archiveCount.textContent = String(archiveMatches)
       if (archiveDetails) {
         archiveDetails.open = query ? archiveMatches > 0 : archiveWasOpen
       }
       if (noResults) {
-        noResults.classList.toggle(
-          'hidden',
-          articleMatches + archiveMatches > 0,
-        )
+        noResults.classList.toggle('hidden', postMatches + archiveMatches > 0)
       }
       hadQuery = Boolean(query)
     }
@@ -382,20 +378,20 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
   }
 
   document.addEventListener('astro:page-load', () => {
-    setupArticleSearch()
-    setupArticleHighlights()
+    setupPostSearch()
+    setupPostHighlights()
     setupArchiveDetails()
   })
 </script>
 
 <style>
-  .article-list-region {
+  .post-list-region {
     --highlight-y: 0px;
     --highlight-height: 0px;
     position: relative;
   }
 
-  .article-list-region::before {
+  .post-list-region::before {
     position: absolute;
     z-index: 0;
     top: 0;
@@ -413,7 +409,7 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .article-list-region::before {
+    .post-list-region::before {
       transition:
         transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
         height 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -422,22 +418,22 @@ const archivedArticles = visiblePosts.filter((post) => post.data.archived)
     }
   }
 
-  .article-list-region[data-highlight-visible]::before {
+  .post-list-region[data-highlight-visible]::before {
     opacity: 1;
   }
 
-  .article-list-region[data-highlight-positioning]::before {
+  .post-list-region[data-highlight-positioning]::before {
     transition: none;
   }
 
-  .article-row {
+  .post-row {
     position: relative;
     z-index: 1;
     padding-block: 0.25rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .article-list-region::before {
+    .post-list-region::before {
       transition: opacity 150ms ease-out;
     }
   }
