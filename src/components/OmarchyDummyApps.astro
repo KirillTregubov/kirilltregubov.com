@@ -1,6 +1,6 @@
 ---
-import HomeHero from './HomeHero.astro'
 import EditorFileIcon from './icons/EditorFileIcon.astro'
+import SocialButtons from './SocialButtons.astro'
 import { getCollection } from 'astro:content'
 import filesIcon from '../assets/vscode-icons/files.svg?raw'
 import searchIcon from '../assets/vscode-icons/search.svg?raw'
@@ -39,7 +39,7 @@ const activityIcons = [
     class="dummy-app dummy-terminal absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[rgb(22_22_30/0.98)] font-mono"
     aria-hidden="true"
   >
-    <div class="terminal-titlebar grid min-h-6 grid-cols-[auto_1fr_auto] items-center gap-[0.45rem] p-[0_0.55rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-[0.48rem]">
+    <div class="terminal-titlebar grid min-h-6 grid-cols-[auto_1fr_auto] items-center gap-[0.45rem] p-[0_0.55rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-[8px]">
       <span class="terminal-mark text-[#ff9e64]">›_</span>
       <span>kirill@omarchy:~</span>
       <button
@@ -52,14 +52,14 @@ const activityIcons = [
         <XIcon aria-hidden="true" />
       </button>
     </div>
-    <div class="terminal-body flex min-h-0 flex-1 flex-col gap-[0.45rem] p-[0.65rem_0.75rem] overflow-hidden text-[#a9b1d6] text-[0.5rem] leading-[1.35]">
+    <div class="terminal-body flex min-h-0 flex-1 flex-col gap-[0.45rem] p-[0.65rem_0.75rem] overflow-hidden text-[#a9b1d6] text-[8px] leading-[1.35]">
       <div class="terminal-commandline flex items-center gap-[0.35rem] whitespace-nowrap">
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
         <span class="command text-[#c0caf5]">fastfetch</span>
       </div>
       <div class="fastfetch flex min-w-0 items-center gap-[0.8rem]">
-        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] [font:700_0.22rem/1_ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
+        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] [font:700_4px/1_ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
 ██████████████████████████████████████████████████████
 ████                     ████                     ████
 ████                     ████                     ████
@@ -84,7 +84,7 @@ const activityIcons = [
 ████                     ████                     ████
 █████████████████████████████     ████████████████████
 █████████████████████████████     ████████████████████</pre>
-        <div class="fetch-details grid min-w-0 gap-[0.38rem] text-[#9aa5ce] text-[0.5rem] whitespace-nowrap">
+        <div class="fetch-details grid min-w-0 gap-[0.38rem] text-[#9aa5ce] text-[8px] whitespace-nowrap">
           <span>
             <b>Hardware</b> Ryzen 5 5600X · RTX 4070
           </span>
@@ -112,7 +112,7 @@ const activityIcons = [
     class="dummy-app dummy-browser absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden select-none flex-col bg-[#171717] text-[#d4d4d8] font-[Inter,ui-sans-serif,system-ui,sans-serif] pointer-events-auto"
     aria-hidden="true"
   >
-    <div class="browser-toolbar grid min-h-[1.45rem] grid-cols-[auto_minmax(2rem,1fr)_auto] items-center gap-[0.4rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-[0.48rem]">
+    <div class="browser-toolbar grid min-h-6 grid-cols-[auto_minmax(2rem,1fr)_auto] items-center gap-[0.4rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-[9px]">
       <div class="browser-nav flex gap-[0.16rem]">
         <span>
           <ArrowLeftIcon aria-hidden="true" />
@@ -125,7 +125,7 @@ const activityIcons = [
         </span>
       </div>
       <div class="address-bar flex min-w-0 items-center gap-[0.35rem] p-[0.14rem_0.45rem] overflow-hidden [border:1px_solid_#34374a] rounded-[0.32rem] bg-[#202230] text-[#9aa5ce] whitespace-nowrap">
-        <span class="site-lock text-[#9ece6a] text-[0.4rem]">●</span>
+        <span class="site-lock text-[#9ece6a] text-[6px]">●</span>
         <span>kirilltregubov.com</span>
       </div>
       <button
@@ -139,7 +139,51 @@ const activityIcons = [
       </button>
     </div>
     <div class="browser-page min-h-0 flex-1 overflow-hidden bg-[#171717]">
-      <HomeHero preview />
+      <div class="browser-preview mx-auto max-w-[42rem]">
+        <div class="browser-preview-copy">
+          <p>
+            Hey! I'm <span class="text-accent-400">Kirill Tregubov</span>, a{' '}
+            <span class="text-accent-400">software developer</span> in Canada. I
+            build tools and apps with TypeScript and React. I studied{' '}
+            <span class="text-accent-400">Computer Science</span> at the
+            University of Toronto. I like open source, design, science fiction,
+            and astronomy.
+          </p>
+          <p>
+            If you want to get in touch, you can email me at{' '}
+            <a
+              class="font-medium text-neutral-200 underline decoration-accent-700 underline-offset-2"
+              href="mailto:contact@kirilltregubov.com"
+            >
+              contact@kirilltregubov.com
+            </a>
+            .
+          </p>
+          <SocialButtons />
+        </div>
+        <figure
+          class="browser-preview-saturn"
+          title="My favourite planet, Saturn."
+        >
+          <img
+            src="/assets/SaturnPlaceholder.jpg"
+            alt="Saturn"
+            class="w-full max-w-52 object-contain"
+            loading="lazy"
+            draggable="false"
+          />
+          <figcaption>
+            My favourite planet, Saturn.{' '}
+            <a
+              href="https://science.nasa.gov/resource/saturn-3d-model/"
+              target="_blank"
+              rel="noopener"
+            >
+              Source
+            </a>
+          </figcaption>
+        </figure>
+      </div>
     </div>
   </div>
 )}
@@ -149,7 +193,7 @@ const activityIcons = [
     class="dummy-app dummy-editor absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[#1a1b26] font-mono"
     aria-hidden="true"
   >
-    <div class="editor-menubar grid min-h-[1.4rem] grid-cols-[auto_auto_auto_minmax(3rem,1fr)_auto] items-center gap-[0.55rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#737aa2] text-[0.4375rem]">
+    <div class="editor-menubar grid min-h-6 grid-cols-[auto_auto_auto_minmax(3rem,1fr)_auto] items-center gap-[0.55rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#737aa2] text-[6px]">
       <span
         class="editor-appmark grid size-4 place-items-center text-[#7aa2f7] [&_svg]:size-[0.55rem]"
         set:html={vscodeLogo}
@@ -178,8 +222,8 @@ const activityIcons = [
       </button>
     </div>
     <div class="editor-workbench flex min-h-0 flex-1">
-      <aside class="editor-sidebar flex w-[37%] min-w-20 [border-right:1px_solid_#292b3a] bg-[#16161e]">
-        <div class="activity-rail flex w-[1.55rem] flex-[0_0_1.55rem] flex-col items-center gap-[0.68rem] pt-2 [border-right:1px_solid_#252735] text-[#565f89]">
+      <aside class="editor-sidebar flex w-[round(nearest,32%,1px)] max-w-48 min-w-[9rem] [border-right:1px_solid_#292b3a] bg-[#16161e]">
+        <div class="activity-rail flex w-[25px] flex-[0_0_25px] flex-col items-center gap-[0.68rem] pt-2 [border-right:1px_solid_#252735] text-[#565f89]">
           {activityIcons.map((icon) => (
             <span
               class="block size-[0.85rem] [&_svg]:size-full"
@@ -187,12 +231,14 @@ const activityIcons = [
             />
           ))}
         </div>
-        <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden text-[#9aa5ce] text-[0.38rem] leading-[1.65]">
-          <div class="explorer-heading flex justify-between p-[0.38rem_0.42rem_0.3rem] text-[#737aa2]">
+        <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden text-[#9aa5ce] text-[6px] leading-[9px]">
+          <div class="explorer-heading flex justify-between p-[6px_7px_5px] text-[#737aa2]">
             <span>EXPLORER</span>
             <span>•••</span>
           </div>
-          <strong>⌄ KIRILLTREGUBOV.COM</strong>
+          <strong class="max-w-48 truncate text-[6px]">
+            ⌄ KIRILLTREGUBOV.COM
+          </strong>
           <span class="tree-folder pl-[0.55rem] text-[#7dcfff]">⌄ src</span>
           <span class="tree-folder nested pl-[0.55rem] text-[#7dcfff]">
             ⌄ components
@@ -215,111 +261,110 @@ const activityIcons = [
         </div>
       </aside>
       <div class="editor-main flex min-w-0 min-h-0 flex-1 flex-col">
-        <div class="editor-tabs flex min-h-[1.35rem] [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#a9b1d6] text-[0.4rem]">
-          <span>
+        <div class="editor-tabs flex min-h-4.5 [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#a9b1d6] text-[6px]">
+          <span class="flex items-center gap-[0.12rem] p-[0_0.25rem] [border-top:1px_solid_#bb9af7] bg-[#1a1b26] [&_svg]:size-[0.3rem] [&_svg]:basis-[0.3rem]">
             <EditorFileIcon type="astro" /> HomeHero.astro&nbsp; ×
           </span>
         </div>
-        <div class="breadcrumbs flex items-center gap-[0.2rem] p-[0.25rem_0.55rem] text-[#565f89] text-[0.34rem]">
+        <div class="breadcrumbs flex items-center gap-[0.2rem] p-[0.25rem_0.55rem] text-[#565f89] text-[7px]">
           src › components › <EditorFileIcon type="astro" /> HomeHero.astro
         </div>
-        <div class="code-pane min-h-0 flex-1 overflow-hidden pt-[0.15rem] text-[#a9b1d6] text-[0.42rem] leading-normal">
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+        <div class="code-pane min-h-0 flex-1 overflow-hidden pt-0.5 text-[#a9b1d6] text-[8px] leading-2">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>1</i>
             <code>
               <em>---</em>
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>2</i>
             <code>
               <b>import</b> <span class="type text-[#7aa2f7]">AboutMe</span>{' '}
-              <b>from</b> <q>./AboutMe.astro</q>
+              <b>from</b> <q>./AboutMe</q>
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>3</i>
             <code>
               <b>import</b> <span class="type text-[#7aa2f7]">Saturn</span>{' '}
               <b>from</b> <q>./Saturn</q>
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>4</i>
             <code></code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>5</i>
             <code>
               <b>interface</b> <span class="type text-[#7aa2f7]">Props</span>{' '}
               &#123;
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>6</i>
             <code>
               &nbsp;&nbsp;<span class="variable text-[#e0af68]">preview</span>?:{' '}
               <span class="type text-[#7aa2f7]">boolean</span>
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>7</i>
             <code>&#125;</code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>8</i>
             <code></code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>9</i>
             <code>
               <b>const</b> &#123;{' '}
-              <span class="variable text-[#e0af68]">preview</span> ={' '}
-              <span class="constant text-[#ff9e64]">false</span> &#125; ={' '}
+              <span class="variable text-[#e0af68]">preview</span> &#125; ={' '}
               <span class="type text-[#7aa2f7]">Astro</span>.
               <span class="variable text-[#e0af68]">props</span>
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>10</i>
             <code>
               <em>---</em>
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>11</i>
             <code></code>
           </div>
-          <div class="line active-line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)] bg-[#1f2335]">
+          <div class="line active-line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)] bg-[#1f2335]">
             <i>12</i>
             <code>
               &lt;<span class="tag text-[#f7768e]">section</span>{' '}
-              <span class="attr text-[#7aa2f7]">class:list</span>
-              =&#123;[...]&#125;&gt;
+              <span class="attr text-[#7aa2f7]">class</span>=<q>home-hero</q>
+              &gt;
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>13</i>
             <code>
               &nbsp;&nbsp;&lt;<span class="type text-[#7aa2f7]">AboutMe</span>{' '}
               /&gt;
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>14</i>
             <code>
               &nbsp;&nbsp;&lt;<span class="type text-[#7aa2f7]">Saturn</span>{' '}
               <span class="attr text-[#7aa2f7]">client:visible</span> /&gt;
             </code>
           </div>
-          <div class="line grid min-h-[1.5em] grid-cols-[2.4em_minmax(0,1fr)]">
+          <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i>15</i>
             <code>
               &lt;/<span class="tag text-[#f7768e]">section</span>&gt;
             </code>
           </div>
         </div>
-        <div class="editor-status flex min-h-4 items-center justify-between p-[0_0.4rem] bg-[#16161e] text-[#858ba3] text-[0.3125rem]">
+        <div class="editor-status flex min-h-4 items-center justify-between p-[0_0.4rem] bg-[#16161e] text-[#858ba3] text-[6px]">
           <span class="flex items-center gap-[0.18rem]">
             <span
               class="block size-1.5 mb-px [&_svg]:size-full"
@@ -366,6 +411,69 @@ const activityIcons = [
     height: 0.62rem;
     stroke-width: 2;
   }
+  .browser-preview {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    overflow: hidden;
+    background: #171717;
+    color: #e5e5e5;
+  }
+  .browser-preview-copy {
+    min-width: 0;
+    padding: 10px 0 10px 1.25rem;
+    color: #d4d4d8;
+    font-size: 0.5rem;
+    line-height: 0.75rem;
+  }
+  .browser-preview-copy > p {
+    display: block;
+    margin: 0;
+  }
+  .browser-preview-copy > p + p {
+    margin-top: 0.34rem;
+  }
+  .browser-preview :global(.browser-preview-copy > div) {
+    gap: 0.28rem;
+    margin-top: 0.45rem;
+  }
+  .browser-preview :global(.browser-preview-copy > div a) {
+    padding: 0.22rem;
+    border-radius: 0.18rem;
+  }
+  .browser-preview :global(.browser-preview-copy > div svg) {
+    width: 0.72rem;
+    height: 0.72rem;
+  }
+  .browser-preview-saturn {
+    display: flex;
+    box-sizing: content-box;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+  .browser-preview-saturn > img {
+    max-height: calc(100% - 1.5rem);
+  }
+  .browser-preview-saturn figcaption {
+    width: 100%;
+    color: rgb(163 163 163 / 0.8);
+    font-size: 7px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .browser-preview-saturn figcaption a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
   .activity-rail span:first-child {
     color: #c0caf5;
   }
@@ -386,21 +494,15 @@ const activityIcons = [
     background: #292e42;
     color: #c0caf5;
   }
-  .editor-tabs span {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0 0.55rem;
-    border-top: 1px solid #bb9af7;
-    background: #1a1b26;
-  }
   .line i {
+    font-size: 7px;
     padding-right: 0.7em;
     color: #3b4261;
     font-style: normal;
     text-align: right;
   }
   .line code {
+    font-size: 6px;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -431,12 +533,12 @@ const activityIcons = [
       display: none;
     }
     .code-pane {
-      padding-top: 0.08rem;
-      font-size: 0.34rem;
-      line-height: 1.3;
+      padding-top: 1px;
+      font-size: 8px;
+      line-height: 8px;
     }
     .line {
-      min-height: 1.3em;
+      min-height: 8px;
     }
   }
 
@@ -452,6 +554,28 @@ const activityIcons = [
     }
     .fastfetch {
       gap: 0.45rem;
+    }
+    .browser-preview {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+    .browser-preview-copy {
+      padding-left: 0.6rem;
+    }
+  }
+
+  @container (max-width: 28rem) and (min-height: 16rem) {
+    .browser-preview {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-content: center;
+      align-items: stretch;
+      row-gap: 0.5rem;
+    }
+    .browser-preview-copy {
+      padding: 0 0.8rem;
+    }
+    .browser-preview-saturn {
+      height: auto;
     }
   }
 
