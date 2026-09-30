@@ -36,10 +36,10 @@ const activityIcons = [
 
 {app === 'terminal' && (
   <div
-    class="dummy-app dummy-terminal absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[rgb(22_22_30/0.98)] font-mono"
+    class="dummy-app leading-4 dummy-terminal absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[rgb(22_22_30/0.98)] font-mono"
     aria-hidden="true"
   >
-    <div class="terminal-titlebar grid min-h-6 grid-cols-[auto_1fr_auto] items-center gap-[0.45rem] p-[0_0.55rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-[8px]">
+    <div class="terminal-titlebar grid min-h-6 grid-cols-[auto_1fr_auto] items-center gap-[0.45rem] py-0 pl-[0.55rem] pr-1 [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-(length:--window-font-8)">
       <span class="terminal-mark text-[#ff9e64]">›_</span>
       <span>kirill@omarchy:~</span>
       <button
@@ -52,14 +52,14 @@ const activityIcons = [
         <XIcon aria-hidden="true" />
       </button>
     </div>
-    <div class="terminal-body flex min-h-0 flex-1 flex-col gap-[0.45rem] p-[0.65rem_0.75rem] overflow-hidden text-[#a9b1d6] text-[8px] leading-[1.35]">
+    <div class="terminal-body flex min-h-0 flex-1 flex-col gap-[0.45rem] p-[0.65rem_0.75rem] overflow-hidden text-[#a9b1d6] text-(length:--window-font-8) leading-(--window-leading-11)">
       <div class="terminal-commandline flex items-center gap-[0.35rem] whitespace-nowrap">
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
         <span class="command text-[#c0caf5]">fastfetch</span>
       </div>
       <div class="fastfetch flex min-w-0 items-center gap-[0.8rem]">
-        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] [font:700_4px/1_ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
+        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] font-bold text-(length:--window-font-4) leading-none [font-family:ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
 ██████████████████████████████████████████████████████
 ████                     ████                     ████
 ████                     ████                     ████
@@ -84,7 +84,7 @@ const activityIcons = [
 ████                     ████                     ████
 █████████████████████████████     ████████████████████
 █████████████████████████████     ████████████████████</pre>
-        <div class="fetch-details grid min-w-0 gap-[0.38rem] text-[#9aa5ce] text-[8px] whitespace-nowrap">
+        <div class="fetch-details grid min-w-0 gap-[0.38rem] text-[#9aa5ce] text-(length:--window-font-8) whitespace-nowrap">
           <span>
             <b>Hardware</b> Ryzen 5 5600X · RTX 4070
           </span>
@@ -109,10 +109,10 @@ const activityIcons = [
 
 {app === 'browser' && (
   <div
-    class="dummy-app dummy-browser absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden select-none flex-col bg-[#171717] text-[#d4d4d8] font-[Inter,ui-sans-serif,system-ui,sans-serif] pointer-events-auto"
+    class="dummy-app leading-4 dummy-browser absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden select-none flex-col bg-[#171717] text-[#d4d4d8] font-[Inter,ui-sans-serif,system-ui,sans-serif] pointer-events-auto"
     aria-hidden="true"
   >
-    <div class="browser-toolbar grid min-h-6 grid-cols-[auto_minmax(2rem,1fr)_auto] items-center gap-[0.4rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-[9px]">
+    <div class="browser-toolbar grid min-h-6 grid-cols-[auto_minmax(2rem,1fr)_auto] items-center gap-[0.4rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-(length:--window-font-9)">
       <div class="browser-nav flex gap-[0.16rem]">
         <span>
           <ArrowLeftIcon aria-hidden="true" />
@@ -125,7 +125,9 @@ const activityIcons = [
         </span>
       </div>
       <div class="address-bar flex min-w-0 items-center gap-[0.35rem] p-[0.14rem_0.45rem] overflow-hidden [border:1px_solid_#34374a] rounded-[0.32rem] bg-[#202230] text-[#9aa5ce] whitespace-nowrap">
-        <span class="site-lock text-[#9ece6a] text-[6px]">●</span>
+        <span class="site-lock text-[#9ece6a] text-(length:--window-font-6)">
+          ●
+        </span>
         <span>kirilltregubov.com</span>
       </div>
       <button
@@ -140,7 +142,7 @@ const activityIcons = [
     </div>
     <div class="browser-page min-h-0 flex-1 overflow-hidden bg-[#171717]">
       <div class="browser-preview mx-auto max-w-[42rem]">
-        <div class="browser-preview-copy">
+        <div class="browser-preview-copy text-(length:--window-font-8) leading-(--window-leading-12)">
           <p>
             Hey! I'm <span class="text-accent-400">Kirill Tregubov</span>, a{' '}
             <span class="text-accent-400">software developer</span> in Canada. I
@@ -172,7 +174,7 @@ const activityIcons = [
             loading="lazy"
             draggable="false"
           />
-          <figcaption>
+          <figcaption class="text-(length:--window-font-7) leading-(--window-leading-12)">
             My favourite planet, Saturn.{' '}
             <a
               href="https://science.nasa.gov/resource/saturn-3d-model/"
@@ -190,10 +192,10 @@ const activityIcons = [
 
 {app === 'editor' && (
   <div
-    class="dummy-app dummy-editor absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[#1a1b26] font-mono"
+    class="dummy-app leading-4 dummy-editor absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[#1a1b26] font-mono"
     aria-hidden="true"
   >
-    <div class="editor-menubar grid min-h-6 grid-cols-[auto_auto_auto_minmax(3rem,1fr)_auto] items-center gap-[0.55rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#737aa2] text-[6px]">
+    <div class="editor-menubar grid min-h-6 grid-cols-[auto_auto_auto_minmax(3rem,1fr)_auto] items-center gap-[0.55rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#737aa2] text-(length:--window-font-6)">
       <span
         class="editor-appmark grid size-4 place-items-center text-[#7aa2f7] [&_svg]:size-[0.55rem]"
         set:html={vscodeLogo}
@@ -231,12 +233,12 @@ const activityIcons = [
             />
           ))}
         </div>
-        <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden text-[#9aa5ce] text-[6px] leading-[9px]">
+        <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden text-[#9aa5ce] text-(length:--window-font-6) leading-(--window-leading-9)">
           <div class="explorer-heading flex justify-between p-[6px_7px_5px] text-[#737aa2]">
             <span>EXPLORER</span>
             <span>•••</span>
           </div>
-          <strong class="max-w-48 truncate text-[6px]">
+          <strong class="max-w-48 truncate text-(length:--window-font-6)">
             ⌄ KIRILLTREGUBOV.COM
           </strong>
           <span class="tree-folder pl-[0.55rem] text-[#7dcfff]">⌄ src</span>
@@ -261,64 +263,64 @@ const activityIcons = [
         </div>
       </aside>
       <div class="editor-main flex min-w-0 min-h-0 flex-1 flex-col">
-        <div class="editor-tabs flex min-h-4.5 [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#a9b1d6] text-[6px]">
+        <div class="editor-tabs flex min-h-4.5 [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#a9b1d6] text-(length:--window-font-6)">
           <span class="flex items-center gap-[0.12rem] p-[0_0.25rem] [border-top:1px_solid_#bb9af7] bg-[#1a1b26] [&_svg]:size-[0.3rem] [&_svg]:basis-[0.3rem]">
             <EditorFileIcon type="astro" /> HomeHero.astro&nbsp; ×
           </span>
         </div>
-        <div class="breadcrumbs flex items-center gap-[0.2rem] p-[0.25rem_0.55rem] text-[#565f89] text-[7px]">
+        <div class="breadcrumbs flex items-center gap-[0.2rem] p-[0.25rem_0.55rem] text-[#565f89] text-(length:--window-font-7)">
           src › components › <EditorFileIcon type="astro" /> HomeHero.astro
         </div>
-        <div class="code-pane min-h-0 flex-1 overflow-hidden pt-0.5 text-[#a9b1d6] text-[8px] leading-2">
+        <div class="code-pane min-h-0 flex-1 overflow-hidden pt-0.5 text-[#a9b1d6] text-(length:--window-font-8) leading-(--window-leading-8)">
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>1</i>
-            <code>
+            <i class="text-(length:--window-font-7)">1</i>
+            <code class="text-(length:--window-font-6)">
               <em>---</em>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>2</i>
-            <code>
+            <i class="text-(length:--window-font-7)">2</i>
+            <code class="text-(length:--window-font-6)">
               <b>import</b> <span class="type text-[#7aa2f7]">AboutMe</span>{' '}
               <b>from</b> <q>./AboutMe</q>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>3</i>
-            <code>
+            <i class="text-(length:--window-font-7)">3</i>
+            <code class="text-(length:--window-font-6)">
               <b>import</b> <span class="type text-[#7aa2f7]">Saturn</span>{' '}
               <b>from</b> <q>./Saturn</q>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>4</i>
-            <code></code>
+            <i class="text-(length:--window-font-7)">4</i>
+            <code class="text-(length:--window-font-6)"></code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>5</i>
-            <code>
+            <i class="text-(length:--window-font-7)">5</i>
+            <code class="text-(length:--window-font-6)">
               <b>interface</b> <span class="type text-[#7aa2f7]">Props</span>{' '}
               &#123;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>6</i>
-            <code>
+            <i class="text-(length:--window-font-7)">6</i>
+            <code class="text-(length:--window-font-6)">
               &nbsp;&nbsp;<span class="variable text-[#e0af68]">preview</span>?:{' '}
               <span class="type text-[#7aa2f7]">boolean</span>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>7</i>
-            <code>&#125;</code>
+            <i class="text-(length:--window-font-7)">7</i>
+            <code class="text-(length:--window-font-6)">&#125;</code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>8</i>
-            <code></code>
+            <i class="text-(length:--window-font-7)">8</i>
+            <code class="text-(length:--window-font-6)"></code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>9</i>
-            <code>
+            <i class="text-(length:--window-font-7)">9</i>
+            <code class="text-(length:--window-font-6)">
               <b>const</b> &#123;{' '}
               <span class="variable text-[#e0af68]">preview</span> &#125; ={' '}
               <span class="type text-[#7aa2f7]">Astro</span>.
@@ -326,45 +328,45 @@ const activityIcons = [
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>10</i>
-            <code>
+            <i class="text-(length:--window-font-7)">10</i>
+            <code class="text-(length:--window-font-6)">
               <em>---</em>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>11</i>
-            <code></code>
+            <i class="text-(length:--window-font-7)">11</i>
+            <code class="text-(length:--window-font-6)"></code>
           </div>
           <div class="line active-line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)] bg-[#1f2335]">
-            <i>12</i>
-            <code>
+            <i class="text-(length:--window-font-7)">12</i>
+            <code class="text-(length:--window-font-6)">
               &lt;<span class="tag text-[#f7768e]">section</span>{' '}
               <span class="attr text-[#7aa2f7]">class</span>=<q>home-hero</q>
               &gt;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>13</i>
-            <code>
+            <i class="text-(length:--window-font-7)">13</i>
+            <code class="text-(length:--window-font-6)">
               &nbsp;&nbsp;&lt;<span class="type text-[#7aa2f7]">AboutMe</span>{' '}
               /&gt;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>14</i>
-            <code>
+            <i class="text-(length:--window-font-7)">14</i>
+            <code class="text-(length:--window-font-6)">
               &nbsp;&nbsp;&lt;<span class="type text-[#7aa2f7]">Saturn</span>{' '}
               <span class="attr text-[#7aa2f7]">client:visible</span> /&gt;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i>15</i>
-            <code>
+            <i class="text-(length:--window-font-7)">15</i>
+            <code class="text-(length:--window-font-6)">
               &lt;/<span class="tag text-[#f7768e]">section</span>&gt;
             </code>
           </div>
         </div>
-        <div class="editor-status flex min-h-4 items-center justify-between p-[0_0.4rem] bg-[#16161e] text-[#858ba3] text-[6px]">
+        <div class="editor-status flex min-h-4 items-center justify-between p-[0_0.4rem] bg-[#16161e] text-[#858ba3] text-(length:--window-font-6)">
           <span class="flex items-center gap-[0.18rem]">
             <span
               class="block size-1.5 mb-px [&_svg]:size-full"
@@ -426,8 +428,6 @@ const activityIcons = [
     min-width: 0;
     padding: 10px 0 10px 1.25rem;
     color: #d4d4d8;
-    font-size: 0.5rem;
-    line-height: 0.75rem;
   }
   .browser-preview-copy > p {
     display: block;
@@ -466,7 +466,6 @@ const activityIcons = [
   .browser-preview-saturn figcaption {
     width: 100%;
     color: rgb(163 163 163 / 0.8);
-    font-size: 7px;
     font-weight: 500;
     text-align: center;
   }
@@ -495,14 +494,12 @@ const activityIcons = [
     color: #c0caf5;
   }
   .line i {
-    font-size: 7px;
     padding-right: 0.7em;
     color: #3b4261;
     font-style: normal;
     text-align: right;
   }
   .line code {
-    font-size: 6px;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -534,8 +531,6 @@ const activityIcons = [
     }
     .code-pane {
       padding-top: 1px;
-      font-size: 8px;
-      line-height: 8px;
     }
     .line {
       min-height: 8px;
@@ -576,6 +571,81 @@ const activityIcons = [
     }
     .browser-preview-saturn {
       height: auto;
+    }
+  }
+
+  /* A 0.0625rem step is one CSS pixel at a 16px root size. Keep
+     responsive text on that grid without overriding the user's root size. */
+  .dummy-app {
+    --window-text-scale: 1;
+    --window-font-4: round(
+      nearest,
+      calc(0.25rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-font-6: round(
+      nearest,
+      calc(0.375rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-font-7: round(
+      nearest,
+      calc(0.4375rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-font-8: round(
+      nearest,
+      calc(0.5rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-font-9: round(
+      nearest,
+      calc(0.5625rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-8: round(
+      nearest,
+      calc(0.5rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-9: round(
+      nearest,
+      calc(0.5625rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-11: round(
+      nearest,
+      calc(0.6875rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-12: round(
+      nearest,
+      calc(0.75rem * var(--window-text-scale)),
+      0.0625rem
+    );
+  }
+
+  @container (min-width: 36rem) and (min-height: 22rem) {
+    .dummy-app {
+      --window-text-scale: 1.15;
+    }
+  }
+
+  @container (min-width: 52rem) and (min-height: 30rem) {
+    .dummy-app {
+      --window-text-scale: 1.3;
+    }
+    .dummy-browser .browser-preview {
+      max-width: 56rem;
+    }
+  }
+
+  @container (min-width: 72rem) and (min-height: 40rem) {
+    .dummy-app {
+      --window-text-scale: 1.45;
+    }
+    .dummy-browser .browser-preview {
+      max-width: 68rem;
     }
   }
 
