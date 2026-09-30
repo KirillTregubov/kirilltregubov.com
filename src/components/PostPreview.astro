@@ -22,7 +22,7 @@ const formattedDate = displayDate.toLocaleDateString('en-CA', {
     href={href}
     class="grid min-h-32 grid-cols-[minmax(0,1fr)_auto] rounded-xl"
   >
-    <div class="flex min-w-0 flex-col justify-center px-4 py-6 lg:px-6">
+    <div class="flex min-w-0 flex-col justify-center px-3 py-6 lg:px-6">
       <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
         <time datetime={displayDate.toISOString()}>
           {post.data.updatedDate ? 'Updated ' : ''}

@@ -1,5 +1,6 @@
 ---
 import Age from './Age'
+import AnimatedLink from './AnimatedLink.astro'
 import Highlight from './Highlight.astro'
 import SocialButtons from './SocialButtons.astro'
 
@@ -72,13 +73,12 @@ const { class: className } = Astro.props
   <p class="mt-4">
     If you want to get in touch, you can email me at{' '}
     <span class="whitespace-nowrap">
-      <a
+      <AnimatedLink
         href="mailto:contact@kirilltregubov.com"
-        class="relative -m-0.5 rounded-sm p-0.5 font-medium text-neutral-200 transition-shadow after:absolute after:right-0.5 after:bottom-0 after:left-0.5 after:h-0.5 after:w-[calc(100%-0.25rem)] after:origin-bottom-left after:scale-x-100 after:rounded-full after:bg-linear-to-r after:from-accent-700 after:to-accent-400 after:transition-transform after:duration-500 after:ease-in-out after:will-change-transform after:content-[''] hover:after:origin-bottom-right hover:after:scale-x-0"
         draggable="false"
       >
         contact@kirilltregubov.com
-      </a>
+      </AnimatedLink>
       .
     </span>
   </p>

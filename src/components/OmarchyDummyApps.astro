@@ -1,5 +1,6 @@
 ---
 import EditorFileIcon from './icons/EditorFileIcon.astro'
+import AnimatedLink from './AnimatedLink.astro'
 import SocialButtons from './SocialButtons.astro'
 import { getCollection } from 'astro:content'
 import filesIcon from '../assets/vscode-icons/files.svg?raw'
@@ -59,7 +60,7 @@ const activityIcons = [
         <span class="command text-[#c0caf5]">fastfetch</span>
       </div>
       <div class="fastfetch flex min-w-0 items-center gap-[0.8rem]">
-        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] font-bold text-(length:--window-font-4) leading-none [font-family:ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
+        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] font-bold text-(length:--window-font-4) leading-none font-[ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
 ██████████████████████████████████████████████████████
 ████                     ████                     ████
 ████                     ████                     ████
@@ -99,7 +100,7 @@ const activityIcons = [
       <div class="terminal-commandline terminal-input flex items-center gap-[0.35rem] whitespace-nowrap mt-0">
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
-        <span class="cursor text-[#c0caf5] animate-[terminal-blink_1.1s_steps(1)_infinite]">
+        <span class="cursor text-[#c0caf5] opacity-0 animate-[terminal-blink_1.1s_steps(1)_infinite_both] motion-reduce:opacity-100">
           {'▌'}
         </span>
       </div>
@@ -141,7 +142,7 @@ const activityIcons = [
       </button>
     </div>
     <div class="browser-page min-h-0 flex-1 overflow-hidden bg-[#171717]">
-      <div class="browser-preview mx-auto max-w-[42rem]">
+      <div class="browser-preview mx-auto max-w-2xl">
         <div class="browser-preview-copy text-(length:--window-font-8) leading-(--window-leading-12)">
           <p>
             Hey! I'm <span class="text-accent-400">Kirill Tregubov</span>, a{' '}
@@ -153,13 +154,16 @@ const activityIcons = [
           </p>
           <p>
             If you want to get in touch, you can email me at{' '}
-            <a
-              class="font-medium text-neutral-200 underline decoration-accent-700 underline-offset-2"
-              href="mailto:contact@kirilltregubov.com"
-            >
-              contact@kirilltregubov.com
-            </a>
-            .
+            <span class="whitespace-nowrap">
+              <AnimatedLink
+                thinUnderline
+                href="mailto:contact@kirilltregubov.com"
+                draggable="false"
+              >
+                contact@kirilltregubov.com
+              </AnimatedLink>
+              .
+            </span>
           </p>
           <SocialButtons />
         </div>
@@ -174,9 +178,10 @@ const activityIcons = [
             loading="lazy"
             draggable="false"
           />
-          <figcaption class="text-(length:--window-font-7) leading-(--window-leading-12)">
+          <figcaption class="w-full text-center text-(length:--window-font-7) leading-(--window-leading-12) font-medium text-neutral-400/80">
             My favourite planet, Saturn.{' '}
             <a
+              class="-m-0.5 rounded-sm p-0.5 underline transition select-none hover:text-neutral-600 focus-visible:outline-hidden active:text-neutral-600"
               href="https://science.nasa.gov/resource/saturn-3d-model/"
               target="_blank"
               rel="noopener"
@@ -224,8 +229,8 @@ const activityIcons = [
       </button>
     </div>
     <div class="editor-workbench flex min-h-0 flex-1">
-      <aside class="editor-sidebar flex w-[round(nearest,32%,1px)] max-w-48 min-w-[9rem] [border-right:1px_solid_#292b3a] bg-[#16161e]">
-        <div class="activity-rail flex w-[25px] flex-[0_0_25px] flex-col items-center gap-[0.68rem] pt-2 [border-right:1px_solid_#252735] text-[#565f89]">
+      <aside class="editor-sidebar flex w-[round(nearest,32%,1px)] max-w-48 min-w-36 [border-right:1px_solid_#292b3a] bg-[#16161e]">
+        <div class="activity-rail flex w-6 flex-[0_0_25px] flex-col items-center gap-[0.68rem] pt-2 [border-right:1px_solid_#252735] text-[#565f89]">
           {activityIcons.map((icon) => (
             <span
               class="block size-[0.85rem] [&_svg]:size-full"
@@ -463,16 +468,6 @@ const activityIcons = [
   .browser-preview-saturn > img {
     max-height: calc(100% - 1.5rem);
   }
-  .browser-preview-saturn figcaption {
-    width: 100%;
-    color: rgb(163 163 163 / 0.8);
-    font-weight: 500;
-    text-align: center;
-  }
-  .browser-preview-saturn figcaption a {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
   .activity-rail span:first-child {
     color: #c0caf5;
   }
@@ -650,8 +645,12 @@ const activityIcons = [
   }
 
   @keyframes terminal-blink {
-    50% {
+    0%,
+    100% {
       opacity: 0;
+    }
+    50% {
+      opacity: 1;
     }
   }
 
