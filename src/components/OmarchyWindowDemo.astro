@@ -7,6 +7,7 @@ import {
   RotateCcwIcon,
 } from 'lucide-react'
 import OmarchyDummyApps from './OmarchyDummyApps.astro'
+import Keybind from './markdown/Keybind.astro'
 ---
 
 <section
@@ -286,6 +287,12 @@ import OmarchyDummyApps from './OmarchyDummyApps.astro'
           data-shortcut-list
           aria-label="Demo shortcuts"
         ></ul>
+        <template data-shortcut-template>
+          <li class="inline-flex items-center gap-[0.35rem] whitespace-nowrap text-[0.625rem] leading-4 text-[#898994]">
+            <Keybind keys={['Alt']} size="small" />
+            <span data-shortcut-label class="leading-4"></span>
+          </li>
+        </template>
       </div>
     </div>
   </div>
@@ -321,6 +328,7 @@ import OmarchyDummyApps from './OmarchyDummyApps.astro'
 
 <script>
   import { defaultKeybindingsHandlerIgnore, tinykeys } from 'tinykeys'
+  import { getKeyArrowPath } from '../lib/keybind'
 
   const setupOmarchyDemos = () => {
     document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
@@ -962,27 +970,49 @@ import OmarchyDummyApps from './OmarchyDummyApps.astro'
       ]
 
       const renderShortcutList = () => {
+        const template = demo.querySelector<HTMLTemplateElement>(
+          '[data-shortcut-template]',
+        )
+        if (!template) return
+
         shortcutList.replaceChildren(
           ...keybinds.map((keybind) => {
-            const item = document.createElement('li')
-            item.className = 'text-[0.625rem] leading-4'
-            const keys = document.createElement('span')
-            keys.className = 'shortcut-keys'
+            const item = template.content.firstElementChild!.cloneNode(
+              true,
+            ) as HTMLLIElement
+            const keys = item.querySelector<HTMLElement>('[data-keybind]')!
+            const keyTemplate = keys.querySelector('kbd')!
+            keys.replaceChildren()
 
             for (const key of [
               shortcutModifier === 'Meta' ? 'Super' : 'Alt',
               ...keybind.keys,
             ]) {
-              const keyElement = document.createElement('kbd')
-              keyElement.className = 'text-[0.625rem] leading-none'
-              keyElement.textContent = key
+              const keyElement = keyTemplate.cloneNode(true) as HTMLElement
+              const keyLabel =
+                keyElement.querySelector<HTMLElement>('[data-key-label]')!
+              keyLabel.textContent = key
+              const arrowPath = getKeyArrowPath(key)
+              keyLabel.classList.toggle('opacity-0', Boolean(arrowPath))
+              const arrow =
+                keyElement.querySelector<SVGElement>('[data-key-arrow]')!
+              arrow.classList.toggle('hidden', !arrowPath)
+              arrow.querySelector('path')!.setAttribute('d', arrowPath ?? '')
+              // Keep copied shortcuts readable without a visible separator.
+              if (keys.childElementCount > 0) {
+                const separator = document.createElement('span')
+                separator.className = 'text-[0px]'
+                separator.setAttribute('aria-hidden', 'true')
+                separator.textContent = '+'
+                keyElement.prepend(separator)
+              }
               keys.append(keyElement)
             }
 
-            const label = document.createElement('span')
-            label.className = 'leading-4'
+            const label = item.querySelector<HTMLElement>(
+              '[data-shortcut-label]',
+            )!
             label.textContent = keybind.label
-            item.append(keys, label)
             return item
           }),
         )
@@ -1725,31 +1755,6 @@ import OmarchyDummyApps from './OmarchyDummyApps.astro'
   }
   .modifier-switcher button:disabled {
     cursor: default;
-  }
-  :global(.shortcut-list li),
-  :global(.shortcut-keys) {
-    display: inline-flex;
-    align-items: center;
-  }
-  :global(.shortcut-list li) {
-    gap: 0.35rem;
-    color: #898994;
-    white-space: nowrap;
-  }
-  :global(.shortcut-keys) {
-    gap: 0.16rem;
-  }
-  :global(.shortcut-keys kbd) {
-    min-width: 1.35rem;
-    padding: 0.2rem 0.32rem;
-    border: 1px solid #40404a;
-    border-bottom-color: #575762;
-    border-radius: 0.3rem;
-    background: #25252c;
-    color: #dadade;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    text-align: center;
-    box-shadow: 0 1px 0 #08080a;
   }
   .mobile-monitor div {
     display: grid;

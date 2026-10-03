@@ -1,0 +1,59 @@
+---
+import { getKeyArrowPath } from '../../lib/keybind'
+
+interface Props {
+  keys: string[]
+  size?: 'default' | 'small'
+  alignToText?: boolean
+}
+
+const { keys, size = 'default', alignToText = false } = Astro.props
+---
+
+<span
+  data-keybind
+  class:list={[
+    'not-prose inline-block select-text whitespace-nowrap align-middle',
+    alignToText && '-translate-y-0.75',
+    size === 'small' ? 'space-x-0.5' : 'space-x-1',
+  ]}
+>
+  {keys.map((key, index) => (
+    <kbd
+      class:list={[
+        'relative inline-block rounded-sm border border-zinc-700 border-b-zinc-600 bg-zinc-800 font-mono text-center leading-none text-zinc-300 shadow-sm',
+        size === 'small'
+          ? 'min-w-5.5 px-1.25 pt-0.75 pb-0.5 text-[0.625rem]'
+          : 'min-w-6.5 px-1.75 pt-1.25 pb-1 text-xs',
+      ]}
+    >
+      {index > 0 && (
+        <span aria-hidden="true" class="text-[0px]">
+          +
+        </span>
+      )}
+      <span
+        data-key-label
+        class:list={['inline-block', getKeyArrowPath(key) && 'opacity-0']}
+      >
+        {key}
+      </span>
+      <svg
+        data-key-arrow
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class:list={[
+          'pointer-events-none absolute inset-0 m-auto size-[1em]',
+          !getKeyArrowPath(key) && 'hidden',
+        ]}
+      >
+        <path d={getKeyArrowPath(key)} />
+      </svg>
+    </kbd>
+  ))}
+</span>

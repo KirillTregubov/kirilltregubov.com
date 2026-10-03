@@ -1,0 +1,161 @@
+---
+title: 'The Developer Tool I Tried to Reinvent'
+description: 'GitHub Desktop had become the home base for all my projects. After I was forced to give it up, I tried building something bigger to replace it and ended up questioning the layer I was building on.'
+pubDate: 'Oct 1 2026'
+image:
+  url: '/assets/blog/quattro.jpg'
+  alt: 'A retro Audi Quattro jumping through a vivid pink sunset landscape'
+tags:
+  - Personal Setup
+draft: false
+archived: false
+---
+
+import OmarchyWindowDemo from '@components/OmarchyWindowDemo.astro'
+import Keybind from '@components/markdown/Keybind.astro'
+import InlineArrow from '@components/markdown/InlineArrow.astro'
+
+I have a confession: I used to exclusively use [GitHub Desktop](https://github.com/apps/desktop).
+
+I started programming when I was 14, although “programming” is pretty generous. Back then, deploying a site meant FTPing into a server and dragging files over manually. Who needs version control when you have local staging and live production? If something broke, surely you remembered what changed.
+
+By the time I got serious about the work I was doing, I was using Git. My high school teacher taught it to me, university reinforced it, and I understood the core loop: unstaged <InlineArrow /> staged <InlineArrow /> committed <InlineArrow /> pushed. I just rarely touched the CLI. Even on recent projects like [OverBuddy](https://github.com/KirillTregubov/OverBuddy), my entire version-control workflow still happened through one GUI app.
+
+## GitHub Desktop
+
+I genuinely preferred using GitHub Desktop as a Git client. Seeing my changes laid out visually made diffs easier to reason about, the history view was convenient, and partially staging changes in a file was effortless.
+
+But my favourite feature had almost nothing to do with Git.
+
+I loved the built-in shortcuts.
+
+From any repository I had cloned, I could select it and hit <Keybind keys={['Ctrl', 'Shift', 'A']} alignToText />[^1] to open the project in VS Code. <Keybind keys={['Ctrl', 'Shift', 'F']} alignToText /> opened the file browser. <Keybind keys={['Ctrl', 'Shift', '~']} alignToText /> launched a terminal in the correct directory. And, of course, <Keybind keys={['Ctrl', 'Shift', 'G']} alignToText /> opened the GitHub remote. Did you really think they were going to leave that one out?
+
+For a long time, I saw these as tiny conveniences. Eventually I realized GitHub Desktop had quietly become a sort of “home base” for all of my projects. I didn’t need to remember where a repository lived, navigate to it in a terminal, or hunt through menus to open the right thing. I picked the project, pressed a few keys, and went where I needed to go.
+
+Without really noticing, I had started wanting every project and the tools around them to be a few keystrokes away.
+
+The funny part is that this never really carried over to the rest of my computer use. I was still very mouse-first: despite being fast at a keyboard, most navigation still ended with me reaching for the mouse. I blame a childhood full of FPS games for that one[^2].
+
+## All Good Things Must End
+
+When I started my current job in 2025, I was pushed out of that comfort zone.
+
+I received a ludicrously specced Dell Precision 7680 laptop with an i9 and 64 GB of RAM (in this economy!). During my onboarding, I was happy to find and request GitHub Desktop through the company portal.
+
+Then I opened it.
+
+It was painfully slow.
+
+I know it’s an Electron app, but surely this machine was powerful enough?
+
+As I learned over the following months, the combination of our security tooling and its configuration made every I/O operation spawn a ridiculous number of scanning processes (that’s not an exaggeration).
+
+GitHub Desktop was basically the worst-case workload for it: an Electron app constantly checking repository state and accessing the filesystem. Git operations that should have been nearly instant were taking around 4–8 **seconds**. While volunteering to help IT debug the issue, I measured those same operations at 20–50 milliseconds with the bottleneck removed.
+
+Yikes.
+
+So I re-learned the Git CLI.
+
+I had used it briefly in university when SSHing into school machines, but I had never really gotten comfortable with it. This time I was forced to. I configured a few aliases, installed [delta](https://github.com/dandavison/delta) for nicer diffs, and quickly realized that Git was actually a pleasant experience inside the terminal. (Who knew, lol!)
+
+I still miss effortlessly staging individual hunks from GitHub Desktop, so if you have a good replacement, please [reach out](https://x.com/messages/compose?recipient_id=2985770630). Aside from that, I had successfully replaced the Git part of GitHub Desktop.
+
+Yet I still missed GitHub Desktop.
+
+My editor was still there. My terminal was still there. Git was still there. All the pieces of my workflow still existed. They just no longer shared a home.
+
+## Trying to Build a Solution
+
+By 2026, AI coding agents had finally become capable enough that an idea I’d been sitting on felt plausible: what if GitHub Desktop’s project-centric “home base” could link every other tool around a project too? I had an idle Codex subscription, so I decided to find out.
+
+At first, I thought of it as GitHub Desktop for my whole development workflow. Opening a project would show me its Git state, scripts, resources, and active AI agents, then let me jump straight into the right folder, editor, terminal, or external app like Figma or Godot.
+
+I basically wanted a control center for being a developer. A **DevCenter**, if you will.
+
+The more I wrote down, the more absurd the scope became: Git operations, runtimes, scripts, project workspaces, bookmarks, AI tooling and usage stats, cross-platform support. At one point I was even thinking about embedding [tldraw](https://tldraw.dev/). Somewhere in that list, I had stopped designing a Git client and started designing my own workstation.
+
+And because I was busy at work, I approached this “reasonable scope” with an equally “reasonable development strategy”: give Codex a giant doc with all these ideas and tell GPT 5.5 `/goal implement the app`.
+
+The result was exactly what you would expect.
+
+{/* TODO: add screenshot */}
+
+I couldn’t meaningfully read through the generated codebase. I didn’t like the design. Every change required too much back-and-forth. I was asking the agent to make architectural and product decisions I had barely made myself.
+
+I was drowning in slop.
+
+You can blame skill issues, but at the end of the day the DevCenter experiment was a failure.
+
+I could have put my head down, installed and customized a gnarly Neovim config, and plunged head-first into that beautiful world (and I promise I will one day, Thiru).
+
+But I could also switch to Arch.
+
+## It’s Time for Something New
+
+Last lore drop, I promise. I’m an avid [Primeagen](www.youtube.com/@ThePrimeagen) viewer, and his streams kept exposing me to a style of computing that felt very different from mine: keyboard-heavy workflows, terminal tools, tiling window managers, and increasingly, this strange Linux setup called [Omarchy](https://omarchy.org/).
+
+I don’t agree with DHH on plenty of things, technical or otherwise, but it’s hard not to admire the momentum he has helped build around making desktop Linux approachable to developers. After years of using computers, [DHH's video showcasing Omarchy Quattro](https://youtu.be/F7fe9pa8OeE?si=H2fI5aX1jIirGkiC) was enough to push me to try Linux properly as my main OS.
+
+What caught my attention wasn’t just his opinionated Arch setup, but the interaction model.
+
+Applications live on direct hotkeys. Workspaces and windows are keyboard-driven instead of things I manually arranged with a mouse. The terminal, multiplexer, and various TUIs[^3] are treated as first-class experiences. Jumping between tools feels consistent because the operating system itself is providing the shortcuts, structure, and theming.
+
+GitHub Desktop gave me shortcuts for four developer tools.
+
+Omarchy gives me shortcuts for the whole computer.
+
+That night I went on Amazon, paid an exorbitant amount of money for another SSD, and formatted a flash drive with Omarchy. (I have traumatic memories of destroying EFI partitions during my Hackintosh days, so Windows and Arch were getting separate drives, whether that was necessary or not.)
+
+Switching was both better and worse than I expected.
+
+Linux still has rough edges. From what I found, [Hyprland](https://github.com/hyprwm/hyprland) doesn’t really have a “primary monitor,” which caused some issues with the default workspace layout for me. Some applications scale poorly when moved between my 1080p and 4K displays, and others have minimum window sizes that fight the tiled layouts I want to use. Gaming brings its own mix of shader compilation, compatibility quirks, and anti-cheats that simply refuse to work.
+
+But the problems I experienced on Linux felt different from the ones I was used to on Windows or macOS.
+
+They didn’t feel permanent.
+
+If a window behaved strangely, I could add a rule for it. If I disliked how a workspace opened, I could change it. If a menu didn’t expose something I wanted, I could modify the menu. If I kept repeating an action, I could turn it into a script and give it a keybind.
+
+Modern AI agents only amplified that feeling. One line from that introductory Omarchy video stuck with me:
+
+> Now, thanks to Agents and AI, you can evolve [the] system as you see fit.
+
+The rough edges are absolutely there. They just stopped feeling like permanent constraints.
+
+## I Was Trying to Fix the Wrong Layer
+
+The DevCenter idea was never going to work in the form I imagined. It was too ambitious for the spare time I had, and a surprising number of the things I wanted to build already had mature, composable solutions on Linux.
+
+[mise](https://github.com/jdx/mise) defines the languages, runtimes, and CLI tools I want available on a machine. Hyprland and Omarchy handle the keybinds, workspaces, app launching, and window rules. My shell already gives me scripts, aliases, and access to REPLs. [Quickshell](https://github.com/quickshell-mirror/quickshell) gives me a place to build the system UI I actually want. And my dotfiles tie it all together, carrying the same shell setup, shortcuts, and tool conventions across my personal and work machines.
+
+Even some of my most DevCenter nice-to-haves, like seeing AI-agent usage and launching new instances quickly, didn’t require a whole application. They fit naturally as a built-in Quickshell plugin in my desktop bar and a couple of keybinds.
+
+The monolith I had imagined kept decomposing into pieces of my operating system.
+
+GitHub Desktop taught me that I wanted a coherent interface for my development environment. When I stopped using it, I assumed the answer was to build a bigger application that could coordinate everything else.
+
+It turned out the application was the wrong layer. Once the operating system itself became programmable enough, and agents made modifying it dramatically easier, the original problem became much smaller.
+
+I wanted my agents to program my workflow into a desktop app.
+
+Instead, they ended up modifying my entire OS.
+
+## Try the Workflow
+
+Below is an embedded demo I cooked up alongside my agents. Try using the keyboard shortcuts rather than clicking everything with the mouse (but that’s still supported!). If you’re on a touch device, I highly suggest coming back with a keyboard to get the full experience.
+
+<OmarchyWindowDemo />
+
+Thanks for reading.
+
+---
+
+[^1]:
+    <Keybind keys={['Ctrl', 'Shift', 'A']} alignToText /> was named after Atom.
+    R.I.P. I was actually quite fond of it and used it until it was clear VS
+    Code was its mature successor. (wiki link)
+
+[^2]: My list of ["The 9 Games That Shaped Who I Am"](https://x.com/KirillTregubov_/status/2104375650580861247?s=20) starts with _Shadow the Hedgehog_. Come on… he’s literally Sonic with a gun!
+
+[^3]: Terminal User Interface. An interactive, text-based interface that runs inside your terminal. Usually feels more app-like than a normal command that just prints output.
