@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import PostPreview from '@components/PostPreview.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import Layout from '@layouts/Layout.astro'
+import { BLOG_SUBTITLE } from '@lib/blog'
 import { ChevronRightIcon, SearchIcon } from 'lucide-react'
 
 const visiblePosts = await getCollection('blog').then((posts) =>
@@ -32,11 +33,23 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
     <ReturnHome />
     <header class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
       <h1 class="text-3xl font-semibold text-neutral-100">Blog</h1>
-      <p class="mt-3 max-w-180 text-lg text-neutral-400">
-        Notes on software development, interface design, and the projects I’ve
-        built.
-      </p>
+      <p class="mt-3 max-w-180 text-lg text-neutral-400">{BLOG_SUBTITLE}</p>
     </header>
+    {import.meta.env.DEV && (
+      <label class="mt-6 inline-flex cursor-pointer items-center gap-3 text-sm text-neutral-300 motion-safe:animate-[fadeUp_0.6s_forwards_0.2s] motion-safe:opacity-0">
+        <input
+          id="blog-show-drafts"
+          type="checkbox"
+          checked
+          class="peer sr-only"
+        />
+        <span
+          class="relative h-5 w-9 rounded-full bg-neutral-700 transition after:absolute after:top-0.5 after:left-0.5 after:size-4 after:rounded-full after:bg-white after:transition-transform peer-checked:bg-orange-500 peer-checked:after:translate-x-4 peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-300 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-neutral-950"
+          aria-hidden="true"
+        ></span>
+        <span>Show drafts</span>
+      </label>
+    )}
     <label class="group relative mt-6 block max-w-120 motion-safe:animate-[fadeUp_0.6s_forwards_0.25s] motion-safe:opacity-0">
       <span class="sr-only">Search blog posts</span>
       <SearchIcon
@@ -64,6 +77,7 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
             ]
               .join(' ')
               .toLocaleLowerCase()}
+            data-draft={post.data.draft}
           >
             <PostPreview post={post} />
           </li>
@@ -100,6 +114,7 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
                   ]
                     .join(' ')
                     .toLocaleLowerCase()}
+                  data-draft={post.data.draft}
                 >
                   <PostPreview post={post} />
                 </li>
@@ -318,6 +333,8 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
     const searchInput = document.querySelector<HTMLInputElement>('#blog-search')
     if (!searchInput || searchInput.dataset.searchInit !== undefined) return
     searchInput.dataset.searchInit = ''
+    const draftsToggle =
+      document.querySelector<HTMLInputElement>('#blog-show-drafts')
 
     const postList = document.querySelector<HTMLElement>('#blog-post-list')
     const archiveList =
@@ -339,13 +356,19 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
     const controller = new AbortController()
     const { signal } = controller
 
-    const filterRows = (rows: HTMLElement[], query: string) => {
+    const filterRows = (
+      rows: HTMLElement[],
+      query: string,
+      showDrafts: boolean,
+    ) => {
       let matches = 0
 
       rows.forEach((row) => {
         const matchesQuery = !query || row.dataset.search?.includes(query)
-        row.hidden = !matchesQuery
-        if (matchesQuery) matches += 1
+        const isVisible =
+          matchesQuery && (showDrafts || row.dataset.draft !== 'true')
+        row.hidden = !isVisible
+        if (isVisible) matches += 1
       })
 
       return matches
@@ -353,9 +376,10 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
 
     const updateResults = () => {
       const query = searchInput.value.trim().toLocaleLowerCase()
+      const showDrafts = draftsToggle?.checked ?? true
       if (query && !hadQuery) archiveWasOpen = archiveDetails?.open ?? false
-      const postMatches = filterRows(postRows, query)
-      const archiveMatches = filterRows(archiveRows, query)
+      const postMatches = filterRows(postRows, query, showDrafts)
+      const archiveMatches = filterRows(archiveRows, query, showDrafts)
 
       if (postList) postList.hidden = postMatches === 0
       if (archiveRegion) archiveRegion.hidden = archiveMatches === 0
@@ -370,6 +394,7 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
     }
 
     searchInput.addEventListener('input', updateResults, { signal })
+    draftsToggle?.addEventListener('change', updateResults, { signal })
     document.addEventListener('astro:before-swap', () => controller.abort(), {
       once: true,
       signal,

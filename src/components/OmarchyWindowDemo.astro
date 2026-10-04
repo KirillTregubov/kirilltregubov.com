@@ -19,11 +19,14 @@ import Keybind from './markdown/Keybind.astro'
       <!-- <p class="eyebrow m-[0_0_0.2rem] text-[#fb923c] text-[0.75rem] font-bold tracking-[0.12em] uppercase">
         See it in action
       </p> -->
-      <h2 id="omarchy-demo-title" class="text-[1.0625rem] leading-5">
+      <h2
+        id="omarchy-demo-title"
+        class="m-0 text-[1.0625rem] font-[650] leading-5 tracking-[-0.01em] text-[#f5f5f5]"
+      >
         See it in action
       </h2>
-      <p class="text-sm leading-5 pt-1">
-        Using a keyboard is optimal for the full experience.
+      <p class="m-0 pt-1 text-[0.8125rem] leading-5 text-[#a1a1ad]">
+        Try the keyboard shortcuts for the full experience.
       </p>
     </div>
 
@@ -70,121 +73,127 @@ import Keybind from './markdown/Keybind.astro'
     </div>
   </div>
 
-  <div class="desktop-experience p-[1.5rem_1.25rem_1.25rem] bg-[radial-gradient(circle_at_50%_0%,#2b1d2c_0,#15141a_38%,#0c0c10_100%)] select-none">
-    <div class="monitor-shell w-full">
-      <div
-        class="screen relative aspect-video overflow-hidden [--window-gap:0.375rem] [border:2px_solid_#363640] [border-bottom-width:1px] rounded-[0.75rem_0.75rem_0_0] bg-[#150b19] shadow-[0_1.6rem_3rem_rgb(0_0_0/0.5)]"
-        role="group"
-        data-layout="dwindle"
-        data-window-count="0"
-        aria-label="Workspace 1, 0 windows, dwindle layout"
-      >
+  <div class="desktop-experience p-[1.5rem_1.25rem_1.25rem] bg-[radial-gradient(ellipse_at_50%_0%,#241b28_0,#15141a_45%,#0c0c10_100%)] select-none">
+    <div class="monitor-shell w-full [--bezel-color:#1b1b20] [--hardware-highlight:#24242b]">
+      <div class="monitor-frame overflow-hidden rounded-t-xl bg-(--bezel-color) p-2 pb-0">
         <div
-          class="wallpaper absolute -inset-6 bg-[linear-gradient(rgb(24_8_25/0.08),rgb(13_7_18/0.18)),url('/assets/blog/quattro.jpg')] bg-center bg-cover transform-[scale(1.015)]"
-          aria-hidden="true"
-        ></div>
+          class="screen relative isolate aspect-video overflow-hidden [--window-gap:0.375rem] rounded-t-sm [clip-path:inset(0_round_0.25rem_0.25rem_0_0)] bg-[#14141f]"
+          role="group"
+          data-layout="dwindle"
+          data-window-count="0"
+          aria-label="Workspace 1, 0 windows, dwindle layout"
+        >
+          <div
+            class="wallpaper absolute -inset-6 [clip-path:inset(3rem_0_0)] bg-[linear-gradient(rgb(24_8_25/0.08),rgb(13_7_18/0.18)),url('/assets/blog/quattro.jpg')] bg-center bg-cover"
+            aria-hidden="true"
+          ></div>
 
-        <div class="topbar absolute z-5 inset-[0_0_auto] grid grid-cols-[1fr_auto_1fr] items-center h-6 px-3 py-0 bg-[rgb(20_20_31/0.96)] text-[#9999ac] font-mono text-[0.625rem] leading-2.5 shadow-[0_1px_rgb(255_255_255/0.04)]">
-          <div class="topbar-left flex items-center gap-1.5">
-            <svg
-              class="omarchy-logo size-2.5 shrink-0 text-[#dedeea]"
-              viewBox="0 0 1200 1200"
-              fill="currentColor"
-              aria-label="Omarchy"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M1200 1200H720v-80h400V80H640.004v160h-400v720h720V240h-80v-80H1040v880H640v160H0V0h1200ZM80 1120h480v-80H160l.004-400H80Zm0-560h80.004V160h400V80H80Z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
+          <div class="topbar absolute z-5 inset-[0_0_auto] grid grid-cols-[1fr_auto_1fr] items-center h-6 px-3 py-0 bg-[#14141f] text-[#9999ac] font-mono text-[0.625rem] leading-2.5 shadow-[0_1px_rgb(255_255_255/0.04)]">
+            <div class="topbar-left flex items-center gap-1.5">
+              <svg
+                class="omarchy-logo size-2.5 shrink-0 text-[#dedeea]"
+                viewBox="0 0 1200 1200"
+                fill="currentColor"
+                aria-label="Omarchy"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1200 1200H720v-80h400V80H640.004v160h-400v720h720V240h-80v-80H1040v880H640v160H0V0h1200ZM80 1120h480v-80H160l.004-400H80Zm0-560h80.004V160h400V80H80Z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <div
+                class="workspaces flex items-center gap-0"
+                role="group"
+                aria-label="Workspaces"
+              >
+                {[1, 2, 3, 4, 5].map((workspace) => (
+                  <button
+                    type="button"
+                    class="workspace-button relative grid size-2.5 flex-[0_0_0.875rem] place-items-center p-0 pt-px border-0 rounded-[0.1875rem] bg-transparent text-[#777789] font-[inherit] [font-weight:inherit] leading-none cursor-pointer [transition:color_140ms_ease,background-color_140ms_ease]"
+                    data-workspace-button={workspace}
+                    aria-label={`Switch to workspace ${workspace}`}
+                    aria-pressed={workspace === 1 ? 'true' : 'false'}
+                  >
+                    <span class="workspace-number">{workspace}</span>
+                    <span
+                      class="workspace-dot absolute top-1/2 left-1/2 hidden size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-xs bg-[#c6b8e9]"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <time
+              class="clock text-[#bdbdcc] whitespace-nowrap"
+              data-system-time
+            ></time>
             <div
-              class="workspaces flex items-center gap-0"
-              role="group"
-              aria-label="Workspaces"
+              class="status-icons flex items-center justify-end gap-2"
+              aria-hidden="true"
             >
-              {[1, 2, 3, 4, 5].map((workspace) => (
-                <button
-                  type="button"
-                  class="workspace-button relative grid size-2.5 flex-[0_0_0.875rem] place-items-center p-0 pt-px border-0 rounded-[0.1875rem] bg-transparent text-[#777789] font-[inherit] [font-weight:inherit] leading-none cursor-pointer [transition:color_140ms_ease,background-color_140ms_ease]"
-                  data-workspace-button={workspace}
-                  aria-label={`Switch to workspace ${workspace}`}
-                  aria-pressed={workspace === 1 ? 'true' : 'false'}
-                >
-                  <span class="workspace-number">{workspace}</span>
-                  <span
-                    class="workspace-dot absolute top-1/2 left-1/2 hidden size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-xs bg-[#c6b8e9]"
-                    aria-hidden="true"
-                  ></span>
-                </button>
-              ))}
+              <!--
+                Paths reproduced from the system's JetBrainsMono Nerd Font:
+                Ethernet (f0200), volume-high (f028), and monitor (f0379).
+                Keeping the outlines inline makes the demo match Omarchy without
+                requiring visitors to have the Nerd Font installed.
+              -->
+              <svg
+                class="status-icon ethernet-icon block size-2.5 shrink-0 fill-current"
+                viewBox="0 0 832 792"
+                preserveAspectRatio="none"
+              >
+                <path d="M207 626V500H291V626H375V500H457V626H541V500H625V626H707V250H541V126H291V250H125V626H207ZM98 0H734Q775 0 803.5 30Q832 60 832 100V694Q832 734 803.5 763Q775 792 734 792H98Q57 792 28.5 763Q0 734 0 694V100Q0 60 28.5 30Q57 0 98 0Z"></path>
+              </svg>
+              <svg
+                class="status-icon audio-icon block h-2.5 w-3.5 shrink-0 fill-current"
+                viewBox="0 0 1154 828"
+                preserveAspectRatio="none"
+              >
+                <path d="M962 11Q1052 84 1103 189Q1154 294 1154 414Q1154 534 1103 639Q1052 744 962 817Q948 828 930 826Q912 824 901 811Q890 797 892 779Q894 761 907 750Q982 690 1024 602Q1066 514 1067 414Q1066 314 1024 226Q982 138 907 78Q894 67 892 49Q890 31 901 17Q912 4 930 2Q948 0 962 11ZM853 145Q913 194 947 264Q981 334 981 414Q981 494 947 564Q913 634 853 683Q839 694 821 692Q803 690 792 677Q780 663 782 645Q784 627 798 616Q894 538 894 414Q894 291 798 213Q784 202 782 184Q780 166 792 152Q803 138 821 136Q839 134 853 145ZM744 280Q808 333 808 414Q808 496 744 549Q730 560 712 558Q694 556 683 542Q672 528 674 510Q676 492 689 481Q721 454 721 414Q721 374 689 347Q676 336 674 318Q672 300 683 286Q694 272 712 270Q730 268 744 280ZM543 16Q577 31 577 68V760Q577 798 543 813Q508 828 481 804L238 587H115Q68 588 34 554Q0 520 0 472V357Q0 309 34 275Q68 241 115 241H238L481 25Q508 1 543 16Z"></path>
+              </svg>
+              <svg
+                class="status-icon monitor-icon block h-2.5 w-2.75 shrink-0 fill-current"
+                viewBox="0 0 918 832"
+                preserveAspectRatio="none"
+              >
+                <path d="M834 82V582H84V82H834ZM834 0H84Q49 0 24.5 24.5Q0 49 0 82V582Q0 617 24.5 641.5Q49 666 84 666H375V750H293V832H625V750H543V666H834Q869 666 893.5 641.5Q918 617 918 582V82Q918 49 893.5 24.5Q869 0 834 0Z"></path>
+              </svg>
             </div>
           </div>
-          <time
-            class="clock text-[#bdbdcc] whitespace-nowrap"
-            data-system-time
-          ></time>
-          <div
-            class="status-icons flex items-center justify-end gap-2"
-            aria-hidden="true"
-          >
-            <!--
-              Paths reproduced from the system's JetBrainsMono Nerd Font:
-              Ethernet (f0200), volume-high (f028), and monitor (f0379).
-              Keeping the outlines inline makes the demo match Omarchy without
-              requiring visitors to have the Nerd Font installed.
-            -->
-            <svg
-              class="status-icon ethernet-icon block size-2.5 shrink-0 fill-current"
-              viewBox="0 0 832 792"
-              preserveAspectRatio="none"
-            >
-              <path d="M207 626V500H291V626H375V500H457V626H541V500H625V626H707V250H541V126H291V250H125V626H207ZM98 0H734Q775 0 803.5 30Q832 60 832 100V694Q832 734 803.5 763Q775 792 734 792H98Q57 792 28.5 763Q0 734 0 694V100Q0 60 28.5 30Q57 0 98 0Z"></path>
-            </svg>
-            <svg
-              class="status-icon audio-icon block h-2.5 w-3.5 shrink-0 fill-current"
-              viewBox="0 0 1154 828"
-              preserveAspectRatio="none"
-            >
-              <path d="M962 11Q1052 84 1103 189Q1154 294 1154 414Q1154 534 1103 639Q1052 744 962 817Q948 828 930 826Q912 824 901 811Q890 797 892 779Q894 761 907 750Q982 690 1024 602Q1066 514 1067 414Q1066 314 1024 226Q982 138 907 78Q894 67 892 49Q890 31 901 17Q912 4 930 2Q948 0 962 11ZM853 145Q913 194 947 264Q981 334 981 414Q981 494 947 564Q913 634 853 683Q839 694 821 692Q803 690 792 677Q780 663 782 645Q784 627 798 616Q894 538 894 414Q894 291 798 213Q784 202 782 184Q780 166 792 152Q803 138 821 136Q839 134 853 145ZM744 280Q808 333 808 414Q808 496 744 549Q730 560 712 558Q694 556 683 542Q672 528 674 510Q676 492 689 481Q721 454 721 414Q721 374 689 347Q676 336 674 318Q672 300 683 286Q694 272 712 270Q730 268 744 280ZM543 16Q577 31 577 68V760Q577 798 543 813Q508 828 481 804L238 587H115Q68 588 34 554Q0 520 0 472V357Q0 309 34 275Q68 241 115 241H238L481 25Q508 1 543 16Z"></path>
-            </svg>
-            <svg
-              class="status-icon monitor-icon block h-2.5 w-2.75 shrink-0 fill-current"
-              viewBox="0 0 918 832"
-              preserveAspectRatio="none"
-            >
-              <path d="M834 82V582H84V82H834ZM834 0H84Q49 0 24.5 24.5Q0 49 0 82V582Q0 617 24.5 641.5Q49 666 84 666H375V750H293V832H625V750H543V666H834Q869 666 893.5 641.5Q918 617 918 582V82Q918 49 893.5 24.5Q869 0 834 0Z"></path>
-            </svg>
-          </div>
-        </div>
 
-        <div
-          class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-(--window-gap) bottom-(--window-gap) left-(--window-gap) overflow-hidden"
-          aria-live="polite"
-        ></div>
+          <div
+            class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-(--window-gap) bottom-(--window-gap) left-(--window-gap) overflow-hidden"
+            aria-live="polite"
+          ></div>
+        </div>
       </div>
       <div
-        class="monitor-chin relative h-4.5 [border:1px_solid_#393942] border-top-0 rounded-[0_0_0.65rem_0.65rem] bg-[linear-gradient(#24242b,#18181e)] text-[#5e5e68] text-[0.4375rem] leading-2 font-bold tracking-[2px] text-center"
+        class="monitor-chin grid h-4 place-items-center rounded-b-xl bg-(--bezel-color) text-[#72727c] text-[0.4375rem] leading-2 font-bold tracking-[0.16em]"
         aria-hidden="true"
       >
-        <span>OMARCHY</span>
+        <span class="translate-y-px">OMARCHY</span>
       </div>
       <div
-        class="monitor-stand w-[19%] h-[0.55rem] m-[0_auto] rounded-[0_0_0.45rem_0.45rem] bg-[linear-gradient(90deg,#111116,#33333b_50%,#111116)] [clip-path:polygon(37%_0,63%_0,100%_100%,0_100%)]"
+        class="monitor-stand mx-auto h-2 w-[11%] bg-[linear-gradient(180deg,var(--bezel-color),var(--hardware-highlight))] [clip-path:polygon(35%_0,65%_0,100%_100%,0_100%)]"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="monitor-base mx-auto h-1 w-[18%] rounded-[50%_50%_0.2rem_0.2rem] bg-[linear-gradient(180deg,var(--hardware-highlight),var(--bezel-color))] shadow-[0_3px_8px_rgb(0_0_0/0.25)]"
         aria-hidden="true"
       ></div>
     </div>
 
-    <div class="demo-controls flex items-center justify-between gap-4 mt-4">
-      <div class="demo-copy min-w-0 select-text">
-        <p class="step-copy m-0 text-[#92929e] text-[0.8125rem] leading-5">
+    <div class="demo-controls flex flex-wrap items-center justify-between gap-x-4 gap-y-3 mt-5">
+      <div class="demo-copy min-w-0 flex-1 basis-60 select-text">
+        <p class="step-copy m-0 text-[#a1a1ad] text-[0.8125rem] leading-5">
           This workspace is empty. Open an app.
         </p>
-        <p class="mode-copy m-[0.2rem_0_0] text-[#666673] text-[0.6875rem] leading-4 capitalize">
+        <p class="mode-copy m-[0.2rem_0_0] text-[#82828f] text-[0.6875rem] leading-4 capitalize">
           Dwindle · workspace 1 · empty
         </p>
       </div>
-      <div class="action-buttons flex shrink-0 gap-[0.35rem]">
+      <div class="action-buttons ml-auto flex shrink-0 gap-[0.35rem]">
         <button
           class="reset-button text-[0.8125rem] leading-5 bg-[#292930] text-[#c6c6cf]"
           type="button"
@@ -240,7 +249,7 @@ import Keybind from './markdown/Keybind.astro'
             Keyboard shortcuts
           </p>
           <p
-            class="shortcut-hint m-0 text-[#777784] text-[0.6875rem] leading-4"
+            class="shortcut-hint m-0 text-[#92929f] text-[0.6875rem] leading-4"
             data-shortcut-hint
           >
             Alt shortcuts are ready to use in the browser.
@@ -316,7 +325,7 @@ import Keybind from './markdown/Keybind.astro'
   {(['terminal', 'browser', 'editor'] as const).map((app) => (
     <template data-app-template={app}>
       <div
-        class="window absolute flex flex-col overflow-hidden [border:2px_solid_rgb(255_255_255/0.14)] rounded-[0.55rem] bg-[#050507] shadow-[0_0.7rem_2rem_rgb(0_0_0/0.4)] contain-[layout_paint] cursor-pointer @container-size [transition:opacity_240ms_ease,border-color_80ms_ease]"
+        class="window absolute flex flex-col overflow-hidden [border:2px_solid_rgb(255_255_255/0.14)] rounded-[0.55rem] bg-[#050507] shadow-[0_0.7rem_2rem_rgb(0_0_0/0.4)] contain-[layout_paint] cursor-pointer @container-size [transition:opacity_240ms_ease,border-color_80ms_ease] data-closing:pointer-events-none data-closing:z-10"
         role="button"
         tabindex="0"
       >
@@ -414,6 +423,10 @@ import Keybind from './markdown/Keybind.astro'
         workspaceButtons,
         () => null,
       )
+      const workspaceFocusMemory: Map<string, number>[] = Array.from(
+        workspaceButtons,
+        () => new Map(),
+      )
       const workspaceLayouts: LayoutMode[] = Array.from(
         workspaceButtons,
         () => 'dwindle',
@@ -446,7 +459,50 @@ import Keybind from './markdown/Keybind.astro'
       }
 
       const getAppWindows = () =>
-        workspace.querySelectorAll<HTMLElement>('.window')
+        workspace.querySelectorAll<HTMLElement>('.window:not([data-closing])')
+
+      const animateWindowClosing = (appWindow: HTMLElement) => {
+        cancelWindowAnimation(appWindow)
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+          return
+
+        // Keep a visual copy in place while the remaining windows reflow.
+        const rect = appWindow.getBoundingClientRect()
+        const workspaceRect = workspace.getBoundingClientRect()
+        const closingWindow = appWindow.cloneNode(true) as HTMLElement
+        delete closingWindow.dataset.windowId
+        closingWindow.dataset.closing = ''
+        closingWindow.inert = true
+        closingWindow.setAttribute('aria-hidden', 'true')
+        closingWindow.tabIndex = -1
+        Object.assign(closingWindow.style, {
+          inset: 'auto',
+          left: `${rect.left - workspaceRect.left}px`,
+          top: `${rect.top - workspaceRect.top}px`,
+          width: `${rect.width}px`,
+          height: `${rect.height}px`,
+        })
+        workspace.append(closingWindow)
+
+        const animation = closingWindow.animate(
+          [
+            { opacity: 1, scale: '1', transformOrigin: 'center' },
+            { opacity: 0, scale: '0.96', transformOrigin: 'center' },
+          ],
+          { duration: 100, easing: 'ease-out', fill: 'forwards' },
+        )
+        windowAnimations.set(closingWindow, animation)
+        const removeClosingWindow = () => {
+          closingWindow.remove()
+          windowAnimations.delete(closingWindow)
+        }
+        animation.addEventListener('finish', removeClosingWindow, {
+          once: true,
+        })
+        animation.addEventListener('cancel', removeClosingWindow, {
+          once: true,
+        })
+      }
 
       const createAppWindow = (app: DemoApp) => {
         const template = demo.querySelector<HTMLTemplateElement>(
@@ -703,6 +759,9 @@ import Keybind from './markdown/Keybind.astro'
         })
 
         workspaceButtons.forEach((button) => {
+          const workspaceIndex = Number(button.dataset.workspaceButton) - 1
+          const hasWindows = (workspaceWindows[workspaceIndex]?.length ?? 0) > 0
+          button.toggleAttribute('data-occupied', hasWindows)
           button.setAttribute(
             'aria-pressed',
             String(Number(button.dataset.workspaceButton) === activeWorkspace),
@@ -757,7 +816,7 @@ import Keybind from './markdown/Keybind.astro'
         const appWindow = workspace.querySelector<HTMLElement>(
           `[data-window-id="${windowId}"]`,
         )
-        if (appWindow) cancelWindowAnimation(appWindow)
+        if (appWindow) animateWindowClosing(appWindow)
         openWindows.splice(windowIndex, 1)
 
         if (workspaceFocus[activeWorkspace - 1] === windowId)
@@ -797,6 +856,20 @@ import Keybind from './markdown/Keybind.astro'
       type FocusDirection = 'left' | 'right' | 'up' | 'down'
       type WindowPoint = { windowId: number; x: number; y: number }
 
+      const oppositeFocusDirection = (
+        direction: FocusDirection,
+      ): FocusDirection =>
+        direction === 'left'
+          ? 'right'
+          : direction === 'right'
+            ? 'left'
+            : direction === 'up'
+              ? 'down'
+              : 'up'
+
+      const focusMemoryKey = (windowId: number, direction: FocusDirection) =>
+        `${windowId}:${direction}`
+
       const getWindowPoints = (openWindows: DemoWindow[]): WindowPoint[] => {
         if (workspaceLayouts[activeWorkspace - 1] === 'scrolling')
           return openWindows.map(({ id }, index) => ({
@@ -827,8 +900,9 @@ import Keybind from './markdown/Keybind.astro'
       }
 
       const focusWindow = (direction: FocusDirection) => {
-        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+        const workspaceIndex = activeWorkspace - 1
+        const openWindows = workspaceWindows[workspaceIndex] ?? []
+        const focusedWindowId = workspaceFocus[workspaceIndex]
         if (!focusedWindowId || openWindows.length < 2) return
 
         const points = getWindowPoints(openWindows)
@@ -857,8 +931,53 @@ import Keybind from './markdown/Keybind.astro'
           })
           .sort((a, b) => a.distance - b.distance)
 
-        const next = candidates[0]
-        if (next) selectWindow(next.windowId)
+        if (workspaceLayouts[workspaceIndex] !== 'dwindle') {
+          if (candidates[0]) selectWindow(candidates[0].windowId)
+          return
+        }
+
+        const focusMemory = workspaceFocusMemory[workspaceIndex]
+        const rememberedWindowId = (memoryDirection: FocusDirection) => {
+          const windowId = focusMemory.get(
+            focusMemoryKey(focusedWindowId, memoryDirection),
+          )
+          return points.find((point) => point.windowId === windowId)
+        }
+        const rememberedNext = rememberedWindowId(direction)
+        let next: WindowPoint | undefined =
+          candidates.find(
+            ({ windowId }) => windowId === rememberedNext?.windowId,
+          ) ?? candidates[0]
+
+        if (!next && (direction === 'left' || direction === 'right')) {
+          const edge =
+            direction === 'left'
+              ? Math.max(...points.map(({ x }) => x))
+              : Math.min(...points.map(({ x }) => x))
+          const wrappedCandidates = points
+            .filter(({ x }) => x === edge)
+            .sort(
+              (a, b) => Math.abs(a.y - current.y) - Math.abs(b.y - current.y),
+            )
+          const rememberedOpposite = rememberedWindowId(
+            oppositeFocusDirection(direction),
+          )
+          next =
+            wrappedCandidates.find(
+              ({ windowId }) => windowId === rememberedOpposite?.windowId,
+            ) ?? wrappedCandidates[0]
+        }
+
+        if (!next) return
+        focusMemory.set(
+          focusMemoryKey(focusedWindowId, direction),
+          next.windowId,
+        )
+        focusMemory.set(
+          focusMemoryKey(next.windowId, oppositeFocusDirection(direction)),
+          focusedWindowId,
+        )
+        selectWindow(next.windowId)
       }
 
       const setLayout = (nextLayout: LayoutMode) => {
@@ -908,6 +1027,38 @@ import Keybind from './markdown/Keybind.astro'
         })
       }
 
+      // const cycleOccupiedWorkspaces = (direction: 'next' | 'previous') => {
+      //   const occupiedWorkspaces = workspaceWindows.flatMap((windows, index) =>
+      //     windows.length > 0 ? [index + 1] : [],
+      //   )
+      //   if (occupiedWorkspaces.length === 0) return
+
+      //   const currentIndex = occupiedWorkspaces.indexOf(activeWorkspace)
+      //   let nextWorkspace: number
+
+      //   if (currentIndex >= 0) {
+      //     const step = direction === 'next' ? 1 : -1
+      //     nextWorkspace =
+      //       occupiedWorkspaces[
+      //         (currentIndex + step + occupiedWorkspaces.length) %
+      //           occupiedWorkspaces.length
+      //       ]
+      //   } else if (direction === 'next') {
+      //     nextWorkspace =
+      //       occupiedWorkspaces.find(
+      //         (workspace) => workspace > activeWorkspace,
+      //       ) ?? occupiedWorkspaces[0]
+      //   } else {
+      //     nextWorkspace =
+      //       [...occupiedWorkspaces]
+      //         .reverse()
+      //         .find((workspace) => workspace < activeWorkspace) ??
+      //       occupiedWorkspaces.at(-1)!
+      //   }
+
+      //   if (nextWorkspace !== activeWorkspace) switchWorkspace(nextWorkspace)
+      // }
+
       type Keybind = {
         code: string
         keys: string[]
@@ -924,6 +1075,18 @@ import Keybind from './markdown/Keybind.astro'
           label: `Workspace ${workspace}`,
           action: () => switchWorkspace(workspace),
         })),
+        // {
+        //   code: 'Tab',
+        //   keys: ['Tab'],
+        //   label: 'Next occupied workspace',
+        //   action: () => cycleOccupiedWorkspaces('next'),
+        // },
+        // {
+        //   code: 'Shift+Tab',
+        //   keys: ['Shift', 'Tab'],
+        //   label: 'Previous occupied workspace',
+        //   action: () => cycleOccupiedWorkspaces('previous'),
+        // },
         {
           code: 'Enter',
           keys: ['Enter'],
@@ -1305,6 +1468,7 @@ import Keybind from './markdown/Keybind.astro'
             null,
             null,
           )
+          workspaceFocusMemory.forEach((memory) => memory.clear())
           workspaceLayouts.splice(
             0,
             workspaceLayouts.length,
@@ -1496,13 +1660,6 @@ import Keybind from './markdown/Keybind.astro'
 
   */
 
-  .demo-heading h2 {
-    margin: 0;
-    color: #f5f5f5;
-    font-weight: 650;
-    letter-spacing: -0.01em;
-  }
-
   .layout-switcher button,
   .demo-controls button {
     display: inline-flex;
@@ -1553,6 +1710,9 @@ import Keybind from './markdown/Keybind.astro'
   .workspace-button:hover {
     background: rgb(255 255 255 / 0.08);
     color: #d1d1dc;
+  }
+  .workspace-button[data-occupied] {
+    color: #bdbdcc;
   }
   .workspace-button[aria-pressed='true'] {
     color: #f1f1f5;
@@ -1669,10 +1829,6 @@ import Keybind from './markdown/Keybind.astro'
   .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
     .window[data-window='3'] {
     left: calc(57% - var(--window-gap));
-  }
-  .monitor-chin span {
-    position: relative;
-    top: 3px;
   }
   .demo-controls button {
     min-height: 2.4rem;

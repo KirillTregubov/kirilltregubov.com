@@ -42,11 +42,11 @@ const formattedDate = displayDate.toLocaleDateString('en-CA', {
       <h2 class="mt-1 text-lg font-semibold text-neutral-200 sm:text-xl">
         {post.data.title}
       </h2>
-      <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-neutral-400 sm:text-base">
+      <p class="mt-1.5 text-sm leading-relaxed text-neutral-400 sm:text-base">
         {post.data.description}
       </p>
     </div>
-    <div class="flex items-center pr-1 pl-3 sm:pl-5 md:pr-3">
+    <div class="flex items-center pr-1 md:pr-3">
       <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2 text-sm font-medium text-neutral-400 transition group-has-focus-visible:text-white group-hover:text-white md:px-3">
         <span class="sr-only sm:not-sr-only">Read post</span>
         <ArrowRightIcon
