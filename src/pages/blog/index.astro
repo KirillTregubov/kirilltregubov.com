@@ -65,18 +65,18 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
         class="w-full rounded-lg border border-neutral-700 bg-neutral-800 py-2 pr-3 pl-9 text-base text-neutral-100 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300! active:border-neutral-500 active:bg-neutral-600 selection:bg-neutral-300 selection:text-neutral-950"
       />
     </label>
-    <div class="post-list-region -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 md:-mx-6">
+    <div class="post-list-region relative -mx-3 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 md:-mx-6">
       <ul id="blog-post-list" class="mt-6">
         {posts.map((post) => (
           <li
-            class="post-row"
+            class="post-row relative z-1 py-1"
             data-search={[
               post.data.title,
               post.data.description,
               ...post.data.tags,
             ]
               .join(' ')
-              .toLocaleLowerCase()}
+              .toLowerCase()}
             data-draft={post.data.draft}
           >
             <PostPreview post={post} />
@@ -94,7 +94,7 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
                 <span class="group-hover:text-white group-focus-visible:text-white group-active:text-white transition">
                   Archive
                 </span>
-                <span class="text-sm font-normal text-neutral-500">
+                <span class="text-sm font-normal text-neutral-400">
                   (<span class="archive-count">{archivedPosts.length}</span>)
                 </span>
               </span>
@@ -106,14 +106,14 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
             <ul id="blog-archive-list" class="archive-list -mx-3 mt-3 md:-mx-6">
               {archivedPosts.map((post) => (
                 <li
-                  class="post-row"
+                  class="post-row relative z-1 py-1"
                   data-search={[
                     post.data.title,
                     post.data.description,
                     ...post.data.tags,
                   ]
                     .join(' ')
-                    .toLocaleLowerCase()}
+                    .toLowerCase()}
                   data-draft={post.data.draft}
                 >
                   <PostPreview post={post} />
@@ -123,17 +123,19 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
           </details>
         </div>
       )}
-      <div
-        class="blog-no-results mx-3 mt-6 hidden rounded-xl border border-dashed border-white/15 px-6 py-12 text-center md:mx-6"
-        role="status"
-        aria-live="polite"
-      >
+      <div class="blog-no-results mx-3 mt-6 hidden rounded-xl border border-dashed border-white/15 px-6 py-12 text-center md:mx-6">
         <p class="font-medium text-neutral-300">No matching posts found.</p>
-        <p class="mt-1 text-sm text-neutral-500">
+        <p class="mt-1 text-sm text-neutral-400">
           Try another title, topic, or keyword.
         </p>
       </div>
     </div>
+    <p
+      id="blog-search-status"
+      class="sr-only"
+      role="status"
+      aria-atomic="true"
+    ></p>
   </main>
 </Layout>
 
@@ -220,11 +222,12 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
         }
 
         rows.forEach((row) => {
-          row.addEventListener('pointerenter', () => moveTo(row))
-          row.addEventListener('focusin', () => moveTo(row))
+          row.addEventListener('pointerenter', () => moveTo(row), { signal })
+          row.addEventListener('focusin', () => moveTo(row), { signal })
         })
 
-        region.addEventListener('pointerleave', hideIfInactive)
+        region.addEventListener('pointerleave', hideIfInactive, { signal })
+        region.addEventListener('blog:filter', hide, { signal })
 
         region
           .querySelectorAll<HTMLDetailsElement>('.archive-details')
@@ -244,15 +247,19 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
             )
           })
 
-        region.addEventListener('focusout', () => {
-          requestAnimationFrame(() => {
-            const focusedRow =
-              document.activeElement?.closest<HTMLElement>('.post-row')
+        region.addEventListener(
+          'focusout',
+          () => {
+            requestAnimationFrame(() => {
+              const focusedRow =
+                document.activeElement?.closest<HTMLElement>('.post-row')
 
-            if (focusedRow && region.contains(focusedRow)) moveTo(focusedRow)
-            else hideIfInactive()
-          })
-        })
+              if (focusedRow && region.contains(focusedRow)) moveTo(focusedRow)
+              else hideIfInactive()
+            })
+          },
+          { signal },
+        )
 
         const reconcileAfterPointer = () => {
           requestAnimationFrame(hideIfInactive)
@@ -272,7 +279,11 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
         )
         document.addEventListener(
           'astro:before-swap',
-          () => controller.abort(),
+          () => {
+            controller.abort()
+            resizeObserver.disconnect()
+            window.clearTimeout(resetTimer)
+          },
           { once: true, signal },
         )
 
@@ -282,7 +293,7 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
           }
         })
 
-        rows.forEach((row) => resizeObserver.observe(row))
+        resizeObserver.observe(region)
       })
   }
 
@@ -298,34 +309,64 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
 
         if (!summary || !list) return
 
-        summary.addEventListener('click', async (event) => {
-          if (reducedMotion.matches) return
+        const controller = new AbortController()
+        let activeAnimation: Animation | undefined
+        const cancelAnimation = () => {
+          activeAnimation?.cancel()
+          activeAnimation = undefined
+          delete details.dataset.animating
+          delete details.dataset.closing
+        }
+        details
+          .closest('.post-list-region')
+          ?.addEventListener('blog:filter', cancelAnimation, {
+            signal: controller.signal,
+          })
+        document.addEventListener(
+          'astro:before-swap',
+          () => {
+            cancelAnimation()
+            controller.abort()
+          },
+          { once: true, signal: controller.signal },
+        )
 
-          event.preventDefault()
-          if (details.dataset.animating !== undefined) return
+        summary.addEventListener(
+          'click',
+          async (event) => {
+            if (reducedMotion.matches) return
 
-          const opening = !details.open
-          details.dataset.animating = ''
+            event.preventDefault()
+            if (details.dataset.animating !== undefined) return
 
-          if (opening) details.open = true
-          else details.dataset.closing = ''
+            const opening = !details.open
+            details.dataset.animating = ''
 
-          const hiddenState = { opacity: 0 }
-          const visibleState = { opacity: 1 }
+            if (opening) details.open = true
+            else details.dataset.closing = ''
 
-          const animation = list.animate(
-            opening ? [hiddenState, visibleState] : [visibleState, hiddenState],
-            { duration: 200, easing: 'ease-out' },
-          )
+            const hiddenState = { opacity: 0 }
+            const visibleState = { opacity: 1 }
 
-          try {
-            await animation.finished
-            if (!opening) details.open = false
-          } finally {
-            delete details.dataset.animating
-            delete details.dataset.closing
-          }
-        })
+            const animation = list.animate(
+              opening
+                ? [hiddenState, visibleState]
+                : [visibleState, hiddenState],
+              { duration: 200, easing: 'ease-out' },
+            )
+
+            activeAnimation = animation
+            try {
+              await animation.finished
+              if (!opening) details.open = false
+            } catch {
+              // Search or navigation can cancel an in-flight fade.
+            } finally {
+              if (activeAnimation === animation) cancelAnimation()
+            }
+          },
+          { signal: controller.signal },
+        )
       })
   }
 
@@ -345,6 +386,8 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
     const archiveCount =
       archiveRegion?.querySelector<HTMLElement>('.archive-count')
     const noResults = document.querySelector<HTMLElement>('.blog-no-results')
+    const status = document.querySelector<HTMLElement>('#blog-search-status')
+    const region = document.querySelector<HTMLElement>('.post-list-region')
     const postRows = Array.from(
       postList?.querySelectorAll<HTMLElement>('.post-row') ?? [],
     )
@@ -374,8 +417,9 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
       return matches
     }
 
-    const updateResults = () => {
-      const query = searchInput.value.trim().toLocaleLowerCase()
+    const updateResults = (event?: Event) => {
+      if (event) region?.dispatchEvent(new Event('blog:filter'))
+      const query = searchInput.value.trim().toLowerCase()
       const showDrafts = draftsToggle?.checked ?? true
       if (query && !hadQuery) archiveWasOpen = archiveDetails?.open ?? false
       const postMatches = filterRows(postRows, query, showDrafts)
@@ -384,11 +428,18 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
       if (postList) postList.hidden = postMatches === 0
       if (archiveRegion) archiveRegion.hidden = archiveMatches === 0
       if (archiveCount) archiveCount.textContent = String(archiveMatches)
-      if (archiveDetails) {
+      if (archiveDetails && (query || hadQuery)) {
         archiveDetails.open = query ? archiveMatches > 0 : archiveWasOpen
       }
       if (noResults) {
         noResults.classList.toggle('hidden', postMatches + archiveMatches > 0)
+      }
+      const totalMatches = postMatches + archiveMatches
+      if (status && event) {
+        status.textContent =
+          totalMatches === 0
+            ? 'No matching posts found.'
+            : `${totalMatches} matching ${totalMatches === 1 ? 'post' : 'posts'}.`
       }
       hadQuery = Boolean(query)
     }
@@ -413,7 +464,6 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
   .post-list-region {
     --highlight-y: 0px;
     --highlight-height: 0px;
-    position: relative;
   }
 
   .post-list-region::before {
@@ -451,15 +501,9 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
     transition: none;
   }
 
-  .post-row {
-    position: relative;
-    z-index: 1;
-    padding-block: 0.25rem;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .post-list-region::before {
-      transition: opacity 150ms ease-out;
+      transition: none;
     }
   }
 </style>

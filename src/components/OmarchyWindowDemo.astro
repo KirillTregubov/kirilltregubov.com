@@ -6,6 +6,8 @@ import {
   MoveHorizontalIcon,
   RotateCcwIcon,
 } from 'lucide-react'
+import { Image } from 'astro:assets'
+import wallpaper from '../../public/assets/blog/quattro.jpg'
 import OmarchyDummyApps from './OmarchyDummyApps.astro'
 import Keybind from './markdown/Keybind.astro'
 ---
@@ -84,9 +86,19 @@ import Keybind from './markdown/Keybind.astro'
           aria-label="Workspace 1, 0 windows, dwindle layout"
         >
           <div
-            class="wallpaper absolute -inset-6 [clip-path:inset(3rem_0_0)] bg-[linear-gradient(rgb(24_8_25/0.08),rgb(13_7_18/0.18)),url('/assets/blog/quattro.jpg')] bg-center bg-cover"
+            class="wallpaper pointer-events-none absolute -inset-6 [clip-path:inset(3rem_0_0)] after:absolute after:inset-0 after:bg-[linear-gradient(rgb(24_8_25/0.08),rgb(13_7_18/0.18))]"
             aria-hidden="true"
-          ></div>
+          >
+            <Image
+              src={wallpaper}
+              alt=""
+              width={1200}
+              widths={[800, 1200, 1600]}
+              sizes="(max-width: 848px) 100vw, 800px"
+              loading="lazy"
+              class="size-full object-cover"
+            />
+          </div>
 
           <div class="topbar absolute z-5 inset-[0_0_auto] grid grid-cols-[1fr_auto_1fr] items-center h-6 px-3 py-0 bg-[#14141f] text-[#9999ac] font-mono text-[0.625rem] leading-2.5 shadow-[0_1px_rgb(255_255_255/0.04)]">
             <div class="topbar-left flex items-center gap-1.5">
@@ -110,14 +122,16 @@ import Keybind from './markdown/Keybind.astro'
                 {[1, 2, 3, 4, 5].map((workspace) => (
                   <button
                     type="button"
-                    class="workspace-button relative grid size-2.5 flex-[0_0_0.875rem] place-items-center p-0 pt-px border-0 rounded-[0.1875rem] bg-transparent text-[#777789] font-[inherit] [font-weight:inherit] leading-none cursor-pointer [transition:color_140ms_ease,background-color_140ms_ease]"
+                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent px-0 pt-0.5 pb-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] data-occupied:text-[#bdbdcc]"
                     data-workspace-button={workspace}
                     aria-label={`Switch to workspace ${workspace}`}
                     aria-pressed={workspace === 1 ? 'true' : 'false'}
                   >
-                    <span class="workspace-number">{workspace}</span>
+                    <span class="workspace-number group-aria-pressed/workspace:invisible">
+                      {workspace}
+                    </span>
                     <span
-                      class="workspace-dot absolute top-1/2 left-1/2 hidden size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-xs bg-[#c6b8e9]"
+                      class="workspace-dot absolute top-1/2 left-1/2 hidden size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-xs bg-[#c6b8e9] group-aria-pressed/workspace:block"
                       aria-hidden="true"
                     ></span>
                   </button>
@@ -125,7 +139,7 @@ import Keybind from './markdown/Keybind.astro'
               </div>
             </div>
             <time
-              class="clock text-[#bdbdcc] whitespace-nowrap"
+              class="clock translate-y-px text-[#bdbdcc] whitespace-nowrap"
               data-system-time
             ></time>
             <div
@@ -139,21 +153,21 @@ import Keybind from './markdown/Keybind.astro'
                 requiring visitors to have the Nerd Font installed.
               -->
               <svg
-                class="status-icon ethernet-icon block size-2.5 shrink-0 fill-current"
+                class="status-icon ethernet-icon block size-2 shrink-0 fill-current"
                 viewBox="0 0 832 792"
                 preserveAspectRatio="none"
               >
                 <path d="M207 626V500H291V626H375V500H457V626H541V500H625V626H707V250H541V126H291V250H125V626H207ZM98 0H734Q775 0 803.5 30Q832 60 832 100V694Q832 734 803.5 763Q775 792 734 792H98Q57 792 28.5 763Q0 734 0 694V100Q0 60 28.5 30Q57 0 98 0Z"></path>
               </svg>
               <svg
-                class="status-icon audio-icon block h-2.5 w-3.5 shrink-0 fill-current"
+                class="status-icon audio-icon block h-2 w-3 shrink-0 fill-current"
                 viewBox="0 0 1154 828"
                 preserveAspectRatio="none"
               >
                 <path d="M962 11Q1052 84 1103 189Q1154 294 1154 414Q1154 534 1103 639Q1052 744 962 817Q948 828 930 826Q912 824 901 811Q890 797 892 779Q894 761 907 750Q982 690 1024 602Q1066 514 1067 414Q1066 314 1024 226Q982 138 907 78Q894 67 892 49Q890 31 901 17Q912 4 930 2Q948 0 962 11ZM853 145Q913 194 947 264Q981 334 981 414Q981 494 947 564Q913 634 853 683Q839 694 821 692Q803 690 792 677Q780 663 782 645Q784 627 798 616Q894 538 894 414Q894 291 798 213Q784 202 782 184Q780 166 792 152Q803 138 821 136Q839 134 853 145ZM744 280Q808 333 808 414Q808 496 744 549Q730 560 712 558Q694 556 683 542Q672 528 674 510Q676 492 689 481Q721 454 721 414Q721 374 689 347Q676 336 674 318Q672 300 683 286Q694 272 712 270Q730 268 744 280ZM543 16Q577 31 577 68V760Q577 798 543 813Q508 828 481 804L238 587H115Q68 588 34 554Q0 520 0 472V357Q0 309 34 275Q68 241 115 241H238L481 25Q508 1 543 16Z"></path>
               </svg>
               <svg
-                class="status-icon monitor-icon block h-2.5 w-2.75 shrink-0 fill-current"
+                class="status-icon monitor-icon block h-2 w-2.5 shrink-0 fill-current"
                 viewBox="0 0 918 832"
                 preserveAspectRatio="none"
               >
@@ -162,10 +176,7 @@ import Keybind from './markdown/Keybind.astro'
             </div>
           </div>
 
-          <div
-            class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-(--window-gap) bottom-(--window-gap) left-(--window-gap) overflow-hidden"
-            aria-live="polite"
-          ></div>
+          <div class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-(--window-gap) bottom-(--window-gap) left-(--window-gap) overflow-hidden"></div>
         </div>
       </div>
       <div
@@ -189,7 +200,11 @@ import Keybind from './markdown/Keybind.astro'
         <p class="step-copy m-0 text-[#a1a1ad] text-[0.8125rem] leading-5">
           This workspace is empty. Open an app.
         </p>
-        <p class="mode-copy m-[0.2rem_0_0] text-[#82828f] text-[0.6875rem] leading-4 capitalize">
+        <p
+          role="status"
+          aria-atomic="true"
+          class="mode-copy m-[0.2rem_0_0] text-[#a1a1ad] text-[0.6875rem] leading-4 capitalize"
+        >
           Dwindle · workspace 1 · empty
         </p>
       </div>
@@ -256,13 +271,19 @@ import Keybind from './markdown/Keybind.astro'
           </p>
         </div>
 
-        <label class="shortcut-toggle inline-flex items-center gap-[0.45rem] shrink-0 text-[#b9b9c2] text-xs leading-4 font-[650] cursor-pointer">
-          <input type="checkbox" data-shortcuts-toggle checked />
+        <label class="shortcut-toggle group inline-flex items-center gap-[0.45rem] shrink-0 text-[#b9b9c2] text-xs leading-4 font-[650] cursor-pointer">
+          <input
+            type="checkbox"
+            data-shortcuts-toggle
+            aria-label="Enable demo keyboard shortcuts"
+            checked
+            class="peer sr-only"
+          />
           <span
-            class="toggle-track relative w-8 h-[1.1rem] rounded-full bg-[#393941] [transition:background-color_160ms_ease]"
+            class="toggle-track relative w-8 h-[1.1rem] rounded-full bg-[#393941] transition-colors peer-checked:bg-[#c66024] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-(--focus-blue) motion-reduce:transition-none"
             aria-hidden="true"
           >
-            <span></span>
+            <span class="absolute top-[0.15rem] left-[0.15rem] size-[0.8rem] rounded-full bg-[#b7b7c1] transition group-has-checked:translate-x-[0.9rem] group-has-checked:bg-white motion-reduce:transition-none"></span>
           </span>
           <span data-shortcuts-status>On</span>
         </label>
@@ -276,7 +297,7 @@ import Keybind from './markdown/Keybind.astro'
         >
           <button
             type="button"
-            class="text-[0.6875rem] leading-4"
+            class="text-[0.6875rem] leading-4 min-h-6 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-[0.35rem] font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
             data-shortcut-modifier="Alt"
             aria-pressed="true"
           >
@@ -284,7 +305,7 @@ import Keybind from './markdown/Keybind.astro'
           </button>
           <button
             type="button"
-            class="text-[0.6875rem] leading-4"
+            class="text-[0.6875rem] leading-4 min-h-6 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-[0.35rem] font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
             data-shortcut-modifier="Meta"
             aria-pressed="false"
           >
@@ -326,10 +347,14 @@ import Keybind from './markdown/Keybind.astro'
     <template data-app-template={app}>
       <div
         class="window absolute flex flex-col overflow-hidden [border:2px_solid_rgb(255_255_255/0.14)] rounded-[0.55rem] bg-[#050507] shadow-[0_0.7rem_2rem_rgb(0_0_0/0.4)] contain-[layout_paint] cursor-pointer @container-size [transition:opacity_240ms_ease,border-color_80ms_ease] data-closing:pointer-events-none data-closing:z-10"
-        role="button"
-        tabindex="0"
+        role="group"
       >
         <OmarchyDummyApps app={app} />
+        <button
+          type="button"
+          data-window-focus
+          class="absolute inset-0 z-1 cursor-pointer rounded-[inherit] focus-visible:outline-2 focus-visible:-outline-offset-5 focus-visible:outline-white focus-visible:ring-inset"
+        ></button>
       </div>
     </template>
   ))}
@@ -403,9 +428,6 @@ import Keybind from './markdown/Keybind.astro'
       type LayoutMode = 'dwindle' | 'scrolling'
       type DemoWindow = { id: number; app: DemoApp }
 
-      // TODO(shipping): Set this to [] to restore the empty production default.
-      const TEMPORARY_PRE_SHIP_DEFAULT_APPS: readonly DemoApp[] = appIds
-
       const appLabels: Record<DemoApp, string> = {
         terminal: 'Terminal',
         browser: 'Browser',
@@ -439,13 +461,9 @@ import Keybind from './markdown/Keybind.astro'
       let shortcutModifier: 'Meta' | 'Alt' = 'Alt'
       let unsubscribeShortcuts: (() => void) | undefined
       const windowAnimations = new Map<HTMLElement, Animation>()
-
-      for (const app of TEMPORARY_PRE_SHIP_DEFAULT_APPS) {
-        const demoWindow = { id: nextWindowId++, app }
-        workspaceWindows[0].push(demoWindow)
-        workspaceFocus[0] = demoWindow.id
-        workspaceReveal[0] = demoWindow.id
-      }
+      const desktopViewport = window.matchMedia('(min-width: 768px)')
+      let demoVisible = false
+      let lastClockMinute = ''
 
       const cancelWindowAnimation = (appWindow: HTMLElement) => {
         windowAnimations.get(appWindow)?.cancel()
@@ -523,8 +541,27 @@ import Keybind from './markdown/Keybind.astro'
           if (windowId) closeWindow(windowId)
         }
 
-        appWindow.addEventListener('click', selectAppWindow)
-        appWindow.addEventListener('focus', selectAppWindow)
+        const focusButton = appWindow.querySelector<HTMLButtonElement>(
+          '[data-window-focus]',
+        )!
+        focusButton.addEventListener('click', selectAppWindow)
+        appWindow.addEventListener('focusin', selectAppWindow)
+        // Keep real window controls separate from the decorative app chrome.
+        const closeButton = appWindow.querySelector<HTMLButtonElement>(
+          '[data-window-close]',
+        )!
+        appWindow.append(closeButton)
+        closeButton.className =
+          'window-close absolute top-0.5 right-1 z-2 grid size-6 cursor-pointer place-items-center rounded-full text-[#a9b1d6] hover:bg-white/10 hover:text-white focus-visible:ring-inset [&_svg]:size-3'
+        closeButton.tabIndex = 0
+        const appContent = appWindow.querySelector<HTMLElement>('.dummy-app')!
+        if (app === 'browser') {
+          appContent.removeAttribute('aria-hidden')
+          focusButton.classList.add('pointer-events-none')
+          appWindow.addEventListener('click', selectAppWindow)
+        } else {
+          appContent.inert = true
+        }
         appWindow.addEventListener('mouseenter', () => {
           if (hoverFocusLocked) return
           const windowId = Number(appWindow.dataset.windowId)
@@ -533,11 +570,6 @@ import Keybind from './markdown/Keybind.astro'
         appWindow
           .querySelector('[data-window-close]')
           ?.addEventListener('click', closeAppWindow)
-        appWindow.addEventListener('keydown', (event) => {
-          if (event.key !== 'Enter' && event.key !== ' ') return
-          event.preventDefault()
-          selectAppWindow()
-        })
         return appWindow
       }
 
@@ -652,6 +684,9 @@ import Keybind from './markdown/Keybind.astro'
 
       const updateSystemTime = () => {
         const now = new Date()
+        const currentMinute = now.toISOString().slice(0, 16)
+        if (currentMinute === lastClockMinute) return
+        lastClockMinute = currentMinute
         const parts = Object.fromEntries(
           timeFormatter
             .formatToParts(now)
@@ -664,7 +699,14 @@ import Keybind from './markdown/Keybind.astro'
       }
 
       updateSystemTime()
-      const clockInterval = window.setInterval(updateSystemTime, 1000)
+      let clockTimer: number | undefined
+      const syncClock = () => {
+        window.clearTimeout(clockTimer)
+        if (!demoVisible || !desktopViewport.matches || document.hidden) return
+        updateSystemTime()
+        clockTimer = window.setTimeout(syncClock, 60000 - (Date.now() % 60000))
+      }
+      document.addEventListener('visibilitychange', syncClock, listenerOptions)
 
       const update = () => {
         const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
@@ -729,11 +771,18 @@ import Keybind from './markdown/Keybind.astro'
           appWindow.dataset.app = demoWindow.app
           appWindow.setAttribute(
             'aria-label',
+            `${appLabels[demoWindow.app]} window ${position + 1}`,
+          )
+          const focusButton = appWindow.querySelector<HTMLButtonElement>(
+            '[data-window-focus]',
+          )!
+          focusButton.setAttribute(
+            'aria-label',
             `Focus ${appLabels[demoWindow.app]} window ${position + 1}`,
           )
+          focusButton.setAttribute('aria-pressed', String(isFocused))
           if (isFocused) appWindow.dataset.focused = ''
           else delete appWindow.dataset.focused
-          appWindow.setAttribute('aria-pressed', String(isFocused))
         })
 
         const isInitialState =
@@ -786,7 +835,9 @@ import Keybind from './markdown/Keybind.astro'
             Number(appWindow.dataset.windowId) === focusedWindowId
           if (isFocused) appWindow.dataset.focused = ''
           else delete appWindow.dataset.focused
-          appWindow.setAttribute('aria-pressed', String(isFocused))
+          appWindow
+            .querySelector('[data-window-focus]')
+            ?.setAttribute('aria-pressed', String(isFocused))
         })
       }
 
@@ -816,6 +867,8 @@ import Keybind from './markdown/Keybind.astro'
         const appWindow = workspace.querySelector<HTMLElement>(
           `[data-window-id="${windowId}"]`,
         )
+        const restoreFocus =
+          appWindow?.contains(document.activeElement) ?? false
         if (appWindow) animateWindowClosing(appWindow)
         openWindows.splice(windowIndex, 1)
 
@@ -825,6 +878,12 @@ import Keybind from './markdown/Keybind.astro'
           workspaceReveal[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
         update()
         animateWindowLayout(previousRects)
+        if (restoreFocus) {
+          const nextFocus = workspace.querySelector<HTMLButtonElement>(
+            '[data-focused] [data-window-focus]',
+          )
+          ;(nextFocus ?? appButtons[0])?.focus({ preventScroll: true })
+        }
       }
 
       const selectWindow = (windowId: number, reveal = true) => {
@@ -1185,7 +1244,12 @@ import Keybind from './markdown/Keybind.astro'
         unsubscribeShortcuts?.()
         unsubscribeShortcuts = undefined
 
-        if (!shortcutsToggle.checked) return
+        if (
+          !shortcutsToggle.checked ||
+          !demoVisible ||
+          !desktopViewport.matches
+        )
+          return
 
         const bindings = Object.fromEntries(
           keybinds.map((keybind) => [
@@ -1193,13 +1257,19 @@ import Keybind from './markdown/Keybind.astro'
             (event: KeyboardEvent) => {
               event.preventDefault()
               keybind.action()
+              const focusTarget =
+                workspace.querySelector<HTMLButtonElement>(
+                  '[data-focused] [data-window-focus]',
+                ) ?? appButtons[0]
+              focusTarget?.focus({ preventScroll: true })
             },
           ]),
         )
         unsubscribeShortcuts = tinykeys(window, bindings, {
           ignore: (event) =>
-            event.target !== shortcutsToggle &&
-            defaultKeybindingsHandlerIgnore(event),
+            event.isComposing ||
+            (event.target !== shortcutsToggle &&
+              defaultKeybindingsHandlerIgnore(event)),
         })
       }
 
@@ -1210,7 +1280,7 @@ import Keybind from './markdown/Keybind.astro'
         shortcutHint.textContent = enabled
           ? shortcutModifier === 'Meta'
             ? 'Using the Super (Windows/Command) key, which may be captured by your OS but is more faithful.'
-            : 'Using the Alt (Option) key so that your browser can receive the shortcuts.'
+            : 'Using Alt (Option). Shortcuts work anywhere on this post while the demo is in view.'
           : 'Shortcuts are disabled. All interface buttons and controls still work.'
         modifierButtons.forEach((button) => {
           button.disabled = !enabled
@@ -1451,35 +1521,15 @@ import Keybind from './markdown/Keybind.astro'
           cancelWindowAnimations()
           workspaceSwitchVersion += 1
           delete screen.dataset.switchingWorkspace
-          workspaceWindows.splice(0, workspaceWindows.length, [], [], [], [])
-          workspaceFocus.splice(
-            0,
-            workspaceFocus.length,
-            null,
-            null,
-            null,
-            null,
-          )
-          workspaceReveal.splice(
-            0,
-            workspaceReveal.length,
-            null,
-            null,
-            null,
-            null,
-          )
+          workspaceWindows.forEach((windows) => windows.splice(0))
+          workspaceFocus.fill(null)
+          workspaceReveal.fill(null)
           workspaceFocusMemory.forEach((memory) => memory.clear())
-          workspaceLayouts.splice(
-            0,
-            workspaceLayouts.length,
-            'dwindle',
-            'dwindle',
-            'dwindle',
-            'dwindle',
-          )
+          workspaceLayouts.fill('dwindle')
           nextWindowId = 1
           activeWorkspace = 1
           update()
+          appButtons[0]?.focus({ preventScroll: true })
         },
         listenerOptions,
       )
@@ -1525,6 +1575,22 @@ import Keybind from './markdown/Keybind.astro'
         )
       })
 
+      const visibilityObserver = new IntersectionObserver(([entry]) => {
+        demoVisible = entry.isIntersecting
+        demo.toggleAttribute('data-visible', demoVisible)
+        installShortcuts()
+        syncClock()
+      })
+      visibilityObserver.observe(demo)
+      desktopViewport.addEventListener(
+        'change',
+        () => {
+          installShortcuts()
+          syncClock()
+        },
+        listenerOptions,
+      )
+
       document.addEventListener(
         'astro:before-swap',
         () => {
@@ -1532,7 +1598,8 @@ import Keybind from './markdown/Keybind.astro'
           // cancelFullscreenAnimation()
           // window.clearTimeout(backdropRemovalTimer)
           // fullscreenBackdrop.remove()
-          window.clearInterval(clockInterval)
+          visibilityObserver.disconnect()
+          window.clearTimeout(clockTimer)
           layoutTransitionVersion += 1
           unsubscribeShortcuts?.()
           cancelWindowAnimations()
@@ -1552,6 +1619,10 @@ import Keybind from './markdown/Keybind.astro'
 </script>
 
 <style>
+  .omarchy-demo:not([data-visible]) :global(.cursor) {
+    animation-play-state: paused;
+  }
+
   /* Fullscreen feature disabled for now.
   :global(.omarchy-demo-backdrop) {
     position: fixed;
@@ -1707,28 +1778,6 @@ import Keybind from './markdown/Keybind.astro'
     stroke-linejoin: round;
     stroke-width: 2;
   }
-  .workspace-button:hover {
-    background: rgb(255 255 255 / 0.08);
-    color: #d1d1dc;
-  }
-  .workspace-button[data-occupied] {
-    color: #bdbdcc;
-  }
-  .workspace-button[aria-pressed='true'] {
-    color: #f1f1f5;
-  }
-  .workspace-button[aria-pressed='true'] .workspace-number {
-    visibility: hidden;
-  }
-  .workspace-button[aria-pressed='true'] .workspace-dot {
-    display: block;
-  }
-
-  .window:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: -5px;
-  }
-
   .window[data-opening] {
     transition: none;
   }
@@ -1864,53 +1913,6 @@ import Keybind from './markdown/Keybind.astro'
   .demo-controls button:disabled {
     cursor: default;
     opacity: 0.38;
-  }
-  .shortcut-toggle input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-  }
-  .toggle-track span {
-    position: absolute;
-    top: 0.15rem;
-    left: 0.15rem;
-    width: 0.8rem;
-    height: 0.8rem;
-    border-radius: 50%;
-    background: #b7b7c1;
-    transition:
-      transform 160ms ease,
-      background-color 160ms ease;
-  }
-  .shortcut-toggle input:checked + .toggle-track {
-    background: #c66024;
-  }
-  .shortcut-toggle input:checked + .toggle-track span {
-    background: #fff;
-    transform: translateX(0.9rem);
-  }
-  .shortcut-toggle input:focus-visible + .toggle-track {
-    outline: 2px solid var(--focus-blue);
-    outline-offset: 2px;
-  }
-  .modifier-switcher button {
-    min-height: auto;
-    padding: 0.35rem 0.5rem;
-    border: 0;
-    border-radius: 0.34rem;
-    background: transparent;
-    color: #777784;
-    font-family: inherit;
-    font-weight: 650;
-    cursor: pointer;
-  }
-  .modifier-switcher button[aria-pressed='true'] {
-    background: #32323b;
-    color: #f4f4f6;
-  }
-  .modifier-switcher button:disabled {
-    cursor: default;
   }
   .mobile-monitor div {
     display: grid;

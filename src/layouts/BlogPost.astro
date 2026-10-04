@@ -1,6 +1,7 @@
 ---
 import type { MarkdownHeading } from 'astro'
 import { Image } from 'astro:assets'
+import { resolveBlogImage } from '@lib/blog'
 import type { BlogSeriesNavigation } from '@lib/series'
 import BlogSeriesNavigationComponent from '@components/BlogSeriesNavigation.astro'
 import ReturnHome from '@components/ReturnHome.astro'
@@ -40,6 +41,7 @@ const formatDate = (date: Date) =>
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'UTC',
   })
 ---
 
@@ -59,18 +61,21 @@ const formatDate = (date: Date) =>
       <div class="mb-6 overflow-hidden rounded-xl bg-neutral-800">
         <Image
           class="unblur aspect-1200/630 w-full object-cover select-none"
-          src={image.url}
+          {...resolveBlogImage(image.url)}
           alt={image.alt}
           width={1200}
           height={630}
           loading="eager"
+          fetchpriority="high"
+          widths={[480, 800, 1200, 1600]}
+          sizes="(max-width: 848px) calc(100vw - 48px), 800px"
         />
       </div>
       <h1 class="text-3xl leading-tight font-semibold text-neutral-100 sm:text-4xl">
         {title}
       </h1>
       <p class="mt-3 text-lg text-neutral-300">{description}</p>
-      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-neutral-500">
+      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-neutral-400">
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         {updatedDate && (
           <>
@@ -103,8 +108,8 @@ const formatDate = (date: Date) =>
     )}
     <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-strong:text-neutral-200 prose-a:-m-0.5 prose-a:rounded-sm prose-a:p-0.5 prose-a:hover:text-white prose-a:focus-visible:text-white prose-a:active:text-white prose-a:transition prose-a:text-neutral-200 prose-img:rounded-xl [&_a[data-footnote-ref]]:ml-0.5 [&_a[data-footnote-ref]]:scroll-mt-20">
       {tableOfContents.length > 1 && (
-        <details class="toc-details group/toc not-prose overflow-hidden rounded-xl border border-neutral-800 transition bg-neutral-800 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
-          <summary class="toc-summary relative z-10 flex cursor-pointer list-none rounded-xl items-center justify-between gap-4 bg-neutral-800 px-5 py-4 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:bg-neutral-700 active:text-white focus-visible:text-white focus-visible:ring-inset group/summary">
+        <details class="toc-details group/toc not-prose overflow-hidden rounded-lg transition bg-neutral-800 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
+          <summary class="toc-summary relative z-10 flex cursor-pointer list-none rounded-lg items-center justify-between gap-4 border border-neutral-700 bg-neutral-800 p-4 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:bg-neutral-700 active:text-white focus-visible:text-white focus-visible:ring-inset group/summary">
             <span>Table of contents</span>
             <ChevronRightIcon
               className="size-4 shrink-0 text-neutral-500 transition-transform duration-150 group-hover/summary:text-white group-active/summary:text-white group-focus-visible/summary:text-white group-open/toc:rotate-90 group-data-closing/toc:rotate-0"
@@ -113,12 +118,12 @@ const formatDate = (date: Date) =>
           </summary>
           <nav
             aria-label="Table of contents"
-            class="toc-content border-t border-neutral-800 px-5 py-4"
+            class="toc-content px-4 pt-2 pb-3"
           >
-            <ol class="space-y-2">
+            <ol>
               <li>
                 <a
-                  class="block rounded-sm text-base text-neutral-400 transition hover:text-white active:text-white"
+                  class="-mx-1 block w-fit rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
                   href="#post-content"
                 >
                   Beginning of Post
@@ -127,7 +132,7 @@ const formatDate = (date: Date) =>
               {tableOfContents.map((heading) => (
                 <li class:list={[heading.depth === 3 && 'pl-4']}>
                   <a
-                    class="block rounded-sm text-base text-neutral-400 transition hover:text-white active:text-white"
+                    class="-mx-1 block w-fit rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
                     href={`#${heading.slug}`}
                   >
                     {heading.text}
@@ -155,7 +160,7 @@ const formatDate = (date: Date) =>
   const setupHeadingLinks = () => {
     document
       .querySelectorAll<HTMLHeadingElement>(
-        '#post-content :is(h1, h2, h3, h4, h5, h6)[id]',
+        '#post-content :is(h1, h2, h3, h4, h5, h6)[id]:not(.not-prose *)',
       )
       .forEach((heading) => {
         if (heading.querySelector('[data-heading-link]')) return
@@ -165,7 +170,7 @@ const formatDate = (date: Date) =>
         link.href = `#${encodeURIComponent(heading.id)}`
         link.dataset.headingLink = ''
         link.className =
-          'not-prose absolute top-0 left-full hidden rounded-sm pl-2 leading-[inherit] font-normal text-neutral-500 no-underline opacity-0 transition-[opacity,color] duration-200 ease-in-out group-hover/heading:opacity-100 group-focus-within/heading:opacity-100 hover:text-white active:text-white focus-visible:opacity-100 motion-reduce:transition-none md:block [@media(hover:none)]:opacity-100'
+          'not-prose absolute top-0 left-full ml-1 hidden rounded-sm px-1 leading-[inherit] font-normal text-neutral-500 no-underline opacity-0 transition-[opacity,color] duration-200 ease-in-out group-hover/heading:opacity-100 group-focus-within/heading:opacity-100 hover:text-white active:text-white focus-visible:opacity-100 motion-reduce:transition-none md:block [@media(hover:none)]:opacity-100'
         link.setAttribute('aria-label', label)
         link.title = label
         const symbol = document.createElement('span')
@@ -205,58 +210,77 @@ const formatDate = (date: Date) =>
 
         if (!summary || !content) return
 
-        summary.addEventListener('click', async (event) => {
-          if (reducedMotion.matches) return
+        const controller = new AbortController()
+        let activeAnimations: Animation[] = []
+        document.addEventListener(
+          'astro:before-swap',
+          () => {
+            controller.abort()
+            activeAnimations.forEach((animation) => animation.cancel())
+          },
+          { once: true, signal: controller.signal },
+        )
 
-          event.preventDefault()
-          if (details.dataset.animating !== undefined) return
+        summary.addEventListener(
+          'click',
+          async (event) => {
+            if (reducedMotion.matches) return
 
-          const opening = !details.open
-          const startHeight = details.getBoundingClientRect().height
-          details.dataset.animating = ''
+            event.preventDefault()
+            if (details.dataset.animating !== undefined) return
 
-          if (opening) details.open = true
-          else details.dataset.closing = ''
+            const opening = !details.open
+            const startHeight = details.getBoundingClientRect().height
+            details.dataset.animating = ''
 
-          const borderHeight = details.offsetHeight - details.clientHeight
-          const endHeight = opening
-            ? details.scrollHeight + borderHeight
-            : summary.getBoundingClientRect().height + borderHeight
+            if (opening) details.open = true
+            else details.dataset.closing = ''
 
-          const heightAnimation = details.animate(
-            [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
-            {
-              duration: 240,
-              easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
-              fill: 'forwards',
-            },
-          )
-          const contentAnimation = content.animate(
-            opening
-              ? [
-                  { opacity: 0, transform: 'translateY(-0.25rem)' },
-                  { opacity: 1, transform: 'translateY(0)' },
-                ]
-              : [
-                  { opacity: 1, transform: 'translateY(0)' },
-                  { opacity: 0, transform: 'translateY(-0.25rem)' },
-                ],
-            { duration: 180, easing: 'ease-out', fill: 'forwards' },
-          )
+            const borderHeight = details.offsetHeight - details.clientHeight
+            const endHeight = opening
+              ? details.scrollHeight + borderHeight
+              : summary.getBoundingClientRect().height + borderHeight
 
-          try {
-            await Promise.all([
-              heightAnimation.finished,
-              contentAnimation.finished,
-            ])
-            if (!opening) details.open = false
-          } finally {
-            heightAnimation.cancel()
-            contentAnimation.cancel()
-            delete details.dataset.animating
-            delete details.dataset.closing
-          }
-        })
+            const heightAnimation = details.animate(
+              [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
+              {
+                duration: 240,
+                easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+                fill: 'forwards',
+              },
+            )
+            const contentAnimation = content.animate(
+              opening
+                ? [
+                    { opacity: 0, transform: 'translateY(-0.25rem)' },
+                    { opacity: 1, transform: 'translateY(0)' },
+                  ]
+                : [
+                    { opacity: 1, transform: 'translateY(0)' },
+                    { opacity: 0, transform: 'translateY(-0.25rem)' },
+                  ],
+              { duration: 180, easing: 'ease-out', fill: 'forwards' },
+            )
+
+            activeAnimations = [heightAnimation, contentAnimation]
+            try {
+              await Promise.all([
+                heightAnimation.finished,
+                contentAnimation.finished,
+              ])
+              if (!opening) details.open = false
+            } catch {
+              // Navigation can cancel an in-flight disclosure animation.
+            } finally {
+              heightAnimation.cancel()
+              contentAnimation.cancel()
+              delete details.dataset.animating
+              delete details.dataset.closing
+              activeAnimations = []
+            }
+          },
+          { signal: controller.signal },
+        )
       })
   }
 
