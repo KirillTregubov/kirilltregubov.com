@@ -855,6 +855,17 @@ import Keybind from './markdown/Keybind.astro'
         update()
         animateWindowLayout(previousRects)
         animateWindowOpening(demoWindow.id)
+
+        if (
+          workspaceLayouts[activeWorkspace - 1] === 'scrolling' &&
+          openWindows.length === 3
+        ) {
+          workspace
+            .querySelector<HTMLButtonElement>(
+              `[data-window-id="${demoWindow.id}"] [data-window-focus]`,
+            )
+            ?.focus({ preventScroll: true })
+        }
       }
 
       const closeWindow = (windowId: number) => {

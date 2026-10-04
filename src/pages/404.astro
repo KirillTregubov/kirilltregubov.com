@@ -27,6 +27,7 @@ import Layout from '@layouts/Layout.astro'
       <p class="mb-6 text-neutral-400">The page you requested was not found.</p>
       <a
         href="/"
+        data-blog-index-link
         class="inline-flex items-center justify-center gap-1 rounded-sm px-1 font-medium text-neutral-400 ring-white! transition select-none hover:text-white focus-visible:text-white active:text-white [@media_(max-height:500px)]:justify-start"
       >
         <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
@@ -35,3 +36,14 @@ import Layout from '@layouts/Layout.astro'
     </div>
   </div>
 </Layout>
+
+<script is:inline>
+  if (window.location.hostname.startsWith('blog.')) {
+    const blogIndexLink = document.querySelector('[data-blog-index-link]')
+
+    if (blogIndexLink) {
+      blogIndexLink.setAttribute('href', '/blog')
+      blogIndexLink.querySelector('span').textContent = 'Return to Blog'
+    }
+  }
+</script>
