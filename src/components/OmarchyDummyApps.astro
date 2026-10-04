@@ -104,7 +104,7 @@ const windowNavigationClass =
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
         <span
-          class="cursor inline-block h-[1em] w-[0.5ch] shrink-0 bg-[#c0caf5] opacity-0 animate-[terminal-blink_1.1s_steps(1)_infinite_both] motion-reduce:opacity-100"
+          class="cursor relative top-px inline-block h-[1em] w-[0.5ch] shrink-0 bg-[#c0caf5] opacity-0 animate-[terminal-blink_1.1s_steps(1)_infinite_both] motion-reduce:opacity-100"
           aria-hidden="true"
         ></span>
       </div>
@@ -244,21 +244,21 @@ const windowNavigationClass =
       </button>
     </div>
     <div class="editor-workbench flex min-h-0 flex-1 gap-0.5 p-0.5 px-0.75 pb-0">
-      <div class="activity-rail flex w-8 shrink-0 flex-col items-center gap-2 rounded-md border border-[#292b3a]/50 bg-[#181922] py-1 text-[#737aa2] [@container_(max-height:13rem)]:w-7 [@container_(max-height:13rem)]:gap-1">
+      <div class="activity-rail flex w-8 shrink-0 flex-col items-center gap-2 overflow-hidden rounded-md border border-[#292b3a]/50 bg-[#181922] py-1 text-[#737aa2]">
         {activityIcons.map((icon) => (
           <span
-            class="grid size-6 shrink-0 place-items-center rounded-sm first:bg-[#292b3a] first:text-[#c0caf5] [&_svg]:size-4 [@container_(max-height:13rem)]:size-5"
+            class="grid size-6 shrink-0 place-items-center rounded-sm first:bg-[#292b3a] first:text-[#c0caf5] [&_svg]:size-4 [@container_(max-width:28rem)_and_(max-height:13rem)]:last:hidden"
             set:html={icon}
           />
         ))}
       </div>
-      <aside class="editor-sidebar flex w-[clamp(7.5rem,23%,9.5rem)] shrink-0 overflow-hidden rounded-md border border-[#292b3a]/50 bg-[#181922] @max-[22rem]:hidden">
+      <aside class="editor-sidebar flex w-30 shrink-0 overflow-hidden rounded-md border border-[#292b3a]/50 bg-[#181922]">
         <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden pb-2 text-[#9aa5ce] text-(length:--window-font-chrome) leading-(--window-leading-tree) [&>span]:min-h-(--window-leading-tree) [&>span]:shrink-0 [&>span]:overflow-hidden [&>span]:text-ellipsis [&>span]:whitespace-nowrap [&_svg]:size-2.5! [&_svg]:basis-2.5!">
-          <div class="explorer-heading flex h-7 shrink-0 items-center justify-between px-2 text-(length:--window-font-chrome) font-semibold text-[#a9b1d6] [@container_(max-height:13rem)]:h-6">
+          <div class="explorer-heading flex h-7 shrink-0 items-center justify-between px-2 text-(length:--window-font-chrome) font-semibold text-[#a9b1d6]">
             <span>Explorer</span>
             <span>•••</span>
           </div>
-          <strong class="mb-1 flex shrink-0 items-center gap-1 overflow-hidden px-2 text-(length:--window-font-chrome) font-semibold text-[#c0caf5] [@container_(max-height:13rem)]:mb-0">
+          <strong class="mb-1 flex shrink-0 items-center gap-1 overflow-hidden px-2 text-(length:--window-font-chrome) font-semibold text-[#c0caf5]">
             <ChevronRightIcon
               aria-hidden="true"
               className="tree-chevron shrink-0 rotate-90"
@@ -325,7 +325,8 @@ const windowNavigationClass =
         <div class="breadcrumbs flex h-5 shrink-0 items-center gap-1 overflow-hidden border-b border-[#292b3a]/30 px-2.5 text-[#737aa2] text-(length:--window-font-meta) leading-none whitespace-nowrap [&_svg]:size-2.5! [&_svg]:basis-2.5! [&_svg]:shrink-0">
           src › components › <EditorFileIcon type="astro" /> HomeHero.astro
         </div>
-        <div class="code-pane min-h-0 flex-1 overflow-hidden py-1.5 font-mono text-[#a9b1d6] text-(length:--window-font-body) leading-(--window-leading-code) [&_.line]:grid-cols-[3em_minmax(0,1fr)] [&_.line]:pr-2 [&_i]:text-[#565f89]">
+        <!-- Tiny tiles show the end of the file, including the active cursor line. -->
+        <div class="code-pane flex min-h-0 flex-1 flex-col overflow-hidden py-1.5 font-mono text-[#a9b1d6] text-(length:--window-font-body) leading-(--window-leading-code) [@container_(max-width:28rem)_and_(max-height:13rem)]:justify-end [&_.line]:shrink-0 [&_.line]:grid-cols-[3em_minmax(0,1fr)] [&_.line]:pr-2 [&_i]:text-[#565f89]">
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
             <i class="text-(length:--window-font-meta)">1</i>
             <code class="text-(length:--window-font-body)">
@@ -547,8 +548,7 @@ const windowNavigationClass =
     .fetch-details {
       gap: 0.22rem;
     }
-    .breadcrumbs,
-    .file-tree > span:nth-of-type(n + 7) {
+    .breadcrumbs {
       display: none;
     }
     .code-pane {
@@ -591,11 +591,15 @@ const windowNavigationClass =
     .fastfetch {
       gap: 0.45rem;
     }
-    .browser-preview {
-      grid-template-columns: 1.2fr 0.8fr;
-    }
     .browser-preview-copy {
       padding-left: 0.6rem;
+    }
+  }
+
+  /* Keep short tiles single-column when Saturn is hidden. */
+  @container (max-width: 18rem) and (height > 13rem) {
+    .browser-preview {
+      grid-template-columns: 1.2fr 0.8fr;
     }
   }
 

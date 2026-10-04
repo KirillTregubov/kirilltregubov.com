@@ -231,7 +231,7 @@ import Keybind from './markdown/Keybind.astro'
     <div class="demo-controls flex flex-wrap items-center justify-between gap-x-4 gap-y-3 mt-5">
       <div class="demo-copy min-w-0 flex-1 basis-60 select-text">
         <p class="step-copy m-0 text-[#a1a1ad] text-[0.8125rem] leading-5">
-          This workspace is empty. Open an app.
+          Wake the desktop to begin.
         </p>
         <p
           role="status"
@@ -300,7 +300,7 @@ import Keybind from './markdown/Keybind.astro'
             class="shortcut-hint m-0 text-[#92929f] text-[0.6875rem] leading-4"
             data-shortcut-hint
           >
-            Start the demo to use your keyboard or the shortcuts below.
+            Wake the desktop to use your keyboard or the shortcuts below.
           </p>
         </div>
 
@@ -312,14 +312,12 @@ import Keybind from './markdown/Keybind.astro'
             checked
             class="peer sr-only"
           />
+          <span data-shortcuts-status>Inactive</span>
           <span
             class="toggle-track relative h-5 w-9 rounded-full bg-[#1b1b1f] shadow-inner transition-colors peer-checked:bg-[#5a5a64] peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-300 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-neutral-950 motion-reduce:transition-none"
             aria-hidden="true"
           >
             <span class="absolute top-0.5 left-0.5 h-4 w-5 rounded-full bg-white shadow transition group-has-checked:translate-x-3 motion-reduce:transition-none"></span>
-          </span>
-          <span data-shortcuts-status class="inline-block w-6 text-left">
-            On
           </span>
         </label>
       </div>
@@ -632,6 +630,7 @@ import Keybind from './markdown/Keybind.astro'
       if (app === 'browser') {
         appContent.removeAttribute('aria-hidden')
         focusButton.classList.add('pointer-events-none')
+        appWindow.prepend(focusButton, closeButton)
         appWindow.addEventListener('click', selectAppWindow)
       } else {
         appContent.inert = true
@@ -808,8 +807,9 @@ import Keybind from './markdown/Keybind.astro'
 
       modeCopy.textContent = `${layoutLabel} · workspace ${activeWorkspace} · ${windowCount === 0 ? 'empty' : `${windowCount} ${windowCount === 1 ? 'window' : 'windows'}`}`
 
-      stepCopy.textContent =
-        windowCount === 0
+      stepCopy.textContent = locked
+        ? 'Wake the desktop to begin.'
+        : windowCount === 0
           ? 'This workspace is empty. Open an app.'
           : windowCount === 1
             ? 'You can open more windows to see the layout take shape.'
@@ -1388,12 +1388,14 @@ import Keybind from './markdown/Keybind.astro'
       const locked = !demo.hasAttribute('data-unlocked')
       const enabled = shortcutsToggle.checked
       shortcutsToggle.disabled = locked
-      shortcutsStatus.textContent = enabled ? 'On' : 'Off'
-      if (!locked) {
-        shortcutHint.textContent = enabled
-          ? 'Press the keys, or select a shortcut below.'
-          : 'Keyboard controls are off. You can still select a shortcut below.'
-      }
+      shortcutsStatus.textContent = locked ? 'Inactive' : enabled ? 'On' : 'Off'
+      shortcutHint.textContent = locked
+        ? 'Wake the desktop to use your keyboard or the shortcuts below.'
+        : !enabled
+          ? 'Keyboard controls are off. You can still select a shortcut below.'
+          : shortcutModifier === 'Meta'
+            ? 'Super (Windows/Command) may be captured by your OS. You can also select a shortcut below.'
+            : 'Press the keys, or select a shortcut below.'
       modifierButtons.forEach((button) => {
         button.disabled = locked || !enabled
         button.setAttribute(
