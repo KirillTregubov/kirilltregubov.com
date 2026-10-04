@@ -28,7 +28,7 @@ import Keybind from './markdown/Keybind.astro'
         See it in action
       </h2>
       <p class="m-0 pt-1 text-[0.8125rem] leading-5 text-[#a1a1ad]">
-        Try the keyboard shortcuts for the full experience.
+        Try the keyboard shortcuts, or tap the keybinds below on a tablet.
       </p>
     </div>
 
@@ -79,7 +79,7 @@ import Keybind from './markdown/Keybind.astro'
     <div class="monitor-shell w-full [--bezel-color:#1b1b20] [--hardware-highlight:#24242b]">
       <div class="monitor-frame overflow-hidden rounded-t-xl bg-(--bezel-color) p-2 pb-0">
         <div
-          class="screen relative isolate aspect-video overflow-hidden [--window-gap:0.375rem] rounded-t-sm [clip-path:inset(0_round_0.25rem_0.25rem_0_0)] bg-[#14141f]"
+          class="screen relative isolate aspect-video overflow-hidden [--window-gap:0.375rem] rounded-t-sm bg-[#14141f]"
           role="group"
           data-layout="dwindle"
           data-window-count="0"
@@ -176,7 +176,7 @@ import Keybind from './markdown/Keybind.astro'
             </div>
           </div>
 
-          <div class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-(--window-gap) bottom-(--window-gap) left-(--window-gap) overflow-hidden"></div>
+          <div class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-0 bottom-(--window-gap) left-0 grid grid-cols-2 grid-rows-2 gap-(--window-gap) px-(--window-gap)"></div>
         </div>
       </div>
       <div
@@ -228,10 +228,10 @@ import Keybind from './markdown/Keybind.astro'
             class="app-color size-2 [border:1px_solid_rgb(255_255_255/0.24)] rounded-[0.18rem]"
             aria-hidden="true"
           ></span>
-          Terminal
+          <span class="relative top-px">Terminal</span>
         </button>
         <button
-          class="app-button text-[0.8125rem] leading-5 browser-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4]"
+          class="app-button text-[0.8125rem] leading-5 browser-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform"
           type="button"
           data-app-button="browser"
           aria-label="Open Browser"
@@ -240,10 +240,10 @@ import Keybind from './markdown/Keybind.astro'
             class="app-color w-[0.55rem] h-[0.55rem] flex-[0_0_0.55rem] [border:1px_solid_rgb(255_255_255/0.24)] rounded-[0.18rem]"
             aria-hidden="true"
           ></span>
-          Browser
+          <span class="relative top-px">Browser</span>
         </button>
         <button
-          class="app-button text-[0.8125rem] leading-5 editor-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4]"
+          class="app-button text-[0.8125rem] leading-5 editor-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform"
           type="button"
           data-app-button="editor"
           aria-label="Open Editor"
@@ -252,7 +252,7 @@ import Keybind from './markdown/Keybind.astro'
             class="app-color w-[0.55rem] h-[0.55rem] flex-[0_0_0.55rem] [border:1px_solid_rgb(255_255_255/0.24)] rounded-[0.18rem]"
             aria-hidden="true"
           ></span>
-          Editor
+          <span class="relative top-px">Editor</span>
         </button>
       </div>
     </div>
@@ -267,7 +267,8 @@ import Keybind from './markdown/Keybind.astro'
             class="shortcut-hint m-0 text-[#92929f] text-[0.6875rem] leading-4"
             data-shortcut-hint
           >
-            Alt shortcuts are ready to use in the browser.
+            Using Alt (Option). Shortcuts work anywhere on this post while the
+            demo is in view.
           </p>
         </div>
 
@@ -289,15 +290,15 @@ import Keybind from './markdown/Keybind.astro'
         </label>
       </div>
 
-      <div class="shortcut-controls flex items-start justify-between gap-4 mt-3 transition-opacity duration-200 data-shortcuts-disabled:opacity-40 motion-reduce:transition-none">
+      <div class="shortcut-controls flex items-start justify-between gap-4 mt-3">
         <div
-          class="modifier-switcher flex shrink-0 gap-[0.15rem] p-[0.16rem] [border:1px_solid_rgb(255_255_255/0.08)] rounded-lg bg-[#111117]"
+          class="modifier-switcher h-fit self-start flex shrink-0 gap-[0.15rem] p-[0.16rem] [border:1px_solid_rgb(255_255_255/0.08)] rounded-lg bg-[#111117]"
           role="group"
           aria-label="Shortcut modifier"
         >
           <button
             type="button"
-            class="text-[0.6875rem] leading-4 min-h-6 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-[0.35rem] font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
+            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
             data-shortcut-modifier="Alt"
             aria-pressed="true"
           >
@@ -305,7 +306,7 @@ import Keybind from './markdown/Keybind.astro'
           </button>
           <button
             type="button"
-            class="text-[0.6875rem] leading-4 min-h-6 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-[0.35rem] font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
+            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
             data-shortcut-modifier="Meta"
             aria-pressed="false"
           >
@@ -313,14 +314,20 @@ import Keybind from './markdown/Keybind.astro'
           </button>
         </div>
         <ul
-          class="shortcut-list flex flex-wrap justify-end gap-[0.45rem_0.75rem] m-0 p-0 list-none"
+          class="shortcut-list flex flex-wrap justify-end gap-[0rem_0.5rem] m-0 p-0 list-none"
           data-shortcut-list
           aria-label="Demo shortcuts"
         ></ul>
         <template data-shortcut-template>
-          <li class="inline-flex items-center gap-[0.35rem] whitespace-nowrap text-[0.625rem] leading-4 text-[#898994]">
-            <Keybind keys={['Alt']} size="small" />
-            <span data-shortcut-label class="leading-4"></span>
+          <li class="inline-flex">
+            <button
+              type="button"
+              data-shortcut-action
+              class="inline-flex min-h-8 cursor-pointer touch-manipulation items-center gap-[0.35rem] rounded-md px-1 py-1 text-[0.625rem] leading-4 whitespace-nowrap text-[#898994] transition-colors hover:bg-white/5 hover:text-[#e7e7eb] active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) pointer-coarse:min-h-11 motion-reduce:transition-none"
+            >
+              <Keybind keys={['Alt']} size="small" />
+              <span data-shortcut-label class="leading-4"></span>
+            </button>
           </li>
         </template>
       </div>
@@ -346,14 +353,14 @@ import Keybind from './markdown/Keybind.astro'
   {(['terminal', 'browser', 'editor'] as const).map((app) => (
     <template data-app-template={app}>
       <div
-        class="window absolute flex flex-col overflow-hidden [border:2px_solid_rgb(255_255_255/0.14)] rounded-[0.55rem] bg-[#050507] shadow-[0_0.7rem_2rem_rgb(0_0_0/0.4)] contain-[layout_paint] cursor-pointer @container-size [transition:opacity_240ms_ease,border-color_80ms_ease] data-closing:pointer-events-none data-closing:z-10"
+        class="window absolute flex flex-col overflow-hidden [border:2px_solid_rgb(255_255_255/0.14)] rounded-[0.55rem] bg-[#050507] contain-[layout_paint] cursor-pointer @container-size [transition:opacity_240ms_ease,border-color_80ms_ease] data-closing:pointer-events-none data-closing:z-10"
         role="group"
       >
         <OmarchyDummyApps app={app} />
         <button
           type="button"
           data-window-focus
-          class="absolute inset-0 z-1 cursor-pointer rounded-[inherit] focus-visible:outline-2 focus-visible:-outline-offset-5 focus-visible:outline-white focus-visible:ring-inset"
+          class="absolute inset-0 z-1 cursor-pointer rounded-[inherit] focus-visible:outline-none! focus-visible:ring-0!"
         ></button>
       </div>
     </template>
@@ -401,8 +408,6 @@ import Keybind from './markdown/Keybind.astro'
       const shortcutList = demo.querySelector<HTMLUListElement>(
         '[data-shortcut-list]',
       )
-      const shortcutControls =
-        demo.querySelector<HTMLElement>('.shortcut-controls')
       const modifierButtons = demo.querySelectorAll<HTMLButtonElement>(
         '[data-shortcut-modifier]',
       )
@@ -418,8 +423,7 @@ import Keybind from './markdown/Keybind.astro'
         !shortcutsToggle ||
         !shortcutsStatus ||
         !shortcutHint ||
-        !shortcutList ||
-        !shortcutControls
+        !shortcutList
       )
         return
 
@@ -552,7 +556,10 @@ import Keybind from './markdown/Keybind.astro'
         )!
         appWindow.append(closeButton)
         closeButton.className =
-          'window-close absolute top-0.5 right-1 z-2 grid size-6 cursor-pointer place-items-center rounded-full text-[#a9b1d6] hover:bg-white/10 hover:text-white focus-visible:ring-inset [&_svg]:size-3'
+          'window-close absolute right-1 z-2 grid size-5 cursor-pointer place-items-center rounded-full text-[#a9b1d6] hover:bg-white/10 hover:text-white focus-visible:ring-inset [&_svg]:size-2.5! [&_svg]:stroke-[1.5]'
+        closeButton.classList.add(
+          app === 'terminal' ? 'top-[1.5px]' : 'top-[3.5px]',
+        )
         closeButton.tabIndex = 0
         const appContent = appWindow.querySelector<HTMLElement>('.dummy-app')!
         if (app === 'browser') {
@@ -594,26 +601,18 @@ import Keybind from './markdown/Keybind.astro'
           const nextRect = appWindow.getBoundingClientRect()
           const translateX = previousRect.left - nextRect.left
           const translateY = previousRect.top - nextRect.top
-          const scaleX = previousRect.width / nextRect.width
-          const scaleY = previousRect.height / nextRect.height
           const positionChanged =
             Math.abs(translateX) > 0.5 || Math.abs(translateY) > 0.5
-          const sizeChanged =
-            Math.abs(scaleX - 1) > 0.005 || Math.abs(scaleY - 1) > 0.005
-          if (!positionChanged && !sizeChanged) continue
+          if (!positionChanged) continue
 
           cancelWindowAnimation(appWindow)
           const animation = appWindow.animate(
             [
               {
                 translate: `${translateX}px ${translateY}px`,
-                scale: `${scaleX} ${scaleY}`,
-                transformOrigin: 'top left',
               },
               {
                 translate: '0 0',
-                scale: '1 1',
-                transformOrigin: 'top left',
               },
             ],
             {
@@ -974,6 +973,7 @@ import Keybind from './markdown/Keybind.astro'
           .filter((point) => {
             if (direction === 'left') return point.x < current.x
             if (direction === 'right') return point.x > current.x
+            if (point.x !== current.x) return false
             if (direction === 'up') return point.y < current.y
             return point.y > current.y
           })
@@ -989,6 +989,19 @@ import Keybind from './markdown/Keybind.astro'
             return { ...point, distance: primary + secondary * 1.5 }
           })
           .sort((a, b) => a.distance - b.distance)
+
+        // Wrap vertically within the column, without using return history.
+        if (direction === 'up' || direction === 'down') {
+          const wrappedCandidates = points
+            .filter(
+              (point) =>
+                point.x === current.x && point.windowId !== focusedWindowId,
+            )
+            .sort((a, b) => (direction === 'up' ? b.y - a.y : a.y - b.y))
+          const next = candidates[0] ?? wrappedCandidates[0]
+          if (next) selectWindow(next.windowId)
+          return
+        }
 
         if (workspaceLayouts[workspaceIndex] !== 'dwindle') {
           if (candidates[0]) selectWindow(candidates[0].windowId)
@@ -1025,6 +1038,14 @@ import Keybind from './markdown/Keybind.astro'
             wrappedCandidates.find(
               ({ windowId }) => windowId === rememberedOpposite?.windowId,
             ) ?? wrappedCandidates[0]
+          if (next) {
+            // If focus wraps across the layout edge, continuing in the same
+            // direction should return to the window we just left.
+            focusMemory.set(
+              focusMemoryKey(next.windowId, direction),
+              focusedWindowId,
+            )
+          }
         }
 
         if (!next) return
@@ -1164,6 +1185,19 @@ import Keybind from './markdown/Keybind.astro'
           label: 'Editor',
           action: () => openApp('editor'),
         },
+        ...(
+          [
+            ['ArrowLeft', '←', 'left'],
+            ['ArrowRight', '→', 'right'],
+            ['ArrowUp', '↑', 'up'],
+            ['ArrowDown', '↓', 'down'],
+          ] as const
+        ).map(([code, key, direction]) => ({
+          code,
+          keys: [key],
+          label: `Focus ${direction}`,
+          action: () => focusWindow(direction),
+        })),
         {
           code: 'KeyW',
           keys: ['W'],
@@ -1176,19 +1210,6 @@ import Keybind from './markdown/Keybind.astro'
           label: 'Toggle layout',
           action: toggleLayout,
         },
-        ...(
-          [
-            ['ArrowLeft', '←', 'left'],
-            ['ArrowDown', '↓', 'down'],
-            ['ArrowUp', '↑', 'up'],
-            ['ArrowRight', '→', 'right'],
-          ] as const
-        ).map(([code, key, direction]) => ({
-          code,
-          keys: [key],
-          label: `Focus ${direction}`,
-          action: () => focusWindow(direction),
-        })),
       ]
 
       const renderShortcutList = () => {
@@ -1202,6 +1223,11 @@ import Keybind from './markdown/Keybind.astro'
             const item = template.content.firstElementChild!.cloneNode(
               true,
             ) as HTMLLIElement
+            const button = item.querySelector<HTMLButtonElement>(
+              '[data-shortcut-action]',
+            )!
+            button.setAttribute('aria-label', keybind.label)
+            button.addEventListener('click', keybind.action, listenerOptions)
             const keys = item.querySelector<HTMLElement>('[data-keybind]')!
             const keyTemplate = keys.querySelector('kbd')!
             keys.replaceChildren()
@@ -1275,7 +1301,6 @@ import Keybind from './markdown/Keybind.astro'
 
       const updateShortcutControls = () => {
         const enabled = shortcutsToggle.checked
-        shortcutControls.toggleAttribute('data-shortcuts-disabled', !enabled)
         shortcutsStatus.textContent = enabled ? 'On' : 'Off'
         shortcutHint.textContent = enabled
           ? shortcutModifier === 'Meta'
@@ -1791,41 +1816,42 @@ import Keybind from './markdown/Keybind.astro'
   }
 
   /* Dwindle: the first split is vertical; the third window splits the right side. */
-  .screen[data-layout='dwindle'] .window {
+  .screen[data-layout='dwindle'] .window:not([data-closing]) {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    min-height: 0;
     transform: none;
   }
   .screen[data-layout='dwindle'][data-window-count='1']
     .window[data-window='1'] {
-    inset: 0;
+    grid-area: 1 / 1 / 3 / 3;
   }
   .screen[data-layout='dwindle'][data-window-count='2']
     .window[data-window='1'] {
-    inset: 0 calc(50% + var(--window-gap) / 2) 0 0;
+    grid-area: 1 / 1 / 3 / 2;
   }
   .screen[data-layout='dwindle'][data-window-count='2']
     .window[data-window='2'] {
-    inset: 0 0 0 calc(50% + var(--window-gap) / 2);
+    grid-area: 1 / 2 / 3 / 3;
   }
   .screen[data-layout='dwindle'][data-window-count='3']
     .window[data-window='1'] {
-    inset: 0 calc(50% + var(--window-gap) / 2) 0 0;
+    grid-area: 1 / 1 / 3 / 2;
   }
   .screen[data-layout='dwindle'][data-window-count='3']
     .window[data-window='2'] {
-    inset: 0 0 round(nearest, calc(50% + var(--window-gap) / 2), 1px)
-      calc(50% + var(--window-gap) / 2);
+    grid-area: 1 / 2 / 2 / 3;
   }
   .screen[data-layout='dwindle'][data-window-count='3']
     .window[data-window='3'] {
-    inset: round(nearest, calc(50% + var(--window-gap) / 2), 1px) 0 0
-      calc(50% + var(--window-gap) / 2);
+    grid-area: 2 / 2 / 3 / 3;
   }
 
   /* Scrolling fills one window, splits two, then becomes a 43%-wide strip. */
-  /* Clip the moving strip at the screen edge; window positions keep the gap. */
+  /* Scrolling places its side gaps on each window, not on the workspace. */
   .screen[data-layout='scrolling'] .workspace {
-    right: 0;
-    left: 0;
+    padding-inline: 0;
   }
   .screen[data-layout='scrolling'] .window {
     top: 0;

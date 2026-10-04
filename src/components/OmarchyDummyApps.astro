@@ -12,6 +12,7 @@ import gitBranchIcon from '../assets/vscode-icons/git-branch.svg?raw'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
+  ChevronRightIcon,
   RotateCwIcon,
   XIcon,
 } from 'lucide-react'
@@ -33,16 +34,18 @@ const activityIcons = [
   debugIcon,
   extensionsIcon,
 ]
+const windowNavigationClass =
+  'flex gap-[0.16rem] text-[#737aa2] [&>span]:grid [&>span]:size-4 [&>span]:place-items-center [&_svg]:size-[0.62rem] [&_svg]:stroke-2'
 ---
 
 {app === 'terminal' && (
   <div
-    class="dummy-app leading-4 dummy-terminal absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[rgb(22_22_30/0.98)] font-mono"
+    class="dummy-app leading-4 dummy-terminal absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[rgb(22_22_30/0.98)] font-mono [--window-font-body:10px]!"
     aria-hidden="true"
   >
-    <div class="terminal-titlebar grid min-h-6 grid-cols-[auto_1fr_auto] items-center gap-[0.45rem] py-0 pl-[0.55rem] pr-1 [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-(length:--window-font-8)">
-      <span class="terminal-mark text-[#ff9e64]">›_</span>
-      <span>kirill@omarchy:~</span>
+    <div class="terminal-titlebar grid h-6 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-[0.45rem] py-0 pl-2 pr-1 border-b border-[#292b3a] bg-[#1a1b26] text-[#737aa2] text-[calc(var(--window-font-address)-1px)] leading-none">
+      <span class="terminal-mark relative top-px text-[#ff9e64]">›_</span>
+      <span class="relative top-px">kirill@omarchy:~</span>
       <button
         class="window-close grid w-[1.15rem] h-[1.15rem] flex-[0_0_1.15rem] place-items-center p-0 border-0 rounded-full bg-transparent text-[#a9b1d6] cursor-pointer pointer-events-auto"
         type="button"
@@ -53,14 +56,14 @@ const activityIcons = [
         <XIcon aria-hidden="true" />
       </button>
     </div>
-    <div class="terminal-body flex min-h-0 flex-1 flex-col gap-[0.45rem] p-[0.65rem_0.75rem] overflow-hidden text-[#a9b1d6] text-(length:--window-font-8) leading-(--window-leading-11)">
+    <div class="terminal-body flex min-h-0 flex-1 flex-col gap-[0.45rem] p-[0.65rem_0.75rem] overflow-hidden text-[#a9b1d6] text-(length:--window-font-body) leading-(--window-leading-terminal)">
       <div class="terminal-commandline flex items-center gap-[0.35rem] whitespace-nowrap">
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
         <span class="command text-[#c0caf5]">fastfetch</span>
       </div>
-      <div class="fastfetch flex min-w-0 items-center gap-[0.8rem]">
-        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] font-bold text-(length:--window-font-4) leading-none font-[ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
+      <div class="fastfetch flex min-w-0 items-center gap-[0.8rem] @max-[28rem]:flex-col @max-[28rem]:items-start">
+        <pre class="fastfetch-logo flex-[0_0_auto] m-0 text-[#ff9e64] font-bold text-(length:--window-font-logo) leading-none font-[ui-monospace,SFMono-Regular,Menlo,monospace] tracking-[-0.04em]">██████████████████████████████████████████████████████
 ██████████████████████████████████████████████████████
 ████                     ████                     ████
 ████                     ████                     ████
@@ -85,7 +88,7 @@ const activityIcons = [
 ████                     ████                     ████
 █████████████████████████████     ████████████████████
 █████████████████████████████     ████████████████████</pre>
-        <div class="fetch-details grid min-w-0 gap-[0.38rem] text-[#9aa5ce] text-(length:--window-font-8) whitespace-nowrap">
+        <div class="fetch-details grid min-w-0 gap-[0.38rem] text-[#9aa5ce] text-(length:--window-font-body) whitespace-nowrap">
           <span>
             <b>Hardware</b> Ryzen 5 5600X · RTX 4070
           </span>
@@ -100,9 +103,10 @@ const activityIcons = [
       <div class="terminal-commandline terminal-input flex items-center gap-[0.35rem] whitespace-nowrap mt-0">
         <span class="path text-[#7dcfff]">~</span>
         <span class="prompt text-[#ff9e64]">❯</span>
-        <span class="cursor text-[#c0caf5] opacity-0 animate-[terminal-blink_1.1s_steps(1)_infinite_both] motion-reduce:opacity-100">
-          {'▌'}
-        </span>
+        <span
+          class="cursor inline-block h-[1em] w-[0.5ch] shrink-0 bg-[#c0caf5] opacity-0 animate-[terminal-blink_1.1s_steps(1)_infinite_both] motion-reduce:opacity-100"
+          aria-hidden="true"
+        ></span>
       </div>
     </div>
   </div>
@@ -110,11 +114,11 @@ const activityIcons = [
 
 {app === 'browser' && (
   <div
-    class="dummy-app leading-4 dummy-browser absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden select-none flex-col bg-[#171717] text-[#d4d4d8] font-[Inter,ui-sans-serif,system-ui,sans-serif] pointer-events-auto"
+    class="dummy-app leading-4 dummy-browser absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden select-none flex-col bg-[#171717] text-[#d4d4d8] font-sans pointer-events-auto"
     aria-hidden="true"
   >
-    <div class="browser-toolbar grid min-h-6 grid-cols-[auto_minmax(2rem,1fr)_auto] items-center gap-[0.4rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#1a1b26] text-[#737aa2] text-(length:--window-font-9)">
-      <div class="browser-nav flex gap-[0.16rem]">
+    <div class="browser-toolbar grid h-7 shrink-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-2 pr-7 pl-2 border-b border-[#292b3a] bg-[#1a1b26] text-[#737aa2] text-(length:--window-font-address) leading-none">
+      <div class:list={['browser-nav', windowNavigationClass]}>
         <span>
           <ArrowLeftIcon aria-hidden="true" />
         </span>
@@ -125,11 +129,11 @@ const activityIcons = [
           <RotateCwIcon aria-hidden="true" />
         </span>
       </div>
-      <div class="address-bar flex min-w-0 items-center gap-[0.35rem] p-[0.14rem_0.45rem] overflow-hidden [border:1px_solid_#34374a] rounded-[0.32rem] bg-[#202230] text-[#9aa5ce] whitespace-nowrap">
-        <span class="site-lock text-[#9ece6a] text-(length:--window-font-6)">
+      <div class="address-bar flex h-4.5 w-full max-w-80 min-w-0 items-center justify-self-center gap-1.5 overflow-hidden rounded-sm border border-[#34374a] bg-[#202230] px-2 text-[#9aa5ce] text-[calc(var(--window-font-address)-1px)] whitespace-nowrap">
+        <span class="site-lock text-[#9ece6a] text-(length:--window-font-chrome)">
           ●
         </span>
-        <span>kirilltregubov.com</span>
+        <span class="truncate">kirilltregubov.com</span>
       </div>
       <button
         class="window-close grid w-[1.15rem] h-[1.15rem] flex-[0_0_1.15rem] place-items-center p-0 border-0 rounded-full bg-transparent text-[#a9b1d6] cursor-pointer pointer-events-auto"
@@ -141,9 +145,9 @@ const activityIcons = [
         <XIcon aria-hidden="true" />
       </button>
     </div>
-    <div class="browser-page min-h-0 flex-1 overflow-hidden bg-[#171717]">
+    <div class="browser-page min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-[#171717]">
       <div class="browser-preview mx-auto max-w-2xl">
-        <div class="browser-preview-copy text-(length:--window-font-8) leading-(--window-leading-12)">
+        <div class="browser-preview-copy text-(length:--window-font-body) leading-(--window-leading-body)">
           <p>
             Hey! I'm <span class="text-accent-400">Kirill Tregubov</span>, a{' '}
             <span class="text-accent-400">software developer</span> in Canada. I
@@ -178,7 +182,7 @@ const activityIcons = [
             loading="lazy"
             draggable="false"
           />
-          <figcaption class="w-full text-center text-(length:--window-font-7) leading-(--window-leading-12) font-medium text-neutral-400/80">
+          <figcaption class="w-full text-center text-(length:--window-font-meta) leading-(--window-leading-body) font-medium text-neutral-400/80">
             My favourite planet, Saturn.{' '}
             <a
               class="-m-0.5 rounded-sm p-0.5 underline transition select-none hover:text-neutral-200 focus-visible:text-neutral-200 active:text-neutral-200"
@@ -197,26 +201,37 @@ const activityIcons = [
 
 {app === 'editor' && (
   <div
-    class="dummy-app leading-4 dummy-editor absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[#1a1b26] font-mono"
+    class="dummy-app leading-4 dummy-editor absolute inset-0 hidden min-w-0 min-h-0 overflow-hidden text-[#a9b1d6] pointer-events-none select-none flex-col bg-[#16161e] font-sans [--window-font-chrome:10px]! [--window-font-meta:10px]! [--window-font-address:11px]! [--window-font-body:10px]! [--window-leading-code:14px]! [--window-leading-tree:14px]!"
     aria-hidden="true"
   >
-    <div class="editor-menubar grid min-h-6 grid-cols-[auto_auto_auto_minmax(3rem,1fr)_auto] items-center gap-[0.55rem] p-[0_0.25rem] [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#737aa2] text-(length:--window-font-6)">
-      <span
-        class="editor-appmark grid size-4 place-items-center text-[#7aa2f7] [&_svg]:size-[0.55rem]"
-        set:html={vscodeLogo}
-      />
-      <div class="editor-menu flex gap-[0.48rem]">
-        <span>File</span>
-        <span>Edit</span>
-        <span>Selection</span>
-        <span>…</span>
+    <div class="editor-menubar grid h-7 shrink-0 grid-cols-[minmax(3.75rem,1fr)_minmax(0,16rem)_minmax(3.75rem,1fr)] items-center gap-2 px-2 border-b border-[#292b3a]/50 bg-[#16161e] text-[#9aa5ce] text-(length:--window-font-chrome) leading-none @max-[36rem]:grid-cols-[minmax(3.75rem,1fr)_minmax(0,12rem)_minmax(3.75rem,1fr)]">
+      <div class="flex min-w-0 items-center gap-2">
+        <span
+          class="editor-appmark grid size-3 place-items-center text-[#7aa2f7] [&_svg]:size-2.5"
+          set:html={vscodeLogo}
+        />
+        <div class="editor-menu flex gap-2 @max-[36rem]:hidden">
+          <span>File</span>
+          <span>Edit</span>
+          <span>Selection</span>
+          <span>…</span>
+        </div>
+        <div
+          class:list={[
+            'editor-history ml-auto shrink-0',
+            windowNavigationClass,
+          ]}
+        >
+          <span>
+            <ArrowLeftIcon aria-hidden="true" />
+          </span>
+          <span>
+            <ArrowRightIcon aria-hidden="true" />
+          </span>
+        </div>
       </div>
-      <span class="editor-history flex items-center gap-[0.12rem] whitespace-nowrap">
-        <ArrowLeftIcon aria-hidden="true" className="size-2 stroke-2" />
-        <ArrowRightIcon aria-hidden="true" className="size-2 stroke-2" />
-      </span>
-      <span class="command-center justify-self-stretch p-[0.1rem_0.4rem] overflow-hidden [border:1px_solid_#2f3346] rounded-sm bg-[#1f2130] text-[#565f89] text-left text-ellipsis whitespace-nowrap">
-        kirilltregubov.com
+      <span class="command-center flex h-4.5 w-full max-w-64 min-w-0 items-center justify-center justify-self-center overflow-hidden rounded-sm border border-[#2f3346] bg-[#1f2130] px-2 py-0 font-sans text-[#9aa5ce] text-[calc(var(--window-font-address)-1px)] leading-none whitespace-nowrap @max-[36rem]:max-w-48">
+        <span class="truncate">kirilltregubov.com</span>
       </span>
       <button
         class="window-close grid w-[1.15rem] h-[1.15rem] flex-[0_0_1.15rem] place-items-center p-0 border-0 rounded-full bg-transparent text-[#a9b1d6] cursor-pointer pointer-events-auto"
@@ -228,104 +243,138 @@ const activityIcons = [
         <XIcon aria-hidden="true" />
       </button>
     </div>
-    <div class="editor-workbench flex min-h-0 flex-1">
-      <aside class="editor-sidebar flex w-[round(nearest,32%,1px)] max-w-48 min-w-36 [border-right:1px_solid_#292b3a] bg-[#16161e]">
-        <div class="activity-rail flex w-6 flex-[0_0_25px] flex-col items-center gap-[0.68rem] pt-2 [border-right:1px_solid_#252735] text-[#565f89]">
-          {activityIcons.map((icon) => (
-            <span
-              class="block size-[0.85rem] [&_svg]:size-full"
-              set:html={icon}
-            />
-          ))}
-        </div>
-        <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden text-[#9aa5ce] text-(length:--window-font-6) leading-(--window-leading-9)">
-          <div class="explorer-heading flex justify-between p-[6px_7px_5px] text-[#737aa2]">
-            <span>EXPLORER</span>
+    <div class="editor-workbench flex min-h-0 flex-1 gap-0.5 p-0.5 px-0.75 pb-0">
+      <div class="activity-rail flex w-8 shrink-0 flex-col items-center gap-2 rounded-md border border-[#292b3a]/50 bg-[#181922] py-1 text-[#737aa2] [@container_(max-height:13rem)]:w-7 [@container_(max-height:13rem)]:gap-1">
+        {activityIcons.map((icon) => (
+          <span
+            class="grid size-6 shrink-0 place-items-center rounded-sm first:bg-[#292b3a] first:text-[#c0caf5] [&_svg]:size-4 [@container_(max-height:13rem)]:size-5"
+            set:html={icon}
+          />
+        ))}
+      </div>
+      <aside class="editor-sidebar flex w-[clamp(7.5rem,23%,9.5rem)] shrink-0 overflow-hidden rounded-md border border-[#292b3a]/50 bg-[#181922] @max-[22rem]:hidden">
+        <div class="file-tree flex min-w-0 flex-1 flex-col overflow-hidden pb-2 text-[#9aa5ce] text-(length:--window-font-chrome) leading-(--window-leading-tree) [&>span]:min-h-(--window-leading-tree) [&>span]:shrink-0 [&>span]:overflow-hidden [&>span]:text-ellipsis [&>span]:whitespace-nowrap [&_svg]:size-2.5! [&_svg]:basis-2.5!">
+          <div class="explorer-heading flex h-7 shrink-0 items-center justify-between px-2 text-(length:--window-font-chrome) font-semibold text-[#a9b1d6] [@container_(max-height:13rem)]:h-6">
+            <span>Explorer</span>
             <span>•••</span>
           </div>
-          <strong class="max-w-48 truncate text-(length:--window-font-6)">
-            ⌄ KIRILLTREGUBOV.COM
+          <strong class="mb-1 flex shrink-0 items-center gap-1 overflow-hidden px-2 text-(length:--window-font-chrome) font-semibold text-[#c0caf5] [@container_(max-height:13rem)]:mb-0">
+            <ChevronRightIcon
+              aria-hidden="true"
+              className="tree-chevron shrink-0 rotate-90"
+            />
+            <span class="truncate">kirilltregubov.com</span>
           </strong>
-          <span class="tree-folder pl-[0.55rem] text-[#7dcfff]">⌄ src</span>
-          <span class="tree-folder nested pl-[0.55rem] text-[#7dcfff]">
-            ⌄ components
+          <span class="tree-folder flex items-center gap-1 pl-2 text-[#9aa5ce]">
+            <ChevronRightIcon
+              aria-hidden="true"
+              className="tree-chevron shrink-0 rotate-90"
+            />{' '}
+            src
           </span>
-          <span class="tree-file flex items-center gap-[0.24rem] pl-[1.15rem]">
+          <span class="tree-folder nested flex items-center gap-1 pl-3 text-[#9aa5ce]">
+            <ChevronRightIcon
+              aria-hidden="true"
+              className="tree-chevron shrink-0 rotate-90"
+            />{' '}
+            components
+          </span>
+          <span class="tree-file flex items-center gap-1 pl-4">
             <EditorFileIcon type="astro" /> AboutMe.astro
           </span>
-          <span class="tree-file flex items-center gap-[0.24rem] pl-[1.15rem]">
+          <span class="tree-file flex items-center gap-1 pl-4">
             <EditorFileIcon type="react" /> Age.tsx
           </span>
-          <span class="tree-file active flex items-center gap-[0.24rem] pl-[1.15rem]">
+          <span class="tree-file active mx-1 flex items-center gap-1 rounded-sm bg-[#292e42] pl-3 text-[#c0caf5]">
             <EditorFileIcon type="astro" /> HomeHero.astro
           </span>
-          <span class="tree-file flex items-center gap-[0.24rem] pl-[1.15rem]">
+          <span class="tree-file flex items-center gap-1 pl-4">
             <EditorFileIcon type="react" /> Saturn.tsx
           </span>
-          <span class="tree-folder pl-[0.55rem] text-[#7dcfff]">› content</span>
-          <span class="tree-folder pl-[0.55rem] text-[#7dcfff]">› layouts</span>
-          <span class="tree-folder pl-[0.55rem] text-[#7dcfff]">› pages</span>
-        </div>
-      </aside>
-      <div class="editor-main flex min-w-0 min-h-0 flex-1 flex-col">
-        <div class="editor-tabs flex min-h-4.5 [border-bottom:1px_solid_#292b3a] bg-[#16161e] text-[#a9b1d6] text-(length:--window-font-6)">
-          <span class="flex items-center gap-[0.12rem] p-[0_0.25rem] [border-top:1px_solid_#bb9af7] bg-[#1a1b26] [&_svg]:size-[0.3rem] [&_svg]:basis-[0.3rem]">
-            <EditorFileIcon type="astro" /> HomeHero.astro&nbsp; ×
+          <span class="tree-folder flex items-center gap-1 pl-2 text-[#9aa5ce]">
+            <ChevronRightIcon
+              aria-hidden="true"
+              className="tree-chevron shrink-0"
+            />{' '}
+            content
+          </span>
+          <span class="tree-folder flex items-center gap-1 pl-2 text-[#9aa5ce]">
+            <ChevronRightIcon
+              aria-hidden="true"
+              className="tree-chevron shrink-0"
+            />{' '}
+            layouts
+          </span>
+          <span class="tree-folder flex items-center gap-1 pl-2 text-[#9aa5ce]">
+            <ChevronRightIcon
+              aria-hidden="true"
+              className="tree-chevron shrink-0"
+            />{' '}
+            pages
           </span>
         </div>
-        <div class="breadcrumbs flex items-center gap-[0.2rem] p-[0.25rem_0.55rem] text-[#565f89] text-(length:--window-font-7)">
+      </aside>
+      <div class="editor-main flex min-w-0 min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-[#292b3a]/50 bg-[#1a1b26]">
+        <div class="editor-tabs flex h-6 shrink-0 border-b border-[#292b3a]/50 bg-[#181922] text-[#a9b1d6] text-(length:--window-font-chrome) leading-none [@container_(max-height:13rem)]:h-5">
+          <span class="flex min-w-0 items-center gap-1 rounded-t-sm bg-[#222436] px-1.5 text-[#c0caf5] [&_svg]:size-2.5! [&_svg]:basis-2.5! [&_svg]:shrink-0">
+            <EditorFileIcon type="astro" />{' '}
+            <span class="truncate">HomeHero.astro</span>{' '}
+            <XIcon aria-hidden="true" className="ml-0.5 size-2!" />
+          </span>
+        </div>
+        <div class="breadcrumbs flex h-5 shrink-0 items-center gap-1 overflow-hidden border-b border-[#292b3a]/30 px-2.5 text-[#737aa2] text-(length:--window-font-meta) leading-none whitespace-nowrap [&_svg]:size-2.5! [&_svg]:basis-2.5! [&_svg]:shrink-0">
           src › components › <EditorFileIcon type="astro" /> HomeHero.astro
         </div>
-        <div class="code-pane min-h-0 flex-1 overflow-hidden pt-0.5 text-[#a9b1d6] text-(length:--window-font-8) leading-(--window-leading-8)">
+        <div class="code-pane min-h-0 flex-1 overflow-hidden py-1.5 font-mono text-[#a9b1d6] text-(length:--window-font-body) leading-(--window-leading-code) [&_.line]:grid-cols-[3em_minmax(0,1fr)] [&_.line]:pr-2 [&_i]:text-[#565f89]">
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">1</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">1</i>
+            <code class="text-(length:--window-font-body)">
               <em>---</em>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">2</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">2</i>
+            <code class="text-(length:--window-font-body)">
               <b>import</b> <span class="type text-[#7aa2f7]">AboutMe</span>{' '}
               <b>from</b> <q>./AboutMe</q>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">3</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">3</i>
+            <code class="text-(length:--window-font-body)">
               <b>import</b> <span class="type text-[#7aa2f7]">Saturn</span>{' '}
               <b>from</b> <q>./Saturn</q>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">4</i>
-            <code class="text-(length:--window-font-6)"></code>
+            <i class="text-(length:--window-font-meta)">4</i>
+            <code class="text-(length:--window-font-body)"></code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">5</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">5</i>
+            <code class="text-(length:--window-font-body)">
               <b>interface</b> <span class="type text-[#7aa2f7]">Props</span>{' '}
               &#123;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">6</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">6</i>
+            <code class="text-(length:--window-font-body)">
               &nbsp;&nbsp;<span class="variable text-[#e0af68]">preview</span>?:{' '}
               <span class="type text-[#7aa2f7]">boolean</span>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">7</i>
-            <code class="text-(length:--window-font-6)">&#125;</code>
+            <i class="text-(length:--window-font-meta)">7</i>
+            <code class="text-(length:--window-font-body)">&#125;</code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">8</i>
-            <code class="text-(length:--window-font-6)"></code>
+            <i class="text-(length:--window-font-meta)">8</i>
+            <code class="text-(length:--window-font-body)"></code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">9</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">9</i>
+            <code class="text-(length:--window-font-body)">
               <b>const</b> &#123;{' '}
               <span class="variable text-[#e0af68]">preview</span> &#125; ={' '}
               <span class="type text-[#7aa2f7]">Astro</span>.
@@ -333,55 +382,64 @@ const activityIcons = [
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">10</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">10</i>
+            <code class="text-(length:--window-font-body)">
               <em>---</em>
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">11</i>
-            <code class="text-(length:--window-font-6)"></code>
+            <i class="text-(length:--window-font-meta)">11</i>
+            <code class="text-(length:--window-font-body)"></code>
           </div>
           <div class="line active-line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)] bg-[#1f2335]">
-            <i class="text-(length:--window-font-7)">12</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">12</i>
+            <code class="text-(length:--window-font-body)">
               &lt;<span class="tag text-[#f7768e]">section</span>{' '}
-              <span class="attr text-[#7aa2f7]">class</span>=<q>home-hero</q>
+              <span class="attr text-[#7aa2f7]">class</span>=
+              <q>
+                home-hero
+                <span
+                  class="cursor editor-cursor relative inline-block h-[1em] w-0 align-[-0.15em] before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-[#c0caf5] animate-[editor-blink_1s_steps(1)_infinite] motion-reduce:animate-none"
+                  aria-hidden="true"
+                ></span>
+              </q>
               &gt;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">13</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">13</i>
+            <code class="text-(length:--window-font-body)">
               &nbsp;&nbsp;&lt;<span class="type text-[#7aa2f7]">AboutMe</span>{' '}
               /&gt;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">14</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">14</i>
+            <code class="text-(length:--window-font-body)">
               &nbsp;&nbsp;&lt;<span class="type text-[#7aa2f7]">Saturn</span>{' '}
               <span class="attr text-[#7aa2f7]">client:visible</span> /&gt;
             </code>
           </div>
           <div class="line grid min-h-[1.25em] grid-cols-[2.4em_minmax(0,1fr)]">
-            <i class="text-(length:--window-font-7)">15</i>
-            <code class="text-(length:--window-font-6)">
+            <i class="text-(length:--window-font-meta)">15</i>
+            <code class="text-(length:--window-font-body)">
               &lt;/<span class="tag text-[#f7768e]">section</span>&gt;
             </code>
           </div>
         </div>
-        <div class="editor-status flex min-h-4 items-center justify-between p-[0_0.4rem] bg-[#16161e] text-[#858ba3] text-(length:--window-font-6)">
-          <span class="flex items-center gap-[0.18rem]">
-            <span
-              class="block size-1.5 mb-px [&_svg]:size-full"
-              set:html={gitBranchIcon}
-            />
-            <span>main</span>
-          </span>
-          <span>Astro&nbsp;&nbsp;UTF-8&nbsp;&nbsp;Ln 12, Col 26</span>
-        </div>
       </div>
+    </div>
+    <div class="editor-status flex h-5 shrink-0 items-center justify-between gap-2 overflow-hidden bg-[#16161e] px-2 text-[#858ba3] text-[0.5625rem] leading-none whitespace-nowrap [@container_(max-height:13rem)]:h-4">
+      <span class="flex items-center gap-[0.18rem]">
+        <span
+          class="block size-1.5 mb-px [&_svg]:size-full"
+          set:html={gitBranchIcon}
+        />
+        <span>main</span>
+      </span>
+      <span class="truncate">
+        Astro&nbsp;&nbsp;UTF-8&nbsp;&nbsp;Ln 12, Col 26
+      </span>
     </div>
   </div>
 )}
@@ -406,17 +464,6 @@ const activityIcons = [
     margin-bottom: 0.04rem;
     color: #bb9af7;
     font-weight: 650;
-  }
-  .browser-nav span {
-    display: grid;
-    width: 1rem;
-    height: 1rem;
-    place-items: center;
-  }
-  .browser-nav svg {
-    width: 0.62rem;
-    height: 0.62rem;
-    stroke-width: 2;
   }
   .browser-preview {
     display: grid;
@@ -468,26 +515,6 @@ const activityIcons = [
   .browser-preview-saturn > img {
     max-height: calc(100% - 1.5rem);
   }
-  .activity-rail span:first-child {
-    color: #c0caf5;
-  }
-  .file-tree strong {
-    padding: 0 0.35rem;
-    color: #c0caf5;
-    font-weight: 600;
-  }
-  .file-tree > span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .tree-folder.nested {
-    padding-left: 0.85rem;
-  }
-  .tree-file.active {
-    background: #292e42;
-    color: #c0caf5;
-  }
   .line i {
     padding-right: 0.7em;
     color: #3b4261;
@@ -532,15 +559,25 @@ const activityIcons = [
     }
   }
 
-  @container (max-width: 18rem) {
-    .browser-nav span:nth-child(2),
-    .editor-menu,
-    .editor-history,
-    .editor-sidebar {
+  @container (max-width: 28rem) and (max-height: 13rem) {
+    .fastfetch-logo,
+    .browser-preview-saturn {
       display: none;
     }
-    .editor-menubar {
-      grid-template-columns: auto minmax(3rem, 1fr) auto;
+    .browser-preview {
+      display: block;
+      height: auto;
+      min-height: 100%;
+      overflow: visible;
+    }
+    .browser-preview-copy {
+      padding: 0.6rem 0.8rem;
+    }
+  }
+
+  @container (max-width: 18rem) {
+    .browser-nav span:nth-child(2) {
+      display: none;
     }
     .fastfetch {
       gap: 0.45rem;
@@ -555,6 +592,8 @@ const activityIcons = [
 
   @container (max-width: 28rem) and (min-height: 16rem) {
     .browser-preview {
+      height: auto;
+      min-height: 100%;
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto auto;
       align-content: center;
@@ -562,60 +601,57 @@ const activityIcons = [
       row-gap: 0.5rem;
     }
     .browser-preview-copy {
-      padding: 0 0.8rem;
+      padding: 0.6rem 0.8rem 0;
     }
     .browser-preview-saturn {
       height: auto;
     }
   }
 
-  /* A 0.0625rem step is one CSS pixel at a 16px root size. Keep
-     responsive text on that grid without overriding the user's root size. */
+  /* Round responsive sizes without scaling glyphs. The editor keeps
+     fixed text sizes and line spacing as its window changes size. */
   .dummy-app {
     --window-text-scale: 1;
-    --window-font-4: round(
+    --window-font-logo: round(
       nearest,
       calc(0.25rem * var(--window-text-scale)),
       0.0625rem
     );
-    --window-font-6: round(
-      nearest,
-      calc(0.375rem * var(--window-text-scale)),
-      0.0625rem
+    --window-font-chrome: calc(
+      round(nearest, calc(0.625rem * var(--window-text-scale)), 0.0625rem) -
+        var(--window-content-font-offset, 0px)
     );
-    --window-font-7: round(
-      nearest,
-      calc(0.4375rem * var(--window-text-scale)),
-      0.0625rem
+    --window-font-meta: calc(
+      round(nearest, calc(0.625rem * var(--window-text-scale)), 0.0625rem) -
+        var(--window-content-font-offset, 0px)
     );
-    --window-font-8: round(
-      nearest,
-      calc(0.5rem * var(--window-text-scale)),
-      0.0625rem
+    --window-font-body: calc(
+      round(nearest, calc(0.6875rem * var(--window-text-scale)), 0.0625rem) -
+        var(--window-content-font-offset, 0px)
     );
-    --window-font-9: round(
-      nearest,
-      calc(0.5625rem * var(--window-text-scale)),
-      0.0625rem
-    );
-    --window-leading-8: round(
-      nearest,
-      calc(0.5rem * var(--window-text-scale)),
-      0.0625rem
-    );
-    --window-leading-9: round(
-      nearest,
-      calc(0.5625rem * var(--window-text-scale)),
-      0.0625rem
-    );
-    --window-leading-11: round(
+    --window-font-address: round(
       nearest,
       calc(0.6875rem * var(--window-text-scale)),
       0.0625rem
     );
-    --window-leading-12: round(
+    --window-leading-code: round(
       nearest,
-      calc(0.75rem * var(--window-text-scale)),
+      calc(0.875rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-tree: round(
+      nearest,
+      calc(0.875rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-terminal: round(
+      nearest,
+      calc(0.9375rem * var(--window-text-scale)),
+      0.0625rem
+    );
+    --window-leading-body: round(
+      nearest,
+      calc(1rem * var(--window-text-scale)),
       0.0625rem
     );
   }
@@ -641,6 +677,16 @@ const activityIcons = [
     }
     .dummy-browser .browser-preview {
       max-width: 68rem;
+    }
+  }
+
+  @keyframes editor-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
     }
   }
 
