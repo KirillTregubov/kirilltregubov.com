@@ -159,3 +159,17 @@
   opacity: 1;
   transform: translate3d(0, 0.2em, 0);
 }
+
+/* Native leading trim (capsize replacement). Progressive enhancement:
+   unsupported browsers ignore it and fall back to normal half-leading. */
+@supports (text-box: trim-both cap alphabetic) {
+  .text-trim {
+    text-box: trim-both cap alphabetic;
+  }
+  .text-trim-start {
+    text-box: trim-start cap alphabetic;
+  }
+  .text-trim-end {
+    text-box: trim-end cap alphabetic;
+  }
+}

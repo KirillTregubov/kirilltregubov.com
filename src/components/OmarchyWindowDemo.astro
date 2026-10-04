@@ -267,8 +267,7 @@ import Keybind from './markdown/Keybind.astro'
             class="shortcut-hint m-0 text-[#92929f] text-[0.6875rem] leading-4"
             data-shortcut-hint
           >
-            Using Alt (Option). Shortcuts work anywhere on this post while the
-            demo is in view.
+            Press the keys, or click/tap a shortcut below.
           </p>
         </div>
 
@@ -314,7 +313,7 @@ import Keybind from './markdown/Keybind.astro'
           </button>
         </div>
         <ul
-          class="shortcut-list flex flex-wrap justify-end gap-[0rem_0.5rem] m-0 p-0 list-none"
+          class="shortcut-list flex flex-wrap justify-end gap-[0rem_0.35rem] m-0 p-0 list-none"
           data-shortcut-list
           aria-label="Demo shortcuts"
         ></ul>
@@ -323,7 +322,7 @@ import Keybind from './markdown/Keybind.astro'
             <button
               type="button"
               data-shortcut-action
-              class="inline-flex min-h-8 cursor-pointer touch-manipulation items-center gap-[0.35rem] rounded-md px-1 py-1 text-[0.625rem] leading-4 whitespace-nowrap text-[#898994] transition-colors hover:bg-white/5 hover:text-[#e7e7eb] active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) pointer-coarse:min-h-11 motion-reduce:transition-none"
+              class="inline-flex min-h-8 cursor-pointer touch-manipulation items-center gap-[0.35rem] rounded-md px-1.5 py-1 text-[0.625rem] leading-4 whitespace-nowrap text-[#898994] transition-colors hover:bg-white/5 hover:text-[#e7e7eb] active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) pointer-coarse:min-h-11 motion-reduce:transition-none"
             >
               <Keybind keys={['Alt']} size="small" />
               <span data-shortcut-label class="leading-4"></span>
@@ -1314,10 +1313,8 @@ import Keybind from './markdown/Keybind.astro'
         const enabled = shortcutsToggle.checked
         shortcutsStatus.textContent = enabled ? 'On' : 'Off'
         shortcutHint.textContent = enabled
-          ? shortcutModifier === 'Meta'
-            ? 'Using the Super (Windows/Command) key, which may be captured by your OS but is more faithful.'
-            : 'Using Alt (Option). Shortcuts work anywhere on this post while the demo is in view.'
-          : 'Shortcuts are disabled. All interface buttons and controls still work.'
+          ? 'Press the keys, or select a shortcut below.'
+          : 'Keyboard controls are off. You can still select a shortcut below.'
         modifierButtons.forEach((button) => {
           button.disabled = !enabled
           button.setAttribute(

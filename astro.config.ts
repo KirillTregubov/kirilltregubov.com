@@ -23,7 +23,8 @@ export default defineConfig({
     plugins: [tailwindcss()],
     build: {
       // SaturnScene is deliberately lazy-loaded after the GPU capability check.
-      chunkSizeWarningLimit: 1000,
+      // Currently ~1003 kB (three.js), so allow headroom for updates.
+      chunkSizeWarningLimit: 1500,
     },
   },
 

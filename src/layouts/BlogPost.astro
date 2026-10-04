@@ -109,8 +109,8 @@ const formatDate = (date: Date) =>
     <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-strong:text-neutral-200 prose-a:-m-0.5 prose-a:rounded-sm prose-a:p-0.5 prose-a:hover:text-white prose-a:focus-visible:text-white prose-a:active:text-white prose-a:transition prose-a:text-neutral-200 prose-img:rounded-xl [&_a[data-footnote-ref]]:ml-0.5 [&_a[data-footnote-ref]]:scroll-mt-20">
       {tableOfContents.length > 1 && (
         <details class="toc-details group/toc not-prose overflow-hidden rounded-lg transition bg-neutral-800 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
-          <summary class="toc-summary relative z-10 flex cursor-pointer list-none rounded-lg items-center justify-between gap-4 border border-neutral-700 bg-neutral-800 p-4 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:bg-neutral-700 active:text-white focus-visible:text-white focus-visible:ring-inset group/summary">
-            <span>Table of contents</span>
+          <summary class="toc-summary relative z-10 flex cursor-pointer list-none rounded-lg items-center justify-between gap-4 border border-neutral-700 bg-neutral-800 p-4 py-5 text-lg leading-6 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:bg-neutral-700 active:text-white focus-visible:text-white focus-visible:ring-inset group/summary">
+            <span class="text-trim">Table of contents</span>
             <ChevronRightIcon
               className="size-4 shrink-0 text-neutral-500 transition-transform duration-150 group-hover/summary:text-white group-active/summary:text-white group-focus-visible/summary:text-white group-open/toc:rotate-90 group-data-closing/toc:rotate-0"
               aria-hidden="true"
