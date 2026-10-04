@@ -28,7 +28,7 @@ import Keybind from './markdown/Keybind.astro'
         See it in action
       </h2>
       <p class="m-0 pt-1 text-[0.8125rem] leading-5 text-[#a1a1ad]">
-        Try the keyboard shortcuts, or tap the keybinds below on a tablet.
+        Try the workflow directly in your browser.
       </p>
     </div>
 
@@ -39,7 +39,7 @@ import Keybind from './markdown/Keybind.astro'
         aria-label="Window layout"
       >
         <button
-          class="select-none"
+          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
           type="button"
           data-layout-button="dwindle"
           aria-pressed="true"
@@ -48,7 +48,7 @@ import Keybind from './markdown/Keybind.astro'
           <span>Dwindle</span>
         </button>
         <button
-          class="select-none"
+          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
           type="button"
           data-layout-button="scrolling"
           aria-pressed="false"
@@ -122,7 +122,7 @@ import Keybind from './markdown/Keybind.astro'
                 {[1, 2, 3, 4, 5].map((workspace) => (
                   <button
                     type="button"
-                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent px-0 pt-0.5 pb-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] data-occupied:text-[#bdbdcc]"
+                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent px-0 pt-0.5 pb-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] transition-opacity motion-reduce:transition-none data-occupied:text-[#bdbdcc] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
                     data-workspace-button={workspace}
                     aria-label={`Switch to workspace ${workspace}`}
                     aria-pressed={workspace === 1 ? 'true' : 'false'}
@@ -177,6 +177,39 @@ import Keybind from './markdown/Keybind.astro'
           </div>
 
           <div class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-0 bottom-(--window-gap) left-0 grid grid-cols-2 grid-rows-2 gap-(--window-gap) px-(--window-gap)"></div>
+
+          <!--
+            Session-lock overlay. Reproduces Omarchy's LockView.qml:
+            base fill Color.background (#1a1b26, tokyo-night), wallpaper
+            cover-cropped + heavy blur (~60px) + contrast 0.92, then the
+            381x67 input field (aspect-[381/67]) with lock.background
+            (background @ 0.8 alpha), 3px lock.borderActive border (#a9b1d6),
+            8px corner radius. Text stays readable at demo scale.
+          -->
+          <div
+            class="absolute inset-0 z-30 grid place-items-center overflow-hidden bg-[#1a1b26]"
+            data-lock-screen
+          >
+            <div class="absolute -inset-48" aria-hidden="true">
+              <Image
+                src={wallpaper}
+                alt=""
+                width={1200}
+                widths={[800, 1200, 1600]}
+                sizes="(max-width: 848px) 100vw, 800px"
+                loading="eager"
+                class="size-full object-cover blur-[60px] contrast-[0.92]"
+              />
+            </div>
+            <button
+              type="button"
+              data-wake-button
+              aria-label="Wake the demo desktop"
+              class="relative grid aspect-381/67 w-[min(381px,55%)] min-w-32 cursor-pointer place-items-center rounded-lg border-[3px] border-[#a9b1d6] bg-[rgb(26_27_38/0.8)] text-sm font-semibold tracking-wide text-[#a9b1d6] transition hover:bg-[rgb(36_40_59/0.9)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) active:scale-[0.98]"
+            >
+              Wake
+            </button>
+          </div>
         </div>
       </div>
       <div
@@ -208,9 +241,9 @@ import Keybind from './markdown/Keybind.astro'
           Dwindle · workspace 1 · empty
         </p>
       </div>
-      <div class="action-buttons ml-auto flex shrink-0 gap-[0.35rem]">
+      <div class="action-buttons ml-auto flex shrink-0 flex-wrap justify-end gap-[0.35rem]">
         <button
-          class="reset-button text-[0.8125rem] leading-5 bg-[#292930] text-[#c6c6cf]"
+          class="reset-button text-[0.8125rem] leading-5 shrink-0 bg-[#292930] text-[#c6c6cf] disabled:pointer-events-none"
           type="button"
           aria-label="Reset demo"
           disabled
@@ -219,7 +252,7 @@ import Keybind from './markdown/Keybind.astro'
           Reset
         </button>
         <button
-          class="app-button text-[0.8125rem] leading-5 terminal-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform"
+          class="app-button text-[0.8125rem] leading-5 terminal-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform disabled:pointer-events-none"
           type="button"
           data-app-button="terminal"
           aria-label="Open Terminal"
@@ -231,7 +264,7 @@ import Keybind from './markdown/Keybind.astro'
           <span class="relative top-px">Terminal</span>
         </button>
         <button
-          class="app-button text-[0.8125rem] leading-5 browser-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform"
+          class="app-button text-[0.8125rem] leading-5 browser-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform disabled:pointer-events-none"
           type="button"
           data-app-button="browser"
           aria-label="Open Browser"
@@ -243,7 +276,7 @@ import Keybind from './markdown/Keybind.astro'
           <span class="relative top-px">Browser</span>
         </button>
         <button
-          class="app-button text-[0.8125rem] leading-5 editor-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform"
+          class="app-button text-[0.8125rem] leading-5 editor-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform disabled:pointer-events-none"
           type="button"
           data-app-button="editor"
           aria-label="Open Editor"
@@ -267,11 +300,11 @@ import Keybind from './markdown/Keybind.astro'
             class="shortcut-hint m-0 text-[#92929f] text-[0.6875rem] leading-4"
             data-shortcut-hint
           >
-            Press the keys, or click/tap a shortcut below.
+            Start the demo to use your keyboard or the shortcuts below.
           </p>
         </div>
 
-        <label class="shortcut-toggle group inline-flex items-center gap-[0.45rem] shrink-0 text-[#b9b9c2] text-xs leading-4 font-[650] cursor-pointer">
+        <label class="shortcut-toggle group inline-flex items-center gap-[0.45rem] shrink-0 text-xs leading-4 font-[650] text-[#b9b9c2] cursor-pointer transition-opacity motion-reduce:transition-none has-disabled:cursor-default has-disabled:opacity-40">
           <input
             type="checkbox"
             data-shortcuts-toggle
@@ -280,12 +313,14 @@ import Keybind from './markdown/Keybind.astro'
             class="peer sr-only"
           />
           <span
-            class="toggle-track relative w-8 h-[1.1rem] rounded-full bg-[#393941] transition-colors peer-checked:bg-[#c66024] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-(--focus-blue) motion-reduce:transition-none"
+            class="toggle-track relative h-5 w-9 rounded-full bg-[#1b1b1f] shadow-inner transition-colors peer-checked:bg-[#5a5a64] peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-300 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-neutral-950 motion-reduce:transition-none"
             aria-hidden="true"
           >
-            <span class="absolute top-[0.15rem] left-[0.15rem] size-[0.8rem] rounded-full bg-[#b7b7c1] transition group-has-checked:translate-x-[0.9rem] group-has-checked:bg-white motion-reduce:transition-none"></span>
+            <span class="absolute top-0.5 left-0.5 h-4 w-5 rounded-full bg-white shadow transition group-has-checked:translate-x-3 motion-reduce:transition-none"></span>
           </span>
-          <span data-shortcuts-status>On</span>
+          <span data-shortcuts-status class="inline-block w-6 text-left">
+            On
+          </span>
         </label>
       </div>
 
@@ -297,7 +332,7 @@ import Keybind from './markdown/Keybind.astro'
         >
           <button
             type="button"
-            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
+            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] transition-opacity aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none motion-reduce:transition-none hover:enabled:text-white"
             data-shortcut-modifier="Alt"
             aria-pressed="true"
           >
@@ -305,7 +340,7 @@ import Keybind from './markdown/Keybind.astro'
           </button>
           <button
             type="button"
-            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default hover:enabled:text-white"
+            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] transition-opacity aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none motion-reduce:transition-none hover:enabled:text-white"
             data-shortcut-modifier="Meta"
             aria-pressed="false"
           >
@@ -313,7 +348,7 @@ import Keybind from './markdown/Keybind.astro'
           </button>
         </div>
         <ul
-          class="shortcut-list flex flex-wrap justify-end gap-[0rem_0.35rem] m-0 p-0 list-none"
+          class="shortcut-list flex flex-wrap justify-end gap-[0rem_0.35rem] m-0 p-0 list-none select-none **:data-keybind:select-none"
           data-shortcut-list
           aria-label="Demo shortcuts"
         ></ul>
@@ -322,7 +357,7 @@ import Keybind from './markdown/Keybind.astro'
             <button
               type="button"
               data-shortcut-action
-              class="inline-flex min-h-8 cursor-pointer touch-manipulation items-center gap-[0.35rem] rounded-md px-1.5 py-1 text-[0.625rem] leading-4 whitespace-nowrap text-[#898994] transition-colors hover:bg-white/5 hover:text-[#e7e7eb] active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) pointer-coarse:min-h-11 motion-reduce:transition-none"
+              class="inline-flex min-h-8 cursor-pointer touch-manipulation items-center gap-[0.35rem] rounded-md px-1.5 py-1 text-[0.625rem] leading-4 whitespace-nowrap text-[#898994] transition hover:bg-white/5 hover:text-[#e7e7eb] active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) pointer-coarse:min-h-11 motion-reduce:transition-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
             >
               <Keybind keys={['Alt']} size="small" />
               <span data-shortcut-label class="leading-4"></span>
@@ -370,284 +405,282 @@ import Keybind from './markdown/Keybind.astro'
   import { defaultKeybindingsHandlerIgnore, tinykeys } from 'tinykeys'
   import { getKeyArrowPath } from '../lib/keybind'
 
+  // --- SESSION LOCK (runs immediately) ---
+  // Wires the Wake button. The demo boots immediately below, exactly as
+  // before, so the shortcut list renders on page load — but shortcut
+  // handling (list clicks + keyboard) stays dormant until Wake arms it
+  // via the `omarchy-demo:wake` event.
   const setupOmarchyDemos = () => {
     document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
-      if (demo.dataset.initialized !== undefined) return
-      demo.dataset.initialized = ''
-      const lifecycleController = new AbortController()
-      const listenerOptions = { signal: lifecycleController.signal }
-
-      const screen = demo.querySelector<HTMLElement>('.screen')
-      const workspace = demo.querySelector<HTMLElement>('.workspace')
-      // const fullscreenButton = demo.querySelector<HTMLButtonElement>(
-      //   '[data-fullscreen-button]',
-      // )
-      const resetButton = demo.querySelector<HTMLButtonElement>('.reset-button')
-      const modeCopy = demo.querySelector<HTMLElement>('.mode-copy')
-      const stepCopy = demo.querySelector<HTMLElement>('.step-copy')
-      const systemTime =
-        demo.querySelector<HTMLTimeElement>('[data-system-time]')
-      const layoutButtons = demo.querySelectorAll<HTMLButtonElement>(
-        '[data-layout-button]',
-      )
-      const workspaceButtons = demo.querySelectorAll<HTMLButtonElement>(
-        '[data-workspace-button]',
-      )
-      const appButtons =
-        demo.querySelectorAll<HTMLButtonElement>('[data-app-button]')
-      const shortcutsToggle = demo.querySelector<HTMLInputElement>(
-        '[data-shortcuts-toggle]',
-      )
-      const shortcutsStatus = demo.querySelector<HTMLElement>(
-        '[data-shortcuts-status]',
-      )
-      const shortcutHint = demo.querySelector<HTMLElement>(
-        '[data-shortcut-hint]',
-      )
-      const shortcutList = demo.querySelector<HTMLUListElement>(
-        '[data-shortcut-list]',
-      )
-      const modifierButtons = demo.querySelectorAll<HTMLButtonElement>(
-        '[data-shortcut-modifier]',
-      )
-
-      if (
-        !screen ||
-        !workspace ||
-        // !fullscreenButton ||
-        !resetButton ||
-        !modeCopy ||
-        !stepCopy ||
-        !systemTime ||
-        !shortcutsToggle ||
-        !shortcutsStatus ||
-        !shortcutHint ||
-        !shortcutList
-      )
-        return
-
-      const appIds = ['terminal', 'browser', 'editor'] as const
-      type DemoApp = (typeof appIds)[number]
-      type LayoutMode = 'dwindle' | 'scrolling'
-      type DemoWindow = { id: number; app: DemoApp }
-
-      const appLabels: Record<DemoApp, string> = {
-        terminal: 'Terminal',
-        browser: 'Browser',
-        editor: 'Editor',
-      }
-      const workspaceWindows: DemoWindow[][] = Array.from(
-        workspaceButtons,
-        () => [],
-      )
-      const workspaceFocus: (number | null)[] = Array.from(
-        workspaceButtons,
-        () => null,
-      )
-      const workspaceReveal: (number | null)[] = Array.from(
-        workspaceButtons,
-        () => null,
-      )
-      const workspaceFocusMemory: Map<string, number>[] = Array.from(
-        workspaceButtons,
-        () => new Map(),
-      )
-      const workspaceLayouts: LayoutMode[] = Array.from(
-        workspaceButtons,
-        () => 'dwindle',
-      )
-      let nextWindowId = 1
-      let activeWorkspace = 1
-      let workspaceSwitchVersion = 0
-      let layoutTransitionVersion = 0
-      let hoverFocusLocked = false
-      let shortcutModifier: 'Meta' | 'Alt' = 'Alt'
-      let unsubscribeShortcuts: (() => void) | undefined
-      const windowAnimations = new Map<HTMLElement, Animation>()
-      const desktopViewport = window.matchMedia('(min-width: 768px)')
-      let demoVisible = false
-      let lastClockMinute = ''
-
-      const cancelWindowAnimation = (appWindow: HTMLElement) => {
-        windowAnimations.get(appWindow)?.cancel()
-        delete appWindow.dataset.opening
-        windowAnimations.delete(appWindow)
-      }
-
-      const cancelWindowAnimations = () => {
-        for (const appWindow of windowAnimations.keys())
-          cancelWindowAnimation(appWindow)
-      }
-
-      const getAppWindows = () =>
-        workspace.querySelectorAll<HTMLElement>('.window:not([data-closing])')
-
-      const animateWindowClosing = (appWindow: HTMLElement) => {
-        cancelWindowAnimation(appWindow)
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-          return
-
-        // Keep a visual copy in place while the remaining windows reflow.
-        const rect = appWindow.getBoundingClientRect()
-        const workspaceRect = workspace.getBoundingClientRect()
-        const closingWindow = appWindow.cloneNode(true) as HTMLElement
-        delete closingWindow.dataset.windowId
-        closingWindow.dataset.closing = ''
-        closingWindow.inert = true
-        closingWindow.setAttribute('aria-hidden', 'true')
-        closingWindow.tabIndex = -1
-        Object.assign(closingWindow.style, {
-          inset: 'auto',
-          left: `${rect.left - workspaceRect.left}px`,
-          top: `${rect.top - workspaceRect.top}px`,
-          width: `${rect.width}px`,
-          height: `${rect.height}px`,
-        })
-        workspace.append(closingWindow)
-
-        const animation = closingWindow.animate(
-          [
-            { opacity: 1, scale: '1', transformOrigin: 'center' },
-            { opacity: 0, scale: '0.96', transformOrigin: 'center' },
-          ],
-          { duration: 100, easing: 'ease-out', fill: 'forwards' },
-        )
-        windowAnimations.set(closingWindow, animation)
-        const removeClosingWindow = () => {
-          closingWindow.remove()
-          windowAnimations.delete(closingWindow)
-        }
-        animation.addEventListener('finish', removeClosingWindow, {
-          once: true,
-        })
-        animation.addEventListener('cancel', removeClosingWindow, {
-          once: true,
-        })
-      }
-
-      const createAppWindow = (app: DemoApp) => {
-        const template = demo.querySelector<HTMLTemplateElement>(
-          `[data-app-template="${app}"]`,
-        )
-        const appWindow = template?.content.firstElementChild?.cloneNode(
-          true,
-        ) as HTMLElement | undefined
-        if (!appWindow) return null
-
-        const selectAppWindow = () => {
-          const windowId = Number(appWindow.dataset.windowId)
-          if (windowId) selectWindow(windowId)
-        }
-        const closeAppWindow = (event: Event) => {
-          event.stopPropagation()
-          const windowId = Number(appWindow.dataset.windowId)
-          if (windowId) closeWindow(windowId)
-        }
-
-        const focusButton = appWindow.querySelector<HTMLButtonElement>(
-          '[data-window-focus]',
-        )!
-        focusButton.addEventListener('click', selectAppWindow)
-        appWindow.addEventListener('focusin', selectAppWindow)
-        // Keep real window controls separate from the decorative app chrome.
-        const closeButton = appWindow.querySelector<HTMLButtonElement>(
-          '[data-window-close]',
-        )!
-        appWindow.append(closeButton)
-        closeButton.className =
-          'window-close absolute right-1 z-2 grid size-5 cursor-pointer place-items-center rounded-full text-[#a9b1d6] hover:bg-white/10 hover:text-white focus-visible:ring-inset [&_svg]:size-2.5! [&_svg]:stroke-[1.5]'
-        closeButton.classList.add(
-          app === 'terminal' ? 'top-[1.5px]' : 'top-[3.5px]',
-        )
-        closeButton.tabIndex = 0
-        const appContent = appWindow.querySelector<HTMLElement>('.dummy-app')!
-        if (app === 'browser') {
-          appContent.removeAttribute('aria-hidden')
-          focusButton.classList.add('pointer-events-none')
-          appWindow.addEventListener('click', selectAppWindow)
-        } else {
-          appContent.inert = true
-        }
-        appWindow.addEventListener('mouseenter', () => {
-          if (hoverFocusLocked) return
-          const windowId = Number(appWindow.dataset.windowId)
-          if (windowId) selectWindow(windowId, false)
-        })
-        appWindow
-          .querySelector('[data-window-close]')
-          ?.addEventListener('click', closeAppWindow)
-        return appWindow
-      }
-
-      type WindowRects = Map<HTMLElement, DOMRect>
-
-      const captureWindowRects = (): WindowRects =>
-        new Map(
-          Array.from(getAppWindows()).map((appWindow) => [
-            appWindow,
-            appWindow.getBoundingClientRect(),
-          ]),
-        )
-
-      const animateWindowLayout = (previousRects: WindowRects) => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-          return []
-
-        const animations: Animation[] = []
-        for (const [appWindow, previousRect] of previousRects) {
-          if (!appWindow.isConnected) continue
-
-          const nextRect = appWindow.getBoundingClientRect()
-          const translateX = previousRect.left - nextRect.left
-          const translateY = previousRect.top - nextRect.top
-          const positionChanged =
-            Math.abs(translateX) > 0.5 || Math.abs(translateY) > 0.5
-          if (!positionChanged) continue
-
-          cancelWindowAnimation(appWindow)
-          const animation = appWindow.animate(
-            [
-              {
-                translate: `${translateX}px ${translateY}px`,
-              },
-              {
-                translate: '0 0',
-              },
-            ],
-            {
-              duration: 480,
-              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      if (demo.dataset.lockWired === undefined) {
+        demo.dataset.lockWired = ''
+        demo
+          .querySelector<HTMLButtonElement>('[data-wake-button]')
+          ?.addEventListener(
+            'click',
+            () => {
+              dismissLockScreen(demo)
+              demo.dispatchEvent(new CustomEvent('omarchy-demo:wake'))
             },
+            { once: true },
           )
+      }
+      bootOmarchyDemo(demo)
+    })
+  }
 
-          windowAnimations.set(appWindow, animation)
-          animations.push(animation)
-          const clearAnimation = () => {
-            if (windowAnimations.get(appWindow) === animation)
-              windowAnimations.delete(appWindow)
-          }
-          animation.addEventListener('finish', clearAnimation, { once: true })
-          animation.addEventListener('cancel', clearAnimation, { once: true })
-        }
+  // Dismisses the session-lock overlay with a short fade. Wake is purely
+  // visual: the demo behind it is already booted.
+  const dismissLockScreen = (demo: HTMLElement) => {
+    demo.toggleAttribute('data-unlocked', true)
+    const lockScreen = demo.querySelector<HTMLElement>('[data-lock-screen]')
+    if (!lockScreen) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      lockScreen.remove()
+    else {
+      lockScreen.dataset.leaving = ''
+      window.setTimeout(() => lockScreen.remove(), 300)
+    }
+  }
 
-        return animations
+  // --- DEMO (runs immediately, as before) ---
+  // Boots the full interactive desktop demo: windows, layouts, workspaces,
+  // shortcuts, clock, and observers.
+  const bootOmarchyDemo = (demo: HTMLElement) => {
+    if (demo.dataset.initialized !== undefined) return
+    demo.dataset.initialized = ''
+    const lifecycleController = new AbortController()
+    const listenerOptions = { signal: lifecycleController.signal }
+
+    const screen = demo.querySelector<HTMLElement>('.screen')
+    const workspace = demo.querySelector<HTMLElement>('.workspace')
+    // const fullscreenButton = demo.querySelector<HTMLButtonElement>(
+    //   '[data-fullscreen-button]',
+    // )
+    const resetButton = demo.querySelector<HTMLButtonElement>('.reset-button')
+    const modeCopy = demo.querySelector<HTMLElement>('.mode-copy')
+    const stepCopy = demo.querySelector<HTMLElement>('.step-copy')
+    const systemTime = demo.querySelector<HTMLTimeElement>('[data-system-time]')
+    const layoutButtons = demo.querySelectorAll<HTMLButtonElement>(
+      '[data-layout-button]',
+    )
+    const workspaceButtons = demo.querySelectorAll<HTMLButtonElement>(
+      '[data-workspace-button]',
+    )
+    const appButtons =
+      demo.querySelectorAll<HTMLButtonElement>('[data-app-button]')
+    const shortcutsToggle = demo.querySelector<HTMLInputElement>(
+      '[data-shortcuts-toggle]',
+    )
+    const shortcutsStatus = demo.querySelector<HTMLElement>(
+      '[data-shortcuts-status]',
+    )
+    const shortcutHint = demo.querySelector<HTMLElement>('[data-shortcut-hint]')
+    const shortcutList = demo.querySelector<HTMLUListElement>(
+      '[data-shortcut-list]',
+    )
+    const modifierButtons = demo.querySelectorAll<HTMLButtonElement>(
+      '[data-shortcut-modifier]',
+    )
+
+    if (
+      !screen ||
+      !workspace ||
+      // !fullscreenButton ||
+      !resetButton ||
+      !modeCopy ||
+      !stepCopy ||
+      !systemTime ||
+      !shortcutsToggle ||
+      !shortcutsStatus ||
+      !shortcutHint ||
+      !shortcutList
+    )
+      return
+
+    const appIds = ['terminal', 'browser', 'editor'] as const
+    type DemoApp = (typeof appIds)[number]
+    type LayoutMode = 'dwindle' | 'scrolling'
+    type DemoWindow = { id: number; app: DemoApp }
+
+    const appLabels: Record<DemoApp, string> = {
+      terminal: 'Terminal',
+      browser: 'Browser',
+      editor: 'Editor',
+    }
+    const workspaceWindows: DemoWindow[][] = Array.from(
+      workspaceButtons,
+      () => [],
+    )
+    const workspaceFocus: (number | null)[] = Array.from(
+      workspaceButtons,
+      () => null,
+    )
+    const workspaceReveal: (number | null)[] = Array.from(
+      workspaceButtons,
+      () => null,
+    )
+    const workspaceFocusMemory: Map<string, number>[] = Array.from(
+      workspaceButtons,
+      () => new Map(),
+    )
+    const workspaceLayouts: LayoutMode[] = Array.from(
+      workspaceButtons,
+      () => 'dwindle',
+    )
+    let nextWindowId = 1
+    let activeWorkspace = 1
+    let workspaceSwitchVersion = 0
+    let layoutTransitionVersion = 0
+    let hoverFocusLocked = false
+    let shortcutModifier: 'Meta' | 'Alt' = 'Alt'
+    let unsubscribeShortcuts: (() => void) | undefined
+    const windowAnimations = new Map<HTMLElement, Animation>()
+    const desktopViewport = window.matchMedia('(min-width: 768px)')
+    let demoVisible = false
+    let lastClockMinute = ''
+
+    const cancelWindowAnimation = (appWindow: HTMLElement) => {
+      windowAnimations.get(appWindow)?.cancel()
+      delete appWindow.dataset.opening
+      windowAnimations.delete(appWindow)
+    }
+
+    const cancelWindowAnimations = () => {
+      for (const appWindow of windowAnimations.keys())
+        cancelWindowAnimation(appWindow)
+    }
+
+    const getAppWindows = () =>
+      workspace.querySelectorAll<HTMLElement>('.window:not([data-closing])')
+
+    const animateWindowClosing = (appWindow: HTMLElement) => {
+      cancelWindowAnimation(appWindow)
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+      // Keep a visual copy in place while the remaining windows reflow.
+      const rect = appWindow.getBoundingClientRect()
+      const workspaceRect = workspace.getBoundingClientRect()
+      const closingWindow = appWindow.cloneNode(true) as HTMLElement
+      delete closingWindow.dataset.windowId
+      closingWindow.dataset.closing = ''
+      closingWindow.inert = true
+      closingWindow.setAttribute('aria-hidden', 'true')
+      closingWindow.tabIndex = -1
+      Object.assign(closingWindow.style, {
+        inset: 'auto',
+        left: `${rect.left - workspaceRect.left}px`,
+        top: `${rect.top - workspaceRect.top}px`,
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+      })
+      workspace.append(closingWindow)
+
+      const animation = closingWindow.animate(
+        [
+          { opacity: 1, scale: '1', transformOrigin: 'center' },
+          { opacity: 0, scale: '0.96', transformOrigin: 'center' },
+        ],
+        { duration: 100, easing: 'ease-out', fill: 'forwards' },
+      )
+      windowAnimations.set(closingWindow, animation)
+      const removeClosingWindow = () => {
+        closingWindow.remove()
+        windowAnimations.delete(closingWindow)
+      }
+      animation.addEventListener('finish', removeClosingWindow, {
+        once: true,
+      })
+      animation.addEventListener('cancel', removeClosingWindow, {
+        once: true,
+      })
+    }
+
+    const createAppWindow = (app: DemoApp) => {
+      const template = demo.querySelector<HTMLTemplateElement>(
+        `[data-app-template="${app}"]`,
+      )
+      const appWindow = template?.content.firstElementChild?.cloneNode(true) as
+        HTMLElement | undefined
+      if (!appWindow) return null
+
+      const selectAppWindow = () => {
+        const windowId = Number(appWindow.dataset.windowId)
+        if (windowId) selectWindow(windowId)
+      }
+      const closeAppWindow = (event: Event) => {
+        event.stopPropagation()
+        const windowId = Number(appWindow.dataset.windowId)
+        if (windowId) closeWindow(windowId)
       }
 
-      const animateWindowOpening = (windowId: number) => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-          return
+      const focusButton = appWindow.querySelector<HTMLButtonElement>(
+        '[data-window-focus]',
+      )!
+      focusButton.addEventListener('click', selectAppWindow)
+      appWindow.addEventListener('focusin', selectAppWindow)
+      // Keep real window controls separate from the decorative app chrome.
+      const closeButton = appWindow.querySelector<HTMLButtonElement>(
+        '[data-window-close]',
+      )!
+      appWindow.append(closeButton)
+      closeButton.className =
+        'window-close absolute right-1 z-2 grid size-5 cursor-pointer place-items-center rounded-full text-[#a9b1d6] hover:bg-white/10 hover:text-white focus-visible:ring-inset [&_svg]:size-2.5! [&_svg]:stroke-[1.5]'
+      closeButton.classList.add('top-[3.5px]')
+      closeButton.tabIndex = 0
+      const appContent = appWindow.querySelector<HTMLElement>('.dummy-app')!
+      if (app === 'browser') {
+        appContent.removeAttribute('aria-hidden')
+        focusButton.classList.add('pointer-events-none')
+        appWindow.addEventListener('click', selectAppWindow)
+      } else {
+        appContent.inert = true
+      }
+      appWindow.addEventListener('mouseenter', () => {
+        if (hoverFocusLocked) return
+        const windowId = Number(appWindow.dataset.windowId)
+        if (windowId) selectWindow(windowId, false)
+      })
+      appWindow
+        .querySelector('[data-window-close]')
+        ?.addEventListener('click', closeAppWindow)
+      return appWindow
+    }
 
-        const appWindow = workspace.querySelector<HTMLElement>(
-          `[data-window-id="${windowId}"]`,
-        )
-        if (!appWindow) return
+    type WindowRects = Map<HTMLElement, DOMRect>
+
+    const captureWindowRects = (): WindowRects =>
+      new Map(
+        Array.from(getAppWindows()).map((appWindow) => [
+          appWindow,
+          appWindow.getBoundingClientRect(),
+        ]),
+      )
+
+    const animateWindowLayout = (previousRects: WindowRects) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+        return []
+
+      const animations: Animation[] = []
+      for (const [appWindow, previousRect] of previousRects) {
+        if (!appWindow.isConnected) continue
+
+        const nextRect = appWindow.getBoundingClientRect()
+        const translateX = previousRect.left - nextRect.left
+        const translateY = previousRect.top - nextRect.top
+        const positionChanged =
+          Math.abs(translateX) > 0.5 || Math.abs(translateY) > 0.5
+        if (!positionChanged) continue
 
         cancelWindowAnimation(appWindow)
-        appWindow.dataset.opening = ''
         const animation = appWindow.animate(
           [
-            { opacity: 0, scale: '0.5' },
-            { opacity: 1, scale: '1' },
+            {
+              translate: `${translateX}px ${translateY}px`,
+            },
+            {
+              translate: '0 0',
+            },
           ],
           {
             duration: 480,
@@ -656,1002 +689,1067 @@ import Keybind from './markdown/Keybind.astro'
         )
 
         windowAnimations.set(appWindow, animation)
-        animation.addEventListener(
-          'finish',
-          () => {
-            delete appWindow.dataset.opening
+        animations.push(animation)
+        const clearAnimation = () => {
+          if (windowAnimations.get(appWindow) === animation)
             windowAnimations.delete(appWindow)
-          },
-          { once: true },
-        )
-        animation.addEventListener(
-          'cancel',
-          () => windowAnimations.delete(appWindow),
-          { once: true },
-        )
-      }
-
-      const timeFormatter = new Intl.DateTimeFormat('en-GB', {
-        weekday: 'short',
-        day: '2-digit',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      })
-
-      const updateSystemTime = () => {
-        const now = new Date()
-        const currentMinute = now.toISOString().slice(0, 16)
-        if (currentMinute === lastClockMinute) return
-        lastClockMinute = currentMinute
-        const parts = Object.fromEntries(
-          timeFormatter
-            .formatToParts(now)
-            .filter(({ type }) => type !== 'literal')
-            .map(({ type, value }) => [type, value]),
-        )
-
-        systemTime.dateTime = now.toISOString()
-        systemTime.textContent = `${parts.weekday} ${parts.day} ${parts.month} ${parts.hour}:${parts.minute}`
-      }
-
-      updateSystemTime()
-      let clockTimer: number | undefined
-      const syncClock = () => {
-        window.clearTimeout(clockTimer)
-        if (!demoVisible || !desktopViewport.matches || document.hidden) return
-        updateSystemTime()
-        clockTimer = window.setTimeout(syncClock, 60000 - (Date.now() % 60000))
-      }
-      document.addEventListener('visibilitychange', syncClock, listenerOptions)
-
-      const update = () => {
-        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
-        const windowCount = openWindows.length
-        const focusIndex = activeWorkspace - 1
-        const focusedWindowId = workspaceFocus[focusIndex]
-        if (!openWindows.some(({ id }) => id === focusedWindowId))
-          workspaceFocus[focusIndex] = openWindows.at(-1)?.id ?? null
-        const revealedWindowId = workspaceReveal[focusIndex]
-        if (!openWindows.some(({ id }) => id === revealedWindowId))
-          workspaceReveal[focusIndex] = openWindows.at(-1)?.id ?? null
-        const focusedWindow = openWindows.find(
-          ({ id }) => id === workspaceFocus[focusIndex],
-        )
-        const revealedWindow = openWindows.find(
-          ({ id }) => id === workspaceReveal[focusIndex],
-        )
-
-        screen.dataset.layout = layout
-        screen.dataset.windowCount = String(windowCount)
-        screen.dataset.workspace = String(activeWorkspace)
-        screen.dataset.focusedPosition = String(
-          revealedWindow ? openWindows.indexOf(revealedWindow) + 1 : 0,
-        )
-        screen.setAttribute(
-          'aria-label',
-          `Workspace ${activeWorkspace}, ${windowCount} ${windowCount === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
-        )
-        const layoutLabel = layout === 'dwindle' ? 'Dwindle' : 'Scrolling'
-
-        modeCopy.textContent = `${layoutLabel} · workspace ${activeWorkspace} · ${windowCount === 0 ? 'empty' : `${windowCount} ${windowCount === 1 ? 'window' : 'windows'}`}`
-
-        stepCopy.textContent =
-          windowCount === 0
-            ? 'This workspace is empty. Open an app.'
-            : windowCount === 1
-              ? 'You can open more windows to see the layout take shape.'
-              : windowCount === 2
-                ? 'You can open another window to complete the layout.'
-                : 'You can change layout modes or switch workspaces.'
-
-        const visibleIds = new Set(openWindows.map(({ id }) => id))
-        getAppWindows().forEach((appWindow) => {
-          if (visibleIds.has(Number(appWindow.dataset.windowId))) return
-          cancelWindowAnimation(appWindow)
-          appWindow.remove()
-        })
-
-        openWindows.forEach((demoWindow, position) => {
-          let appWindow = workspace.querySelector<HTMLElement>(
-            `[data-window-id="${demoWindow.id}"]`,
-          )
-          if (!appWindow) {
-            appWindow = createAppWindow(demoWindow.app)
-            if (!appWindow) return
-            appWindow.dataset.windowId = String(demoWindow.id)
-            workspace.append(appWindow)
-          }
-          const isFocused = demoWindow.id === workspaceFocus[focusIndex]
-          appWindow.dataset.window = String(position + 1)
-          appWindow.dataset.app = demoWindow.app
-          appWindow.setAttribute(
-            'aria-label',
-            `${appLabels[demoWindow.app]} window ${position + 1}`,
-          )
-          const focusButton = appWindow.querySelector<HTMLButtonElement>(
-            '[data-window-focus]',
-          )!
-          focusButton.setAttribute(
-            'aria-label',
-            `Focus ${appLabels[demoWindow.app]} window ${position + 1}`,
-          )
-          focusButton.setAttribute('aria-pressed', String(isFocused))
-          if (isFocused) appWindow.dataset.focused = ''
-          else delete appWindow.dataset.focused
-        })
-
-        const isInitialState =
-          activeWorkspace === 1 &&
-          workspaceWindows.every((windows) => windows.length === 0) &&
-          workspaceLayouts.every(
-            (workspaceLayout) => workspaceLayout === 'dwindle',
-          )
-
-        resetButton.disabled = isInitialState
-
-        appButtons.forEach((button) => {
-          const app = button.dataset.appButton as DemoApp
-          button.disabled = windowCount >= 3
-          button.setAttribute('aria-label', `Open ${appLabels[app]}`)
-        })
-
-        layoutButtons.forEach((button) => {
-          button.setAttribute(
-            'aria-pressed',
-            String(button.dataset.layoutButton === layout),
-          )
-        })
-
-        workspaceButtons.forEach((button) => {
-          const workspaceIndex = Number(button.dataset.workspaceButton) - 1
-          const hasWindows = (workspaceWindows[workspaceIndex]?.length ?? 0) > 0
-          button.toggleAttribute('data-occupied', hasWindows)
-          button.setAttribute(
-            'aria-pressed',
-            String(Number(button.dataset.workspaceButton) === activeWorkspace),
-          )
-        })
-      }
-
-      const updateFocusState = () => {
-        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
-        const focusedWindowId = workspaceFocus[activeWorkspace - 1]
-        const focusedWindow = openWindows.find(
-          ({ id }) => id === focusedWindowId,
-        )
-
-        screen.setAttribute(
-          'aria-label',
-          `Workspace ${activeWorkspace}, ${openWindows.length} ${openWindows.length === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
-        )
-        getAppWindows().forEach((appWindow) => {
-          const isFocused =
-            Number(appWindow.dataset.windowId) === focusedWindowId
-          if (isFocused) appWindow.dataset.focused = ''
-          else delete appWindow.dataset.focused
-          appWindow
-            .querySelector('[data-window-focus]')
-            ?.setAttribute('aria-pressed', String(isFocused))
-        })
-      }
-
-      const openApp = (app: DemoApp) => {
-        workspaceSwitchVersion += 1
-        delete screen.dataset.switchingWorkspace
-
-        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        if (openWindows.length >= appIds.length) return
-
-        const previousRects = captureWindowRects()
-        const demoWindow = { id: nextWindowId++, app }
-        openWindows.push(demoWindow)
-        workspaceFocus[activeWorkspace - 1] = demoWindow.id
-        workspaceReveal[activeWorkspace - 1] = demoWindow.id
-        update()
-        animateWindowLayout(previousRects)
-        animateWindowOpening(demoWindow.id)
-
-        if (
-          workspaceLayouts[activeWorkspace - 1] === 'scrolling' &&
-          openWindows.length === 3
-        ) {
-          workspace
-            .querySelector<HTMLButtonElement>(
-              `[data-window-id="${demoWindow.id}"] [data-window-focus]`,
-            )
-            ?.focus({ preventScroll: true })
         }
+        animation.addEventListener('finish', clearAnimation, { once: true })
+        animation.addEventListener('cancel', clearAnimation, { once: true })
       }
 
-      const closeWindow = (windowId: number) => {
-        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        const windowIndex = openWindows.findIndex(({ id }) => id === windowId)
-        if (windowIndex === -1) return
-        const previousRects = captureWindowRects()
+      return animations
+    }
 
-        const appWindow = workspace.querySelector<HTMLElement>(
-          `[data-window-id="${windowId}"]`,
-        )
-        const restoreFocus =
-          appWindow?.contains(document.activeElement) ?? false
-        if (appWindow) animateWindowClosing(appWindow)
-        openWindows.splice(windowIndex, 1)
+    const animateWindowOpening = (windowId: number) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-        if (workspaceFocus[activeWorkspace - 1] === windowId)
-          workspaceFocus[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
-        if (workspaceReveal[activeWorkspace - 1] === windowId)
-          workspaceReveal[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
-        update()
-        animateWindowLayout(previousRects)
-        if (restoreFocus) {
-          const nextFocus = workspace.querySelector<HTMLButtonElement>(
-            '[data-focused] [data-window-focus]',
-          )
-          ;(nextFocus ?? appButtons[0])?.focus({ preventScroll: true })
-        }
-      }
+      const appWindow = workspace.querySelector<HTMLElement>(
+        `[data-window-id="${windowId}"]`,
+      )
+      if (!appWindow) return
 
-      const selectWindow = (windowId: number, reveal = true) => {
-        const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
-        if (!openWindows.some(({ id }) => id === windowId)) return
-
-        const workspaceIndex = activeWorkspace - 1
-        const focusChanged = workspaceFocus[workspaceIndex] !== windowId
-        const revealChanged =
-          reveal && workspaceReveal[workspaceIndex] !== windowId
-        if (!focusChanged && !revealChanged) return
-
-        const previousRects = revealChanged ? captureWindowRects() : null
-        workspaceFocus[workspaceIndex] = windowId
-        if (reveal) workspaceReveal[workspaceIndex] = windowId
-        if (revealChanged && previousRects) {
-          update()
-          animateWindowLayout(previousRects)
-        } else {
-          updateFocusState()
-        }
-      }
-
-      const closeFocusedWindow = () => {
-        const focusedWindowId = workspaceFocus[activeWorkspace - 1]
-        if (focusedWindowId) closeWindow(focusedWindowId)
-      }
-
-      type FocusDirection = 'left' | 'right' | 'up' | 'down'
-      type WindowPoint = { windowId: number; x: number; y: number }
-
-      const oppositeFocusDirection = (
-        direction: FocusDirection,
-      ): FocusDirection =>
-        direction === 'left'
-          ? 'right'
-          : direction === 'right'
-            ? 'left'
-            : direction === 'up'
-              ? 'down'
-              : 'up'
-
-      const focusMemoryKey = (windowId: number, direction: FocusDirection) =>
-        `${windowId}:${direction}`
-
-      const getWindowPoints = (openWindows: DemoWindow[]): WindowPoint[] => {
-        if (workspaceLayouts[activeWorkspace - 1] === 'scrolling')
-          return openWindows.map(({ id }, index) => ({
-            windowId: id,
-            x: index,
-            y: 0,
-          }))
-
-        const positions =
-          openWindows.length === 3
-            ? [
-                [0, 0.5],
-                [1, 0],
-                [1, 1],
-              ]
-            : openWindows.length === 2
-              ? [
-                  [0, 0],
-                  [1, 0],
-                ]
-              : [[0, 0]]
-
-        return openWindows.map(({ id }, index) => ({
-          windowId: id,
-          x: positions[index]?.[0] ?? 0,
-          y: positions[index]?.[1] ?? 0,
-        }))
-      }
-
-      const focusWindow = (direction: FocusDirection) => {
-        const workspaceIndex = activeWorkspace - 1
-        const openWindows = workspaceWindows[workspaceIndex] ?? []
-        const focusedWindowId = workspaceFocus[workspaceIndex]
-        if (!focusedWindowId || openWindows.length < 2) return
-
-        const points = getWindowPoints(openWindows)
-        const current = points.find(
-          ({ windowId }) => windowId === focusedWindowId,
-        )
-        if (!current) return
-
-        const candidates = points
-          .filter((point) => {
-            if (direction === 'left') return point.x < current.x
-            if (direction === 'right') return point.x > current.x
-            if (point.x !== current.x) return false
-            if (direction === 'up') return point.y < current.y
-            return point.y > current.y
-          })
-          .map((point) => {
-            const primary =
-              direction === 'left' || direction === 'right'
-                ? Math.abs(point.x - current.x)
-                : Math.abs(point.y - current.y)
-            const secondary =
-              direction === 'left' || direction === 'right'
-                ? Math.abs(point.y - current.y)
-                : Math.abs(point.x - current.x)
-            return { ...point, distance: primary + secondary * 1.5 }
-          })
-          .sort((a, b) => a.distance - b.distance)
-
-        // Wrap vertically within the column, without using return history.
-        if (direction === 'up' || direction === 'down') {
-          const wrappedCandidates = points
-            .filter(
-              (point) =>
-                point.x === current.x && point.windowId !== focusedWindowId,
-            )
-            .sort((a, b) => (direction === 'up' ? b.y - a.y : a.y - b.y))
-          const next = candidates[0] ?? wrappedCandidates[0]
-          if (next) selectWindow(next.windowId)
-          return
-        }
-
-        if (workspaceLayouts[workspaceIndex] !== 'dwindle') {
-          if (candidates[0]) selectWindow(candidates[0].windowId)
-          return
-        }
-
-        const focusMemory = workspaceFocusMemory[workspaceIndex]
-        const rememberedWindowId = (memoryDirection: FocusDirection) => {
-          const windowId = focusMemory.get(
-            focusMemoryKey(focusedWindowId, memoryDirection),
-          )
-          return points.find((point) => point.windowId === windowId)
-        }
-        const rememberedNext = rememberedWindowId(direction)
-        let next: WindowPoint | undefined =
-          candidates.find(
-            ({ windowId }) => windowId === rememberedNext?.windowId,
-          ) ?? candidates[0]
-
-        if (!next && (direction === 'left' || direction === 'right')) {
-          const edge =
-            direction === 'left'
-              ? Math.max(...points.map(({ x }) => x))
-              : Math.min(...points.map(({ x }) => x))
-          const wrappedCandidates = points
-            .filter(({ x }) => x === edge)
-            .sort(
-              (a, b) => Math.abs(a.y - current.y) - Math.abs(b.y - current.y),
-            )
-          const rememberedOpposite = rememberedWindowId(
-            oppositeFocusDirection(direction),
-          )
-          next =
-            wrappedCandidates.find(
-              ({ windowId }) => windowId === rememberedOpposite?.windowId,
-            ) ?? wrappedCandidates[0]
-          if (next) {
-            // If focus wraps across the layout edge, continuing in the same
-            // direction should return to the window we just left.
-            focusMemory.set(
-              focusMemoryKey(next.windowId, direction),
-              focusedWindowId,
-            )
-          }
-        }
-
-        if (!next) return
-        focusMemory.set(
-          focusMemoryKey(focusedWindowId, direction),
-          next.windowId,
-        )
-        focusMemory.set(
-          focusMemoryKey(next.windowId, oppositeFocusDirection(direction)),
-          focusedWindowId,
-        )
-        selectWindow(next.windowId)
-      }
-
-      const setLayout = (nextLayout: LayoutMode) => {
-        if (workspaceLayouts[activeWorkspace - 1] === nextLayout) return
-
-        const transitionVersion = ++layoutTransitionVersion
-        hoverFocusLocked = true
-        const previousRects = captureWindowRects()
-        workspaceLayouts[activeWorkspace - 1] = nextLayout
-        update()
-        const layoutAnimations = animateWindowLayout(previousRects)
-
-        if (layoutAnimations.length === 0) {
-          hoverFocusLocked = false
-          return
-        }
-
-        void Promise.allSettled(
-          layoutAnimations.map((animation) => animation.finished),
-        ).then(() => {
-          if (transitionVersion === layoutTransitionVersion)
-            hoverFocusLocked = false
-        })
-      }
-
-      const toggleLayout = () => {
-        setLayout(
-          workspaceLayouts[activeWorkspace - 1] === 'dwindle'
-            ? 'scrolling'
-            : 'dwindle',
-        )
-      }
-
-      const switchWorkspace = (workspace: number) => {
-        cancelWindowAnimations()
-        workspaceSwitchVersion += 1
-        const switchVersion = workspaceSwitchVersion
-        screen.dataset.switchingWorkspace = ''
-        activeWorkspace = workspace
-        update()
-
-        window.requestAnimationFrame(() => {
-          window.requestAnimationFrame(() => {
-            if (switchVersion === workspaceSwitchVersion)
-              delete screen.dataset.switchingWorkspace
-          })
-        })
-      }
-
-      // const cycleOccupiedWorkspaces = (direction: 'next' | 'previous') => {
-      //   const occupiedWorkspaces = workspaceWindows.flatMap((windows, index) =>
-      //     windows.length > 0 ? [index + 1] : [],
-      //   )
-      //   if (occupiedWorkspaces.length === 0) return
-
-      //   const currentIndex = occupiedWorkspaces.indexOf(activeWorkspace)
-      //   let nextWorkspace: number
-
-      //   if (currentIndex >= 0) {
-      //     const step = direction === 'next' ? 1 : -1
-      //     nextWorkspace =
-      //       occupiedWorkspaces[
-      //         (currentIndex + step + occupiedWorkspaces.length) %
-      //           occupiedWorkspaces.length
-      //       ]
-      //   } else if (direction === 'next') {
-      //     nextWorkspace =
-      //       occupiedWorkspaces.find(
-      //         (workspace) => workspace > activeWorkspace,
-      //       ) ?? occupiedWorkspaces[0]
-      //   } else {
-      //     nextWorkspace =
-      //       [...occupiedWorkspaces]
-      //         .reverse()
-      //         .find((workspace) => workspace < activeWorkspace) ??
-      //       occupiedWorkspaces.at(-1)!
-      //   }
-
-      //   if (nextWorkspace !== activeWorkspace) switchWorkspace(nextWorkspace)
-      // }
-
-      type Keybind = {
-        code: string
-        keys: string[]
-        label: string
-        action: () => void
-      }
-
-      const keybinds: Keybind[] = [
-        ...Array.from(workspaceButtons, (button) =>
-          Number(button.dataset.workspaceButton),
-        ).map((workspace) => ({
-          code: `Digit${workspace}`,
-          keys: [String(workspace)],
-          label: `Workspace ${workspace}`,
-          action: () => switchWorkspace(workspace),
-        })),
-        // {
-        //   code: 'Tab',
-        //   keys: ['Tab'],
-        //   label: 'Next occupied workspace',
-        //   action: () => cycleOccupiedWorkspaces('next'),
-        // },
-        // {
-        //   code: 'Shift+Tab',
-        //   keys: ['Shift', 'Tab'],
-        //   label: 'Previous occupied workspace',
-        //   action: () => cycleOccupiedWorkspaces('previous'),
-        // },
+      cancelWindowAnimation(appWindow)
+      appWindow.dataset.opening = ''
+      const animation = appWindow.animate(
+        [
+          { opacity: 0, scale: '0.5' },
+          { opacity: 1, scale: '1' },
+        ],
         {
-          code: 'Enter',
-          keys: ['Enter'],
-          label: 'Terminal',
-          action: () => openApp('terminal'),
+          duration: 480,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
         },
-        {
-          code: 'Shift+Enter',
-          keys: ['Shift', 'Enter'],
-          label: 'Browser',
-          action: () => openApp('browser'),
-        },
-        {
-          code: 'Shift+KeyN',
-          keys: ['Shift', 'N'],
-          label: 'Editor',
-          action: () => openApp('editor'),
-        },
-        ...(
-          [
-            ['ArrowLeft', '←', 'left'],
-            ['ArrowRight', '→', 'right'],
-            ['ArrowUp', '↑', 'up'],
-            ['ArrowDown', '↓', 'down'],
-          ] as const
-        ).map(([code, key, direction]) => ({
-          code,
-          keys: [key],
-          label: `Focus ${direction}`,
-          action: () => focusWindow(direction),
-        })),
-        {
-          code: 'KeyW',
-          keys: ['W'],
-          label: 'Close window',
-          action: closeFocusedWindow,
-        },
-        {
-          code: 'KeyL',
-          keys: ['L'],
-          label: 'Toggle layout',
-          action: toggleLayout,
-        },
-      ]
-
-      const renderShortcutList = () => {
-        const template = demo.querySelector<HTMLTemplateElement>(
-          '[data-shortcut-template]',
-        )
-        if (!template) return
-
-        shortcutList.replaceChildren(
-          ...keybinds.map((keybind) => {
-            const item = template.content.firstElementChild!.cloneNode(
-              true,
-            ) as HTMLLIElement
-            const button = item.querySelector<HTMLButtonElement>(
-              '[data-shortcut-action]',
-            )!
-            button.setAttribute('aria-label', keybind.label)
-            button.addEventListener('click', keybind.action, listenerOptions)
-            const keys = item.querySelector<HTMLElement>('[data-keybind]')!
-            const keyTemplate = keys.querySelector('kbd')!
-            keys.replaceChildren()
-
-            for (const key of [
-              shortcutModifier === 'Meta' ? 'Super' : 'Alt',
-              ...keybind.keys,
-            ]) {
-              const keyElement = keyTemplate.cloneNode(true) as HTMLElement
-              const keyLabel =
-                keyElement.querySelector<HTMLElement>('[data-key-label]')!
-              keyLabel.textContent = key
-              const arrowPath = getKeyArrowPath(key)
-              keyLabel.classList.toggle('opacity-0', Boolean(arrowPath))
-              const arrow =
-                keyElement.querySelector<SVGElement>('[data-key-arrow]')!
-              arrow.classList.toggle('hidden', !arrowPath)
-              arrow.querySelector('path')!.setAttribute('d', arrowPath ?? '')
-              // Keep copied shortcuts readable without a visible separator.
-              if (keys.childElementCount > 0) {
-                const separator = document.createElement('span')
-                separator.className = 'text-[0px]'
-                separator.setAttribute('aria-hidden', 'true')
-                separator.textContent = '+'
-                keyElement.prepend(separator)
-              }
-              keys.append(keyElement)
-            }
-
-            const label = item.querySelector<HTMLElement>(
-              '[data-shortcut-label]',
-            )!
-            label.textContent = keybind.label
-            return item
-          }),
-        )
-      }
-
-      const installShortcuts = () => {
-        unsubscribeShortcuts?.()
-        unsubscribeShortcuts = undefined
-
-        if (
-          !shortcutsToggle.checked ||
-          !demoVisible ||
-          !desktopViewport.matches
-        )
-          return
-
-        const bindings = Object.fromEntries(
-          keybinds.map((keybind) => [
-            `${shortcutModifier}+${keybind.code}`,
-            (event: KeyboardEvent) => {
-              event.preventDefault()
-              keybind.action()
-              const focusTarget =
-                workspace.querySelector<HTMLButtonElement>(
-                  '[data-focused] [data-window-focus]',
-                ) ?? appButtons[0]
-              focusTarget?.focus({ preventScroll: true })
-            },
-          ]),
-        )
-        unsubscribeShortcuts = tinykeys(window, bindings, {
-          ignore: (event) =>
-            event.isComposing ||
-            (event.target !== shortcutsToggle &&
-              defaultKeybindingsHandlerIgnore(event)),
-        })
-      }
-
-      const updateShortcutControls = () => {
-        const enabled = shortcutsToggle.checked
-        shortcutsStatus.textContent = enabled ? 'On' : 'Off'
-        shortcutHint.textContent = enabled
-          ? 'Press the keys, or select a shortcut below.'
-          : 'Keyboard controls are off. You can still select a shortcut below.'
-        modifierButtons.forEach((button) => {
-          button.disabled = !enabled
-          button.setAttribute(
-            'aria-pressed',
-            String(button.dataset.shortcutModifier === shortcutModifier),
-          )
-        })
-        renderShortcutList()
-        installShortcuts()
-      }
-
-      // Fullscreen feature disabled for now.
-      // const fullscreenPlaceholder = document.createComment('omarchy-demo')
-      // const fullscreenBackdrop = document.createElement('div')
-      // fullscreenBackdrop.className = 'omarchy-demo-backdrop'
-      // let previousBodyOverflow = ''
-      // let previousRootOverflow = ''
-      // let previousRootScrollbarGutter = ''
-      // let fullscreenAnimation: Animation | undefined
-      // let fullscreenContentAnimations: Animation[] = []
-      // let restoreFullscreenLayout = () => {}
-      // const fullscreenParts = Array.from(
-      //   demo.querySelectorAll<HTMLElement>(
-      //     '.demo-heading, .monitor-shell, .demo-controls, .shortcut-panel',
-      //   ),
-      // )
-
-      // const cancelFullscreenAnimation = () => {
-      //   fullscreenAnimation?.cancel()
-      //   fullscreenAnimation = undefined
-      //   fullscreenContentAnimations.forEach((animation) => animation.cancel())
-      //   fullscreenContentAnimations = []
-      //   restoreFullscreenLayout()
-      //   restoreFullscreenLayout = () => {}
-      //   delete demo.dataset.transitioning
-      // }
-      // let backdropRemovalTimer: number | undefined
-
-      // const updateFullscreenButton = () => {
-      //   const expanded = demo.hasAttribute('data-expanded')
-      //   const label = expanded ? 'Exit fullscreen' : 'Enter fullscreen'
-      //   fullscreenButton.setAttribute('aria-pressed', String(expanded))
-      //   fullscreenButton.setAttribute('aria-label', label)
-      //   fullscreenButton.title = label
-      // }
-
-      // const setExpanded = (
-      //   expanded: boolean,
-      //   focusButton = true,
-      //   animateTransition = true,
-      // ) => {
-      //   if (expanded === demo.hasAttribute('data-expanded')) return
-      //   const start = demo.getBoundingClientRect()
-      //   const partStarts = fullscreenParts.map((part) =>
-      //     part.getBoundingClientRect(),
-      //   )
-      //   cancelFullscreenAnimation()
-      //   if (expanded) {
-      //     window.clearTimeout(backdropRemovalTimer)
-      //     demo.before(fullscreenPlaceholder)
-      //     previousBodyOverflow = document.body.style.overflow
-      //     previousRootOverflow = document.documentElement.style.overflow
-      //     previousRootScrollbarGutter =
-      //       document.documentElement.style.scrollbarGutter
-      //     document.body.style.overflow = 'hidden'
-      //     document.documentElement.style.overflow = 'hidden'
-      //     document.documentElement.style.scrollbarGutter = 'auto'
-      //     document.body.append(fullscreenBackdrop)
-      //     // Commit the hidden state so the backdrop fades in on this frame.
-      //     void fullscreenBackdrop.offsetWidth
-      //     fullscreenBackdrop.dataset.visible = ''
-      //     document.body.append(demo)
-      //     demo.dataset.expanded = ''
-      //   } else {
-      //     fullscreenPlaceholder.replaceWith(demo)
-      //     document.body.style.overflow = previousBodyOverflow
-      //     document.documentElement.style.overflow = previousRootOverflow
-      //     document.documentElement.style.scrollbarGutter =
-      //       previousRootScrollbarGutter
-      //     delete demo.dataset.expanded
-      //     delete fullscreenBackdrop.dataset.visible
-      //     if (animateTransition) {
-      //       backdropRemovalTimer = window.setTimeout(
-      //         () => fullscreenBackdrop.remove(),
-      //         280,
-      //       )
-      //     } else {
-      //       fullscreenBackdrop.remove()
-      //     }
-      //   }
-      //   if (
-      //     animateTransition &&
-      //     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      //   ) {
-      //     const end = demo.getBoundingClientRect()
-      //     const partEnds = fullscreenParts.map((part) =>
-      //       part.getBoundingClientRect(),
-      //     )
-      //     // Freeze the destination layout while the frame resizes. Text and
-      //     // controls move independently, rather than stretching with the frame.
-      //     const layoutParts = Array.from(demo.children).filter(
-      //       (part): part is HTMLElement => part instanceof HTMLElement,
-      //     )
-      //     const previousStyles = layoutParts.map((part) => ({
-      //       width: part.style.width,
-      //       height: part.style.height,
-      //       flex: part.style.flex,
-      //     }))
-      //     const layoutRects = layoutParts.map((part) =>
-      //       part.getBoundingClientRect(),
-      //     )
-      //     layoutParts.forEach((part, index) => {
-      //       part.style.width = `${layoutRects[index].width}px`
-      //       part.style.height = `${layoutRects[index].height}px`
-      //       part.style.flex = 'none'
-      //     })
-      //     const previousOverflow = demo.style.overflow
-      //     demo.style.overflow = 'hidden'
-      //     restoreFullscreenLayout = () => {
-      //       layoutParts.forEach((part, index) => {
-      //         part.style.width = previousStyles[index].width
-      //         part.style.height = previousStyles[index].height
-      //         part.style.flex = previousStyles[index].flex
-      //       })
-      //       demo.style.overflow = previousOverflow
-      //     }
-      //     // Keep the returning demo above the fading fullscreen backdrop.
-      //     demo.dataset.transitioning = ''
-      //     const deltaX = start.left - end.left
-      //     const deltaY = start.top - end.top
-      //     const timing = {
-      //       duration: 280,
-      //       easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-      //     }
-      //     fullscreenContentAnimations = fullscreenParts.map((part, index) => {
-      //       if (
-      //         part.classList.contains('demo-controls') ||
-      //         part.classList.contains('shortcut-panel')
-      //       ) {
-      //         return part.animate(
-      //           [
-      //             { opacity: 0, offset: 0 },
-      //             { opacity: 0, offset: 0.6 },
-      //             { opacity: 1, offset: 1 },
-      //           ],
-      //           { duration: timing.duration, easing: 'ease-in-out' },
-      //         )
-      //       }
-      //       const from = partStarts[index]
-      //       const to = partEnds[index]
-      //       const isMonitor = part.classList.contains('monitor-shell')
-      //       const scale = isMonitor && to.width ? from.width / to.width : 1
-      //       return part.animate(
-      //         [
-      //           {
-      //             transform: `translate3d(${from.left - to.left - deltaX}px, ${from.top - to.top - deltaY}px, 0) scale(${scale})`,
-      //             transformOrigin: 'top left',
-      //             ...(!isMonitor && {
-      //               width: `${from.width}px`,
-      //               height: `${from.height}px`,
-      //             }),
-      //           },
-      //           {
-      //             transform: 'translate3d(0, 0, 0) scale(1)',
-      //             transformOrigin: 'top left',
-      //             ...(!isMonitor && {
-      //               width: `${to.width}px`,
-      //               height: `${to.height}px`,
-      //             }),
-      //           },
-      //         ],
-      //         timing,
-      //       )
-      //     })
-      //     fullscreenAnimation = demo.animate(
-      //       [
-      //         {
-      //           transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`,
-      //           width: `${start.width}px`,
-      //           height: `${start.height}px`,
-      //         },
-      //         {
-      //           transform: 'translate3d(0, 0, 0)',
-      //           width: `${end.width}px`,
-      //           height: `${end.height}px`,
-      //         },
-      //       ],
-      //       timing,
-      //     )
-      //     fullscreenAnimation.addEventListener(
-      //       'finish',
-      //       cancelFullscreenAnimation,
-      //       { once: true },
-      //     )
-      //   }
-      //   updateFullscreenButton()
-      //   if (focusButton) fullscreenButton.focus({ preventScroll: true })
-      // }
-
-      // fullscreenBackdrop.addEventListener(
-      //   'click',
-      //   () => setExpanded(false),
-      //   listenerOptions,
-      // )
-
-      // fullscreenButton.addEventListener(
-      //   'click',
-      //   () => setExpanded(!demo.hasAttribute('data-expanded')),
-      //   listenerOptions,
-      // )
-      // document.addEventListener(
-      //   'keydown',
-      //   (event) => {
-      //     if (event.key !== 'Escape' || !demo.hasAttribute('data-expanded'))
-      //       return
-      //     event.preventDefault()
-      //     setExpanded(false)
-      //   },
-      //   listenerOptions,
-      // )
-
-      appButtons.forEach((button) => {
-        button.addEventListener(
-          'click',
-          () => {
-            const app = button.dataset.appButton as DemoApp
-            if (!appIds.includes(app)) return
-            openApp(app)
-          },
-          listenerOptions,
-        )
-      })
-
-      resetButton.addEventListener(
-        'click',
-        () => {
-          cancelWindowAnimations()
-          workspaceSwitchVersion += 1
-          delete screen.dataset.switchingWorkspace
-          workspaceWindows.forEach((windows) => windows.splice(0))
-          workspaceFocus.fill(null)
-          workspaceReveal.fill(null)
-          workspaceFocusMemory.forEach((memory) => memory.clear())
-          workspaceLayouts.fill('dwindle')
-          nextWindowId = 1
-          activeWorkspace = 1
-          update()
-          appButtons[0]?.focus({ preventScroll: true })
-        },
-        listenerOptions,
       )
 
-      workspaceButtons.forEach((button) => {
-        button.addEventListener(
-          'click',
-          () => {
-            switchWorkspace(Number(button.dataset.workspaceButton) || 1)
-          },
-          listenerOptions,
-        )
-      })
-
-      layoutButtons.forEach((button) => {
-        button.addEventListener(
-          'click',
-          () => {
-            setLayout(
-              button.dataset.layoutButton === 'scrolling'
-                ? 'scrolling'
-                : 'dwindle',
-            )
-          },
-          listenerOptions,
-        )
-      })
-
-      shortcutsToggle.addEventListener(
-        'change',
-        updateShortcutControls,
-        listenerOptions,
-      )
-      modifierButtons.forEach((button) => {
-        button.addEventListener(
-          'click',
-          () => {
-            shortcutModifier =
-              button.dataset.shortcutModifier === 'Alt' ? 'Alt' : 'Meta'
-            updateShortcutControls()
-          },
-          listenerOptions,
-        )
-      })
-
-      const visibilityObserver = new IntersectionObserver(([entry]) => {
-        demoVisible = entry.isIntersecting
-        demo.toggleAttribute('data-visible', demoVisible)
-        installShortcuts()
-        syncClock()
-      })
-      visibilityObserver.observe(demo)
-      desktopViewport.addEventListener(
-        'change',
+      windowAnimations.set(appWindow, animation)
+      animation.addEventListener(
+        'finish',
         () => {
-          installShortcuts()
-          syncClock()
-        },
-        listenerOptions,
-      )
-
-      document.addEventListener(
-        'astro:before-swap',
-        () => {
-          // setExpanded(false, false, false)
-          // cancelFullscreenAnimation()
-          // window.clearTimeout(backdropRemovalTimer)
-          // fullscreenBackdrop.remove()
-          visibilityObserver.disconnect()
-          window.clearTimeout(clockTimer)
-          layoutTransitionVersion += 1
-          unsubscribeShortcuts?.()
-          cancelWindowAnimations()
-          lifecycleController.abort()
-          delete demo.dataset.initialized
+          delete appWindow.dataset.opening
+          windowAnimations.delete(appWindow)
         },
         { once: true },
       )
+      animation.addEventListener(
+        'cancel',
+        () => windowAnimations.delete(appWindow),
+        { once: true },
+      )
+    }
 
-      update()
-      updateShortcutControls()
-      // updateFullscreenButton()
+    const timeFormatter = new Intl.DateTimeFormat('en-GB', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
     })
+
+    const updateSystemTime = () => {
+      const now = new Date()
+      const currentMinute = now.toISOString().slice(0, 16)
+      if (currentMinute === lastClockMinute) return
+      lastClockMinute = currentMinute
+      const parts = Object.fromEntries(
+        timeFormatter
+          .formatToParts(now)
+          .filter(({ type }) => type !== 'literal')
+          .map(({ type, value }) => [type, value]),
+      )
+
+      systemTime.dateTime = now.toISOString()
+      systemTime.textContent = `${parts.weekday} ${parts.day} ${parts.month} ${parts.hour}:${parts.minute}`
+    }
+
+    updateSystemTime()
+    let clockTimer: number | undefined
+    const syncClock = () => {
+      window.clearTimeout(clockTimer)
+      if (!demoVisible || !desktopViewport.matches || document.hidden) return
+      updateSystemTime()
+      clockTimer = window.setTimeout(syncClock, 60000 - (Date.now() % 60000))
+    }
+    document.addEventListener('visibilitychange', syncClock, listenerOptions)
+
+    const update = () => {
+      // Locked (pre-Wake) controls stay disabled: the screen overlay blocks
+      // the workspace, and update() keeps every control below it inert too.
+      const locked = !demo.hasAttribute('data-unlocked')
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
+      const windowCount = openWindows.length
+      const focusIndex = activeWorkspace - 1
+      const focusedWindowId = workspaceFocus[focusIndex]
+      if (!openWindows.some(({ id }) => id === focusedWindowId))
+        workspaceFocus[focusIndex] = openWindows.at(-1)?.id ?? null
+      const revealedWindowId = workspaceReveal[focusIndex]
+      if (!openWindows.some(({ id }) => id === revealedWindowId))
+        workspaceReveal[focusIndex] = openWindows.at(-1)?.id ?? null
+      const focusedWindow = openWindows.find(
+        ({ id }) => id === workspaceFocus[focusIndex],
+      )
+      const revealedWindow = openWindows.find(
+        ({ id }) => id === workspaceReveal[focusIndex],
+      )
+
+      screen.dataset.layout = layout
+      screen.dataset.windowCount = String(windowCount)
+      screen.dataset.workspace = String(activeWorkspace)
+      screen.dataset.focusedPosition = String(
+        revealedWindow ? openWindows.indexOf(revealedWindow) + 1 : 0,
+      )
+      screen.setAttribute(
+        'aria-label',
+        `Workspace ${activeWorkspace}, ${windowCount} ${windowCount === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
+      )
+      const layoutLabel = layout === 'dwindle' ? 'Dwindle' : 'Scrolling'
+
+      modeCopy.textContent = `${layoutLabel} · workspace ${activeWorkspace} · ${windowCount === 0 ? 'empty' : `${windowCount} ${windowCount === 1 ? 'window' : 'windows'}`}`
+
+      stepCopy.textContent =
+        windowCount === 0
+          ? 'This workspace is empty. Open an app.'
+          : windowCount === 1
+            ? 'You can open more windows to see the layout take shape.'
+            : windowCount === 2
+              ? 'You can open another window to complete the layout.'
+              : 'You can change layout modes or switch workspaces.'
+
+      const visibleIds = new Set(openWindows.map(({ id }) => id))
+      getAppWindows().forEach((appWindow) => {
+        if (visibleIds.has(Number(appWindow.dataset.windowId))) return
+        cancelWindowAnimation(appWindow)
+        appWindow.remove()
+      })
+
+      openWindows.forEach((demoWindow, position) => {
+        let appWindow = workspace.querySelector<HTMLElement>(
+          `[data-window-id="${demoWindow.id}"]`,
+        )
+        if (!appWindow) {
+          appWindow = createAppWindow(demoWindow.app)
+          if (!appWindow) return
+          appWindow.dataset.windowId = String(demoWindow.id)
+          workspace.append(appWindow)
+        }
+        const isFocused = demoWindow.id === workspaceFocus[focusIndex]
+        appWindow.dataset.window = String(position + 1)
+        appWindow.dataset.app = demoWindow.app
+        appWindow.setAttribute(
+          'aria-label',
+          `${appLabels[demoWindow.app]} window ${position + 1}`,
+        )
+        const focusButton = appWindow.querySelector<HTMLButtonElement>(
+          '[data-window-focus]',
+        )!
+        focusButton.setAttribute(
+          'aria-label',
+          `Focus ${appLabels[demoWindow.app]} window ${position + 1}`,
+        )
+        focusButton.setAttribute('aria-pressed', String(isFocused))
+        if (isFocused) appWindow.dataset.focused = ''
+        else delete appWindow.dataset.focused
+      })
+
+      const isInitialState =
+        activeWorkspace === 1 &&
+        workspaceWindows.every((windows) => windows.length === 0) &&
+        workspaceLayouts.every(
+          (workspaceLayout) => workspaceLayout === 'dwindle',
+        )
+
+      resetButton.disabled = locked || isInitialState
+
+      appButtons.forEach((button) => {
+        const app = button.dataset.appButton as DemoApp
+        button.disabled = locked || windowCount >= 3
+        button.setAttribute('aria-label', `Open ${appLabels[app]}`)
+      })
+
+      layoutButtons.forEach((button) => {
+        button.disabled = locked
+        button.setAttribute(
+          'aria-pressed',
+          String(button.dataset.layoutButton === layout),
+        )
+      })
+
+      workspaceButtons.forEach((button) => {
+        const workspaceIndex = Number(button.dataset.workspaceButton) - 1
+        const hasWindows = (workspaceWindows[workspaceIndex]?.length ?? 0) > 0
+        button.disabled = locked
+        button.toggleAttribute('data-occupied', hasWindows)
+        button.setAttribute(
+          'aria-pressed',
+          String(Number(button.dataset.workspaceButton) === activeWorkspace),
+        )
+      })
+    }
+
+    const updateFocusState = () => {
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
+      const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+      const focusedWindow = openWindows.find(({ id }) => id === focusedWindowId)
+
+      screen.setAttribute(
+        'aria-label',
+        `Workspace ${activeWorkspace}, ${openWindows.length} ${openWindows.length === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
+      )
+      getAppWindows().forEach((appWindow) => {
+        const isFocused = Number(appWindow.dataset.windowId) === focusedWindowId
+        if (isFocused) appWindow.dataset.focused = ''
+        else delete appWindow.dataset.focused
+        appWindow
+          .querySelector('[data-window-focus]')
+          ?.setAttribute('aria-pressed', String(isFocused))
+      })
+    }
+
+    const openApp = (app: DemoApp) => {
+      workspaceSwitchVersion += 1
+      delete screen.dataset.switchingWorkspace
+
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      if (openWindows.length >= appIds.length) return
+
+      const previousRects = captureWindowRects()
+      const demoWindow = { id: nextWindowId++, app }
+      openWindows.push(demoWindow)
+      workspaceFocus[activeWorkspace - 1] = demoWindow.id
+      workspaceReveal[activeWorkspace - 1] = demoWindow.id
+      update()
+      animateWindowLayout(previousRects)
+      animateWindowOpening(demoWindow.id)
+
+      if (
+        workspaceLayouts[activeWorkspace - 1] === 'scrolling' &&
+        openWindows.length === 3
+      ) {
+        workspace
+          .querySelector<HTMLButtonElement>(
+            `[data-window-id="${demoWindow.id}"] [data-window-focus]`,
+          )
+          ?.focus({ preventScroll: true })
+      }
+    }
+
+    const closeWindow = (windowId: number) => {
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      const windowIndex = openWindows.findIndex(({ id }) => id === windowId)
+      if (windowIndex === -1) return
+      const previousRects = captureWindowRects()
+
+      const appWindow = workspace.querySelector<HTMLElement>(
+        `[data-window-id="${windowId}"]`,
+      )
+      const restoreFocus = appWindow?.contains(document.activeElement) ?? false
+      if (appWindow) animateWindowClosing(appWindow)
+      openWindows.splice(windowIndex, 1)
+
+      if (workspaceFocus[activeWorkspace - 1] === windowId)
+        workspaceFocus[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
+      if (workspaceReveal[activeWorkspace - 1] === windowId)
+        workspaceReveal[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
+      update()
+      animateWindowLayout(previousRects)
+      if (restoreFocus) {
+        const nextFocus = workspace.querySelector<HTMLButtonElement>(
+          '[data-focused] [data-window-focus]',
+        )
+        ;(nextFocus ?? appButtons[0])?.focus({ preventScroll: true })
+      }
+    }
+
+    const selectWindow = (windowId: number, reveal = true) => {
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      if (!openWindows.some(({ id }) => id === windowId)) return
+
+      const workspaceIndex = activeWorkspace - 1
+      const focusChanged = workspaceFocus[workspaceIndex] !== windowId
+      const revealChanged =
+        reveal && workspaceReveal[workspaceIndex] !== windowId
+      if (!focusChanged && !revealChanged) return
+
+      const previousRects = revealChanged ? captureWindowRects() : null
+      workspaceFocus[workspaceIndex] = windowId
+      if (reveal) workspaceReveal[workspaceIndex] = windowId
+      if (revealChanged && previousRects) {
+        update()
+        animateWindowLayout(previousRects)
+      } else {
+        updateFocusState()
+      }
+    }
+
+    const closeFocusedWindow = () => {
+      const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+      if (focusedWindowId) closeWindow(focusedWindowId)
+    }
+
+    type FocusDirection = 'left' | 'right' | 'up' | 'down'
+    type WindowPoint = { windowId: number; x: number; y: number }
+
+    const oppositeFocusDirection = (
+      direction: FocusDirection,
+    ): FocusDirection =>
+      direction === 'left'
+        ? 'right'
+        : direction === 'right'
+          ? 'left'
+          : direction === 'up'
+            ? 'down'
+            : 'up'
+
+    const focusMemoryKey = (windowId: number, direction: FocusDirection) =>
+      `${windowId}:${direction}`
+
+    const getWindowPoints = (openWindows: DemoWindow[]): WindowPoint[] => {
+      if (workspaceLayouts[activeWorkspace - 1] === 'scrolling')
+        return openWindows.map(({ id }, index) => ({
+          windowId: id,
+          x: index,
+          y: 0,
+        }))
+
+      const positions =
+        openWindows.length === 3
+          ? [
+              [0, 0.5],
+              [1, 0],
+              [1, 1],
+            ]
+          : openWindows.length === 2
+            ? [
+                [0, 0],
+                [1, 0],
+              ]
+            : [[0, 0]]
+
+      return openWindows.map(({ id }, index) => ({
+        windowId: id,
+        x: positions[index]?.[0] ?? 0,
+        y: positions[index]?.[1] ?? 0,
+      }))
+    }
+
+    const focusWindow = (direction: FocusDirection) => {
+      const workspaceIndex = activeWorkspace - 1
+      const openWindows = workspaceWindows[workspaceIndex] ?? []
+      const focusedWindowId = workspaceFocus[workspaceIndex]
+      if (!focusedWindowId || openWindows.length < 2) return
+
+      const points = getWindowPoints(openWindows)
+      const current = points.find(
+        ({ windowId }) => windowId === focusedWindowId,
+      )
+      if (!current) return
+
+      const candidates = points
+        .filter((point) => {
+          if (direction === 'left') return point.x < current.x
+          if (direction === 'right') return point.x > current.x
+          if (point.x !== current.x) return false
+          if (direction === 'up') return point.y < current.y
+          return point.y > current.y
+        })
+        .map((point) => {
+          const primary =
+            direction === 'left' || direction === 'right'
+              ? Math.abs(point.x - current.x)
+              : Math.abs(point.y - current.y)
+          const secondary =
+            direction === 'left' || direction === 'right'
+              ? Math.abs(point.y - current.y)
+              : Math.abs(point.x - current.x)
+          return { ...point, distance: primary + secondary * 1.5 }
+        })
+        .sort((a, b) => a.distance - b.distance)
+
+      // Wrap vertically within the column, without using return history.
+      if (direction === 'up' || direction === 'down') {
+        const wrappedCandidates = points
+          .filter(
+            (point) =>
+              point.x === current.x && point.windowId !== focusedWindowId,
+          )
+          .sort((a, b) => (direction === 'up' ? b.y - a.y : a.y - b.y))
+        const next = candidates[0] ?? wrappedCandidates[0]
+        if (next) selectWindow(next.windowId)
+        return
+      }
+
+      if (workspaceLayouts[workspaceIndex] !== 'dwindle') {
+        if (candidates[0]) selectWindow(candidates[0].windowId)
+        return
+      }
+
+      const focusMemory = workspaceFocusMemory[workspaceIndex]
+      const rememberedWindowId = (memoryDirection: FocusDirection) => {
+        const windowId = focusMemory.get(
+          focusMemoryKey(focusedWindowId, memoryDirection),
+        )
+        return points.find((point) => point.windowId === windowId)
+      }
+      const rememberedNext = rememberedWindowId(direction)
+      let next: WindowPoint | undefined =
+        candidates.find(
+          ({ windowId }) => windowId === rememberedNext?.windowId,
+        ) ?? candidates[0]
+
+      if (!next && (direction === 'left' || direction === 'right')) {
+        const edge =
+          direction === 'left'
+            ? Math.max(...points.map(({ x }) => x))
+            : Math.min(...points.map(({ x }) => x))
+        const wrappedCandidates = points
+          .filter(({ x }) => x === edge)
+          .sort((a, b) => Math.abs(a.y - current.y) - Math.abs(b.y - current.y))
+        const rememberedOpposite = rememberedWindowId(
+          oppositeFocusDirection(direction),
+        )
+        next =
+          wrappedCandidates.find(
+            ({ windowId }) => windowId === rememberedOpposite?.windowId,
+          ) ?? wrappedCandidates[0]
+        if (next) {
+          // If focus wraps across the layout edge, continuing in the same
+          // direction should return to the window we just left.
+          focusMemory.set(
+            focusMemoryKey(next.windowId, direction),
+            focusedWindowId,
+          )
+        }
+      }
+
+      if (!next) return
+      focusMemory.set(focusMemoryKey(focusedWindowId, direction), next.windowId)
+      focusMemory.set(
+        focusMemoryKey(next.windowId, oppositeFocusDirection(direction)),
+        focusedWindowId,
+      )
+      selectWindow(next.windowId)
+    }
+
+    const setLayout = (nextLayout: LayoutMode) => {
+      if (workspaceLayouts[activeWorkspace - 1] === nextLayout) return
+
+      const transitionVersion = ++layoutTransitionVersion
+      hoverFocusLocked = true
+      const previousRects = captureWindowRects()
+      workspaceLayouts[activeWorkspace - 1] = nextLayout
+      update()
+      const layoutAnimations = animateWindowLayout(previousRects)
+
+      if (layoutAnimations.length === 0) {
+        hoverFocusLocked = false
+        return
+      }
+
+      void Promise.allSettled(
+        layoutAnimations.map((animation) => animation.finished),
+      ).then(() => {
+        if (transitionVersion === layoutTransitionVersion)
+          hoverFocusLocked = false
+      })
+    }
+
+    const toggleLayout = () => {
+      setLayout(
+        workspaceLayouts[activeWorkspace - 1] === 'dwindle'
+          ? 'scrolling'
+          : 'dwindle',
+      )
+    }
+
+    const switchWorkspace = (workspace: number) => {
+      cancelWindowAnimations()
+      workspaceSwitchVersion += 1
+      const switchVersion = workspaceSwitchVersion
+      screen.dataset.switchingWorkspace = ''
+      activeWorkspace = workspace
+      update()
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (switchVersion === workspaceSwitchVersion)
+            delete screen.dataset.switchingWorkspace
+        })
+      })
+    }
+
+    // const cycleOccupiedWorkspaces = (direction: 'next' | 'previous') => {
+    //   const occupiedWorkspaces = workspaceWindows.flatMap((windows, index) =>
+    //     windows.length > 0 ? [index + 1] : [],
+    //   )
+    //   if (occupiedWorkspaces.length === 0) return
+
+    //   const currentIndex = occupiedWorkspaces.indexOf(activeWorkspace)
+    //   let nextWorkspace: number
+
+    //   if (currentIndex >= 0) {
+    //     const step = direction === 'next' ? 1 : -1
+    //     nextWorkspace =
+    //       occupiedWorkspaces[
+    //         (currentIndex + step + occupiedWorkspaces.length) %
+    //           occupiedWorkspaces.length
+    //       ]
+    //   } else if (direction === 'next') {
+    //     nextWorkspace =
+    //       occupiedWorkspaces.find(
+    //         (workspace) => workspace > activeWorkspace,
+    //       ) ?? occupiedWorkspaces[0]
+    //   } else {
+    //     nextWorkspace =
+    //       [...occupiedWorkspaces]
+    //         .reverse()
+    //         .find((workspace) => workspace < activeWorkspace) ??
+    //       occupiedWorkspaces.at(-1)!
+    //   }
+
+    //   if (nextWorkspace !== activeWorkspace) switchWorkspace(nextWorkspace)
+    // }
+
+    type Keybind = {
+      code: string
+      keys: string[]
+      label: string
+      action: () => void
+    }
+
+    const keybinds: Keybind[] = [
+      ...Array.from(workspaceButtons, (button) =>
+        Number(button.dataset.workspaceButton),
+      ).map((workspace) => ({
+        code: `Digit${workspace}`,
+        keys: [String(workspace)],
+        label: `Workspace ${workspace}`,
+        action: () => switchWorkspace(workspace),
+      })),
+      // {
+      //   code: 'Tab',
+      //   keys: ['Tab'],
+      //   label: 'Next occupied workspace',
+      //   action: () => cycleOccupiedWorkspaces('next'),
+      // },
+      // {
+      //   code: 'Shift+Tab',
+      //   keys: ['Shift', 'Tab'],
+      //   label: 'Previous occupied workspace',
+      //   action: () => cycleOccupiedWorkspaces('previous'),
+      // },
+      {
+        code: 'Enter',
+        keys: ['Enter'],
+        label: 'Terminal',
+        action: () => openApp('terminal'),
+      },
+      {
+        code: 'Shift+Enter',
+        keys: ['Shift', 'Enter'],
+        label: 'Browser',
+        action: () => openApp('browser'),
+      },
+      {
+        code: 'Shift+KeyN',
+        keys: ['Shift', 'N'],
+        label: 'Editor',
+        action: () => openApp('editor'),
+      },
+      ...(
+        [
+          ['ArrowLeft', '←', 'left'],
+          ['ArrowRight', '→', 'right'],
+          ['ArrowUp', '↑', 'up'],
+          ['ArrowDown', '↓', 'down'],
+        ] as const
+      ).map(([code, key, direction]) => ({
+        code,
+        keys: [key],
+        label: `Focus ${direction}`,
+        action: () => focusWindow(direction),
+      })),
+      {
+        code: 'KeyW',
+        keys: ['W'],
+        label: 'Close window',
+        action: closeFocusedWindow,
+      },
+      {
+        code: 'KeyL',
+        keys: ['L'],
+        label: 'Toggle layout',
+        action: toggleLayout,
+      },
+    ]
+
+    const renderShortcutList = () => {
+      const template = demo.querySelector<HTMLTemplateElement>(
+        '[data-shortcut-template]',
+      )
+      if (!template) return
+
+      shortcutList.replaceChildren(
+        ...keybinds.map((keybind) => {
+          const item = template.content.firstElementChild!.cloneNode(
+            true,
+          ) as HTMLLIElement
+          const button = item.querySelector<HTMLButtonElement>(
+            '[data-shortcut-action]',
+          )!
+          button.setAttribute('aria-label', keybind.label)
+          // Rendered immediately, but dormant until Wake: locked buttons
+          // are disabled (grayed out via disabled:opacity-60) and the
+          // click guard below drops any activation before unlock.
+          button.disabled = !demo.hasAttribute('data-unlocked')
+          button.addEventListener(
+            'click',
+            () => {
+              if (!demo.hasAttribute('data-unlocked')) return
+              keybind.action()
+            },
+            listenerOptions,
+          )
+          const keys = item.querySelector<HTMLElement>('[data-keybind]')!
+          const keyTemplate = keys.querySelector('kbd')!
+          keys.replaceChildren()
+
+          for (const key of [
+            shortcutModifier === 'Meta' ? 'Super' : 'Alt',
+            ...keybind.keys,
+          ]) {
+            const keyElement = keyTemplate.cloneNode(true) as HTMLElement
+            const keyLabel =
+              keyElement.querySelector<HTMLElement>('[data-key-label]')!
+            keyLabel.textContent = key
+            const arrowPath = getKeyArrowPath(key)
+            keyLabel.classList.toggle('opacity-0', Boolean(arrowPath))
+            const arrow =
+              keyElement.querySelector<SVGElement>('[data-key-arrow]')!
+            arrow.classList.toggle('hidden', !arrowPath)
+            arrow.querySelector('path')!.setAttribute('d', arrowPath ?? '')
+            // Keep copied shortcuts readable without a visible separator.
+            if (keys.childElementCount > 0) {
+              const separator = document.createElement('span')
+              separator.className = 'text-[0px]'
+              separator.setAttribute('aria-hidden', 'true')
+              separator.textContent = '+'
+              keyElement.prepend(separator)
+            }
+            keys.append(keyElement)
+          }
+
+          const label = item.querySelector<HTMLElement>(
+            '[data-shortcut-label]',
+          )!
+          label.textContent = keybind.label
+          return item
+        }),
+      )
+    }
+
+    const installShortcuts = () => {
+      unsubscribeShortcuts?.()
+      unsubscribeShortcuts = undefined
+
+      if (
+        !shortcutsToggle.checked ||
+        !demoVisible ||
+        !desktopViewport.matches ||
+        !demo.hasAttribute('data-unlocked')
+      )
+        return
+
+      const bindings = Object.fromEntries(
+        keybinds.map((keybind) => [
+          `${shortcutModifier}+${keybind.code}`,
+          (event: KeyboardEvent) => {
+            event.preventDefault()
+            keybind.action()
+            const focusTarget =
+              workspace.querySelector<HTMLButtonElement>(
+                '[data-focused] [data-window-focus]',
+              ) ?? appButtons[0]
+            focusTarget?.focus({ preventScroll: true })
+          },
+        ]),
+      )
+      unsubscribeShortcuts = tinykeys(window, bindings, {
+        ignore: (event) =>
+          event.isComposing ||
+          (event.target !== shortcutsToggle &&
+            defaultKeybindingsHandlerIgnore(event)),
+      })
+    }
+
+    const updateShortcutControls = () => {
+      const locked = !demo.hasAttribute('data-unlocked')
+      const enabled = shortcutsToggle.checked
+      shortcutsToggle.disabled = locked
+      shortcutsStatus.textContent = enabled ? 'On' : 'Off'
+      if (!locked) {
+        shortcutHint.textContent = enabled
+          ? 'Press the keys, or select a shortcut below.'
+          : 'Keyboard controls are off. You can still select a shortcut below.'
+      }
+      modifierButtons.forEach((button) => {
+        button.disabled = locked || !enabled
+        button.setAttribute(
+          'aria-pressed',
+          String(button.dataset.shortcutModifier === shortcutModifier),
+        )
+      })
+      renderShortcutList()
+      installShortcuts()
+    }
+
+    // Fullscreen feature disabled for now.
+    // const fullscreenPlaceholder = document.createComment('omarchy-demo')
+    // const fullscreenBackdrop = document.createElement('div')
+    // fullscreenBackdrop.className = 'omarchy-demo-backdrop'
+    // let previousBodyOverflow = ''
+    // let previousRootOverflow = ''
+    // let previousRootScrollbarGutter = ''
+    // let fullscreenAnimation: Animation | undefined
+    // let fullscreenContentAnimations: Animation[] = []
+    // let restoreFullscreenLayout = () => {}
+    // const fullscreenParts = Array.from(
+    //   demo.querySelectorAll<HTMLElement>(
+    //     '.demo-heading, .monitor-shell, .demo-controls, .shortcut-panel',
+    //   ),
+    // )
+
+    // const cancelFullscreenAnimation = () => {
+    //   fullscreenAnimation?.cancel()
+    //   fullscreenAnimation = undefined
+    //   fullscreenContentAnimations.forEach((animation) => animation.cancel())
+    //   fullscreenContentAnimations = []
+    //   restoreFullscreenLayout()
+    //   restoreFullscreenLayout = () => {}
+    //   delete demo.dataset.transitioning
+    // }
+    // let backdropRemovalTimer: number | undefined
+
+    // const updateFullscreenButton = () => {
+    //   const expanded = demo.hasAttribute('data-expanded')
+    //   const label = expanded ? 'Exit fullscreen' : 'Enter fullscreen'
+    //   fullscreenButton.setAttribute('aria-pressed', String(expanded))
+    //   fullscreenButton.setAttribute('aria-label', label)
+    //   fullscreenButton.title = label
+    // }
+
+    // const setExpanded = (
+    //   expanded: boolean,
+    //   focusButton = true,
+    //   animateTransition = true,
+    // ) => {
+    //   if (expanded === demo.hasAttribute('data-expanded')) return
+    //   const start = demo.getBoundingClientRect()
+    //   const partStarts = fullscreenParts.map((part) =>
+    //     part.getBoundingClientRect(),
+    //   )
+    //   cancelFullscreenAnimation()
+    //   if (expanded) {
+    //     window.clearTimeout(backdropRemovalTimer)
+    //     demo.before(fullscreenPlaceholder)
+    //     previousBodyOverflow = document.body.style.overflow
+    //     previousRootOverflow = document.documentElement.style.overflow
+    //     previousRootScrollbarGutter =
+    //       document.documentElement.style.scrollbarGutter
+    //     document.body.style.overflow = 'hidden'
+    //     document.documentElement.style.overflow = 'hidden'
+    //     document.documentElement.style.scrollbarGutter = 'auto'
+    //     document.body.append(fullscreenBackdrop)
+    //     // Commit the hidden state so the backdrop fades in on this frame.
+    //     void fullscreenBackdrop.offsetWidth
+    //     fullscreenBackdrop.dataset.visible = ''
+    //     document.body.append(demo)
+    //     demo.dataset.expanded = ''
+    //   } else {
+    //     fullscreenPlaceholder.replaceWith(demo)
+    //     document.body.style.overflow = previousBodyOverflow
+    //     document.documentElement.style.overflow = previousRootOverflow
+    //     document.documentElement.style.scrollbarGutter =
+    //       previousRootScrollbarGutter
+    //     delete demo.dataset.expanded
+    //     delete fullscreenBackdrop.dataset.visible
+    //     if (animateTransition) {
+    //       backdropRemovalTimer = window.setTimeout(
+    //         () => fullscreenBackdrop.remove(),
+    //         280,
+    //       )
+    //     } else {
+    //       fullscreenBackdrop.remove()
+    //     }
+    //   }
+    //   if (
+    //     animateTransition &&
+    //     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    //   ) {
+    //     const end = demo.getBoundingClientRect()
+    //     const partEnds = fullscreenParts.map((part) =>
+    //       part.getBoundingClientRect(),
+    //     )
+    //     // Freeze the destination layout while the frame resizes. Text and
+    //     // controls move independently, rather than stretching with the frame.
+    //     const layoutParts = Array.from(demo.children).filter(
+    //       (part): part is HTMLElement => part instanceof HTMLElement,
+    //     )
+    //     const previousStyles = layoutParts.map((part) => ({
+    //       width: part.style.width,
+    //       height: part.style.height,
+    //       flex: part.style.flex,
+    //     }))
+    //     const layoutRects = layoutParts.map((part) =>
+    //       part.getBoundingClientRect(),
+    //     )
+    //     layoutParts.forEach((part, index) => {
+    //       part.style.width = `${layoutRects[index].width}px`
+    //       part.style.height = `${layoutRects[index].height}px`
+    //       part.style.flex = 'none'
+    //     })
+    //     const previousOverflow = demo.style.overflow
+    //     demo.style.overflow = 'hidden'
+    //     restoreFullscreenLayout = () => {
+    //       layoutParts.forEach((part, index) => {
+    //         part.style.width = previousStyles[index].width
+    //         part.style.height = previousStyles[index].height
+    //         part.style.flex = previousStyles[index].flex
+    //       })
+    //       demo.style.overflow = previousOverflow
+    //     }
+    //     // Keep the returning demo above the fading fullscreen backdrop.
+    //     demo.dataset.transitioning = ''
+    //     const deltaX = start.left - end.left
+    //     const deltaY = start.top - end.top
+    //     const timing = {
+    //       duration: 280,
+    //       easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    //     }
+    //     fullscreenContentAnimations = fullscreenParts.map((part, index) => {
+    //       if (
+    //         part.classList.contains('demo-controls') ||
+    //         part.classList.contains('shortcut-panel')
+    //       ) {
+    //         return part.animate(
+    //           [
+    //             { opacity: 0, offset: 0 },
+    //             { opacity: 0, offset: 0.6 },
+    //             { opacity: 1, offset: 1 },
+    //           ],
+    //           { duration: timing.duration, easing: 'ease-in-out' },
+    //         )
+    //       }
+    //       const from = partStarts[index]
+    //       const to = partEnds[index]
+    //       const isMonitor = part.classList.contains('monitor-shell')
+    //       const scale = isMonitor && to.width ? from.width / to.width : 1
+    //       return part.animate(
+    //         [
+    //           {
+    //             transform: `translate3d(${from.left - to.left - deltaX}px, ${from.top - to.top - deltaY}px, 0) scale(${scale})`,
+    //             transformOrigin: 'top left',
+    //             ...(!isMonitor && {
+    //               width: `${from.width}px`,
+    //               height: `${from.height}px`,
+    //             }),
+    //           },
+    //           {
+    //             transform: 'translate3d(0, 0, 0) scale(1)',
+    //             transformOrigin: 'top left',
+    //             ...(!isMonitor && {
+    //               width: `${to.width}px`,
+    //               height: `${to.height}px`,
+    //             }),
+    //           },
+    //         ],
+    //         timing,
+    //       )
+    //     })
+    //     fullscreenAnimation = demo.animate(
+    //       [
+    //         {
+    //           transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`,
+    //           width: `${start.width}px`,
+    //           height: `${start.height}px`,
+    //         },
+    //         {
+    //           transform: 'translate3d(0, 0, 0)',
+    //           width: `${end.width}px`,
+    //           height: `${end.height}px`,
+    //         },
+    //       ],
+    //       timing,
+    //     )
+    //     fullscreenAnimation.addEventListener(
+    //       'finish',
+    //       cancelFullscreenAnimation,
+    //       { once: true },
+    //     )
+    //   }
+    //   updateFullscreenButton()
+    //   if (focusButton) fullscreenButton.focus({ preventScroll: true })
+    // }
+
+    // fullscreenBackdrop.addEventListener(
+    //   'click',
+    //   () => setExpanded(false),
+    //   listenerOptions,
+    // )
+
+    // fullscreenButton.addEventListener(
+    //   'click',
+    //   () => setExpanded(!demo.hasAttribute('data-expanded')),
+    //   listenerOptions,
+    // )
+    // document.addEventListener(
+    //   'keydown',
+    //   (event) => {
+    //     if (event.key !== 'Escape' || !demo.hasAttribute('data-expanded'))
+    //       return
+    //     event.preventDefault()
+    //     setExpanded(false)
+    //   },
+    //   listenerOptions,
+    // )
+
+    appButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          const app = button.dataset.appButton as DemoApp
+          if (!appIds.includes(app)) return
+          openApp(app)
+        },
+        listenerOptions,
+      )
+    })
+
+    resetButton.addEventListener(
+      'click',
+      () => {
+        cancelWindowAnimations()
+        workspaceSwitchVersion += 1
+        delete screen.dataset.switchingWorkspace
+        workspaceWindows.forEach((windows) => windows.splice(0))
+        workspaceFocus.fill(null)
+        workspaceReveal.fill(null)
+        workspaceFocusMemory.forEach((memory) => memory.clear())
+        workspaceLayouts.fill('dwindle')
+        nextWindowId = 1
+        activeWorkspace = 1
+        update()
+        appButtons[0]?.focus({ preventScroll: true })
+      },
+      listenerOptions,
+    )
+
+    workspaceButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          switchWorkspace(Number(button.dataset.workspaceButton) || 1)
+        },
+        listenerOptions,
+      )
+    })
+
+    layoutButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          setLayout(
+            button.dataset.layoutButton === 'scrolling'
+              ? 'scrolling'
+              : 'dwindle',
+          )
+        },
+        listenerOptions,
+      )
+    })
+
+    shortcutsToggle.addEventListener(
+      'change',
+      updateShortcutControls,
+      listenerOptions,
+    )
+    modifierButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          shortcutModifier =
+            button.dataset.shortcutModifier === 'Alt' ? 'Alt' : 'Meta'
+          updateShortcutControls()
+        },
+        listenerOptions,
+      )
+    })
+
+    // Wake arms handling: update() enables the app/reset/layout buttons
+    // and updateShortcutControls() enables the shortcut list + keyboard.
+    demo.addEventListener(
+      'omarchy-demo:wake',
+      () => {
+        update()
+        updateShortcutControls()
+      },
+      listenerOptions,
+    )
+
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      demoVisible = entry.isIntersecting
+      demo.toggleAttribute('data-visible', demoVisible)
+      installShortcuts()
+      syncClock()
+    })
+    visibilityObserver.observe(demo)
+    desktopViewport.addEventListener(
+      'change',
+      () => {
+        installShortcuts()
+        syncClock()
+      },
+      listenerOptions,
+    )
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        // setExpanded(false, false, false)
+        // cancelFullscreenAnimation()
+        // window.clearTimeout(backdropRemovalTimer)
+        // fullscreenBackdrop.remove()
+        visibilityObserver.disconnect()
+        window.clearTimeout(clockTimer)
+        layoutTransitionVersion += 1
+        unsubscribeShortcuts?.()
+        cancelWindowAnimations()
+        lifecycleController.abort()
+        delete demo.dataset.initialized
+      },
+      { once: true },
+    )
+
+    update()
+    updateShortcutControls()
+    // updateFullscreenButton()
   }
 
   document.addEventListener('astro:page-load', setupOmarchyDemos)
 </script>
 
 <style>
+  /* Session-lock overlay: fades out when Wake dismisses it. */
+  [data-lock-screen] {
+    transition: opacity 300ms ease;
+  }
+  [data-lock-screen][data-leaving] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .omarchy-demo:not([data-visible]) :global(.cursor) {
     animation-play-state: paused;
   }
@@ -1785,9 +1883,10 @@ import Keybind from './markdown/Keybind.astro'
     font-weight: 600;
     line-height: 1rem;
     transition:
-      background-color 160ms ease,
-      color 160ms ease,
-      box-shadow 160ms ease;
+      background-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease,
+      opacity 150ms ease;
   }
 
   .layout-switcher button:hover {
@@ -1946,7 +2045,7 @@ import Keybind from './markdown/Keybind.astro'
   }
   .demo-controls button:disabled {
     cursor: default;
-    opacity: 0.38;
+    opacity: 0.4;
   }
   .mobile-monitor div {
     display: grid;
@@ -2002,6 +2101,7 @@ import Keybind from './markdown/Keybind.astro'
             }
             */
 
+    [data-lock-screen],
     .window,
     .layout-switcher button,
     .demo-controls button,
