@@ -1,0 +1,300 @@
+---
+import type { MarkdownHeading } from 'astro'
+import { Image } from 'astro:assets'
+import { resolveBlogImage } from '@lib/blog'
+import type { BlogSeriesNavigation } from '@lib/series'
+import BlogSeriesNavigationComponent from '@components/BlogSeriesNavigation.astro'
+import BlogAuthor from '@components/BlogAuthor.astro'
+import ReturnHome from '@components/ReturnHome.astro'
+import Layout from '@layouts/Layout.astro'
+import { ChevronRightIcon } from 'lucide-react'
+
+interface Props {
+  title: string
+  description: string
+  pubDate: Date
+  updatedDate?: Date
+  image: {
+    url: string
+    alt: string
+  }
+  tags: string[]
+  headings: MarkdownHeading[]
+  series?: BlogSeriesNavigation
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  image,
+  tags,
+  headings,
+  series,
+} = Astro.props
+
+const tableOfContents = headings.filter(
+  (heading) => heading.depth === 2 || heading.depth === 3,
+)
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+---
+
+<Layout
+  title={`${title} - Kirill Tregubov`}
+  {description}
+  type="article"
+  image={image.url}
+  publishedDate={pubDate}
+  {updatedDate}
+  bodyClass="flex flex-col"
+  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
+>
+  <main class="mx-auto w-full max-w-200 grow space-y-8">
+    <ReturnHome href="/blog" label="Blog" />
+    <header class="mt-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
+      <div class="mb-6 overflow-hidden rounded-xl bg-neutral-800">
+        <Image
+          class="unblur aspect-1200/630 w-full object-cover select-none"
+          {...resolveBlogImage(image.url)}
+          alt={image.alt}
+          width={1200}
+          height={630}
+          loading="eager"
+          fetchpriority="high"
+          widths={[480, 800, 1200, 1600]}
+          sizes="(max-width: 848px) calc(100vw - 48px), 800px"
+        />
+      </div>
+      <h1 class="text-3xl leading-tight font-semibold text-neutral-100 sm:text-4xl">
+        {title}
+      </h1>
+      <p class="mt-3 text-lg text-neutral-300">{description}</p>
+      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-neutral-400">
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {updatedDate && (
+          <>
+            <span class="select-none" aria-hidden="true">
+              ·
+            </span>
+            <time datetime={updatedDate.toISOString()}>
+              Updated {formatDate(updatedDate)}
+            </time>
+          </>
+        )}
+        {tags.length > 0 && (
+          <>
+            <span class="select-none" aria-hidden="true">
+              ·
+            </span>
+            <ul class="flex flex-wrap gap-2" aria-label="Tags">
+              {tags.map((tag) => (
+                <li class="rounded-sm bg-neutral-800 px-2 py-0.5 text-neutral-400">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+    </header>
+    {series && (
+      <BlogSeriesNavigationComponent series={series} placement="top" />
+    )}
+    <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-strong:text-neutral-200 prose-a:-m-0.5 prose-a:rounded-sm prose-a:p-0.5 prose-a:hover:text-white prose-a:focus-visible:text-white prose-a:active:text-white prose-a:transition prose-a:text-neutral-200 prose-img:rounded-xl prose-hr:my-8 prose-hr:border-neutral-700 [&_[data-keybind]+sup>a[data-footnote-ref]]:ml-px [&_a[data-footnote-ref]]:scroll-mt-20">
+      {tableOfContents.length > 1 && (
+        <details class="toc-details group/toc not-prose overflow-hidden rounded-lg transition bg-neutral-800 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
+          <summary class="toc-summary relative z-10 flex cursor-pointer list-none rounded-lg items-center justify-between gap-4 border border-neutral-700 bg-neutral-800 p-4 py-5 text-lg leading-6 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:bg-neutral-700 active:text-white focus-visible:text-white focus-visible:ring-inset group/summary">
+            <span class="text-trim">Table of contents</span>
+            <ChevronRightIcon
+              className="size-4 shrink-0 text-neutral-500 transition-transform duration-150 group-hover/summary:text-white group-active/summary:text-white group-focus-visible/summary:text-white group-open/toc:rotate-90 group-data-closing/toc:rotate-0"
+              aria-hidden="true"
+            />
+          </summary>
+          <nav
+            aria-label="Table of contents"
+            class="toc-content px-4 pt-2 pb-3"
+          >
+            <ol>
+              <li>
+                <a
+                  class="-mx-1 block w-fit rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
+                  href="#post-content"
+                >
+                  Beginning of Post
+                </a>
+              </li>
+              {tableOfContents.map((heading) => (
+                <li class:list={[heading.depth === 3 && 'pl-4']}>
+                  <a
+                    class="-mx-1 block w-fit rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
+                    href={`#${heading.slug}`}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </details>
+      )}
+      <div
+        id="post-content"
+        class="scroll-mt-20 [&_summary]:-m-0.5 [&_summary]:rounded-sm [&_summary]:p-0.5 [&_summary]:transition [&_summary]:cursor-pointer [&_[data-footnotes]_li]:relative [&_[data-footnotes]_li]:isolate [&_[data-footnotes]_li]:scroll-mt-20 [&_[data-footnotes]_li]:before:absolute [&_[data-footnotes]_li]:before:-left-[calc(1.6em+0.75rem)] [&_[data-footnotes]_li]:before:-right-3 [&_[data-footnotes]_li]:before:-inset-y-2 [&_[data-footnotes]_li]:before:-z-1 [&_[data-footnotes]_li]:before:rounded-lg motion-safe:[&_[data-footnotes]_li]:before:transition-colors [&_[data-footnotes]_li:target]:before:bg-neutral-800/60 [&_[data-footnotes]_li]:before:content-[''] motion-safe:animate-[fadeUp_0.6s_backwards_0.45s]"
+      >
+        <slot />
+      </div>
+      {series && (
+        <BlogSeriesNavigationComponent series={series} placement="bottom" />
+      )}
+      <BlogAuthor />
+    </article>
+  </main>
+</Layout>
+
+<script>
+  const setupHeadingLinks = () => {
+    document
+      .querySelectorAll<HTMLHeadingElement>(
+        '#post-content :is(h1, h2, h3, h4, h5, h6)[id]:not(.not-prose *):not(.sr-only)',
+      )
+      .forEach((heading) => {
+        if (heading.querySelector('[data-heading-link]')) return
+
+        const label = `Link to ${heading.textContent?.trim() || 'this section'}`
+        const link = document.createElement('a')
+        link.href = `#${encodeURIComponent(heading.id)}`
+        link.dataset.headingLink = ''
+        link.className =
+          'not-prose absolute top-0 left-full ml-1 hidden rounded-sm px-1 leading-[inherit] font-normal text-neutral-500 no-underline opacity-0 transition-[opacity,color] duration-200 ease-in-out group-hover/heading:opacity-100 group-focus-within/heading:opacity-100 hover:text-white  active:text-white focus-visible:opacity-100 motion-reduce:transition-none md:block [@media(hover:none)]:opacity-100'
+        link.setAttribute('aria-label', label)
+        link.title = label
+        const symbol = document.createElement('span')
+        symbol.className = 'text-base md:text-[1em]'
+        symbol.textContent = '#'
+        link.append(symbol)
+
+        heading.classList.add(
+          'group/heading',
+          'relative',
+          'w-fit',
+          'max-w-full',
+        )
+        heading.append(link)
+      })
+  }
+
+  const setupFootnoteBackrefs = () => {
+    document
+      .querySelectorAll<HTMLAnchorElement>('a[data-footnote-backref]')
+      .forEach((link) => {
+        if (link.textContent === '↩') link.textContent = '\u21A9\uFE0E'
+      })
+  }
+
+  const setupTableOfContents = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    document
+      .querySelectorAll<HTMLDetailsElement>('.toc-details')
+      .forEach((details) => {
+        if (details.dataset.tocInit !== undefined) return
+        details.dataset.tocInit = ''
+
+        const summary = details.querySelector<HTMLElement>('.toc-summary')
+        const content = details.querySelector<HTMLElement>('.toc-content')
+
+        if (!summary || !content) return
+
+        const controller = new AbortController()
+        let activeAnimations: Animation[] = []
+        document.addEventListener(
+          'astro:before-swap',
+          () => {
+            controller.abort()
+            activeAnimations.forEach((animation) => animation.cancel())
+          },
+          { once: true, signal: controller.signal },
+        )
+
+        summary.addEventListener(
+          'click',
+          async (event) => {
+            if (reducedMotion.matches) return
+
+            event.preventDefault()
+            if (details.dataset.animating !== undefined) return
+
+            const opening = !details.open
+            const startHeight = details.getBoundingClientRect().height
+            details.dataset.animating = ''
+
+            if (opening) details.open = true
+            else details.dataset.closing = ''
+
+            const borderHeight = details.offsetHeight - details.clientHeight
+            const endHeight = opening
+              ? details.scrollHeight + borderHeight
+              : summary.getBoundingClientRect().height + borderHeight
+
+            const heightAnimation = details.animate(
+              [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
+              {
+                duration: 240,
+                easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+                fill: 'forwards',
+              },
+            )
+            const contentAnimation = content.animate(
+              opening
+                ? [
+                    { opacity: 0, transform: 'translateY(-0.25rem)' },
+                    { opacity: 1, transform: 'translateY(0)' },
+                  ]
+                : [
+                    { opacity: 1, transform: 'translateY(0)' },
+                    { opacity: 0, transform: 'translateY(-0.25rem)' },
+                  ],
+              { duration: 180, easing: 'ease-out', fill: 'forwards' },
+            )
+
+            activeAnimations = [heightAnimation, contentAnimation]
+            try {
+              await Promise.all([
+                heightAnimation.finished,
+                contentAnimation.finished,
+              ])
+              if (!opening) details.open = false
+            } catch {
+              // Navigation can cancel an in-flight disclosure animation.
+            } finally {
+              heightAnimation.cancel()
+              contentAnimation.cancel()
+              delete details.dataset.animating
+              delete details.dataset.closing
+              activeAnimations = []
+            }
+          },
+          { signal: controller.signal },
+        )
+      })
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    setupHeadingLinks()
+    setupFootnoteBackrefs()
+    setupTableOfContents()
+  })
+</script>
+
+<style>
+  .prose :global(a[data-footnote-backref]) {
+    font-variant-emoji: text;
+  }
+</style>

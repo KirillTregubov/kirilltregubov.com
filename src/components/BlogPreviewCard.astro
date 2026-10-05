@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets'
+import { resolveBlogImage } from '@lib/blog'
+import type { CollectionEntry } from 'astro:content'
+import { ArrowRightIcon } from 'lucide-react'
+
+interface Props {
+  post: CollectionEntry<'blog'>
+  single?: boolean
+}
+
+const { post, single = false } = Astro.props
+const formattedDate = post.data.pubDate.toLocaleDateString('en-CA', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+---
+
+<a
+  href={`/blog/${post.id}`}
+  class:list={[
+    'group flex h-full min-w-0 flex-col gap-4 rounded-xl border border-neutral-700/60 bg-neutral-800/30 p-4 transition hover:border-neutral-600 hover:bg-neutral-800/60 focus-visible:border-neutral-600 focus-visible:bg-neutral-800/60 sm:flex-row sm:items-center sm:gap-5',
+    !single && 'lg:flex-col lg:items-stretch xl:flex-row xl:items-center',
+  ]}
+>
+  <Image
+    {...resolveBlogImage(post.data.image.url)}
+    alt={post.data.image.alt}
+    width={480}
+    height={270}
+    class:list={[
+      'aspect-video w-full shrink-0 rounded-lg object-cover sm:w-44',
+      !single && 'lg:w-full xl:w-44',
+    ]}
+    loading="lazy"
+    widths={[240, 480, 800]}
+    sizes={
+      single
+        ? '(min-width: 640px) 176px, calc(100vw - 80px)'
+        : '(min-width: 1344px) 176px, (min-width: 1024px) 400px, (min-width: 640px) 176px, calc(100vw - 80px)'
+    }
+  />
+  <div class="min-w-0 flex-1">
+    <time
+      datetime={post.data.pubDate.toISOString()}
+      class="text-xs text-neutral-400"
+    >
+      {formattedDate}
+    </time>
+    <h3 class="mt-1 text-lg leading-snug font-medium text-neutral-200 transition group-hover:text-white group-focus-visible:text-white">
+      {post.data.title}
+    </h3>
+    <p class="mt-2 text-sm leading-relaxed text-neutral-400">
+      {post.data.description}
+    </p>
+  </div>
+  <ArrowRightIcon
+    className={`hidden size-5 shrink-0 text-neutral-500 transition motion-safe:group-hover:translate-x-0.5 group-hover:text-neutral-200 motion-safe:group-focus-visible:translate-x-0.5 group-focus-visible:text-neutral-200 sm:block ${single ? '' : 'lg:hidden xl:block'}`}
+    aria-hidden="true"
+  />
+</a>

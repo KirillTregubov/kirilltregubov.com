@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import BlogPreviewCard from './BlogPreviewCard.astro'
+
+interface Props {
+  posts: CollectionEntry<'blog'>[]
+  mode?: 'single' | 'multiple'
+}
+
+const { posts, mode = 'multiple' } = Astro.props
+const single = mode === 'single'
+const latestPosts = posts.slice(0, single ? 1 : 2)
+---
+
+<ul
+  class:list={['grid gap-8 gap-x-6 xl:gap-x-10', !single && 'lg:grid-cols-2']}
+>
+  {latestPosts.map((post, index) => (
+    <li class:list={[!single && index > 0 && 'hidden lg:block']}>
+      <BlogPreviewCard {post} {single} />
+    </li>
+  ))}
+</ul>

@@ -10,6 +10,8 @@ interface Props {
   description?: string
   type?: string
   image?: string
+  publishedDate?: Date
+  updatedDate?: Date
   bodyClass?: string
   footerClass?: string
   footerContent?: string
@@ -20,6 +22,8 @@ let {
   description,
   type,
   image,
+  publishedDate,
+  updatedDate,
   bodyClass,
   footerClass,
   footerContent = null,
@@ -36,6 +40,8 @@ if (!image) {
 }
 
 const formattedImage = image.replace('/assets/', '')
+const pageUrl = new URL(pathname, Astro.site).href
+const imageUrl = new URL(`/assets/${formattedImage}`, Astro.site).href
 
 const devOverflowToggleScript = `
   document.addEventListener('keydown', (event) => {
@@ -51,14 +57,14 @@ const devOverflowToggleScript = `
 <!doctype html>
 <html
   lang="en"
-  class="scroll-smooth scrollbar-gutter-stable"
+  class="motion-safe:scroll-smooth scrollbar-gutter-stable"
   transition:animate="none"
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="robots" content="follow, index" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       href="/favicons/favicon-96x96.png"
       rel="icon"
@@ -86,23 +92,29 @@ const devOverflowToggleScript = `
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta property="og:site_name" content="Kirill Tregubov" />
-    <meta property="og:url" content={`https://kirilltregubov.com${pathname}`} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
+    {publishedDate && (
+      <meta
+        property="article:published_time"
+        content={publishedDate.toISOString()}
+      />
+    )}
+    {updatedDate && (
+      <meta
+        property="article:modified_time"
+        content={updatedDate.toISOString()}
+      />
+    )}
     <meta property="og:locale" content="en_US" />
-    <meta
-      property="og:image"
-      content={`https://kirilltregubov.com/assets/${formattedImage}`}
-    />
+    <meta property="og:image" content={imageUrl} />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:creator" content="@KirillTregubov_" />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta
-      property="twitter:image"
-      content={`https://kirilltregubov.com/assets/${formattedImage}`}
-    />
+    <meta property="twitter:image" content={imageUrl} />
     <ClientRouter />
   </head>
   <body
@@ -126,7 +138,7 @@ const devOverflowToggleScript = `
           rel="noopener"
           href="https://github.com/KirillTregubov/kirilltregubov.com"
           target="_blank"
-          class="-m-0.5 rounded-sm p-0.5 underline underline-offset-2 transition-shadow"
+          class="-m-0.5 inline-block rounded-sm p-0.5 underline underline-offset-2 transition hover:text-neutral-300 focus-visible:text-neutral-300 active:text-neutral-300"
         >
           open source
         </a>

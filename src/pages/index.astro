@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
-import AboutMe from '@components/AboutMe.astro'
+import HomeHero from '@components/HomeHero.astro'
+import LatestPosts from '@components/LatestPosts.astro'
 import PageContainer from '@components/PageContainer.astro'
 import {
   ProjectList,
@@ -8,9 +9,15 @@ import {
   ProjectToggle,
 } from '@components/ProjectContext'
 import ProjectPreview from '@components/ProjectPreview.astro'
-import Saturn from '@components/Saturn'
 import TechnologyStack from '@components/TechnologyStack.astro'
 import Layout from '@layouts/Layout.astro'
+import { BLOG_SUBTITLE } from '@lib/blog'
+import { ArrowRightIcon } from 'lucide-react'
+
+const latestPosts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft && !post.data.hidden)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2)
 
 const allProjects = await getCollection('projects').then((projects) =>
   projects
@@ -28,29 +35,32 @@ const allProjects = await getCollection('projects').then((projects) =>
   footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.75s] motion-safe:opacity-0"
 >
   <PageContainer class="space-y-8 md:space-y-12">
-    <section class="flex flex-col justify-center lg:flex-row lg:items-center lg:gap-6 xl:gap-0 2xl:-mt-6">
-      <AboutMe class="animate-[fadeUp_0.6s_forwards] lg:text-balance" />
-      <figure
-        class="saturn relative box-content h-[calc(100vw-9rem)] max-h-75 w-full lg:min-w-100 xl:max-h-100 xl:min-w-150 2xl:min-w-175"
-        title="My favourite planet, Saturn."
+    <HomeHero />
+    {latestPosts.length > 0 && (
+      <section
+        id="writing"
+        aria-labelledby="writing-title"
+        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
       >
-        <Saturn client:idle fallbackClass="max-h-[300px] xl:max-h-[400px]" />
-        <figcaption
-          class="absolute bottom-0 w-full pb-2 text-center text-sm font-medium text-neutral-400/80 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xl:pb-4 2xl:pb-6"
-          title=""
-        >
-          My favourite planet, Saturn.{' '}
+        <div class="flex items-center justify-between gap-4">
+          <h2 id="writing-title" class="text-xl leading-none font-semibold">
+            My Writing
+          </h2>
           <a
-            class="-m-0.5 rounded-sm p-0.5 underline transition select-none hover:text-neutral-600 focus-visible:outline-hidden active:text-neutral-600"
-            href="https://science.nasa.gov/resource/saturn-3d-model/"
-            target="_blank"
-            rel="noopener"
+            href="/blog"
+            class="group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium transition hover:text-white focus-visible:text-white active:text-white px-2 -mx-2"
           >
-            Source
+            All Posts
+            <ArrowRightIcon
+              className="size-4 transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:group-focus-visible:translate-x-0.5"
+              aria-hidden="true"
+            />
           </a>
-        </figcaption>
-      </figure>
-    </section>
+        </div>
+        <p class="mt-2 mb-3 text-neutral-400">{BLOG_SUBTITLE}</p>
+        <LatestPosts posts={latestPosts} mode="single" />
+      </section>
+    )}
     {/* <section
       id="experience"
       class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
@@ -131,7 +141,7 @@ const allProjects = await getCollection('projects').then((projects) =>
                   'Reanimated',
                   'AirTable'
                 ].map((tech) => (
-                  <div class=" rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                  <div class="rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
                     {tech}
                   </div>
                 ))
@@ -190,7 +200,7 @@ const allProjects = await getCollection('projects').then((projects) =>
                   'Tailwind CSS',
                   'Motion'
                 ].map((tech) => (
-                  <div class=" rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                  <div class="rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
                     {tech}
                   </div>
                 ))
@@ -262,7 +272,7 @@ const allProjects = await getCollection('projects').then((projects) =>
                   'Next.js',
                   'Tailwind CSS'
                 ].map((tech) => (
-                  <div class=" rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
+                  <div class="rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
                     {tech}
                   </div>
                 ))

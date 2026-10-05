@@ -28,10 +28,12 @@ export function ProjectToggle() {
     <button
       type="button"
       onClick={() => showAll.set(!$showAll)}
-      className="-mx-3 -my-1 inline-flex shrink-0 cursor-pointer items-center rounded-sm px-3 py-1 pr-1 font-medium transition select-none hover:text-neutral-400 active:text-neutral-400"
+      className="-mx-1 -my-1 inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-sm px-3 py-1 pr-1 font-medium transition select-none hover:text-white focus-visible:text-white active:text-white"
     >
       {$showAll ? 'Show Featured' : 'Show All'}
-      <ChevronRightIcon className="size-6" />
+      <ChevronRightIcon
+        className={`size-5 transition-transform ${$showAll ? 'rotate-90' : ''}`}
+      />
     </button>
   )
 }

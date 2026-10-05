@@ -1,0 +1,2115 @@
+---
+import {
+  LayoutGridIcon,
+  // Maximize2Icon,
+  // Minimize2Icon,
+  MoveHorizontalIcon,
+  RotateCcwIcon,
+} from 'lucide-react'
+import { Image } from 'astro:assets'
+import wallpaper from '../../public/assets/blog/quattro.jpg'
+import OmarchyDummyApps from './OmarchyDummyApps.astro'
+import Keybind from './markdown/Keybind.astro'
+---
+
+<section
+  class="omarchy-demo not-prose shadow-lg [--orange:#ff8a3d] [--focus-blue:#8bd5ff] m-[2.5rem_0] overflow-hidden [border:1px_solid_rgb(255_255_255/0.1)] rounded-[1.25rem] bg-[#111116] data-transitioning:relative data-transitioning:z-50"
+  aria-labelledby="omarchy-demo-title"
+>
+  <div class="demo-heading flex items-center justify-between gap-5 p-[18px_20px] [border-bottom:1px_solid_rgb(255_255_255/0.08)]">
+    <div>
+      <!-- <p class="eyebrow m-[0_0_0.2rem] text-[#fb923c] text-[0.75rem] font-bold tracking-[0.12em] uppercase">
+        See it in action
+      </p> -->
+      <h2
+        id="omarchy-demo-title"
+        class="m-0 text-[1.0625rem] font-[650] leading-5 tracking-[-0.01em] text-[#f5f5f5]"
+      >
+        See it in action
+      </h2>
+      <p class="m-0 pt-1 text-[0.8125rem] leading-5 text-[#a1a1ad]">
+        Try the workflow directly in your browser.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <div
+        class="layout-switcher grid grid-cols-[repeat(2,6rem)] gap-1 p-1 [border:1px_solid_rgb(255_255_255/0.08)] rounded-[0.625rem] bg-[#09090d]"
+        role="group"
+        aria-label="Window layout"
+      >
+        <button
+          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+          type="button"
+          data-layout-button="dwindle"
+          aria-pressed="true"
+        >
+          <LayoutGridIcon aria-hidden="true" />
+          <span>Dwindle</span>
+        </button>
+        <button
+          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+          type="button"
+          data-layout-button="scrolling"
+          aria-pressed="false"
+        >
+          <MoveHorizontalIcon aria-hidden="true" />
+          <span>Scrolling</span>
+        </button>
+      </div>
+      <!-- Fullscreen feature disabled for now.
+      <button
+        type="button"
+        class="fullscreen-button group grid size-12 shrink-0 place-items-center rounded-[0.625rem] [border:1px_solid_rgb(255_255_255/0.08)] bg-[#09090d] text-[#9999a4] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue)"
+        data-fullscreen-button
+        aria-label="Enter fullscreen"
+        aria-pressed="false"
+        title="Enter fullscreen"
+      >
+        <span class="grid place-items-center" aria-hidden="true">
+          <Maximize2Icon className="size-4 [grid-area:1/1] scale-100 opacity-100 blur-none transition duration-200 will-change-transform group-aria-pressed:scale-50 group-aria-pressed:opacity-0 group-aria-pressed:blur-[2px] motion-reduce:transition-none" />
+          <Minimize2Icon className="size-4 [grid-area:1/1] scale-50 opacity-0 blur-[2px] transition duration-200 group-aria-pressed:scale-100 group-aria-pressed:opacity-100 group-aria-pressed:blur-none motion-reduce:transition-none" />
+        </span>
+      </button>
+      -->
+    </div>
+  </div>
+
+  <div class="desktop-experience p-[1.5rem_1.25rem_1.25rem] bg-[radial-gradient(ellipse_at_50%_0%,#241b28_0,#15141a_45%,#0c0c10_100%)] select-none">
+    <div class="monitor-shell w-full [--bezel-color:#1b1b20] [--hardware-highlight:#24242b]">
+      <div class="monitor-frame overflow-hidden rounded-t-xl bg-(--bezel-color) p-2 pb-0">
+        <div
+          class="screen relative isolate aspect-video overflow-hidden [--window-gap:0.375rem] rounded-t-sm bg-[#14141f]"
+          role="group"
+          data-layout="dwindle"
+          data-window-count="0"
+          aria-label="Workspace 1, 0 windows, dwindle layout"
+        >
+          <div
+            class="wallpaper pointer-events-none absolute -inset-6 [clip-path:inset(3rem_0_0)] after:absolute after:inset-0 after:bg-[linear-gradient(rgb(24_8_25/0.08),rgb(13_7_18/0.18))]"
+            aria-hidden="true"
+          >
+            <Image
+              src={wallpaper}
+              alt=""
+              width={1200}
+              widths={[800, 1200, 1600]}
+              sizes="(max-width: 848px) 100vw, 800px"
+              loading="lazy"
+              class="size-full object-cover"
+            />
+          </div>
+
+          <div class="topbar absolute z-5 inset-[0_0_auto] grid grid-cols-[1fr_auto_1fr] items-center h-6 px-3 py-0 bg-[#14141f] text-[#9999ac] font-mono text-[0.625rem] leading-2.5 shadow-[0_1px_rgb(255_255_255/0.04)]">
+            <div class="topbar-left flex items-center gap-1.5">
+              <svg
+                class="omarchy-logo size-2.5 shrink-0 text-[#dedeea]"
+                viewBox="0 0 1200 1200"
+                fill="currentColor"
+                aria-label="Omarchy"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1200 1200H720v-80h400V80H640.004v160h-400v720h720V240h-80v-80H1040v880H640v160H0V0h1200ZM80 1120h480v-80H160l.004-400H80Zm0-560h80.004V160h400V80H80Z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <div
+                class="workspaces flex items-center gap-0"
+                role="group"
+                aria-label="Workspaces"
+              >
+                {[1, 2, 3, 4, 5].map((workspace) => (
+                  <button
+                    type="button"
+                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent px-0 pt-0.5 pb-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] transition-opacity motion-reduce:transition-none data-occupied:text-[#bdbdcc] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+                    data-workspace-button={workspace}
+                    aria-label={`Switch to workspace ${workspace}`}
+                    aria-pressed={workspace === 1 ? 'true' : 'false'}
+                  >
+                    <span class="workspace-number group-aria-pressed/workspace:invisible">
+                      {workspace}
+                    </span>
+                    <span
+                      class="workspace-dot absolute top-1/2 left-1/2 hidden size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-xs bg-[#c6b8e9] group-aria-pressed/workspace:block"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <time
+              class="clock translate-y-px text-[#bdbdcc] whitespace-nowrap"
+              data-system-time
+            ></time>
+            <div
+              class="status-icons flex items-center justify-end gap-2"
+              aria-hidden="true"
+            >
+              <!--
+                Paths reproduced from the system's JetBrainsMono Nerd Font:
+                Ethernet (f0200), volume-high (f028), and monitor (f0379).
+                Keeping the outlines inline makes the demo match Omarchy without
+                requiring visitors to have the Nerd Font installed.
+              -->
+              <svg
+                class="status-icon ethernet-icon block size-2 shrink-0 fill-current"
+                viewBox="0 0 832 792"
+                preserveAspectRatio="none"
+              >
+                <path d="M207 626V500H291V626H375V500H457V626H541V500H625V626H707V250H541V126H291V250H125V626H207ZM98 0H734Q775 0 803.5 30Q832 60 832 100V694Q832 734 803.5 763Q775 792 734 792H98Q57 792 28.5 763Q0 734 0 694V100Q0 60 28.5 30Q57 0 98 0Z"></path>
+              </svg>
+              <svg
+                class="status-icon audio-icon block h-2 w-3 shrink-0 fill-current"
+                viewBox="0 0 1154 828"
+                preserveAspectRatio="none"
+              >
+                <path d="M962 11Q1052 84 1103 189Q1154 294 1154 414Q1154 534 1103 639Q1052 744 962 817Q948 828 930 826Q912 824 901 811Q890 797 892 779Q894 761 907 750Q982 690 1024 602Q1066 514 1067 414Q1066 314 1024 226Q982 138 907 78Q894 67 892 49Q890 31 901 17Q912 4 930 2Q948 0 962 11ZM853 145Q913 194 947 264Q981 334 981 414Q981 494 947 564Q913 634 853 683Q839 694 821 692Q803 690 792 677Q780 663 782 645Q784 627 798 616Q894 538 894 414Q894 291 798 213Q784 202 782 184Q780 166 792 152Q803 138 821 136Q839 134 853 145ZM744 280Q808 333 808 414Q808 496 744 549Q730 560 712 558Q694 556 683 542Q672 528 674 510Q676 492 689 481Q721 454 721 414Q721 374 689 347Q676 336 674 318Q672 300 683 286Q694 272 712 270Q730 268 744 280ZM543 16Q577 31 577 68V760Q577 798 543 813Q508 828 481 804L238 587H115Q68 588 34 554Q0 520 0 472V357Q0 309 34 275Q68 241 115 241H238L481 25Q508 1 543 16Z"></path>
+              </svg>
+              <svg
+                class="status-icon monitor-icon block h-2 w-2.5 shrink-0 fill-current"
+                viewBox="0 0 918 832"
+                preserveAspectRatio="none"
+              >
+                <path d="M834 82V582H84V82H834ZM834 0H84Q49 0 24.5 24.5Q0 49 0 82V582Q0 617 24.5 641.5Q49 666 84 666H375V750H293V832H625V750H543V666H834Q869 666 893.5 641.5Q918 617 918 582V82Q918 49 893.5 24.5Q869 0 834 0Z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="workspace absolute z-2 top-[calc(1.5rem+var(--window-gap))] right-0 bottom-(--window-gap) left-0 grid grid-cols-2 grid-rows-2 gap-(--window-gap) px-(--window-gap)"></div>
+
+          <!--
+            Session-lock overlay. Reproduces Omarchy's LockView.qml:
+            base fill Color.background (#1a1b26, tokyo-night), wallpaper
+            cover-cropped + heavy blur (~60px) + contrast 0.92, then the
+            381x67 input field (aspect-[381/67]) with lock.background
+            (background @ 0.8 alpha), 3px lock.borderActive border (#a9b1d6),
+            8px corner radius. Text stays readable at demo scale.
+          -->
+          <div
+            class="absolute inset-0 z-30 grid place-items-center overflow-hidden bg-[#1a1b26]"
+            data-lock-screen
+          >
+            <div class="absolute -inset-48" aria-hidden="true">
+              <Image
+                src={wallpaper}
+                alt=""
+                width={1200}
+                widths={[800, 1200, 1600]}
+                sizes="(max-width: 848px) 100vw, 800px"
+                loading="eager"
+                class="size-full object-cover blur-[60px] contrast-[0.92]"
+              />
+            </div>
+            <button
+              type="button"
+              data-wake-button
+              aria-label="Wake the demo desktop"
+              class="relative grid aspect-381/67 w-[min(381px,55%)] min-w-32 cursor-pointer place-items-center rounded-lg border-[3px] border-[#a9b1d6] bg-[rgb(26_27_38/0.8)] text-sm font-semibold tracking-wide text-[#a9b1d6] transition hover:bg-[rgb(36_40_59/0.9)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) active:scale-[0.98]"
+            >
+              Wake
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="monitor-chin grid h-4 place-items-center rounded-b-xl bg-(--bezel-color) text-[#72727c] text-[0.4375rem] leading-2 font-bold tracking-[0.16em]"
+        aria-hidden="true"
+      >
+        <span class="translate-y-px">OMARCHY</span>
+      </div>
+      <div
+        class="monitor-stand mx-auto h-2 w-[11%] bg-[linear-gradient(180deg,var(--bezel-color),var(--hardware-highlight))] [clip-path:polygon(35%_0,65%_0,100%_100%,0_100%)]"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="monitor-base mx-auto h-1 w-[18%] rounded-[50%_50%_0.2rem_0.2rem] bg-[linear-gradient(180deg,var(--hardware-highlight),var(--bezel-color))] shadow-[0_3px_8px_rgb(0_0_0/0.25)]"
+        aria-hidden="true"
+      ></div>
+    </div>
+
+    <div class="demo-controls flex flex-wrap items-center justify-between gap-x-4 gap-y-3 mt-5">
+      <div class="demo-copy min-w-0 flex-1 basis-60 select-text">
+        <p class="step-copy m-0 text-[#a1a1ad] text-[0.8125rem] leading-5">
+          Wake the desktop to begin.
+        </p>
+        <p
+          role="status"
+          aria-atomic="true"
+          class="mode-copy m-[0.2rem_0_0] text-[#a1a1ad] text-[0.6875rem] leading-4 capitalize"
+        >
+          Dwindle · workspace 1 · empty
+        </p>
+      </div>
+      <div class="action-buttons ml-auto flex shrink-0 flex-wrap justify-end gap-[0.35rem]">
+        <button
+          class="reset-button text-[0.8125rem] leading-5 shrink-0 bg-[#292930] text-[#c6c6cf] disabled:pointer-events-none"
+          type="button"
+          aria-label="Reset demo"
+          disabled
+        >
+          <RotateCcwIcon aria-hidden="true" />
+          Reset
+        </button>
+        <button
+          class="app-button text-[0.8125rem] leading-5 terminal-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform disabled:pointer-events-none"
+          type="button"
+          data-app-button="terminal"
+          aria-label="Open Terminal"
+        >
+          <span
+            class="app-color size-2 [border:1px_solid_rgb(255_255_255/0.24)] rounded-[0.18rem]"
+            aria-hidden="true"
+          ></span>
+          <span class="relative top-px">Terminal</span>
+        </button>
+        <button
+          class="app-button text-[0.8125rem] leading-5 browser-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform disabled:pointer-events-none"
+          type="button"
+          data-app-button="browser"
+          aria-label="Open Browser"
+        >
+          <span
+            class="app-color w-[0.55rem] h-[0.55rem] flex-[0_0_0.55rem] [border:1px_solid_rgb(255_255_255/0.24)] rounded-[0.18rem]"
+            aria-hidden="true"
+          ></span>
+          <span class="relative top-px">Browser</span>
+        </button>
+        <button
+          class="app-button text-[0.8125rem] leading-5 editor-button shrink-0 whitespace-nowrap bg-[#24242b] text-[#9999a4] will-change-transform disabled:pointer-events-none"
+          type="button"
+          data-app-button="editor"
+          aria-label="Open Editor"
+        >
+          <span
+            class="app-color w-[0.55rem] h-[0.55rem] flex-[0_0_0.55rem] [border:1px_solid_rgb(255_255_255/0.24)] rounded-[0.18rem]"
+            aria-hidden="true"
+          ></span>
+          <span class="relative top-px">Editor</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="shortcut-panel mt-4 p-[0.85rem] [border:1px_solid_rgb(255_255_255/0.08)] rounded-xl bg-[rgb(8_8_12/0.72)]">
+      <div class="shortcut-header flex items-center justify-between gap-4">
+        <div>
+          <p class="shortcut-title m-0 text-[#e7e7eb] text-[0.8125rem] font-bold leading-5">
+            Keyboard shortcuts
+          </p>
+          <p
+            class="shortcut-hint m-0 text-[#92929f] text-[0.6875rem] leading-4"
+            data-shortcut-hint
+          >
+            Wake the desktop to use your keyboard or the shortcuts below.
+          </p>
+        </div>
+
+        <label class="shortcut-toggle group inline-flex items-center gap-[0.45rem] shrink-0 text-xs leading-4 font-[650] text-[#b9b9c2] cursor-pointer transition-opacity motion-reduce:transition-none has-disabled:cursor-default has-disabled:opacity-40">
+          <input
+            type="checkbox"
+            data-shortcuts-toggle
+            aria-label="Enable demo keyboard shortcuts"
+            checked
+            class="peer sr-only"
+          />
+          <span data-shortcuts-status>Inactive</span>
+          <span
+            class="toggle-track relative h-5 w-9 rounded-full bg-[#1b1b1f] shadow-inner transition-colors peer-checked:bg-[#5a5a64] peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-300 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-neutral-950 motion-reduce:transition-none"
+            aria-hidden="true"
+          >
+            <span class="absolute top-0.5 left-0.5 h-4 w-5 rounded-full bg-white shadow transition group-has-checked:translate-x-3 motion-reduce:transition-none"></span>
+          </span>
+        </label>
+      </div>
+
+      <div class="shortcut-controls flex items-start justify-between gap-4 mt-3">
+        <div
+          class="modifier-switcher h-fit self-start flex shrink-0 gap-[0.15rem] p-[0.16rem] [border:1px_solid_rgb(255_255_255/0.08)] rounded-lg bg-[#111117]"
+          role="group"
+          aria-label="Shortcut modifier"
+        >
+          <button
+            type="button"
+            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] transition-opacity aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none motion-reduce:transition-none hover:enabled:text-white"
+            data-shortcut-modifier="Alt"
+            aria-pressed="true"
+          >
+            Alt
+          </button>
+          <button
+            type="button"
+            class="h-6 min-h-6 text-[0.6875rem] leading-4 cursor-pointer rounded-[0.34rem] bg-transparent px-2 py-0 font-[650] text-[#a1a1ad] transition-opacity aria-pressed:bg-[#32323b] aria-pressed:text-[#f4f4f6] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none motion-reduce:transition-none hover:enabled:text-white"
+            data-shortcut-modifier="Meta"
+            aria-pressed="false"
+          >
+            Super
+          </button>
+        </div>
+        <ul
+          class="shortcut-list flex flex-wrap justify-end gap-[0rem_0.35rem] m-0 p-0 list-none select-none **:data-keybind:select-none"
+          data-shortcut-list
+          aria-label="Demo shortcuts"
+        ></ul>
+        <template data-shortcut-template>
+          <li class="inline-flex">
+            <button
+              type="button"
+              data-shortcut-action
+              class="inline-flex min-h-8 cursor-pointer touch-manipulation items-center gap-[0.35rem] rounded-md px-1.5 py-1 text-[0.625rem] leading-4 whitespace-nowrap text-[#898994] transition hover:bg-white/5 hover:text-[#e7e7eb] active:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) pointer-coarse:min-h-11 motion-reduce:transition-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+            >
+              <Keybind keys={['Alt']} size="small" />
+              <span data-shortcut-label class="leading-4"></span>
+            </button>
+          </li>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-disabled [&_p]:text-sm [&_p]:leading-5 [&_strong]:text-base hidden p-[2.5rem_1.5rem] text-center bg-[radial-gradient(circle_at_50%_0,#2a1a29,#101014_65%)]">
+    <div class="mobile-monitor w-26 m-[0_auto_1.3rem]" aria-hidden="true">
+      <div>
+        <LayoutGridIcon />
+      </div>
+      <span></span>
+    </div>
+    <p>
+      <strong>Desktop demo</strong>
+    </p>
+    <p>
+      This workspace needs a little more room. Open the post on a desktop to try
+      it.
+    </p>
+  </div>
+
+  {(['terminal', 'browser', 'editor'] as const).map((app) => (
+    <template data-app-template={app}>
+      <div
+        class="window absolute flex flex-col overflow-hidden [border:2px_solid_rgb(255_255_255/0.14)] rounded-[0.55rem] bg-[#050507] contain-[layout_paint] cursor-pointer @container-size [transition:opacity_240ms_ease,border-color_80ms_ease] data-closing:pointer-events-none data-closing:z-10"
+        role="group"
+      >
+        <OmarchyDummyApps app={app} />
+        <button
+          type="button"
+          data-window-focus
+          class="absolute inset-0 z-1 cursor-pointer rounded-[inherit] focus-visible:outline-none! focus-visible:ring-0!"
+        ></button>
+      </div>
+    </template>
+  ))}
+</section>
+
+<script>
+  import { defaultKeybindingsHandlerIgnore, tinykeys } from 'tinykeys'
+  import { getKeyArrowPath } from '../lib/keybind'
+
+  // --- SESSION LOCK (runs immediately) ---
+  // Wires the Wake button. The demo boots immediately below, exactly as
+  // before, so the shortcut list renders on page load — but shortcut
+  // handling (list clicks + keyboard) stays dormant until Wake arms it
+  // via the `omarchy-demo:wake` event.
+  const setupOmarchyDemos = () => {
+    document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
+      if (demo.dataset.lockWired === undefined) {
+        demo.dataset.lockWired = ''
+        demo
+          .querySelector<HTMLButtonElement>('[data-wake-button]')
+          ?.addEventListener(
+            'click',
+            () => {
+              dismissLockScreen(demo)
+              demo.dispatchEvent(new CustomEvent('omarchy-demo:wake'))
+            },
+            { once: true },
+          )
+      }
+      bootOmarchyDemo(demo)
+    })
+  }
+
+  // Dismisses the session-lock overlay with a short fade. Wake is purely
+  // visual: the demo behind it is already booted.
+  const dismissLockScreen = (demo: HTMLElement) => {
+    demo.toggleAttribute('data-unlocked', true)
+    const lockScreen = demo.querySelector<HTMLElement>('[data-lock-screen]')
+    if (!lockScreen) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      lockScreen.remove()
+    else {
+      lockScreen.dataset.leaving = ''
+      window.setTimeout(() => lockScreen.remove(), 300)
+    }
+  }
+
+  // --- DEMO (runs immediately, as before) ---
+  // Boots the full interactive desktop demo: windows, layouts, workspaces,
+  // shortcuts, clock, and observers.
+  const bootOmarchyDemo = (demo: HTMLElement) => {
+    if (demo.dataset.initialized !== undefined) return
+    demo.dataset.initialized = ''
+    const lifecycleController = new AbortController()
+    const listenerOptions = { signal: lifecycleController.signal }
+
+    const screen = demo.querySelector<HTMLElement>('.screen')
+    const workspace = demo.querySelector<HTMLElement>('.workspace')
+    // const fullscreenButton = demo.querySelector<HTMLButtonElement>(
+    //   '[data-fullscreen-button]',
+    // )
+    const resetButton = demo.querySelector<HTMLButtonElement>('.reset-button')
+    const modeCopy = demo.querySelector<HTMLElement>('.mode-copy')
+    const stepCopy = demo.querySelector<HTMLElement>('.step-copy')
+    const systemTime = demo.querySelector<HTMLTimeElement>('[data-system-time]')
+    const layoutButtons = demo.querySelectorAll<HTMLButtonElement>(
+      '[data-layout-button]',
+    )
+    const workspaceButtons = demo.querySelectorAll<HTMLButtonElement>(
+      '[data-workspace-button]',
+    )
+    const appButtons =
+      demo.querySelectorAll<HTMLButtonElement>('[data-app-button]')
+    const shortcutsToggle = demo.querySelector<HTMLInputElement>(
+      '[data-shortcuts-toggle]',
+    )
+    const shortcutsStatus = demo.querySelector<HTMLElement>(
+      '[data-shortcuts-status]',
+    )
+    const shortcutHint = demo.querySelector<HTMLElement>('[data-shortcut-hint]')
+    const shortcutList = demo.querySelector<HTMLUListElement>(
+      '[data-shortcut-list]',
+    )
+    const modifierButtons = demo.querySelectorAll<HTMLButtonElement>(
+      '[data-shortcut-modifier]',
+    )
+
+    if (
+      !screen ||
+      !workspace ||
+      // !fullscreenButton ||
+      !resetButton ||
+      !modeCopy ||
+      !stepCopy ||
+      !systemTime ||
+      !shortcutsToggle ||
+      !shortcutsStatus ||
+      !shortcutHint ||
+      !shortcutList
+    )
+      return
+
+    const appIds = ['terminal', 'browser', 'editor'] as const
+    type DemoApp = (typeof appIds)[number]
+    type LayoutMode = 'dwindle' | 'scrolling'
+    type DemoWindow = { id: number; app: DemoApp }
+
+    const appLabels: Record<DemoApp, string> = {
+      terminal: 'Terminal',
+      browser: 'Browser',
+      editor: 'Editor',
+    }
+    const workspaceWindows: DemoWindow[][] = Array.from(
+      workspaceButtons,
+      () => [],
+    )
+    const workspaceFocus: (number | null)[] = Array.from(
+      workspaceButtons,
+      () => null,
+    )
+    const workspaceReveal: (number | null)[] = Array.from(
+      workspaceButtons,
+      () => null,
+    )
+    const workspaceFocusMemory: Map<string, number>[] = Array.from(
+      workspaceButtons,
+      () => new Map(),
+    )
+    const workspaceLayouts: LayoutMode[] = Array.from(
+      workspaceButtons,
+      () => 'dwindle',
+    )
+    let nextWindowId = 1
+    let activeWorkspace = 1
+    let workspaceSwitchVersion = 0
+    let layoutTransitionVersion = 0
+    let hoverFocusLocked = false
+    let shortcutModifier: 'Meta' | 'Alt' = 'Alt'
+    let unsubscribeShortcuts: (() => void) | undefined
+    const windowAnimations = new Map<HTMLElement, Animation>()
+    const desktopViewport = window.matchMedia('(min-width: 768px)')
+    let demoVisible = false
+    let lastClockMinute = ''
+
+    const cancelWindowAnimation = (appWindow: HTMLElement) => {
+      windowAnimations.get(appWindow)?.cancel()
+      delete appWindow.dataset.opening
+      windowAnimations.delete(appWindow)
+    }
+
+    const cancelWindowAnimations = () => {
+      for (const appWindow of windowAnimations.keys())
+        cancelWindowAnimation(appWindow)
+    }
+
+    const getAppWindows = () =>
+      workspace.querySelectorAll<HTMLElement>('.window:not([data-closing])')
+
+    const animateWindowClosing = (appWindow: HTMLElement) => {
+      cancelWindowAnimation(appWindow)
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+      // Keep a visual copy in place while the remaining windows reflow.
+      const rect = appWindow.getBoundingClientRect()
+      const workspaceRect = workspace.getBoundingClientRect()
+      const closingWindow = appWindow.cloneNode(true) as HTMLElement
+      delete closingWindow.dataset.windowId
+      closingWindow.dataset.closing = ''
+      closingWindow.inert = true
+      closingWindow.setAttribute('aria-hidden', 'true')
+      closingWindow.tabIndex = -1
+      Object.assign(closingWindow.style, {
+        inset: 'auto',
+        left: `${rect.left - workspaceRect.left}px`,
+        top: `${rect.top - workspaceRect.top}px`,
+        width: `${rect.width}px`,
+        height: `${rect.height}px`,
+      })
+      workspace.append(closingWindow)
+
+      const animation = closingWindow.animate(
+        [
+          { opacity: 1, scale: '1', transformOrigin: 'center' },
+          { opacity: 0, scale: '0.96', transformOrigin: 'center' },
+        ],
+        { duration: 100, easing: 'ease-out', fill: 'forwards' },
+      )
+      windowAnimations.set(closingWindow, animation)
+      const removeClosingWindow = () => {
+        closingWindow.remove()
+        windowAnimations.delete(closingWindow)
+      }
+      animation.addEventListener('finish', removeClosingWindow, {
+        once: true,
+      })
+      animation.addEventListener('cancel', removeClosingWindow, {
+        once: true,
+      })
+    }
+
+    const createAppWindow = (app: DemoApp) => {
+      const template = demo.querySelector<HTMLTemplateElement>(
+        `[data-app-template="${app}"]`,
+      )
+      const appWindow = template?.content.firstElementChild?.cloneNode(true) as
+        HTMLElement | undefined
+      if (!appWindow) return null
+
+      const selectAppWindow = () => {
+        const windowId = Number(appWindow.dataset.windowId)
+        if (windowId) selectWindow(windowId)
+      }
+      const closeAppWindow = (event: Event) => {
+        event.stopPropagation()
+        const windowId = Number(appWindow.dataset.windowId)
+        if (windowId) closeWindow(windowId)
+      }
+
+      const focusButton = appWindow.querySelector<HTMLButtonElement>(
+        '[data-window-focus]',
+      )!
+      focusButton.addEventListener('click', selectAppWindow)
+      appWindow.addEventListener('focusin', selectAppWindow)
+      // Keep real window controls separate from the decorative app chrome.
+      const closeButton = appWindow.querySelector<HTMLButtonElement>(
+        '[data-window-close]',
+      )!
+      appWindow.append(closeButton)
+      closeButton.className =
+        'window-close absolute right-1 z-2 grid size-5 cursor-pointer place-items-center rounded-full text-[#a9b1d6] hover:bg-white/10 hover:text-white focus-visible:ring-inset [&_svg]:size-2.5! [&_svg]:stroke-[1.5]'
+      closeButton.classList.add('top-[3.5px]')
+      closeButton.tabIndex = 0
+      const appContent = appWindow.querySelector<HTMLElement>('.dummy-app')!
+      if (app === 'browser') {
+        appContent.removeAttribute('aria-hidden')
+        focusButton.classList.add('pointer-events-none')
+        appWindow.prepend(focusButton, closeButton)
+        appWindow.addEventListener('click', selectAppWindow)
+      } else {
+        appContent.inert = true
+      }
+      appWindow.addEventListener('mouseenter', () => {
+        if (hoverFocusLocked) return
+        const windowId = Number(appWindow.dataset.windowId)
+        if (windowId) selectWindow(windowId, false)
+      })
+      appWindow
+        .querySelector('[data-window-close]')
+        ?.addEventListener('click', closeAppWindow)
+      return appWindow
+    }
+
+    type WindowRects = Map<HTMLElement, DOMRect>
+
+    const captureWindowRects = (): WindowRects =>
+      new Map(
+        Array.from(getAppWindows()).map((appWindow) => [
+          appWindow,
+          appWindow.getBoundingClientRect(),
+        ]),
+      )
+
+    const animateWindowLayout = (previousRects: WindowRects) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+        return []
+
+      const animations: Animation[] = []
+      for (const [appWindow, previousRect] of previousRects) {
+        if (!appWindow.isConnected) continue
+
+        const nextRect = appWindow.getBoundingClientRect()
+        const translateX = previousRect.left - nextRect.left
+        const translateY = previousRect.top - nextRect.top
+        const positionChanged =
+          Math.abs(translateX) > 0.5 || Math.abs(translateY) > 0.5
+        if (!positionChanged) continue
+
+        cancelWindowAnimation(appWindow)
+        const animation = appWindow.animate(
+          [
+            {
+              translate: `${translateX}px ${translateY}px`,
+            },
+            {
+              translate: '0 0',
+            },
+          ],
+          {
+            duration: 480,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          },
+        )
+
+        windowAnimations.set(appWindow, animation)
+        animations.push(animation)
+        const clearAnimation = () => {
+          if (windowAnimations.get(appWindow) === animation)
+            windowAnimations.delete(appWindow)
+        }
+        animation.addEventListener('finish', clearAnimation, { once: true })
+        animation.addEventListener('cancel', clearAnimation, { once: true })
+      }
+
+      return animations
+    }
+
+    const animateWindowOpening = (windowId: number) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+      const appWindow = workspace.querySelector<HTMLElement>(
+        `[data-window-id="${windowId}"]`,
+      )
+      if (!appWindow) return
+
+      cancelWindowAnimation(appWindow)
+      appWindow.dataset.opening = ''
+      const animation = appWindow.animate(
+        [
+          { opacity: 0, scale: '0.5' },
+          { opacity: 1, scale: '1' },
+        ],
+        {
+          duration: 480,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        },
+      )
+
+      windowAnimations.set(appWindow, animation)
+      animation.addEventListener(
+        'finish',
+        () => {
+          delete appWindow.dataset.opening
+          windowAnimations.delete(appWindow)
+        },
+        { once: true },
+      )
+      animation.addEventListener(
+        'cancel',
+        () => windowAnimations.delete(appWindow),
+        { once: true },
+      )
+    }
+
+    const timeFormatter = new Intl.DateTimeFormat('en-GB', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    })
+
+    const updateSystemTime = () => {
+      const now = new Date()
+      const currentMinute = now.toISOString().slice(0, 16)
+      if (currentMinute === lastClockMinute) return
+      lastClockMinute = currentMinute
+      const parts = Object.fromEntries(
+        timeFormatter
+          .formatToParts(now)
+          .filter(({ type }) => type !== 'literal')
+          .map(({ type, value }) => [type, value]),
+      )
+
+      systemTime.dateTime = now.toISOString()
+      systemTime.textContent = `${parts.weekday} ${parts.day} ${parts.month} ${parts.hour}:${parts.minute}`
+    }
+
+    updateSystemTime()
+    let clockTimer: number | undefined
+    const syncClock = () => {
+      window.clearTimeout(clockTimer)
+      if (!demoVisible || !desktopViewport.matches || document.hidden) return
+      updateSystemTime()
+      clockTimer = window.setTimeout(syncClock, 60000 - (Date.now() % 60000))
+    }
+    document.addEventListener('visibilitychange', syncClock, listenerOptions)
+
+    const update = () => {
+      // Locked (pre-Wake) controls stay disabled: the screen overlay blocks
+      // the workspace, and update() keeps every control below it inert too.
+      const locked = !demo.hasAttribute('data-unlocked')
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
+      const windowCount = openWindows.length
+      const focusIndex = activeWorkspace - 1
+      const focusedWindowId = workspaceFocus[focusIndex]
+      if (!openWindows.some(({ id }) => id === focusedWindowId))
+        workspaceFocus[focusIndex] = openWindows.at(-1)?.id ?? null
+      const revealedWindowId = workspaceReveal[focusIndex]
+      if (!openWindows.some(({ id }) => id === revealedWindowId))
+        workspaceReveal[focusIndex] = openWindows.at(-1)?.id ?? null
+      const focusedWindow = openWindows.find(
+        ({ id }) => id === workspaceFocus[focusIndex],
+      )
+      const revealedWindow = openWindows.find(
+        ({ id }) => id === workspaceReveal[focusIndex],
+      )
+
+      screen.dataset.layout = layout
+      screen.dataset.windowCount = String(windowCount)
+      screen.dataset.workspace = String(activeWorkspace)
+      screen.dataset.focusedPosition = String(
+        revealedWindow ? openWindows.indexOf(revealedWindow) + 1 : 0,
+      )
+      screen.setAttribute(
+        'aria-label',
+        `Workspace ${activeWorkspace}, ${windowCount} ${windowCount === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
+      )
+      const layoutLabel = layout === 'dwindle' ? 'Dwindle' : 'Scrolling'
+
+      modeCopy.textContent = `${layoutLabel} · workspace ${activeWorkspace} · ${windowCount === 0 ? 'empty' : `${windowCount} ${windowCount === 1 ? 'window' : 'windows'}`}`
+
+      stepCopy.textContent = locked
+        ? 'Wake the desktop to begin.'
+        : windowCount === 0
+          ? 'This workspace is empty. Open an app.'
+          : windowCount === 1
+            ? 'You can open more windows to see the layout take shape.'
+            : windowCount === 2
+              ? 'You can open another window to complete the layout.'
+              : 'You can change layout modes or switch workspaces.'
+
+      const visibleIds = new Set(openWindows.map(({ id }) => id))
+      getAppWindows().forEach((appWindow) => {
+        if (visibleIds.has(Number(appWindow.dataset.windowId))) return
+        cancelWindowAnimation(appWindow)
+        appWindow.remove()
+      })
+
+      openWindows.forEach((demoWindow, position) => {
+        let appWindow = workspace.querySelector<HTMLElement>(
+          `[data-window-id="${demoWindow.id}"]`,
+        )
+        if (!appWindow) {
+          appWindow = createAppWindow(demoWindow.app)
+          if (!appWindow) return
+          appWindow.dataset.windowId = String(demoWindow.id)
+          workspace.append(appWindow)
+        }
+        const isFocused = demoWindow.id === workspaceFocus[focusIndex]
+        appWindow.dataset.window = String(position + 1)
+        appWindow.dataset.app = demoWindow.app
+        appWindow.setAttribute(
+          'aria-label',
+          `${appLabels[demoWindow.app]} window ${position + 1}`,
+        )
+        const focusButton = appWindow.querySelector<HTMLButtonElement>(
+          '[data-window-focus]',
+        )!
+        focusButton.setAttribute(
+          'aria-label',
+          `Focus ${appLabels[demoWindow.app]} window ${position + 1}`,
+        )
+        focusButton.setAttribute('aria-pressed', String(isFocused))
+        if (isFocused) appWindow.dataset.focused = ''
+        else delete appWindow.dataset.focused
+      })
+
+      const isInitialState =
+        activeWorkspace === 1 &&
+        workspaceWindows.every((windows) => windows.length === 0) &&
+        workspaceLayouts.every(
+          (workspaceLayout) => workspaceLayout === 'dwindle',
+        )
+
+      resetButton.disabled = locked || isInitialState
+
+      appButtons.forEach((button) => {
+        const app = button.dataset.appButton as DemoApp
+        button.disabled = locked || windowCount >= 3
+        button.setAttribute('aria-label', `Open ${appLabels[app]}`)
+      })
+
+      layoutButtons.forEach((button) => {
+        button.disabled = locked
+        button.setAttribute(
+          'aria-pressed',
+          String(button.dataset.layoutButton === layout),
+        )
+      })
+
+      workspaceButtons.forEach((button) => {
+        const workspaceIndex = Number(button.dataset.workspaceButton) - 1
+        const hasWindows = (workspaceWindows[workspaceIndex]?.length ?? 0) > 0
+        button.disabled = locked
+        button.toggleAttribute('data-occupied', hasWindows)
+        button.setAttribute(
+          'aria-pressed',
+          String(Number(button.dataset.workspaceButton) === activeWorkspace),
+        )
+      })
+    }
+
+    const updateFocusState = () => {
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      const layout = workspaceLayouts[activeWorkspace - 1] ?? 'dwindle'
+      const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+      const focusedWindow = openWindows.find(({ id }) => id === focusedWindowId)
+
+      screen.setAttribute(
+        'aria-label',
+        `Workspace ${activeWorkspace}, ${openWindows.length} ${openWindows.length === 1 ? 'window' : 'windows'}, ${layout} layout${focusedWindow ? `, ${focusedWindow.app} focused` : ''}`,
+      )
+      getAppWindows().forEach((appWindow) => {
+        const isFocused = Number(appWindow.dataset.windowId) === focusedWindowId
+        if (isFocused) appWindow.dataset.focused = ''
+        else delete appWindow.dataset.focused
+        appWindow
+          .querySelector('[data-window-focus]')
+          ?.setAttribute('aria-pressed', String(isFocused))
+      })
+    }
+
+    const openApp = (app: DemoApp) => {
+      workspaceSwitchVersion += 1
+      delete screen.dataset.switchingWorkspace
+
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      if (openWindows.length >= appIds.length) return
+
+      const previousRects = captureWindowRects()
+      const demoWindow = { id: nextWindowId++, app }
+      openWindows.push(demoWindow)
+      workspaceFocus[activeWorkspace - 1] = demoWindow.id
+      workspaceReveal[activeWorkspace - 1] = demoWindow.id
+      update()
+      animateWindowLayout(previousRects)
+      animateWindowOpening(demoWindow.id)
+
+      if (
+        workspaceLayouts[activeWorkspace - 1] === 'scrolling' &&
+        openWindows.length === 3
+      ) {
+        workspace
+          .querySelector<HTMLButtonElement>(
+            `[data-window-id="${demoWindow.id}"] [data-window-focus]`,
+          )
+          ?.focus({ preventScroll: true })
+      }
+    }
+
+    const closeWindow = (windowId: number) => {
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      const windowIndex = openWindows.findIndex(({ id }) => id === windowId)
+      if (windowIndex === -1) return
+      const previousRects = captureWindowRects()
+
+      const appWindow = workspace.querySelector<HTMLElement>(
+        `[data-window-id="${windowId}"]`,
+      )
+      const restoreFocus = appWindow?.contains(document.activeElement) ?? false
+      if (appWindow) animateWindowClosing(appWindow)
+      openWindows.splice(windowIndex, 1)
+
+      if (workspaceFocus[activeWorkspace - 1] === windowId)
+        workspaceFocus[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
+      if (workspaceReveal[activeWorkspace - 1] === windowId)
+        workspaceReveal[activeWorkspace - 1] = openWindows.at(-1)?.id ?? null
+      update()
+      animateWindowLayout(previousRects)
+      if (restoreFocus) {
+        const nextFocus = workspace.querySelector<HTMLButtonElement>(
+          '[data-focused] [data-window-focus]',
+        )
+        ;(nextFocus ?? appButtons[0])?.focus({ preventScroll: true })
+      }
+    }
+
+    const selectWindow = (windowId: number, reveal = true) => {
+      const openWindows = workspaceWindows[activeWorkspace - 1] ?? []
+      if (!openWindows.some(({ id }) => id === windowId)) return
+
+      const workspaceIndex = activeWorkspace - 1
+      const focusChanged = workspaceFocus[workspaceIndex] !== windowId
+      const revealChanged =
+        reveal && workspaceReveal[workspaceIndex] !== windowId
+      if (!focusChanged && !revealChanged) return
+
+      const previousRects = revealChanged ? captureWindowRects() : null
+      workspaceFocus[workspaceIndex] = windowId
+      if (reveal) workspaceReveal[workspaceIndex] = windowId
+      if (revealChanged && previousRects) {
+        update()
+        animateWindowLayout(previousRects)
+      } else {
+        updateFocusState()
+      }
+    }
+
+    const closeFocusedWindow = () => {
+      const focusedWindowId = workspaceFocus[activeWorkspace - 1]
+      if (focusedWindowId) closeWindow(focusedWindowId)
+    }
+
+    type FocusDirection = 'left' | 'right' | 'up' | 'down'
+    type WindowPoint = { windowId: number; x: number; y: number }
+
+    const oppositeFocusDirection = (
+      direction: FocusDirection,
+    ): FocusDirection =>
+      direction === 'left'
+        ? 'right'
+        : direction === 'right'
+          ? 'left'
+          : direction === 'up'
+            ? 'down'
+            : 'up'
+
+    const focusMemoryKey = (windowId: number, direction: FocusDirection) =>
+      `${windowId}:${direction}`
+
+    const getWindowPoints = (openWindows: DemoWindow[]): WindowPoint[] => {
+      if (workspaceLayouts[activeWorkspace - 1] === 'scrolling')
+        return openWindows.map(({ id }, index) => ({
+          windowId: id,
+          x: index,
+          y: 0,
+        }))
+
+      const positions =
+        openWindows.length === 3
+          ? [
+              [0, 0.5],
+              [1, 0],
+              [1, 1],
+            ]
+          : openWindows.length === 2
+            ? [
+                [0, 0],
+                [1, 0],
+              ]
+            : [[0, 0]]
+
+      return openWindows.map(({ id }, index) => ({
+        windowId: id,
+        x: positions[index]?.[0] ?? 0,
+        y: positions[index]?.[1] ?? 0,
+      }))
+    }
+
+    const focusWindow = (direction: FocusDirection) => {
+      const workspaceIndex = activeWorkspace - 1
+      const openWindows = workspaceWindows[workspaceIndex] ?? []
+      const focusedWindowId = workspaceFocus[workspaceIndex]
+      if (!focusedWindowId || openWindows.length < 2) return
+
+      const points = getWindowPoints(openWindows)
+      const current = points.find(
+        ({ windowId }) => windowId === focusedWindowId,
+      )
+      if (!current) return
+
+      const candidates = points
+        .filter((point) => {
+          if (direction === 'left') return point.x < current.x
+          if (direction === 'right') return point.x > current.x
+          if (point.x !== current.x) return false
+          if (direction === 'up') return point.y < current.y
+          return point.y > current.y
+        })
+        .map((point) => {
+          const primary =
+            direction === 'left' || direction === 'right'
+              ? Math.abs(point.x - current.x)
+              : Math.abs(point.y - current.y)
+          const secondary =
+            direction === 'left' || direction === 'right'
+              ? Math.abs(point.y - current.y)
+              : Math.abs(point.x - current.x)
+          return { ...point, distance: primary + secondary * 1.5 }
+        })
+        .sort((a, b) => a.distance - b.distance)
+
+      // Wrap vertically within the column, without using return history.
+      if (direction === 'up' || direction === 'down') {
+        const wrappedCandidates = points
+          .filter(
+            (point) =>
+              point.x === current.x && point.windowId !== focusedWindowId,
+          )
+          .sort((a, b) => (direction === 'up' ? b.y - a.y : a.y - b.y))
+        const next = candidates[0] ?? wrappedCandidates[0]
+        if (next) selectWindow(next.windowId)
+        return
+      }
+
+      if (workspaceLayouts[workspaceIndex] !== 'dwindle') {
+        if (candidates[0]) selectWindow(candidates[0].windowId)
+        return
+      }
+
+      const focusMemory = workspaceFocusMemory[workspaceIndex]
+      const rememberedWindowId = (memoryDirection: FocusDirection) => {
+        const windowId = focusMemory.get(
+          focusMemoryKey(focusedWindowId, memoryDirection),
+        )
+        return points.find((point) => point.windowId === windowId)
+      }
+      const rememberedNext = rememberedWindowId(direction)
+      let next: WindowPoint | undefined =
+        candidates.find(
+          ({ windowId }) => windowId === rememberedNext?.windowId,
+        ) ?? candidates[0]
+
+      if (!next && (direction === 'left' || direction === 'right')) {
+        const edge =
+          direction === 'left'
+            ? Math.max(...points.map(({ x }) => x))
+            : Math.min(...points.map(({ x }) => x))
+        const wrappedCandidates = points
+          .filter(({ x }) => x === edge)
+          .sort((a, b) => Math.abs(a.y - current.y) - Math.abs(b.y - current.y))
+        const rememberedOpposite = rememberedWindowId(
+          oppositeFocusDirection(direction),
+        )
+        next =
+          wrappedCandidates.find(
+            ({ windowId }) => windowId === rememberedOpposite?.windowId,
+          ) ?? wrappedCandidates[0]
+        if (next) {
+          // If focus wraps across the layout edge, continuing in the same
+          // direction should return to the window we just left.
+          focusMemory.set(
+            focusMemoryKey(next.windowId, direction),
+            focusedWindowId,
+          )
+        }
+      }
+
+      if (!next) return
+      focusMemory.set(focusMemoryKey(focusedWindowId, direction), next.windowId)
+      focusMemory.set(
+        focusMemoryKey(next.windowId, oppositeFocusDirection(direction)),
+        focusedWindowId,
+      )
+      selectWindow(next.windowId)
+    }
+
+    const setLayout = (nextLayout: LayoutMode) => {
+      if (workspaceLayouts[activeWorkspace - 1] === nextLayout) return
+
+      const transitionVersion = ++layoutTransitionVersion
+      hoverFocusLocked = true
+      const previousRects = captureWindowRects()
+      workspaceLayouts[activeWorkspace - 1] = nextLayout
+      update()
+      const layoutAnimations = animateWindowLayout(previousRects)
+
+      if (layoutAnimations.length === 0) {
+        hoverFocusLocked = false
+        return
+      }
+
+      void Promise.allSettled(
+        layoutAnimations.map((animation) => animation.finished),
+      ).then(() => {
+        if (transitionVersion === layoutTransitionVersion)
+          hoverFocusLocked = false
+      })
+    }
+
+    const toggleLayout = () => {
+      setLayout(
+        workspaceLayouts[activeWorkspace - 1] === 'dwindle'
+          ? 'scrolling'
+          : 'dwindle',
+      )
+    }
+
+    const switchWorkspace = (workspace: number) => {
+      cancelWindowAnimations()
+      workspaceSwitchVersion += 1
+      const switchVersion = workspaceSwitchVersion
+      screen.dataset.switchingWorkspace = ''
+      activeWorkspace = workspace
+      update()
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (switchVersion === workspaceSwitchVersion)
+            delete screen.dataset.switchingWorkspace
+        })
+      })
+    }
+
+    // const cycleOccupiedWorkspaces = (direction: 'next' | 'previous') => {
+    //   const occupiedWorkspaces = workspaceWindows.flatMap((windows, index) =>
+    //     windows.length > 0 ? [index + 1] : [],
+    //   )
+    //   if (occupiedWorkspaces.length === 0) return
+
+    //   const currentIndex = occupiedWorkspaces.indexOf(activeWorkspace)
+    //   let nextWorkspace: number
+
+    //   if (currentIndex >= 0) {
+    //     const step = direction === 'next' ? 1 : -1
+    //     nextWorkspace =
+    //       occupiedWorkspaces[
+    //         (currentIndex + step + occupiedWorkspaces.length) %
+    //           occupiedWorkspaces.length
+    //       ]
+    //   } else if (direction === 'next') {
+    //     nextWorkspace =
+    //       occupiedWorkspaces.find(
+    //         (workspace) => workspace > activeWorkspace,
+    //       ) ?? occupiedWorkspaces[0]
+    //   } else {
+    //     nextWorkspace =
+    //       [...occupiedWorkspaces]
+    //         .reverse()
+    //         .find((workspace) => workspace < activeWorkspace) ??
+    //       occupiedWorkspaces.at(-1)!
+    //   }
+
+    //   if (nextWorkspace !== activeWorkspace) switchWorkspace(nextWorkspace)
+    // }
+
+    type Keybind = {
+      code: string
+      keys: string[]
+      label: string
+      action: () => void
+    }
+
+    const keybinds: Keybind[] = [
+      ...Array.from(workspaceButtons, (button) =>
+        Number(button.dataset.workspaceButton),
+      ).map((workspace) => ({
+        code: `Digit${workspace}`,
+        keys: [String(workspace)],
+        label: `Workspace ${workspace}`,
+        action: () => switchWorkspace(workspace),
+      })),
+      // {
+      //   code: 'Tab',
+      //   keys: ['Tab'],
+      //   label: 'Next occupied workspace',
+      //   action: () => cycleOccupiedWorkspaces('next'),
+      // },
+      // {
+      //   code: 'Shift+Tab',
+      //   keys: ['Shift', 'Tab'],
+      //   label: 'Previous occupied workspace',
+      //   action: () => cycleOccupiedWorkspaces('previous'),
+      // },
+      {
+        code: 'Enter',
+        keys: ['Enter'],
+        label: 'Terminal',
+        action: () => openApp('terminal'),
+      },
+      {
+        code: 'Shift+Enter',
+        keys: ['Shift', 'Enter'],
+        label: 'Browser',
+        action: () => openApp('browser'),
+      },
+      {
+        code: 'Shift+KeyN',
+        keys: ['Shift', 'N'],
+        label: 'Editor',
+        action: () => openApp('editor'),
+      },
+      ...(
+        [
+          ['ArrowLeft', '←', 'left'],
+          ['ArrowRight', '→', 'right'],
+          ['ArrowUp', '↑', 'up'],
+          ['ArrowDown', '↓', 'down'],
+        ] as const
+      ).map(([code, key, direction]) => ({
+        code,
+        keys: [key],
+        label: `Focus ${direction}`,
+        action: () => focusWindow(direction),
+      })),
+      {
+        code: 'KeyW',
+        keys: ['W'],
+        label: 'Close window',
+        action: closeFocusedWindow,
+      },
+      {
+        code: 'KeyL',
+        keys: ['L'],
+        label: 'Toggle layout',
+        action: toggleLayout,
+      },
+    ]
+
+    const renderShortcutList = () => {
+      const template = demo.querySelector<HTMLTemplateElement>(
+        '[data-shortcut-template]',
+      )
+      if (!template) return
+
+      shortcutList.replaceChildren(
+        ...keybinds.map((keybind) => {
+          const item = template.content.firstElementChild!.cloneNode(
+            true,
+          ) as HTMLLIElement
+          const button = item.querySelector<HTMLButtonElement>(
+            '[data-shortcut-action]',
+          )!
+          button.setAttribute('aria-label', keybind.label)
+          // Rendered immediately, but dormant until Wake: locked buttons
+          // are disabled (grayed out via disabled:opacity-60) and the
+          // click guard below drops any activation before unlock.
+          button.disabled = !demo.hasAttribute('data-unlocked')
+          button.addEventListener(
+            'click',
+            () => {
+              if (!demo.hasAttribute('data-unlocked')) return
+              keybind.action()
+            },
+            listenerOptions,
+          )
+          const keys = item.querySelector<HTMLElement>('[data-keybind]')!
+          const keyTemplate = keys.querySelector('kbd')!
+          keys.replaceChildren()
+
+          for (const key of [
+            shortcutModifier === 'Meta' ? 'Super' : 'Alt',
+            ...keybind.keys,
+          ]) {
+            const keyElement = keyTemplate.cloneNode(true) as HTMLElement
+            const keyLabel =
+              keyElement.querySelector<HTMLElement>('[data-key-label]')!
+            keyLabel.textContent = key
+            const arrowPath = getKeyArrowPath(key)
+            keyLabel.classList.toggle('opacity-0', Boolean(arrowPath))
+            const arrow =
+              keyElement.querySelector<SVGElement>('[data-key-arrow]')!
+            arrow.classList.toggle('hidden', !arrowPath)
+            arrow.querySelector('path')!.setAttribute('d', arrowPath ?? '')
+            // Keep copied shortcuts readable without a visible separator.
+            if (keys.childElementCount > 0) {
+              const separator = document.createElement('span')
+              separator.className = 'text-[0px]'
+              separator.setAttribute('aria-hidden', 'true')
+              separator.textContent = '+'
+              keyElement.prepend(separator)
+            }
+            keys.append(keyElement)
+          }
+
+          const label = item.querySelector<HTMLElement>(
+            '[data-shortcut-label]',
+          )!
+          label.textContent = keybind.label
+          return item
+        }),
+      )
+    }
+
+    const installShortcuts = () => {
+      unsubscribeShortcuts?.()
+      unsubscribeShortcuts = undefined
+
+      if (
+        !shortcutsToggle.checked ||
+        !demoVisible ||
+        !desktopViewport.matches ||
+        !demo.hasAttribute('data-unlocked')
+      )
+        return
+
+      const bindings = Object.fromEntries(
+        keybinds.map((keybind) => [
+          `${shortcutModifier}+${keybind.code}`,
+          (event: KeyboardEvent) => {
+            event.preventDefault()
+            keybind.action()
+            const focusTarget =
+              workspace.querySelector<HTMLButtonElement>(
+                '[data-focused] [data-window-focus]',
+              ) ?? appButtons[0]
+            focusTarget?.focus({ preventScroll: true })
+          },
+        ]),
+      )
+      unsubscribeShortcuts = tinykeys(window, bindings, {
+        ignore: (event) =>
+          event.isComposing ||
+          (event.target !== shortcutsToggle &&
+            defaultKeybindingsHandlerIgnore(event)),
+      })
+    }
+
+    const updateShortcutControls = () => {
+      const locked = !demo.hasAttribute('data-unlocked')
+      const enabled = shortcutsToggle.checked
+      shortcutsToggle.disabled = locked
+      shortcutsStatus.textContent = locked ? 'Inactive' : enabled ? 'On' : 'Off'
+      shortcutHint.textContent = locked
+        ? 'Wake the desktop to use your keyboard or the shortcuts below.'
+        : !enabled
+          ? 'Keyboard controls are off. You can still select a shortcut below.'
+          : shortcutModifier === 'Meta'
+            ? 'Super (Windows/Command) may be captured by your OS. You can also select a shortcut below.'
+            : 'Press the keys, or select a shortcut below.'
+      modifierButtons.forEach((button) => {
+        button.disabled = locked || !enabled
+        button.setAttribute(
+          'aria-pressed',
+          String(button.dataset.shortcutModifier === shortcutModifier),
+        )
+      })
+      renderShortcutList()
+      installShortcuts()
+    }
+
+    // Fullscreen feature disabled for now.
+    // const fullscreenPlaceholder = document.createComment('omarchy-demo')
+    // const fullscreenBackdrop = document.createElement('div')
+    // fullscreenBackdrop.className = 'omarchy-demo-backdrop'
+    // let previousBodyOverflow = ''
+    // let previousRootOverflow = ''
+    // let previousRootScrollbarGutter = ''
+    // let fullscreenAnimation: Animation | undefined
+    // let fullscreenContentAnimations: Animation[] = []
+    // let restoreFullscreenLayout = () => {}
+    // const fullscreenParts = Array.from(
+    //   demo.querySelectorAll<HTMLElement>(
+    //     '.demo-heading, .monitor-shell, .demo-controls, .shortcut-panel',
+    //   ),
+    // )
+
+    // const cancelFullscreenAnimation = () => {
+    //   fullscreenAnimation?.cancel()
+    //   fullscreenAnimation = undefined
+    //   fullscreenContentAnimations.forEach((animation) => animation.cancel())
+    //   fullscreenContentAnimations = []
+    //   restoreFullscreenLayout()
+    //   restoreFullscreenLayout = () => {}
+    //   delete demo.dataset.transitioning
+    // }
+    // let backdropRemovalTimer: number | undefined
+
+    // const updateFullscreenButton = () => {
+    //   const expanded = demo.hasAttribute('data-expanded')
+    //   const label = expanded ? 'Exit fullscreen' : 'Enter fullscreen'
+    //   fullscreenButton.setAttribute('aria-pressed', String(expanded))
+    //   fullscreenButton.setAttribute('aria-label', label)
+    //   fullscreenButton.title = label
+    // }
+
+    // const setExpanded = (
+    //   expanded: boolean,
+    //   focusButton = true,
+    //   animateTransition = true,
+    // ) => {
+    //   if (expanded === demo.hasAttribute('data-expanded')) return
+    //   const start = demo.getBoundingClientRect()
+    //   const partStarts = fullscreenParts.map((part) =>
+    //     part.getBoundingClientRect(),
+    //   )
+    //   cancelFullscreenAnimation()
+    //   if (expanded) {
+    //     window.clearTimeout(backdropRemovalTimer)
+    //     demo.before(fullscreenPlaceholder)
+    //     previousBodyOverflow = document.body.style.overflow
+    //     previousRootOverflow = document.documentElement.style.overflow
+    //     previousRootScrollbarGutter =
+    //       document.documentElement.style.scrollbarGutter
+    //     document.body.style.overflow = 'hidden'
+    //     document.documentElement.style.overflow = 'hidden'
+    //     document.documentElement.style.scrollbarGutter = 'auto'
+    //     document.body.append(fullscreenBackdrop)
+    //     // Commit the hidden state so the backdrop fades in on this frame.
+    //     void fullscreenBackdrop.offsetWidth
+    //     fullscreenBackdrop.dataset.visible = ''
+    //     document.body.append(demo)
+    //     demo.dataset.expanded = ''
+    //   } else {
+    //     fullscreenPlaceholder.replaceWith(demo)
+    //     document.body.style.overflow = previousBodyOverflow
+    //     document.documentElement.style.overflow = previousRootOverflow
+    //     document.documentElement.style.scrollbarGutter =
+    //       previousRootScrollbarGutter
+    //     delete demo.dataset.expanded
+    //     delete fullscreenBackdrop.dataset.visible
+    //     if (animateTransition) {
+    //       backdropRemovalTimer = window.setTimeout(
+    //         () => fullscreenBackdrop.remove(),
+    //         280,
+    //       )
+    //     } else {
+    //       fullscreenBackdrop.remove()
+    //     }
+    //   }
+    //   if (
+    //     animateTransition &&
+    //     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    //   ) {
+    //     const end = demo.getBoundingClientRect()
+    //     const partEnds = fullscreenParts.map((part) =>
+    //       part.getBoundingClientRect(),
+    //     )
+    //     // Freeze the destination layout while the frame resizes. Text and
+    //     // controls move independently, rather than stretching with the frame.
+    //     const layoutParts = Array.from(demo.children).filter(
+    //       (part): part is HTMLElement => part instanceof HTMLElement,
+    //     )
+    //     const previousStyles = layoutParts.map((part) => ({
+    //       width: part.style.width,
+    //       height: part.style.height,
+    //       flex: part.style.flex,
+    //     }))
+    //     const layoutRects = layoutParts.map((part) =>
+    //       part.getBoundingClientRect(),
+    //     )
+    //     layoutParts.forEach((part, index) => {
+    //       part.style.width = `${layoutRects[index].width}px`
+    //       part.style.height = `${layoutRects[index].height}px`
+    //       part.style.flex = 'none'
+    //     })
+    //     const previousOverflow = demo.style.overflow
+    //     demo.style.overflow = 'hidden'
+    //     restoreFullscreenLayout = () => {
+    //       layoutParts.forEach((part, index) => {
+    //         part.style.width = previousStyles[index].width
+    //         part.style.height = previousStyles[index].height
+    //         part.style.flex = previousStyles[index].flex
+    //       })
+    //       demo.style.overflow = previousOverflow
+    //     }
+    //     // Keep the returning demo above the fading fullscreen backdrop.
+    //     demo.dataset.transitioning = ''
+    //     const deltaX = start.left - end.left
+    //     const deltaY = start.top - end.top
+    //     const timing = {
+    //       duration: 280,
+    //       easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    //     }
+    //     fullscreenContentAnimations = fullscreenParts.map((part, index) => {
+    //       if (
+    //         part.classList.contains('demo-controls') ||
+    //         part.classList.contains('shortcut-panel')
+    //       ) {
+    //         return part.animate(
+    //           [
+    //             { opacity: 0, offset: 0 },
+    //             { opacity: 0, offset: 0.6 },
+    //             { opacity: 1, offset: 1 },
+    //           ],
+    //           { duration: timing.duration, easing: 'ease-in-out' },
+    //         )
+    //       }
+    //       const from = partStarts[index]
+    //       const to = partEnds[index]
+    //       const isMonitor = part.classList.contains('monitor-shell')
+    //       const scale = isMonitor && to.width ? from.width / to.width : 1
+    //       return part.animate(
+    //         [
+    //           {
+    //             transform: `translate3d(${from.left - to.left - deltaX}px, ${from.top - to.top - deltaY}px, 0) scale(${scale})`,
+    //             transformOrigin: 'top left',
+    //             ...(!isMonitor && {
+    //               width: `${from.width}px`,
+    //               height: `${from.height}px`,
+    //             }),
+    //           },
+    //           {
+    //             transform: 'translate3d(0, 0, 0) scale(1)',
+    //             transformOrigin: 'top left',
+    //             ...(!isMonitor && {
+    //               width: `${to.width}px`,
+    //               height: `${to.height}px`,
+    //             }),
+    //           },
+    //         ],
+    //         timing,
+    //       )
+    //     })
+    //     fullscreenAnimation = demo.animate(
+    //       [
+    //         {
+    //           transform: `translate3d(${deltaX}px, ${deltaY}px, 0)`,
+    //           width: `${start.width}px`,
+    //           height: `${start.height}px`,
+    //         },
+    //         {
+    //           transform: 'translate3d(0, 0, 0)',
+    //           width: `${end.width}px`,
+    //           height: `${end.height}px`,
+    //         },
+    //       ],
+    //       timing,
+    //     )
+    //     fullscreenAnimation.addEventListener(
+    //       'finish',
+    //       cancelFullscreenAnimation,
+    //       { once: true },
+    //     )
+    //   }
+    //   updateFullscreenButton()
+    //   if (focusButton) fullscreenButton.focus({ preventScroll: true })
+    // }
+
+    // fullscreenBackdrop.addEventListener(
+    //   'click',
+    //   () => setExpanded(false),
+    //   listenerOptions,
+    // )
+
+    // fullscreenButton.addEventListener(
+    //   'click',
+    //   () => setExpanded(!demo.hasAttribute('data-expanded')),
+    //   listenerOptions,
+    // )
+    // document.addEventListener(
+    //   'keydown',
+    //   (event) => {
+    //     if (event.key !== 'Escape' || !demo.hasAttribute('data-expanded'))
+    //       return
+    //     event.preventDefault()
+    //     setExpanded(false)
+    //   },
+    //   listenerOptions,
+    // )
+
+    appButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          const app = button.dataset.appButton as DemoApp
+          if (!appIds.includes(app)) return
+          openApp(app)
+        },
+        listenerOptions,
+      )
+    })
+
+    resetButton.addEventListener(
+      'click',
+      () => {
+        cancelWindowAnimations()
+        workspaceSwitchVersion += 1
+        delete screen.dataset.switchingWorkspace
+        workspaceWindows.forEach((windows) => windows.splice(0))
+        workspaceFocus.fill(null)
+        workspaceReveal.fill(null)
+        workspaceFocusMemory.forEach((memory) => memory.clear())
+        workspaceLayouts.fill('dwindle')
+        nextWindowId = 1
+        activeWorkspace = 1
+        update()
+        appButtons[0]?.focus({ preventScroll: true })
+      },
+      listenerOptions,
+    )
+
+    workspaceButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          switchWorkspace(Number(button.dataset.workspaceButton) || 1)
+        },
+        listenerOptions,
+      )
+    })
+
+    layoutButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          setLayout(
+            button.dataset.layoutButton === 'scrolling'
+              ? 'scrolling'
+              : 'dwindle',
+          )
+        },
+        listenerOptions,
+      )
+    })
+
+    shortcutsToggle.addEventListener(
+      'change',
+      updateShortcutControls,
+      listenerOptions,
+    )
+    modifierButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          shortcutModifier =
+            button.dataset.shortcutModifier === 'Alt' ? 'Alt' : 'Meta'
+          updateShortcutControls()
+        },
+        listenerOptions,
+      )
+    })
+
+    // Wake arms handling: update() enables the app/reset/layout buttons
+    // and updateShortcutControls() enables the shortcut list + keyboard.
+    demo.addEventListener(
+      'omarchy-demo:wake',
+      () => {
+        update()
+        updateShortcutControls()
+      },
+      listenerOptions,
+    )
+
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      demoVisible = entry.isIntersecting
+      demo.toggleAttribute('data-visible', demoVisible)
+      installShortcuts()
+      syncClock()
+    })
+    visibilityObserver.observe(demo)
+    desktopViewport.addEventListener(
+      'change',
+      () => {
+        installShortcuts()
+        syncClock()
+      },
+      listenerOptions,
+    )
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        // setExpanded(false, false, false)
+        // cancelFullscreenAnimation()
+        // window.clearTimeout(backdropRemovalTimer)
+        // fullscreenBackdrop.remove()
+        visibilityObserver.disconnect()
+        window.clearTimeout(clockTimer)
+        layoutTransitionVersion += 1
+        unsubscribeShortcuts?.()
+        cancelWindowAnimations()
+        lifecycleController.abort()
+        delete demo.dataset.initialized
+      },
+      { once: true },
+    )
+
+    update()
+    updateShortcutControls()
+    // updateFullscreenButton()
+  }
+
+  document.addEventListener('astro:page-load', setupOmarchyDemos)
+</script>
+
+<style>
+  /* Session-lock overlay: fades out when Wake dismisses it. */
+  [data-lock-screen] {
+    transition: opacity 300ms ease;
+  }
+  [data-lock-screen][data-leaving] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .omarchy-demo:not([data-visible]) :global(.cursor) {
+    animation-play-state: paused;
+  }
+
+  /* Fullscreen feature disabled for now.
+  :global(.omarchy-demo-backdrop) {
+    position: fixed;
+    z-index: 49;
+    inset: 0;
+    background: rgb(0 0 0 / 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  :global(.omarchy-demo-backdrop[data-visible]) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .omarchy-demo[data-expanded] {
+    position: fixed;
+    z-index: 50;
+    inset: 0;
+    display: flex;
+    width: 100vw;
+    height: 100dvh;
+    flex-direction: column;
+    margin: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .omarchy-demo[data-expanded] .demo-heading {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    background: #111116;
+  }
+
+  .omarchy-demo[data-expanded] .desktop-experience {
+    flex: 1;
+  }
+
+  @media (max-width: 63.999rem), (max-height: 41.999rem) {
+    .omarchy-demo[data-expanded] {
+      inset: 0;
+      width: calc(100vw - 1.5rem);
+      height: fit-content;
+      max-height: calc(100dvh - 1.5rem);
+      margin: auto;
+      border: 1px solid rgb(255 255 255 / 0.16);
+      border-radius: 1.25rem;
+      box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.5);
+    }
+
+    .omarchy-demo[data-expanded] .desktop-experience {
+      display: flex;
+      flex-direction: column;
+      justify-content: safe center;
+    }
+  }
+
+  @media (min-width: 64rem) and (min-height: 42rem) {
+    .omarchy-demo[data-expanded] .desktop-experience {
+      display: grid;
+      min-height: 0;
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, 24rem);
+      grid-template-rows: auto minmax(0, 1fr);
+      align-items: start;
+      gap: 1rem;
+    }
+
+    .omarchy-demo[data-expanded] .monitor-shell {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      align-self: center;
+      justify-self: center;
+      width: min(100%, 80rem, calc((100dvh - 13rem) * 16 / 9));
+    }
+
+    .omarchy-demo[data-expanded] .demo-controls {
+      grid-column: 2;
+      grid-row: 1;
+      flex-direction: column;
+      align-items: stretch;
+      margin-top: 0;
+    }
+
+    .omarchy-demo[data-expanded] .action-buttons {
+      flex-wrap: wrap;
+    }
+
+    .omarchy-demo[data-expanded] .shortcut-panel {
+      grid-column: 2;
+      grid-row: 2;
+      margin-top: 0;
+    }
+
+    .omarchy-demo[data-expanded] .shortcut-controls {
+      flex-direction: column;
+    }
+
+    .omarchy-demo[data-expanded] .shortcut-list {
+      justify-content: flex-start;
+    }
+  }
+
+  */
+
+  .layout-switcher button,
+  .demo-controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .layout-switcher button {
+    height: 2.375rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.4375rem;
+    background: transparent;
+    color: #8f8f9a;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease,
+      opacity 150ms ease;
+  }
+
+  .layout-switcher button:hover {
+    color: #dedee3;
+  }
+  .layout-switcher button[aria-pressed='true'] {
+    background: #26262e;
+    color: #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+  }
+
+  .layout-switcher svg,
+  .demo-controls svg {
+    display: block;
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+  .window[data-opening] {
+    transition: none;
+  }
+
+  .screen[data-switching-workspace] .window {
+    transition: none;
+  }
+
+  .window[data-focused] {
+    border-color: var(--focus-blue);
+  }
+
+  /* Dwindle: the first split is vertical; the third window splits the right side. */
+  .screen[data-layout='dwindle'] .window:not([data-closing]) {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    min-height: 0;
+    transform: none;
+  }
+  .screen[data-layout='dwindle'][data-window-count='1']
+    .window[data-window='1'] {
+    grid-area: 1 / 1 / 3 / 3;
+  }
+  .screen[data-layout='dwindle'][data-window-count='2']
+    .window[data-window='1'] {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+  .screen[data-layout='dwindle'][data-window-count='2']
+    .window[data-window='2'] {
+    grid-area: 1 / 2 / 3 / 3;
+  }
+  .screen[data-layout='dwindle'][data-window-count='3']
+    .window[data-window='1'] {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+  .screen[data-layout='dwindle'][data-window-count='3']
+    .window[data-window='2'] {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .screen[data-layout='dwindle'][data-window-count='3']
+    .window[data-window='3'] {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  /* Scrolling fills one window, splits two, then becomes a 43%-wide strip. */
+  /* Scrolling places its side gaps on each window, not on the workspace. */
+  .screen[data-layout='scrolling'] .workspace {
+    padding-inline: 0;
+  }
+  .screen[data-layout='scrolling'] .window {
+    top: 0;
+    bottom: 0;
+  }
+  .screen[data-layout='scrolling'][data-window-count='1']
+    .window[data-window='1'] {
+    left: var(--window-gap);
+    width: calc(100% - var(--window-gap) - var(--window-gap));
+    transform: none;
+  }
+  .screen[data-layout='scrolling'][data-window-count='2']
+    .window[data-window='1'] {
+    left: var(--window-gap);
+    width: calc(50% - var(--window-gap) - var(--window-gap) / 2);
+    transform: none;
+  }
+  .screen[data-layout='scrolling'][data-window-count='2']
+    .window[data-window='2'] {
+    left: calc(50% + var(--window-gap) / 2);
+    width: calc(50% - var(--window-gap) - var(--window-gap) / 2);
+    transform: none;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'] .window {
+    width: 43%;
+    transform: none;
+  }
+  .screen[data-layout='scrolling'][data-window-count='3']
+    .window[data-window='1'] {
+    left: var(--window-gap);
+  }
+  .screen[data-layout='scrolling'][data-window-count='3']
+    .window[data-window='2'] {
+    left: calc(43% + var(--window-gap) + var(--window-gap));
+  }
+  .screen[data-layout='scrolling'][data-window-count='3']
+    .window[data-window='3'] {
+    left: calc(86% + var(--window-gap) + var(--window-gap) + var(--window-gap));
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
+    .window[data-window='1'] {
+    left: calc(
+      -29% - var(--window-gap) - var(--window-gap) - var(--window-gap)
+    );
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
+    .window[data-window='2'] {
+    left: calc(14% - var(--window-gap) - var(--window-gap));
+  }
+  .screen[data-layout='scrolling'][data-window-count='3'][data-focused-position='3']
+    .window[data-window='3'] {
+    left: calc(57% - var(--window-gap));
+  }
+  .demo-controls button {
+    min-height: 2.4rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.55rem;
+    font-weight: 650;
+    transition:
+      transform 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      opacity 150ms ease;
+  }
+  .demo-controls button:not(:disabled):active {
+    transform: scale(0.97);
+  }
+  .reset-button:hover:not(:disabled) {
+    background: #35353e;
+    color: #fff;
+  }
+  .app-button:hover {
+    background: #303039;
+    color: #e7e7eb;
+  }
+  .terminal-button .app-color {
+    background: #050507;
+  }
+  .browser-button .app-color {
+    background: #d9ad16;
+  }
+  .editor-button .app-color {
+    background: #2563d9;
+  }
+  .demo-controls button:disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+  .mobile-monitor div {
+    display: grid;
+    aspect-ratio: 16 / 10;
+    place-items: center;
+    border: 2px solid #555562;
+    border-radius: 0.4rem;
+    background: #1a1a21;
+    color: #fb923c;
+    box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.35);
+  }
+  .mobile-monitor div svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+  .mobile-monitor span {
+    display: block;
+    width: 2.5rem;
+    height: 0.3rem;
+    margin: -1px auto 0 auto;
+    border-radius: 0 0 0.3rem 0.3rem;
+    background: #555562;
+  }
+  .mobile-disabled p {
+    margin: 0;
+    color: #8e8e99;
+  }
+  .mobile-disabled p + p {
+    max-width: 24rem;
+    margin: 0.35rem auto 0;
+  }
+  .mobile-disabled strong {
+    color: #f3f3f5;
+  }
+
+  @media (max-width: 767px) {
+    .demo-heading,
+    .desktop-experience {
+      display: none;
+    }
+    .mobile-disabled {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Fullscreen feature disabled for now.
+            :global(.omarchy-demo-backdrop) {
+              transition: none;
+            }
+            */
+
+    [data-lock-screen],
+    .window,
+    .layout-switcher button,
+    .demo-controls button,
+    .toggle-track,
+    .toggle-track span {
+      transition: none;
+    }
+  }
+</style>

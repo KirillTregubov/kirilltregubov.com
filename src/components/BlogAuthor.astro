@@ -1,0 +1,48 @@
+---
+import { ArrowRightIcon } from 'lucide-react'
+import CanadianFlag from './CanadianFlag.astro'
+---
+
+<>
+  <hr />
+  <aside
+    id="post-author"
+    aria-label="About the author"
+    class="grid items-start gap-5 sm:grid-cols-[1fr_11rem] sm:gap-8"
+  >
+    <div>
+      <p class="mt-0">
+        I'm Kirill Tregubov, a software developer from{' '}
+        <span class="whitespace-nowrap">
+          <CanadianFlag /> Canada.
+        </span>{' '}
+        I build tools and apps, contribute to open source, and write about my
+        experiences along the way. I'm also interested in interface design,
+        science fiction, and astronomy.
+      </p>
+      <p class="mb-0 flex gap-4">
+        <a href="/blog" class="text-inherit">
+          More writing
+          <!-- <ArrowRightIcon className="inline ml-1 size-3.5" aria-hidden="true" /> -->
+        </a>
+        <a href="/" class="text-inherit">
+          More about me
+        </a>
+      </p>
+    </div>
+    <figure class="not-prose mx-auto w-44 text-center sm:w-full">
+      <img
+        src="/assets/saturn-author.webp"
+        alt="Saturn"
+        width="528"
+        height="204"
+        loading="lazy"
+        decoding="async"
+        class="w-full select-none"
+      />
+      <figcaption class="mt-3 text-sm text-neutral-400">
+        My favourite planet.
+      </figcaption>
+    </figure>
+  </aside>
+</>

@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { ArrowRightIcon } from 'lucide-react'
+
+interface Props {
+  post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+const href = `/blog/${post.id}`
+
+const displayDate = post.data.updatedDate ?? post.data.pubDate
+const formattedDate = displayDate.toLocaleDateString('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+})
+---
+
+<div class="group rounded-xl">
+  <a
+    href={href}
+    class="grid min-h-32 grid-cols-[minmax(0,1fr)_auto] rounded-xl"
+  >
+    <div class="flex min-w-0 flex-col justify-center px-3 py-6 md:px-6">
+      <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-400">
+        <time datetime={displayDate.toISOString()}>
+          {post.data.updatedDate ? 'Updated ' : ''}
+          {formattedDate}
+        </time>
+        {import.meta.env.DEV && post.data.hidden && (
+          <span class="rounded-sm bg-violet-950 px-1.5 py-0.5 text-violet-300">
+            Development only
+          </span>
+        )}
+        {import.meta.env.DEV && post.data.draft && (
+          <span class="rounded-sm bg-amber-950 px-1.5 py-0.5 text-amber-300">
+            Draft
+          </span>
+        )}
+      </div>
+      <h2 class="mt-1 text-lg font-semibold text-neutral-200 sm:text-xl">
+        {post.data.title}
+      </h2>
+      <p class="mt-1.5 text-sm leading-relaxed text-neutral-400 sm:text-base">
+        {post.data.description}
+      </p>
+    </div>
+    <div class="flex items-center pr-1 md:pr-3">
+      <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2 text-sm font-medium text-neutral-400 transition group-has-focus-visible:text-white group-hover:text-white md:px-3">
+        <span class="sr-only sm:not-sr-only">Read post</span>
+        <ArrowRightIcon
+          className="size-4 -translate-y-px transition-transform motion-safe:group-has-focus-visible:translate-x-0.5 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none"
+          aria-hidden="true"
+        />
+      </span>
+    </div>
+  </a>
+</div>

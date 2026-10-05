@@ -41,15 +41,36 @@ const projects = defineCollection({
   }),
 })
 
-// const blog = defineCollection({
-//   loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/blog' }),
-//   schema: z.object({
-//     title: z.string(),
-//     description: z.string(),
-//     pubDate: z.coerce.date(),
-//     updatedDate: z.coerce.date().optional()
-//   })
-// })
+const blog = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    image: z.object({
+      url: z.string(),
+      alt: z.string(),
+    }),
+    tags: z.array(z.string()).default([]),
+    series: z
+      .object({
+        id: z
+          .string()
+          .regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            'Series id must contain lowercase alphanumeric segments separated by hyphens',
+          ),
+        title: z.string().min(1),
+        order: z.number().int().positive(),
+      })
+      .optional(),
+    draft: z.boolean().default(false),
+    hidden: z.boolean().default(false),
+    archived: z.boolean().default(false),
+    demo: z.url().optional(),
+  }),
+})
 
 const overbuddy = defineCollection({
   loader: file('src/content/overbuddy/backgrounds.json'),
@@ -137,7 +158,7 @@ const cinemas = defineCollection({
 export const collections = {
   technologies,
   projects,
-  // blog,
+  blog,
   overbuddy,
   cinemas,
 }

@@ -1,0 +1,160 @@
+---
+import type { BlogSeriesNavigation as ResolvedBlogSeries } from '@lib/series'
+import { ArrowDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+
+interface Props {
+  series: ResolvedBlogSeries
+  placement: 'top' | 'bottom'
+}
+
+const { series, placement } = Astro.props
+const currentPart = series.currentIndex + 1
+const seriesEntries = series.members.map((member, index) => ({
+  id: member.id,
+  title: member.data.title,
+  part: index + 1,
+  href: `/blog/${member.id}`,
+  isCurrent: index === series.currentIndex,
+}))
+const navigationId = 'blog-series-navigation'
+const titleId = 'blog-series-navigation-title'
+---
+
+{placement === 'top' && (
+  <aside
+    aria-label={`Series: ${series.title}`}
+    class="not-prose mt-6 flex flex-col gap-3 rounded-xl border border-neutral-800 bg-neutral-800/30 px-4 py-3 text-sm motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5"
+  >
+    <p class="min-w-0 text-neutral-400">
+      Part <span class="font-semibold text-neutral-200">{currentPart}</span> of{' '}
+      {series.members.length} in{' '}
+      <span class="font-medium text-orange-300">{series.title}</span>
+    </p>
+    <a
+      class="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-md border border-neutral-700 bg-neutral-800/70 px-3 py-1.5 font-medium text-neutral-200 transition hover:border-orange-700/80 hover:bg-neutral-800 hover:text-white"
+      href={`#${navigationId}`}
+      aria-label={`View all parts in ${series.title}`}
+    >
+      <span>View series</span>
+      <ArrowDownIcon className="size-4 text-orange-400" aria-hidden="true" />
+    </a>
+  </aside>
+)}
+
+{placement === 'bottom' && (
+  <section
+    id={navigationId}
+    tabindex="-1"
+    aria-labelledby={titleId}
+    class="not-prose mt-12 scroll-mt-20 rounded-xl border border-neutral-800 bg-neutral-800/30 p-4 outline-hidden sm:p-6"
+  >
+    <header class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+      <div>
+        <p class="text-xs font-semibold tracking-[0.16em] text-orange-400 uppercase">
+          Series
+        </p>
+        <h2 id={titleId} class="mt-1 text-xl font-semibold text-neutral-100">
+          {series.title}
+        </h2>
+      </div>
+      <p class="text-sm text-neutral-500">
+        Part {currentPart} of {series.members.length}
+      </p>
+    </header>
+
+    <nav aria-label={`Parts in ${series.title}`}>
+      <ol class="mt-5 overflow-hidden rounded-lg border border-neutral-800/90 bg-neutral-900/40">
+        {seriesEntries.map((entry) => (
+          <li class="border-b border-neutral-800/90 last:border-b-0">
+            {entry.isCurrent ? (
+              <div
+                aria-current="page"
+                class="flex items-center gap-3 bg-orange-950/30 px-3 py-3 text-neutral-100 sm:px-4"
+              >
+                <span
+                  class="flex size-7 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-xs font-semibold text-orange-300"
+                  aria-hidden="true"
+                >
+                  {entry.part}
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="sr-only">Part {entry.part}: </span>
+                  <span class="block truncate font-medium">{entry.title}</span>
+                  <span class="mt-0.5 block text-xs text-orange-300/80">
+                    Current entry
+                  </span>
+                </span>
+              </div>
+            ) : (
+              <a
+                class="group flex items-center gap-3 px-3 py-3 text-neutral-400 transition hover:bg-neutral-800/70 hover:text-white sm:px-4"
+                href={entry.href}
+                aria-label={`Part ${entry.part}: ${entry.title}`}
+              >
+                <span
+                  class="flex size-7 shrink-0 items-center justify-center rounded-full bg-neutral-800 text-xs font-semibold text-neutral-500 transition group-hover:bg-orange-500/20 group-hover:text-orange-300"
+                  aria-hidden="true"
+                >
+                  {entry.part}
+                </span>
+                <span class="min-w-0 flex-1 truncate font-medium">
+                  {entry.title}
+                </span>
+                <ChevronRightIcon
+                  className="size-4 shrink-0 text-neutral-600"
+                  aria-hidden="true"
+                />
+              </a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <nav
+      aria-label={`Previous and next parts in ${series.title}`}
+      class="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-between sm:gap-4"
+    >
+      {series.previous ? (
+        <a
+          class="group flex min-w-0 items-center gap-2 rounded-lg border border-neutral-800 px-3 py-2.5 text-neutral-400 transition hover:border-neutral-700 hover:bg-neutral-800/60 hover:text-white sm:max-w-[48%]"
+          href={`/blog/${series.previous.id}`}
+          rel="prev"
+          aria-label={`Previous part: ${series.previous.data.title}`}
+        >
+          <ChevronLeftIcon
+            className="size-4 shrink-0 text-orange-400"
+            aria-hidden="true"
+          />
+          <span class="min-w-0">
+            <span class="block text-xs text-neutral-500">Previous</span>
+            <span class="block truncate font-medium">
+              {series.previous.data.title}
+            </span>
+          </span>
+        </a>
+      ) : (
+        <span aria-hidden="true" class="hidden sm:block" />
+      )}
+      {series.next && (
+        <a
+          class="group flex min-w-0 items-center justify-end gap-2 rounded-lg border border-neutral-800 px-3 py-2.5 text-right text-neutral-400 transition hover:border-neutral-700 hover:bg-neutral-800/60 hover:text-white sm:max-w-[48%] sm:flex-row-reverse"
+          href={`/blog/${series.next.id}`}
+          rel="next"
+          aria-label={`Next part: ${series.next.data.title}`}
+        >
+          <ChevronRightIcon
+            className="size-4 shrink-0 text-orange-400"
+            aria-hidden="true"
+          />
+          <span class="min-w-0">
+            <span class="block text-xs text-neutral-500">Next</span>
+            <span class="block truncate font-medium">
+              {series.next.data.title}
+            </span>
+          </span>
+        </a>
+      )}
+    </nav>
+  </section>
+)}
