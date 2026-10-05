@@ -1,5 +1,6 @@
 ---
 import Age from './Age'
+import CanadianFlag from './CanadianFlag.astro'
 import AnimatedLink from './AnimatedLink.astro'
 import Highlight from './Highlight.astro'
 import SocialButtons from './SocialButtons.astro'
@@ -16,9 +17,7 @@ const { class: className } = Astro.props
     Hey! I'm <Highlight>Kirill Tregubov</Highlight>, a <Age client:load />{' '}
     year-old <Highlight>software developer</Highlight> based in{' '}
     <span class="whitespace-nowrap">
-      <span class="canadian-flag" aria-hidden>
-        🇨🇦
-      </span>
+      <CanadianFlag />
       Canada
     </span>
     . I specialize in TypeScript and spend most of my time building CLI tools
@@ -29,52 +28,11 @@ const { class: className } = Astro.props
     passionate about <span class="whitespace-nowrap">open-source</span>{' '}
     software, interface design, science fiction and astronomy. I use arch btw.
   </p>
-  <script>
-    function isCanadianFlagSupported() {
-      const emoji = '🇨🇦'
-      const c = document.createElement('canvas')
-      const ctx = c.getContext('2d')
-      if (!ctx) return false
-
-      c.width = c.height = 20
-      ctx.textBaseline = 'top'
-      ctx.font = '20px sans-serif'
-      ctx.fillText(emoji, 0, 0)
-
-      const data = ctx.getImageData(0, 0, c.width, c.height).data
-
-      let redPixels = 0,
-        totalPixels = 0
-      for (let i = 0; i < data.length; i += 4) {
-        const [r, g, b, a] = data.slice(i, i + 4)
-        if (!a) continue
-        totalPixels++
-        if (r > 150 && r > 1.3 * g && r > 1.3 * b) redPixels++
-      }
-
-      // If at least ~5% of pixels are clearly red, assume the flag rendered.
-      return redPixels / totalPixels > 0.05
-    }
-
-    document.addEventListener('astro:page-load', () => {
-      const flags = document.querySelectorAll('.canadian-flag')
-      if (flags.length === 0) return
-
-      const showFlag = isCanadianFlagSupported()
-      flags.forEach((button) => {
-        if (!showFlag) {
-          button.textContent = ''
-          button.innerHTML =
-            '<img src="/assets/canada.svg" alt="Canada" class="inline-block size-[1em] w-auto align-middle mb-0.5 mr-px" />'
-        }
-      })
-    })
-  </script>
   <p class="mt-4">
     If you want to get in touch, you can email me at{' '}
     <span class="whitespace-nowrap">
       <AnimatedLink href="mailto:contact@kirilltregubov.com" draggable="false">
-        contact@kirilltregubov.com
+        {'contact@kirilltregubov.com'}
       </AnimatedLink>
       .
     </span>

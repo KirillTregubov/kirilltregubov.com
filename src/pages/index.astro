@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import HomeHero from '@components/HomeHero.astro'
-import BlogPreviewCard from '@components/BlogPreviewCard.astro'
+import LatestPosts from '@components/LatestPosts.astro'
 import PageContainer from '@components/PageContainer.astro'
 import {
   ProjectList,
@@ -48,7 +48,7 @@ const allProjects = await getCollection('projects').then((projects) =>
           </h2>
           <a
             href="/blog"
-            class="group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium transition hover:text-white focus-visible:text-white"
+            class="group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium transition hover:text-white focus-visible:text-white active:text-white px-2 -mx-2"
           >
             All Posts
             <ArrowRightIcon
@@ -58,13 +58,7 @@ const allProjects = await getCollection('projects').then((projects) =>
           </a>
         </div>
         <p class="mt-2 mb-3 text-neutral-400">{BLOG_SUBTITLE}</p>
-        <ul class="grid gap-8 gap-x-6 lg:grid-cols-2 xl:gap-x-10">
-          {latestPosts.map((post, index) => (
-            <li class:list={[index > 0 && 'hidden lg:block']}>
-              <BlogPreviewCard {post} />
-            </li>
-          ))}
-        </ul>
+        <LatestPosts posts={latestPosts} mode="single" />
       </section>
     )}
     {/* <section

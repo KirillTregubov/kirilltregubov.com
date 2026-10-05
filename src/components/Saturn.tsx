@@ -2,13 +2,15 @@ import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 
 const SaturnScene = lazy(() => import('./SaturnScene'))
 
-function Fallback({ className }: { className?: string }) {
+function Fallback() {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <img
-        src="/assets/SaturnPlaceholder.jpg"
-        alt="Saturn placeholder"
-        className={`object-cover motion-safe:animate-[saturnPlaceholderIn_800ms_ease-out_forwards] motion-safe:opacity-0${className ? ` ${className}` : ''}`}
+        src="/assets/SaturnPlaceholder.webp"
+        alt="Saturn"
+        width="1500"
+        height="1000"
+        className="h-full w-auto max-w-none shrink-0 object-contain motion-safe:animate-[saturnPlaceholderIn_800ms_ease-out_forwards] motion-safe:opacity-0"
         loading="eager"
         draggable="false"
       />
@@ -18,14 +20,12 @@ function Fallback({ className }: { className?: string }) {
 
 interface SaturnProps {
   className?: string
-  fallbackClass?: string
   sceneScale?: number
   staticOnly?: boolean
 }
 
 export default function Saturn({
   className,
-  fallbackClass,
   sceneScale,
   staticOnly = false,
 }: SaturnProps) {
@@ -64,7 +64,7 @@ export default function Saturn({
   if (staticOnly) {
     return (
       <div className={`relative h-full w-full ${className ?? ''}`}>
-        <Fallback className={fallbackClass} />
+        <Fallback />
       </div>
     )
   }
@@ -75,7 +75,7 @@ export default function Saturn({
         className={`absolute inset-0 transition-opacity duration-700 motion-reduce:transition-none ${sceneReady ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
         aria-hidden={sceneReady}
       >
-        <Fallback className={fallbackClass} />
+        <Fallback />
       </div>
       {renderScene && (
         <div

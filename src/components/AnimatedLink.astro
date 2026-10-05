@@ -11,7 +11,7 @@ const { class: className, thinUnderline = false, ...attributes } = Astro.props
 <a
   {...attributes}
   class:list={[
-    "relative -m-0.5 rounded-sm p-0.5 font-medium text-neutral-200 transition-opacity duration-200 ease-out hover:opacity-85 focus-visible:opacity-85 motion-reduce:transition-none after:absolute after:right-0.5 after:bottom-0 after:left-0.5 after:origin-center after:scale-x-100 after:rounded-full after:bg-linear-to-r after:from-accent-700 after:to-accent-400 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-0 focus-visible:after:scale-x-0 motion-reduce:after:transition-none",
+    "relative -m-0.5 -mx-1 rounded-sm p-0.5 px-1 font-medium text-neutral-200 transition-opacity duration-200 ease-out hover:opacity-85 focus-visible:opacity-85 motion-reduce:transition-none after:absolute after:right-1 after:bottom-0 after:left-1 after:origin-center after:scale-x-100 after:rounded-full after:bg-linear-to-r after:from-accent-700 after:to-accent-400 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-0 focus-visible:after:scale-x-0 motion-reduce:after:transition-none",
     thinUnderline ? 'after:h-px' : 'after:h-0.5',
     className,
   ]}

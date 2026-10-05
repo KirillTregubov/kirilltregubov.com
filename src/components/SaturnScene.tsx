@@ -1,8 +1,8 @@
 import { animated, useReducedMotion, useSpring } from '@react-spring/three'
-import { PerspectiveCamera, Preload, useGLTF } from '@react-three/drei'
+import { Preload, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import type * as THREE from 'three'
+import * as THREE from 'three'
 
 const DRAG_RADIANS_PER_PIXEL = 0.01
 const MAX_DRAG_SPEED = 6
@@ -167,24 +167,12 @@ function Scene({ onReady, scale: targetScale = 0.1 }: SaturnSceneProps) {
 }
 
 function CanvasContent({ onReady, scale }: SaturnSceneProps) {
-  useThree((state) => {
-    state.camera?.lookAt(0, 0, 0)
-    // state.camera?.rotateY(-0.1)
-    // state.camera?.rotateX(-0.05)
-    state.camera?.rotateZ(-0.3)
-  })
   const lightRef = useRef<THREE.PointLight>(null)
 
   return (
     <>
       <Scene onReady={onReady} scale={scale} />
       <Preload all />
-      <PerspectiveCamera
-        makeDefault
-        // position={[200, 60, 175]}
-        position={[150, 40, 150]}
-      />
-      {/* [170, 170, 170] */}
       <pointLight
         ref={lightRef}
         position={[150, 85, 25]}
@@ -199,6 +187,15 @@ function CanvasContent({ onReady, scale }: SaturnSceneProps) {
 
 function OuterCanvas({ onReady, scale }: SaturnSceneProps) {
   const ref = useRef<HTMLCanvasElement>(null)
+  const camera = useMemo(() => {
+    // Keep the camera owned by Canvas, including while Suspense hides the scene.
+    // Fiber updates its aspect ratio and renderer size on resize and zoom.
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 2000)
+    camera.position.set(150, 40, 150)
+    camera.lookAt(0, 0, 0)
+    camera.rotateZ(-0.3)
+    return camera
+  }, [])
 
   useEffect(() => {
     const canvas = ref.current
@@ -217,7 +214,7 @@ function OuterCanvas({ onReady, scale }: SaturnSceneProps) {
   }, [])
 
   return (
-    <Canvas ref={ref}>
+    <Canvas ref={ref} camera={camera}>
       <Suspense fallback={null}>
         <CanvasContent onReady={onReady} scale={scale} />
       </Suspense>

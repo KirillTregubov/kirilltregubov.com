@@ -6,7 +6,7 @@ image:
   url: '/assets/blog/quattro.jpg'
   alt: 'An airborne retro Audi Quattro in front of a vivid synthwave sunset landscape'
 tags:
-  - Personal Setup
+  - My Setup
 draft: false
 archived: false
 ---
@@ -17,9 +17,9 @@ import InlineArrow from '@components/markdown/InlineArrow.astro'
 
 I have a confession: I used to exclusively use [GitHub Desktop](https://github.com/apps/desktop).
 
-I started programming when I was 14, although “programming” is pretty generous. Back then, deploying a site meant FTPing into a server and dragging files over manually. Who needs version control when you have local staging and live production? If something broke, surely you remembered what changed.
+I started programming when I was 14, although "programming" is pretty generous. I was mostly editing templates and writing small scripts. Back then, deploying a site meant FTPing into a server and dragging files over manually. Who needs version control when you have local staging and live production? If something broke, surely you remembered what changed.
 
-By the time I got serious about the work I was doing, I was using Git. My high school teacher taught it to me, university reinforced it, and I understood the core loop: unstaged <InlineArrow /> staged <InlineArrow /> committed <InlineArrow /> pushed. I just rarely touched the CLI. Even on recent projects like [OverBuddy](https://github.com/KirillTregubov/OverBuddy), my entire version-control workflow still happened through one GUI app.
+Once I started taking development more seriously, Git (expectedly) became central to my workflow. My high school teacher taught it to me, university reinforced it, and I understood the core loop: unstaged <InlineArrow /> staged <InlineArrow /> committed <InlineArrow /> pushed. I just rarely touched the CLI. Even on recent projects like [OverBuddy](https://github.com/KirillTregubov/OverBuddy), my entire version control workflow still happened through one GUI app.
 
 ## GitHub Desktop
 
@@ -89,17 +89,17 @@ You can blame skill issues, but at the end of the day the DevCenter experiment w
 
 I could have put my head down, installed and customized a gnarly Neovim config, and plunged head-first into that beautiful world (and I promise I will one day, Thiru).
 
-But I could also switch to Arch.
+Or maybe another app wasn't the answer.
 
 ## It’s Time for Something New
 
 Last lore drop, I promise. I’m an avid [Primeagen](https://www.youtube.com/@ThePrimeagen) viewer, and his streams kept exposing me to a style of computing that felt very different from mine: keyboard-heavy workflows, terminal tools, tiling window managers, and increasingly, this strange Linux setup called [Omarchy](https://omarchy.org/).
 
-I don’t agree with DHH on plenty of things, technical or otherwise, but it’s hard not to admire the momentum he has helped build around making desktop Linux approachable to developers. After years of using computers, [DHH's video showcasing Omarchy Quattro](https://youtu.be/F7fe9pa8OeE?si=H2fI5aX1jIirGkiC) was enough to push me to try Linux properly as my main OS.
+I don’t agree with DHH on plenty of things, technical or otherwise, but it’s hard not to admire the momentum he has helped build around making desktop Linux approachable to developers. After years of using computers, [DHH's video showcasing Omarchy Quattro](https://www.youtube.com/watch?v=F7fe9pa8OeE) was enough to push me to try Linux properly as my main OS.
 
 What caught my attention wasn’t just his opinionated Arch setup, but the interaction model.
 
-Applications live on direct hotkeys. Workspaces and windows are keyboard-driven instead of things I manually arranged with a mouse. The terminal, multiplexer, and various TUIs[^3] are treated as first-class experiences. Jumping between tools feels consistent because the operating system itself is providing the shortcuts, structure, and theming.
+Applications and workspaces have dedicated hotkeys. Windows are manipulated with the keyboard rather than manually arranged with a mouse. The terminal, multiplexer, and various TUIs[^3] are treated as first-class experiences. Jumping between tools feels consistent because the operating system itself is providing the shortcuts, structure, and theming.
 
 GitHub Desktop gave me shortcuts for four developer tools.
 
@@ -109,7 +109,7 @@ That night I went on Amazon, paid an exorbitant amount of money for another SSD,
 
 Switching was both better and worse than I expected.
 
-Linux still has rough edges. From what I found, [Hyprland](https://github.com/hyprwm/hyprland) doesn’t really have a “primary monitor,” which caused some issues with the default workspace layout for me. Some applications scale poorly when moved between my 1080p and 4K displays, and others have minimum window sizes that fight the tiled layouts I want to use. Gaming brings its own mix of shader compilation, compatibility quirks, and anti-cheats that simply refuse to work.
+Linux still has rough edges. From what I found, [Hyprland](https://github.com/hyprwm/hyprland) doesn’t really have a “primary monitor,” which caused some issues with the default workspace layout for me. Some applications scale poorly when moved between my 1080p and 4K displays, and others have minimum window sizes that fight the tiled layouts I want to use. Gaming brings its own mix of shader compilation wait times, compatibility quirks, and anti-cheats that simply refuse to work.
 
 But the problems I experienced on Linux felt different from the ones I was used to on Windows or macOS.
 
@@ -122,6 +122,8 @@ Modern AI agents only amplified that feeling. One line from that introductory Om
 > Now, thanks to Agents and AI, you can evolve [the] system as you see fit.
 
 The rough edges are absolutely there. They just stopped feeling like permanent constraints.
+
+Arch isn't easy, but there's a kind of simplicity[^4] to its design that facilitates a level of customization that far exceeds Windows and macOS.
 
 ## The Wrong Abstraction
 
@@ -147,7 +149,9 @@ Below is an embedded demo I cooked up alongside my agents. Try the keyboard shor
 
 <OmarchyWindowDemo />
 
-Thanks for reading.
+I guess I can finally say,
+
+I use arch btw.
 
 ---
 
@@ -157,6 +161,8 @@ Thanks for reading.
     quite fond of it and used it until it was clear VS Code was its mature
     successor.
 
-[^2]: My list of ["The 9 Games That Shaped Who I Am"](https://x.com/KirillTregubov_/status/2104375650580861247?s=20) starts with _Shadow the Hedgehog_. Come on… he’s literally Sonic with a gun!
+[^2]: My list of ["The 9 Games That Shaped Who I Am"](https://x.com/KirillTregubov_/status/2104375650580861247) starts with _Shadow the Hedgehog_. Come on… he’s literally Sonic with a gun!
 
 [^3]: Terminal User Interface. An interactive, text-based interface that runs inside your terminal. Usually feels more app-like than a normal command that just prints output.
+
+[^4]: Have you seen [this Rich Hickey talk](https://www.youtube.com/watch?v=SxdOUGdseq4)? I will probably write about it in the future.
