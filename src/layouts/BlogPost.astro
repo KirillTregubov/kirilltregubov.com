@@ -34,9 +34,26 @@ const {
   series,
 } = Astro.props
 
-const tableOfContents = headings.filter(
-  (heading) => heading.depth === 2 || heading.depth === 3,
-)
+let sectionNumber = 1
+let subsectionNumber = 0
+const tableOfContents = headings
+  .filter((heading) => heading.depth === 2 || heading.depth === 3)
+  .map((heading) => {
+    if (heading.depth === 2) {
+      sectionNumber += 1
+      subsectionNumber = 0
+    } else {
+      subsectionNumber += 1
+    }
+
+    return {
+      ...heading,
+      number:
+        heading.depth === 2
+          ? `${sectionNumber}.`
+          : `${sectionNumber}.${subsectionNumber}.`,
+    }
+  })
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-CA', {
     year: 'numeric',
@@ -124,19 +141,21 @@ const formatDate = (date: Date) =>
             <ol>
               <li>
                 <a
-                  class="-mx-1 block w-fit rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
+                  class="-mx-1 flex w-fit items-baseline gap-y-2 gap-x-1 rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
                   href="#post-content"
                 >
-                  Beginning of Post
+                  <span class="shrink-0 tabular-nums">1.</span>
+                  <span>Beginning of Post</span>
                 </a>
               </li>
               {tableOfContents.map((heading) => (
                 <li class:list={[heading.depth === 3 && 'pl-4']}>
                   <a
-                    class="-mx-1 block w-fit rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
+                    class="-mx-1 flex w-fit items-baseline gap-y-2 gap-x-1 rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
                     href={`#${heading.slug}`}
                   >
-                    {heading.text}
+                    <span class="shrink-0 tabular-nums">{heading.number}</span>
+                    <span>{heading.text}</span>
                   </a>
                 </li>
               ))}
