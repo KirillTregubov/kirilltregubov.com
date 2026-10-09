@@ -49,7 +49,10 @@ const allProjects = await getCollection('projects').then((projects) =>
           </h2>
           <a
             href="/blog"
-            class:list={[interactiveButtonClass, 'group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium hover:text-white focus-visible:text-white active:text-white px-2 -mx-2']}
+            class:list={[
+              interactiveButtonClass,
+              'group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium hover:text-white focus-visible:text-white active:text-white px-2 -mx-2',
+            ]}
           >
             All Posts
             <ArrowRightIcon

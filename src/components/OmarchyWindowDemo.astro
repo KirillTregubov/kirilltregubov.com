@@ -29,7 +29,7 @@ import Keybind from './markdown/Keybind.astro'
         aria-atomic="true"
         class="mode-copy m-0 pt-1 text-[0.8125rem] leading-5 text-neutral-300"
       >
-        Try the workflow directly in your browser.
+        Try the workflow directly in your browser!
       </p>
     </div>
   </div>
@@ -156,7 +156,7 @@ import Keybind from './markdown/Keybind.astro'
                 width={1200}
                 widths={[800, 1200, 1600]}
                 sizes="(max-width: 848px) 100vw, 800px"
-                loading="eager"
+                loading="lazy"
                 class="size-full object-cover blur-[60px] contrast-[0.92]"
               />
             </div>
@@ -164,7 +164,8 @@ import Keybind from './markdown/Keybind.astro'
               type="button"
               data-wake-button
               aria-label="Wake the demo desktop"
-              class="relative grid aspect-381/67 w-[min(381px,55%)] min-w-32 cursor-pointer place-items-center rounded-lg border-[3px] border-[#a9b1d6] bg-[rgb(26_27_38/0.8)] text-sm font-semibold tracking-wide text-[#a9b1d6] transition hover:bg-[rgb(36_40_59/0.9)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) will-change-transform active:scale-[0.98]"
+              disabled
+              class="relative grid aspect-381/67 w-[min(381px,55%)] min-w-32 cursor-pointer place-items-center rounded-lg border-[3px] border-[#a9b1d6] bg-[rgb(26_27_38/0.8)] text-sm font-semibold tracking-wide text-[#a9b1d6] transition hover:bg-[rgb(36_40_59/0.9)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) will-change-transform active:scale-[0.99] disabled:cursor-wait disabled:opacity-60"
             >
               Wake
             </button>
@@ -381,20 +382,21 @@ import Keybind from './markdown/Keybind.astro'
   // via the `omarchy-demo:wake` event.
   const setupOmarchyDemos = () => {
     document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
+      const wakeButton =
+        demo.querySelector<HTMLButtonElement>('[data-wake-button]')
       if (demo.dataset.lockWired === undefined) {
         demo.dataset.lockWired = ''
-        demo
-          .querySelector<HTMLButtonElement>('[data-wake-button]')
-          ?.addEventListener(
-            'click',
-            () => {
-              dismissLockScreen(demo)
-              demo.dispatchEvent(new CustomEvent('omarchy-demo:wake'))
-            },
-            { once: true },
-          )
+        wakeButton?.addEventListener(
+          'click',
+          () => {
+            dismissLockScreen(demo)
+            demo.dispatchEvent(new CustomEvent('omarchy-demo:wake'))
+          },
+          { once: true },
+        )
       }
       bootOmarchyDemo(demo)
+      if (wakeButton) wakeButton.disabled = false
     })
   }
 

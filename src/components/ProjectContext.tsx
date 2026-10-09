@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/react'
+import { interactiveButtonClass } from '@styles/classes'
 import { ChevronRightIcon } from 'lucide-react'
 import { atom } from 'nanostores'
-import { interactiveButtonClass } from '@styles/classes'
 
 const showAll = atom(false)
 
