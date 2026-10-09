@@ -1,2 +1,2 @@
 export const interactiveButtonClass =
-  'transition duration-150 will-change-transform active:scale-[0.97]'
+  'transition duration-150 will-change-transform active:scale-[0.98]'

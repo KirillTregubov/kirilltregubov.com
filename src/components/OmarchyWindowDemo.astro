@@ -16,62 +16,21 @@ import Keybind from './markdown/Keybind.astro'
   class="omarchy-demo not-prose shadow-lg [--orange:#ff8a3d] [--focus-blue:#8bd5ff] m-[2.5rem_0] overflow-hidden [border:1px_solid_rgb(255_255_255/0.1)] rounded-[1.25rem] bg-[#111116] data-transitioning:relative data-transitioning:z-50"
   aria-labelledby="omarchy-demo-title"
 >
-  <div class="demo-heading flex items-center justify-between gap-5 p-[18px_20px] [border-bottom:1px_solid_rgb(255_255_255/0.08)]">
-    <div>
-      <!-- <p class="eyebrow m-[0_0_0.2rem] text-[#fb923c] text-[0.75rem] font-bold tracking-[0.12em] uppercase">
-        See it in action
-      </p> -->
+  <div class="demo-heading p-[18px_20px] [border-bottom:1px_solid_rgb(255_255_255/0.08)]">
+    <div class="demo-copy min-w-0 select-text">
       <h2
         id="omarchy-demo-title"
-        class="m-0 text-[1.0625rem] font-[650] leading-5 tracking-[-0.01em] text-[#f5f5f5]"
+        class="step-copy m-0 text-[1.0625rem] font-[650] leading-5 tracking-[-0.01em] text-[#f5f5f5]"
       >
-        See it in action
+        Wake the desktop to begin.
       </h2>
-      <p class="m-0 pt-1 text-[0.8125rem] leading-5 text-[#a1a1ad]">
+      <p
+        role="status"
+        aria-atomic="true"
+        class="mode-copy m-0 pt-1 text-[0.8125rem] leading-5 text-neutral-300"
+      >
         Try the workflow directly in your browser.
       </p>
-    </div>
-
-    <div class="flex items-center gap-2">
-      <div
-        class="layout-switcher grid grid-cols-[repeat(2,6rem)] gap-1 p-1 [border:1px_solid_rgb(255_255_255/0.08)] rounded-[0.625rem] bg-[#09090d]"
-        role="group"
-        aria-label="Window layout"
-      >
-        <button
-          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
-          type="button"
-          data-layout-button="dwindle"
-          aria-pressed="true"
-        >
-          <LayoutGridIcon aria-hidden="true" />
-          <span>Dwindle</span>
-        </button>
-        <button
-          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
-          type="button"
-          data-layout-button="scrolling"
-          aria-pressed="false"
-        >
-          <MoveHorizontalIcon aria-hidden="true" />
-          <span>Scrolling</span>
-        </button>
-      </div>
-      <!-- Fullscreen feature disabled for now.
-      <button
-        type="button"
-        class="fullscreen-button group grid size-12 shrink-0 place-items-center rounded-[0.625rem] [border:1px_solid_rgb(255_255_255/0.08)] bg-[#09090d] text-[#9999a4] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue)"
-        data-fullscreen-button
-        aria-label="Enter fullscreen"
-        aria-pressed="false"
-        title="Enter fullscreen"
-      >
-        <span class="grid place-items-center" aria-hidden="true">
-          <Maximize2Icon className="size-4 [grid-area:1/1] scale-100 opacity-100 blur-none transition duration-200 will-change-transform group-aria-pressed:scale-50 group-aria-pressed:opacity-0 group-aria-pressed:blur-[2px] motion-reduce:transition-none" />
-          <Minimize2Icon className="size-4 [grid-area:1/1] scale-50 opacity-0 blur-[2px] transition duration-200 group-aria-pressed:scale-100 group-aria-pressed:opacity-100 group-aria-pressed:blur-none motion-reduce:transition-none" />
-        </span>
-      </button>
-      -->
     </div>
   </div>
 
@@ -100,7 +59,7 @@ import Keybind from './markdown/Keybind.astro'
             />
           </div>
 
-          <div class="topbar absolute z-5 inset-[0_0_auto] grid grid-cols-[1fr_auto_1fr] items-center h-6 px-3 py-0 bg-[#14141f] text-[#9999ac] font-mono text-[0.625rem] leading-2.5 shadow-[0_1px_rgb(255_255_255/0.04)]">
+          <div class="topbar absolute z-5 inset-[0_0_auto] grid grid-cols-[1fr_auto_1fr] items-center h-6 px-2.5 py-0 bg-[#14141f] text-[#9999ac] font-mono text-[0.625rem] leading-2.5 shadow-[0_1px_rgb(255_255_255/0.04)]">
             <div class="topbar-left flex items-center gap-1.5">
               <svg
                 class="omarchy-logo size-2.5 shrink-0 text-[#dedeea]"
@@ -122,16 +81,16 @@ import Keybind from './markdown/Keybind.astro'
                 {[1, 2, 3, 4, 5].map((workspace) => (
                   <button
                     type="button"
-                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent px-0 pt-0.5 pb-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] transition-opacity motion-reduce:transition-none data-occupied:text-[#bdbdcc] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent p-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] transition-opacity motion-reduce:transition-none data-occupied:text-[#bdbdcc] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
                     data-workspace-button={workspace}
                     aria-label={`Switch to workspace ${workspace}`}
                     aria-pressed={workspace === 1 ? 'true' : 'false'}
                   >
-                    <span class="workspace-number group-aria-pressed/workspace:invisible">
+                    <span class="workspace-number translate-y-px group-aria-pressed/workspace:invisible">
                       {workspace}
                     </span>
                     <span
-                      class="workspace-dot absolute top-1/2 left-1/2 hidden size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-xs bg-[#c6b8e9] group-aria-pressed/workspace:block"
+                      class="workspace-dot absolute top-1.5 left-1 hidden size-1.5 rounded-[1px] bg-[#c6b8e9] group-aria-pressed/workspace:block"
                       aria-hidden="true"
                     ></span>
                   </button>
@@ -205,7 +164,7 @@ import Keybind from './markdown/Keybind.astro'
               type="button"
               data-wake-button
               aria-label="Wake the demo desktop"
-              class="relative grid aspect-381/67 w-[min(381px,55%)] min-w-32 cursor-pointer place-items-center rounded-lg border-[3px] border-[#a9b1d6] bg-[rgb(26_27_38/0.8)] text-sm font-semibold tracking-wide text-[#a9b1d6] transition hover:bg-[rgb(36_40_59/0.9)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) active:scale-[0.98]"
+              class="relative grid aspect-381/67 w-[min(381px,55%)] min-w-32 cursor-pointer place-items-center rounded-lg border-[3px] border-[#a9b1d6] bg-[rgb(26_27_38/0.8)] text-sm font-semibold tracking-wide text-[#a9b1d6] transition hover:bg-[rgb(36_40_59/0.9)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-blue) will-change-transform active:scale-[0.98]"
             >
               Wake
             </button>
@@ -229,17 +188,29 @@ import Keybind from './markdown/Keybind.astro'
     </div>
 
     <div class="demo-controls flex flex-wrap items-center justify-between gap-x-4 gap-y-3 mt-5">
-      <div class="demo-copy min-w-0 flex-1 basis-60 select-text">
-        <p class="step-copy m-0 text-[#a1a1ad] text-[0.8125rem] leading-5">
-          Wake the desktop to begin.
-        </p>
-        <p
-          role="status"
-          aria-atomic="true"
-          class="mode-copy m-[0.2rem_0_0] text-[#a1a1ad] text-[0.6875rem] leading-4 capitalize"
+      <div
+        class="layout-switcher grid grid-cols-[repeat(2,6rem)] gap-1 p-1 [border:1px_solid_rgb(255_255_255/0.08)] rounded-[0.625rem] bg-[#09090d]"
+        role="group"
+        aria-label="Window layout"
+      >
+        <button
+          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+          type="button"
+          data-layout-button="dwindle"
+          aria-pressed="true"
         >
-          Dwindle · workspace 1 · empty
-        </p>
+          <LayoutGridIcon aria-hidden="true" />
+          <span>Dwindle</span>
+        </button>
+        <button
+          class="select-none disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+          type="button"
+          data-layout-button="scrolling"
+          aria-pressed="false"
+        >
+          <MoveHorizontalIcon aria-hidden="true" />
+          <span>Scrolling</span>
+        </button>
       </div>
       <div class="action-buttons ml-auto flex shrink-0 flex-wrap justify-end gap-[0.35rem]">
         <button
@@ -805,17 +776,18 @@ import Keybind from './markdown/Keybind.astro'
       )
       const layoutLabel = layout === 'dwindle' ? 'Dwindle' : 'Scrolling'
 
-      modeCopy.textContent = `${layoutLabel} · workspace ${activeWorkspace} · ${windowCount === 0 ? 'empty' : `${windowCount} ${windowCount === 1 ? 'window' : 'windows'}`}`
+      if (!locked) {
+        modeCopy.textContent = `${layoutLabel} · Workspace ${activeWorkspace} · ${windowCount === 0 ? 'Empty' : `${windowCount} ${windowCount === 1 ? 'Window' : 'Windows'}`}`
 
-      stepCopy.textContent = locked
-        ? 'Wake the desktop to begin.'
-        : windowCount === 0
-          ? 'This workspace is empty. Open an app.'
-          : windowCount === 1
-            ? 'You can open more windows to see the layout take shape.'
-            : windowCount === 2
-              ? 'You can open another window to complete the layout.'
-              : 'You can change layout modes or switch workspaces.'
+        stepCopy.textContent =
+          windowCount === 0
+            ? 'This workspace is empty. Open an app.'
+            : windowCount === 1
+              ? 'You can open more windows to see the layout take shape.'
+              : windowCount === 2
+                ? 'You can open another window to complete the layout.'
+                : 'You can change layout modes or switch workspaces.'
+      }
 
       const visibleIds = new Set(openWindows.map(({ id }) => id))
       getAppWindows().forEach((appWindow) => {
@@ -1395,7 +1367,7 @@ import Keybind from './markdown/Keybind.astro'
           ? 'Keyboard controls are off. You can still select a shortcut below.'
           : shortcutModifier === 'Meta'
             ? 'Super (Windows/Command) may be captured by your OS. You can also select a shortcut below.'
-            : 'Press the keys, or select a shortcut below.'
+            : 'Press Alt (Option) and the associated shortcut keys, or select a shortcut below.'
       modifierButtons.forEach((button) => {
         button.disabled = locked || !enabled
         button.setAttribute(

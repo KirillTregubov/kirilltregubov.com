@@ -13,6 +13,7 @@ import TechnologyStack from '@components/TechnologyStack.astro'
 import Layout from '@layouts/Layout.astro'
 import { BLOG_SUBTITLE } from '@lib/blog'
 import { ArrowRightIcon } from 'lucide-react'
+import { interactiveButtonClass } from '@styles/classes'
 
 const latestPosts = (await getCollection('blog'))
   .filter((post) => !post.data.draft && !post.data.hidden)
@@ -48,11 +49,11 @@ const allProjects = await getCollection('projects').then((projects) =>
           </h2>
           <a
             href="/blog"
-            class="group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium transition hover:text-white focus-visible:text-white active:text-white px-2 -mx-2"
+            class:list={[interactiveButtonClass, 'group -my-1 inline-flex shrink-0 items-center gap-1.5 rounded-sm py-1 font-medium hover:text-white focus-visible:text-white active:text-white px-2 -mx-2']}
           >
             All Posts
             <ArrowRightIcon
-              className="size-4 transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:group-focus-visible:translate-x-0.5"
+              className="size-4 -translate-y-px transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:group-focus-visible:translate-x-0.5"
               aria-hidden="true"
             />
           </a>

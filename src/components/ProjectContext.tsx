@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/react'
 import { ChevronRightIcon } from 'lucide-react'
 import { atom } from 'nanostores'
+import { interactiveButtonClass } from '@styles/classes'
 
 const showAll = atom(false)
 
@@ -28,11 +29,11 @@ export function ProjectToggle() {
     <button
       type="button"
       onClick={() => showAll.set(!$showAll)}
-      className="-mx-1 -my-1 inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-sm px-3 py-1 pr-1 font-medium transition select-none hover:text-white focus-visible:text-white active:text-white"
+      className={`${interactiveButtonClass} -mx-2 -my-1 inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-sm px-2 py-1 font-medium select-none hover:text-white focus-visible:text-white active:text-white`}
     >
       {$showAll ? 'Show Featured' : 'Show All'}
       <ChevronRightIcon
-        className={`size-5 transition-transform ${$showAll ? 'rotate-90' : ''}`}
+        className={`size-4 -translate-y-px transition-transform ${$showAll ? 'rotate-90' : ''}`}
       />
     </button>
   )

@@ -1,5 +1,6 @@
 ---
 import { ArrowLeftIcon, HomeIcon } from 'lucide-react'
+import { interactiveButtonClass } from '@styles/classes'
 
 interface Props {
   containerClass?: string
@@ -19,12 +20,12 @@ const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
 >
   <a
     {href}
-    class="-ml-1 inline-flex w-auto grow-0 items-center gap-1 rounded-sm px-1 font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
+    class:list={[interactiveButtonClass, '-ml-1 inline-flex w-auto grow-0 items-center justify-center gap-2.5 rounded-sm px-1 font-medium select-none hover:text-white focus-visible:text-white active:text-white']}
   >
     {href === '/' ? (
-      <HomeIcon className="mr-1.5 size-5" aria-hidden="true" />
+      <HomeIcon className="size-5 shrink-0 -translate-y-px" aria-hidden="true" />
     ) : (
-      <ArrowLeftIcon className="mr-1.5 size-5" aria-hidden="true" />
+      <ArrowLeftIcon className="size-5 shrink-0 -translate-y-px" aria-hidden="true" />
     )}
     <span>{label}</span>
   </a>

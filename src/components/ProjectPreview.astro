@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import Android from '@components/icons/Android.astro'
 import Apple from '@components/icons/Apple.astro'
+import GitHub from '@components/icons/GitHub.astro'
 import { formatApproximateDate } from '@lib/time'
 import ProjectLink from './ProjectLink.astro'
 
@@ -78,6 +79,7 @@ const updatedDate =
       project.data.demo ||
       project.data.play ||
       project.data.download ||
+      project.data.repository ||
       project.data.apple ||
       project.data.google) && (
       <div class="mt-2 flex flex-wrap items-center gap-2 select-none">
@@ -126,7 +128,13 @@ const updatedDate =
             Play
           </ProjectLink>
         )}
-        {project.data.download && (
+        {project.data.repository && (
+          <ProjectLink href={project.data.repository} external>
+            <GitHub className="mr-1.5 size-5" aria-hidden="true" />
+            GitHub
+          </ProjectLink>
+        )}
+        {project.data.download && !project.data.repository && (
           <ProjectLink href={project.data.download} external>
             <ExternalLinkIcon className="mr-1.5 size-5" aria-hidden="true" />
             Download
