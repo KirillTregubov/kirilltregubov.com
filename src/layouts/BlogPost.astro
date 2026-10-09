@@ -124,7 +124,7 @@ const formatDate = (date: Date) =>
     {series && (
       <BlogSeriesNavigationComponent series={series} placement="top" />
     )}
-    <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-strong:text-neutral-200 prose-a:-m-0.5 prose-a:rounded-sm prose-a:p-0.5 prose-a:hover:text-white prose-a:focus-visible:text-white prose-a:active:text-white prose-a:transition prose-a:duration-150 prose-a:inline-block prose-a:will-change-transform prose-a:active:scale-[0.98] prose-a:text-neutral-200 prose-img:rounded-xl prose-hr:my-8 prose-hr:border-neutral-700 [&_[data-keybind]+sup>a[data-footnote-ref]]:ml-px [&_a[data-footnote-ref]]:scroll-mt-20">
+    <article class="prose prose-lg max-w-none text-neutral-300 prose-neutral dark:prose-invert prose-headings:scroll-mt-20 prose-h2:text-2xl prose-h3:text-xl prose-h4:font-medium prose-strong:text-neutral-200 prose-a:-m-0.5 prose-a:rounded-sm prose-a:p-0.5 prose-a:hover:text-white prose-a:focus-visible:text-white prose-a:active:text-white prose-a:transition prose-a:duration-150 prose-a:inline-block prose-a:will-change-transform prose-a:active:scale-[0.99] prose-a:text-neutral-200 prose-img:rounded-xl prose-hr:my-8 prose-hr:border-neutral-700 [&_[data-keybind]+sup>a[data-footnote-ref]]:ml-px [&_a[data-footnote-ref]]:scroll-mt-20 [&_a:is([data-footnote-ref],[data-footnote-backref])]:inline-block [&_a:is([data-footnote-ref],[data-footnote-backref])]:will-change-transform [&_a[data-footnote-ref]]:active:scale-[0.95] [&_a[data-footnote-backref]]:active:scale-[0.95]">
       {tableOfContents.length > 1 && (
         <details class="toc-details group/toc not-prose overflow-hidden rounded-lg transition bg-neutral-800 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0">
           <summary class="toc-summary relative z-10 flex cursor-pointer list-none rounded-lg items-center justify-between gap-4 border border-neutral-700 bg-neutral-800 p-4 py-5 text-lg leading-6 font-semibold transition-[background-color,color,border-radius] text-neutral-200 marker:content-none hover:bg-neutral-700 hover:text-white active:bg-neutral-700 active:text-white focus-visible:text-white focus-visible:ring-inset group/summary">
@@ -191,7 +191,7 @@ const formatDate = (date: Date) =>
         link.href = `#${encodeURIComponent(heading.id)}`
         link.dataset.headingLink = ''
         link.className =
-          'not-prose absolute top-0 left-full ml-1 hidden rounded-sm px-1 leading-[inherit] font-normal text-neutral-500 no-underline opacity-0 transition-[opacity,color] duration-200 ease-in-out group-hover/heading:opacity-100 group-focus-within/heading:opacity-100 hover:text-white  active:text-white focus-visible:opacity-100 motion-reduce:transition-none md:block [@media(hover:none)]:opacity-100'
+          'not-prose absolute top-0 left-full ml-1 hidden rounded-sm px-1 leading-[inherit] font-normal text-neutral-500 no-underline opacity-0 transition-[opacity,color,scale] duration-200 ease-in-out will-change-transform active:scale-[0.98] group-hover/heading:opacity-100 group-focus-within/heading:opacity-100 hover:text-white active:text-white focus-visible:opacity-100 motion-reduce:transition-none md:block [@media(hover:none)]:opacity-100'
         link.setAttribute('aria-label', label)
         link.title = label
         const symbol = document.createElement('span')
