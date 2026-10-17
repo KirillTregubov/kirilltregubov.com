@@ -15,6 +15,7 @@ interface Props {
   bodyClass?: string
   footerClass?: string
   footerContent?: string
+  player?: { path: string; width: number; height: number }
 }
 
 let {
@@ -27,6 +28,7 @@ let {
   bodyClass,
   footerClass,
   footerContent = null,
+  player,
 } = Astro.props
 const { pathname } = Astro.url
 if (!description) {
@@ -110,11 +112,25 @@ const devOverflowToggleScript = `
     )}
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content={imageUrl} />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:creator" content="@KirillTregubov_" />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={imageUrl} />
+    <meta
+      name="twitter:card"
+      content={player ? 'player' : 'summary_large_image'}
+    />
+    {player && (
+      <>
+        <meta name="twitter:site" content="@KirillTregubov_" />
+        <meta
+          name="twitter:player"
+          content={new URL(player.path, Astro.site).href}
+        />
+        <meta name="twitter:player:width" content={String(player.width)} />
+        <meta name="twitter:player:height" content={String(player.height)} />
+      </>
+    )}
+    <meta name="twitter:creator" content="@KirillTregubov_" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <ClientRouter />
   </head>
   <body

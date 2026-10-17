@@ -1,0 +1,20 @@
+---
+import '@styles/global.css'
+import '@fontsource-variable/inter/index.css'
+import PlayerPlayground from '@components/PlayerPlayground'
+---
+
+<!doctype html>
+<html lang="en" class="dark bg-neutral-900">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Interactive Playground | Kirill Tregubov</title>
+  </head>
+  <body class="m-0 bg-neutral-900 font-sans text-neutral-300">
+    <main class="mx-auto max-w-2xl p-4 sm:p-6">
+      <PlayerPlayground client:load />
+    </main>
+  </body>
+</html>

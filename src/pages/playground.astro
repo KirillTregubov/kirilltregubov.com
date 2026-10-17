@@ -1,0 +1,20 @@
+---
+import Layout from '@layouts/Layout.astro'
+import PlayerPlayground from '@components/PlayerPlayground'
+---
+
+<Layout
+  title="Interactive Playground | Kirill Tregubov"
+  description="An interactive Saturn scene and React state experiments."
+  player={{ path: '/embed/playground', width: 640, height: 800 }}
+>
+  <main class="mx-auto max-w-2xl">
+    <a
+      href="/"
+      class="mb-6 inline-block text-sm text-neutral-400 underline underline-offset-4 hover:text-white"
+    >
+      Back to home
+    </a>
+    <PlayerPlayground client:load />
+  </main>
+</Layout>
