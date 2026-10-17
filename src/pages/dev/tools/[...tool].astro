@@ -1,0 +1,111 @@
+---
+import '@styles/global.css'
+import '@fontsource-variable/inter/index.css'
+import {
+  Bookmark,
+  Heart,
+  MessageCircle,
+  MoreHorizontal,
+  Repeat2,
+  Share,
+} from 'lucide-react'
+
+// No paths are generated in production: these tools exist only in astro dev.
+export function getStaticPaths() {
+  return import.meta.env.DEV
+    ? [{ params: { tool: undefined } }, { params: { tool: 'player' } }]
+    : []
+}
+
+const isPlayer = Astro.params.tool === 'player'
+---
+
+<!doctype html>
+<html lang="en" class="dark bg-neutral-950">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{isPlayer ? 'X player preview' : 'Local tools'} · Local dev</title>
+  </head>
+  <body class="m-0 p-4 font-sans text-neutral-300 sm:p-6">
+    <main>
+      {isPlayer ? (
+        <>
+          <header class="mb-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+            <a
+              href="/dev/tools"
+              class="text-neutral-400 underline underline-offset-4 hover:text-white"
+            >
+              Local tools
+            </a>
+            <h1 class="font-medium">X player preview · 566 × 566 px</h1>
+          </header>
+          <div class="overflow-x-auto">
+            <article
+              aria-label="Tweet frame preview"
+              class="box-border w-[600px] border-x border-neutral-800 bg-black px-[15px] pb-4 font-[Arial,sans-serif] text-[15px] text-[#e7e9ea]"
+            >
+              <div class="flex h-[84px] items-center gap-2">
+                <div
+                  aria-hidden="true"
+                  class="flex size-10 shrink-0 items-center justify-center rounded-full bg-neutral-800 font-bold"
+                >
+                  S
+                </div>
+                <div class="flex-1 leading-5">
+                  <p class="font-bold">Spectra</p>
+                  <p class="text-[#71767b]">@highimspectra</p>
+                </div>
+                <MoreHorizontal size={20} aria-hidden="true" />
+              </div>
+              <div class="box-content size-[566px] overflow-hidden rounded-2xl border border-[#2f3336] bg-black">
+                <iframe
+                  src="/embed/playground?autoplay=1&auto_play=true"
+                  title="X player preview at 566 by 566 pixels"
+                  width="566"
+                  height="566"
+                  scrolling="no"
+                  allow="autoplay; fullscreen; web-share"
+                  allowfullscreen
+                  class="block h-[566px] w-[566px] max-w-none border-0 bg-neutral-900"
+                />
+              </div>
+              <p class="mt-1 text-[13px] text-[#71767b]">
+                From kirilltregubov.com
+              </p>
+              <p class="my-4 text-[#71767b]">3:24 AM · Oct 17, 2026</p>
+              <div
+                aria-hidden="true"
+                class="flex justify-between border-t border-[#2f3336] pt-4 text-[#71767b]"
+              >
+                <MessageCircle size={20} />
+                <Repeat2 size={20} />
+                <Heart size={20} />
+                <Bookmark size={20} />
+                <Share size={20} />
+              </div>
+            </article>
+          </div>
+        </>
+      ) : (
+        <>
+          <h1 class="text-xl font-semibold text-neutral-100">Local tools</h1>
+          <p class="mt-2 text-sm text-neutral-500">
+            Development only. Excluded from production builds.
+          </p>
+          <ul class="mt-6">
+            <li>
+              <a
+                href="/dev/tools/player"
+                class="text-neutral-300 underline underline-offset-4 hover:text-white"
+              >
+                X player preview · 566 × 566 px
+              </a>
+            </li>
+          </ul>
+        </>
+      )}
+    </main>
+  </body>
+</html>
