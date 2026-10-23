@@ -20,6 +20,7 @@ interface Props {
   }
   tags: string[]
   headings: MarkdownHeading[]
+  beginningOfPostInToc: boolean
   series?: BlogSeriesNavigation
 }
 
@@ -31,10 +32,11 @@ const {
   image,
   tags,
   headings,
+  beginningOfPostInToc,
   series,
 } = Astro.props
 
-let sectionNumber = 1
+let sectionNumber = beginningOfPostInToc ? 1 : 0
 let subsectionNumber = 0
 const tableOfContents = headings
   .filter((heading) => heading.depth === 2 || heading.depth === 3)
@@ -43,6 +45,7 @@ const tableOfContents = headings
       sectionNumber += 1
       subsectionNumber = 0
     } else {
+      if (sectionNumber === 0) sectionNumber = 1
       subsectionNumber += 1
     }
 
@@ -138,15 +141,17 @@ const formatDate = (date: Date) =>
             class="toc-content px-4 pt-2 pb-3"
           >
             <ol>
-              <li>
-                <a
-                  class="-mx-1 flex w-fit items-baseline gap-y-2 gap-x-1 rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
-                  href="#post-content"
-                >
-                  <span class="shrink-0 tabular-nums">1.</span>
-                  <span>Beginning of Post</span>
-                </a>
-              </li>
+              {beginningOfPostInToc && (
+                <li>
+                  <a
+                    class="-mx-1 flex w-fit items-baseline gap-y-2 gap-x-1 rounded-sm p-1 text-base text-neutral-400 transition hover:text-white active:text-white"
+                    href="#post-content"
+                  >
+                    <span class="shrink-0 tabular-nums">1.</span>
+                    <span>Beginning of Post</span>
+                  </a>
+                </li>
+              )}
               {tableOfContents.map((heading) => (
                 <li class:list={[heading.depth === 3 && 'pl-4']}>
                   <a

@@ -68,6 +68,7 @@ const blog = defineCollection({
     draft: z.boolean().default(false),
     hidden: z.boolean().default(false),
     archived: z.boolean().default(false),
+    beginningOfPostInToc: z.boolean().default(true),
     demo: z.url().optional(),
   }),
 })
