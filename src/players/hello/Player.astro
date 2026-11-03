@@ -1,0 +1,89 @@
+---
+import Saturn from '@components/Saturn'
+import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
+import { resolveBlogImage } from '@lib/blog'
+
+const latestPost = (await getCollection('blog'))
+  .filter((post) => !post.data.draft && !post.data.hidden)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())[0]
+---
+
+<div class="@container flex h-[calc(100%_-_2rem)] min-h-0 flex-col overflow-hidden bg-neutral-900">
+  <header class="shrink-0 px-3 pt-2 @min-[360px]:px-4 @min-[360px]:pt-4">
+    <h1 class="text-lg font-medium tracking-tight text-neutral-100 @min-[360px]:text-xl">
+      Hi, I’m Kirill.
+    </h1>
+    <p class="mt-1 max-w-md text-xs leading-relaxed text-neutral-400 @min-[360px]:mt-2 @min-[360px]:text-sm">
+      I’m a software developer from Canada. I write about the tools I use and
+      the things I build.
+    </p>
+  </header>
+  <div
+    class="relative min-h-0 flex-1 overflow-hidden"
+    role="img"
+    aria-label="Interactive Saturn model. Drag horizontally to spin."
+  >
+    <div class="absolute -inset-y-4 inset-x-0">
+      <Saturn client:load />
+    </div>
+  </div>
+  <footer class="shrink-0 px-3 pb-3 @min-[360px]:px-4 @min-[360px]:pb-4">
+    <div class="mb-2 flex items-center justify-between gap-2 text-[10px] text-neutral-500 @min-[360px]:mb-3 @min-[360px]:text-xs">
+      <span>My favourite planet.</span>
+      <a
+        href="https://science.nasa.gov/resource/saturn-3d-model/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-sm underline underline-offset-2 hover:text-neutral-300 focus-visible:ring-1 focus-visible:ring-orange-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900"
+      >
+        Model: NASA
+      </a>
+    </div>
+    {latestPost && (
+      <div class="border-t border-neutral-700/70 pt-5">
+        <a
+          href={`/blog/${latestPost.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative isolate flex items-center gap-3 rounded-lg text-neutral-200 before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-lg before:bg-orange-400/7 before:opacity-0 before:transition-[inset,opacity] before:duration-300 before:ease-[cubic-bezier(0.05,0,0,1)] before:content-[''] hover:before:-inset-2.5 hover:before:opacity-100 focus-visible:ring-0! focus-visible:before:-inset-2.5 focus-visible:before:opacity-100 focus-visible:before:ring-1 focus-visible:before:ring-orange-400/45 motion-reduce:before:transition-none"
+        >
+          <Image
+            {...resolveBlogImage(latestPost.data.image.url)}
+            alt={latestPost.data.image.alt}
+            width={256}
+            height={144}
+            widths={[144, 192, 256, 384]}
+            sizes="clamp(56px, calc(44vw - 116px), 128px)"
+            loading="eager"
+            class="aspect-video h-auto w-[clamp(56px,calc(44cqw_-_108px),128px)] shrink-0 rounded-sm object-cover"
+          />
+          <span class="min-w-0 flex-1">
+            <time
+              datetime={latestPost.data.pubDate.toISOString()}
+              class="mb-1 block text-xs text-neutral-500"
+            >
+              {latestPost.data.pubDate.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </time>
+            <span
+              title={latestPost.data.title}
+              class="block truncate text-[clamp(11px,3cqw,16px)] leading-snug font-medium"
+            >
+              {latestPost.data.title}
+            </span>
+          </span>
+          <span
+            aria-hidden="true"
+            class="shrink-0 text-neutral-500 transition group-hover:text-orange-400 group-focus-visible:text-orange-400"
+          >
+            ↗
+          </span>
+        </a>
+      </div>
+    )}
+  </footer>
+</div>

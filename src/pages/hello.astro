@@ -1,0 +1,19 @@
+---
+import Layout from '@layouts/Layout.astro'
+import player from '../players/hello/player'
+---
+
+<Layout
+  title={`${player.title} | Kirill Tregubov`}
+  description={player.description}
+  player={{ path: '/embed/hello', width: 566, height: 566 }}
+>
+  <main class="mx-auto max-w-xl">
+    <iframe
+      src="/embed/hello"
+      title="Meet Kirill Tregubov"
+      class="block aspect-square w-full border-0"
+      allow="autoplay; fullscreen"
+    />
+  </main>
+</Layout>

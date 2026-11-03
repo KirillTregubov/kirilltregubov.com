@@ -12,8 +12,16 @@ Please install [Bun](https://bun.sh/) and clone this repository.
 
 With `bun dev` running, open [local tools](http://localhost:4321/dev/tools).
 The [X player preview](http://localhost:4321/dev/tools/player) renders the actual
-embed in a 566 × 566 CSS pixel iframe with scrolling disabled, matching the
-measured X player. Edit `src/components/PlayerPlayground.tsx` to update the demo.
+embed with selectable sizes from 320 to 640 CSS pixels and scrolling disabled.
+The player adapts its layout to the iframe while keeping text and controls readable.
+Browse the [player gallery](http://localhost:4321/dev/tools/players) to select a player.
+
+Each player lives in `src/players/<id>/`: `player.ts` contains its gallery metadata
+and `Player.astro` renders it. New folders with these files are automatically
+discovered by the gallery and served at `/embed/<id>`.
+The saved deployed test is `src/players/playground/`; the profile player is
+`src/players/hello/`, shared via `/hello`. Share pages supply the X card metadata
+and are created separately from the embed routes.
 Routes under `src/pages/dev/tools/[...tool].astro` generate no production paths.
 
 ## 🧞 Commands

@@ -1,0 +1,36 @@
+---
+import '@styles/global.css'
+import '@fontsource-variable/inter/index.css'
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
+import { players } from '@lib/players'
+
+const components = import.meta.glob<{ default: AstroComponentFactory }>(
+  '../../players/*/Player.astro',
+  { eager: true },
+)
+
+export function getStaticPaths() {
+  return players.map((player) => ({
+    params: { player: player.id },
+    props: { player },
+  }))
+}
+
+const { player } = Astro.props
+const Player = components[`../../players/${player.id}/Player.astro`].default
+---
+
+<!doctype html>
+<html lang="en" class="dark overflow-hidden bg-neutral-900">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{player.title} | Kirill Tregubov</title>
+  </head>
+  <body class="m-0 h-dvh overflow-hidden bg-neutral-900 font-sans text-neutral-300">
+    <main class="h-full w-full p-2 sm:p-3">
+      <Player />
+    </main>
+  </body>
+</html>

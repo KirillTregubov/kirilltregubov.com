@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import Saturn from './Saturn'
+
+import Saturn from '../../components/Saturn'
 
 const colors = [
   { name: 'Orange', dot: 'bg-orange-400', text: 'text-orange-400' },
