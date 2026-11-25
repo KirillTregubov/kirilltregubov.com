@@ -1,0 +1,25 @@
+---
+// Rendered at build time, then refreshed in the browser so the age stays
+// correct after a birthday without a rebuild.
+const birthDate = { year: 2001, month: 10, day: 7 }
+
+const ageOn = (today: Date) => {
+  const hadBirthday =
+    today.getMonth() + 1 > birthDate.month ||
+    (today.getMonth() + 1 === birthDate.month &&
+      today.getDate() >= birthDate.day)
+  return today.getFullYear() - birthDate.year - (hadBirthday ? 0 : 1)
+}
+---
+
+<span data-age={JSON.stringify(birthDate)}>{ageOn(new Date())}</span>
+<script is:inline>
+  document.querySelectorAll('[data-age]').forEach((el) => {
+    const { year, month, day } = JSON.parse(el.dataset.age)
+    const today = new Date()
+    const hadBirthday =
+      today.getMonth() + 1 > month ||
+      (today.getMonth() + 1 === month && today.getDate() >= day)
+    el.textContent = String(today.getFullYear() - year - (hadBirthday ? 0 : 1))
+  })
+</script>

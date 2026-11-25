@@ -4,6 +4,7 @@ import '@fontsource-variable/inter/index.css'
 import SpeedInsights from '@vercel/speed-insights/astro'
 import { ClientRouter } from 'astro:transitions'
 import Snow from '@components/Snow'
+import { SITE_DESCRIPTION, SITE_NAME, X_HANDLE } from '@lib/site'
 
 interface Props {
   title: string
@@ -32,7 +33,7 @@ let {
 } = Astro.props
 const { pathname } = Astro.url
 if (!description) {
-  description = 'Software Developer specialized in Web and App Development.'
+  description = SITE_DESCRIPTION
 }
 if (!type) {
   type = 'website'
@@ -42,7 +43,10 @@ if (!image) {
 }
 
 const formattedImage = image.replace('/assets/', '')
-const pageUrl = new URL(pathname, Astro.site).href
+// Internal links omit the trailing slash, so canonical URLs do too.
+const canonicalPath =
+  pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname
+const pageUrl = new URL(canonicalPath, Astro.site).href
 const imageUrl = new URL(`/assets/${formattedImage}`, Astro.site).href
 
 const devOverflowToggleScript = `
@@ -81,19 +85,19 @@ const devOverflowToggleScript = `
       sizes="180x180"
     />
     <link rel="manifest" href="/favicons/site.webmanifest" />
-    <!-- <meta
-      name="theme-color"
-      content="#fafafa"
-      media="(prefers-color-scheme: light)"
-    /> -->
-    <meta
-      name="theme-color"
-      content="#171717"
-      media="(prefers-color-scheme: dark)"
-    />
+    <!-- The site is always dark, so use the same color in light mode. -->
+    <meta name="theme-color" content="#171717" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <meta property="og:site_name" content="Kirill Tregubov" />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE_NAME}
+      href={new URL('rss.xml', Astro.site)}
+    />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -118,7 +122,7 @@ const devOverflowToggleScript = `
     />
     {player && (
       <>
-        <meta name="twitter:site" content="@KirillTregubov_" />
+        <meta name="twitter:site" content={X_HANDLE} />
         <meta
           name="twitter:player"
           content={new URL(player.path, Astro.site).href}
@@ -127,7 +131,7 @@ const devOverflowToggleScript = `
         <meta name="twitter:player:height" content={String(player.height)} />
       </>
     )}
-    <meta name="twitter:creator" content="@KirillTregubov_" />
+    <meta name="twitter:creator" content={X_HANDLE} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />

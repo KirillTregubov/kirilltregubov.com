@@ -23,37 +23,55 @@ Check items off as they land.
       Done: geometry was only ~90 KB; the 4096×3072 PNG planet texture was the
       cost. Planet texture → 2048×1536 WebP (q90), rings kept as lossless PNG.
       5.48 MB → 173 KB, no decoder needed.
-- [ ] **Reduce hydration on the homepage.** `ProjectTitle`, `ProjectToggle`,
+- [x] **Reduce hydration on the homepage.** `ProjectTitle`, `ProjectToggle`,
       `ProjectList` all use `client:load`, and `ProjectList` wraps the whole
       grid. `Age` hydrates React to print one number — compute at build time
       with a tiny inline script that updates it in the browser.
+      Done: the project toggle is static HTML + a small script, and `Age` is
+      an Astro component. `date-fns` and `nanostores` were removed. React
+      still loads on the homepage for Saturn.
 
 ## SEO & discoverability
 
-- [ ] **Add a sitemap** (`@astrojs/sitemap`) and exclude `/dev/**` and
+- [x] **Add a sitemap** (`@astrojs/sitemap`) and exclude `/dev/**` and
       `/embed/**`.
-- [ ] **Add `robots.txt`** pointing to the sitemap.
-- [ ] **Add an RSS feed** for the blog (`@astrojs/rss`) plus
+- [x] **Add `robots.txt`** pointing to the sitemap.
+- [x] **Add an RSS feed** for the blog (`@astrojs/rss`) plus
       `<link rel="alternate" type="application/rss+xml">` in the layout.
-- [ ] **Add `<link rel="canonical">`** in `Layout.astro`.
-- [ ] **Give the homepage an `<h1>`.** The name in the hero is a `Highlight`
+- [x] **Add `<link rel="canonical">`** in `Layout.astro`.
+- [x] **Give the homepage an `<h1>`.** The name in the hero is a `Highlight`
       span, so the page has no top-level heading.
-- [ ] **Add a light `theme-color`** meta (currently commented out) or remove
+- [x] **Add a light `theme-color`** meta (currently commented out) or remove
       the dead comment.
 
 ## Correctness & accessibility
 
-- [ ] **Fix duplicate `id="tech-stack"`** in `src/pages/index.astro`. Give
+- [x] **Fix duplicate `id="tech-stack"`** in `src/pages/index.astro`. Give
       "Tools & Services" its own id and add `aria-labelledby` to both
       sections, matching the Writing section.
+- [x] **Consistent entrance animation timing.** Pages hard-coded their own
+      `animate-[fadeUp_…]` delays, and some blocks (blog author, bottom series
+      nav, blog index footer) had none, so they appeared before the content
+      above them. All pages now use the `enter` / `enter-N` utilities in
+      `global.css` (N × 150ms), in reading order, with the footer last.
 
 ## Cleanup
 
-- [ ] **Remove the commented-out Work Experience section** (~200 lines) from
+- [x] **Remove the commented-out Work Experience section** (~200 lines) from
       `src/pages/index.astro`; it lives in git history.
-- [ ] **Remove `src/pages/_max-verstappen.astro.backup`.**
-- [ ] **Centralize site constants** (default description, `@KirillTregubov_`
+- [x] **Remove `src/pages/_max-verstappen.astro.backup`.**
+- [x] **Centralize site constants** (default description, `@KirillTregubov_`
       handle, site name) in one module.
+- [ ] **Decide on unused files.** Nothing references `public/assets/experience/`
+      (1.9 MB), `public/assets/f1/` (1.4 MB), `public/assets/max_verstappen.jpg`
+      or `src/experiments/f1-prediction.ts`. They still deploy publicly. Keep
+      them for the Work Experience section's return, or delete them.
+
+## Follow-ups
+
+- [ ] **Check the sitemap in the next production build.** It is only generated
+      at build time. Confirm `/sitemap-index.xml` leaves out `/dev`, `/embed`,
+      and hidden or draft posts, and uses URLs without trailing slashes.
 
 ## Deferred
 

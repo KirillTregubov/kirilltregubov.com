@@ -67,6 +67,26 @@
   }
 }
 
+/*
+ * Page entrance animation. Blocks fade up in reading order:
+ * `enter` starts immediately and `enter-N` waits N × 150ms.
+ * The `both` fill mode keeps a block hidden until its step starts.
+ */
+@utility enter {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: fadeUp 0.6s both;
+    animation-delay: calc(var(--enter-step, 0) * 150ms);
+  }
+}
+
+@utility enter-* {
+  --enter-step: --value(integer);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: fadeUp 0.6s both;
+    animation-delay: calc(var(--enter-step) * 150ms);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -93,10 +113,6 @@
   .unblur {
     animation: unblur 0.3s ease;
   }
-}
-
-.show-featured li:not([data-featured]) {
-  display: none;
 }
 
 @keyframes fade-in {

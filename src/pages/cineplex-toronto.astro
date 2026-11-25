@@ -121,12 +121,12 @@ const getAuditoriumHeading = (auditoriums: string) => {
   title="Toronto Cineplex Guide"
   description="A reference to Cineplex viewing formats, auditorium formats, and screen aspect ratios at theatres in the Greater Toronto Area."
   bodyClass="bg-[radial-gradient(circle_at_50%_-12rem,rgb(120_53_15/0.2),transparent_35rem),#171717]"
-  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
+  footerClass="enter-3"
 >
   <PageContainer>
     <ReturnHome />
 
-    <header class="mt-2 motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0">
+    <header class="mt-2 enter">
       <div class="grid gap-5">
         <div class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem)] px-6 py-8 sm:p-10">
           <!-- class="relative rounded-3xl border border-amber-200/16 bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem),#160d08] px-6 py-9 sm:px-10 sm:py-12" -->
@@ -194,7 +194,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </dl>
             </div>
 
-            <div class="relative mr-auto w-full max-w-[20rem] -rotate-2 touch-manipulation rounded-xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:hidden">
+            <div class="relative mr-auto w-full max-w-[20rem] -rotate-2 touch-manipulation rounded-xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 enter-1 lg:hidden">
               <span
                 class="absolute top-[55%] -left-3 size-5 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"
@@ -246,7 +246,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </div>
             </div>
 
-            <div class="relative mx-auto hidden w-full max-w-md rotate-2 touch-manipulation rounded-2xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 lg:block">
+            <div class="relative mx-auto hidden w-full max-w-md rotate-2 touch-manipulation rounded-2xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 enter-1 lg:block">
               <span
                 class="absolute top-[67%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
                 aria-hidden="true"
@@ -315,7 +315,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
       class="mt-4 scroll-mt-12 xs:scroll-mt-13"
       aria-labelledby="directory-title"
     >
-      <div class="sticky top-12 xs:top-13 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
+      <div class="sticky top-12 xs:top-13 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] enter-1">
         <h2 id="directory-title" class="sr-only">
           Theatre directory
         </h2>
@@ -418,7 +418,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
         </div>
       </div>
 
-      <div class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
+      <div class="enter-1">
         <div class="mt-2 flex flex-col gap-y-0.5 text-sm text-neutral-500 sm:flex-row sm:gap-x-2">
           <p id="result-count" class="sm:whitespace-nowrap" aria-live="polite">
             Showing all {theatres.length} locations
@@ -717,7 +717,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
     </section>
 
     <!-- <aside
-      class="mt-8 rounded-2xl border border-white/8 bg-white/3 p-5 text-sm leading-relaxed text-neutral-500 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0 sm:p-6"
+      class="mt-8 rounded-2xl border border-white/8 bg-white/3 p-5 text-sm leading-relaxed text-neutral-500 enter-2 sm:p-6"
     >
       <p>
         <strong class="font-semibold text-neutral-300">About this guide.</strong

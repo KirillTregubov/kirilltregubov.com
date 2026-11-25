@@ -3,16 +3,12 @@ import { getCollection } from 'astro:content'
 import HomeHero from '@components/HomeHero.astro'
 import LatestPosts from '@components/LatestPosts.astro'
 import PageContainer from '@components/PageContainer.astro'
-import {
-  ProjectList,
-  ProjectTitle,
-  ProjectToggle,
-} from '@components/ProjectContext'
 import ProjectPreview from '@components/ProjectPreview.astro'
 import TechnologyStack from '@components/TechnologyStack.astro'
 import Layout from '@layouts/Layout.astro'
 import { BLOG_SUBTITLE } from '@lib/blog'
-import { ArrowRightIcon } from 'lucide-react'
+import { SITE_NAME } from '@lib/site'
+import { ArrowRightIcon, ChevronRightIcon } from 'lucide-react'
 import { interactiveButtonClass } from '@styles/classes'
 
 const latestPosts = (await getCollection('blog'))
@@ -32,18 +28,15 @@ const allProjects = await getCollection('projects').then((projects) =>
 ---
 
 <Layout
-  title="Kirill Tregubov"
+  title={SITE_NAME}
   player={{ path: '/embed/playground', width: 640, height: 800 }}
-  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.75s] motion-safe:opacity-0"
+  footerClass="enter-5"
 >
   <PageContainer class="space-y-8 md:space-y-12">
+    <h1 class="sr-only">Kirill Tregubov, Software Developer</h1>
     <HomeHero />
     {latestPosts.length > 0 && (
-      <section
-        id="writing"
-        aria-labelledby="writing-title"
-        class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
-      >
+      <section id="writing" aria-labelledby="writing-title" class="enter-1">
         <div class="flex items-center justify-between gap-4">
           <h2 id="writing-title" class="text-xl leading-none font-semibold">
             My Writing
@@ -66,281 +59,82 @@ const allProjects = await getCollection('projects').then((projects) =>
         <LatestPosts posts={latestPosts} mode="single" />
       </section>
     )}
-    {/* <section
-      id="experience"
-      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0"
-    >
-      <h2 class="text-xl leading-none font-semibold">Work Experience</h2>
-      <p class="mt-2 mb-3 text-neutral-400">
-        Roles and projects where I have applied my skills professionally,
-        showcasing my impact and expertise.
-      </p>
-      <div class="mt-4 space-y-6">
-        <div
-          class="flex flex-col gap-x-6 gap-y-4 lg:flex-row lg:items-center xl:gap-x-10"
-        >
-          <Image
-            class="unblur rounded-xl select-none lg:w-[calc(50%-1.25rem)]"
-            src="/assets/experience/PollutionReporter.jpg"
-            alt="Screenshots of the EQAO Practice Test website"
-            width={1200}
-            height={630}
-            onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
-            loading="eager"
-          />
-          <div>
-            <div
-              class="mb-1 text-lg md:flex md:items-center md:justify-between"
-            >
-              <h2 class="font-semibold">Pollution Reporter</h2>
-              <h3 class="text-neutral-400">December 2024 - March 2025</h3>
-            </div>
-            <p class="mb-2 text-neutral-200">
-              Updated a mobile app that provides academic research connecting
-              polluters to pollution to health harms in Ontario's Chemical
-              Valley. It also helps residents report pollution incidents by
-              drafting an email addressed to the Ontario Ministry of the
-              Environment's Spills Action Center.
-            </p>
-            <div class="mb-2 flex gap-2 select-none">
-              <a
-                href="https://apps.apple.com/ca/app/pollution-reporter/id1476589861"
-                target="_blank"
-                rel="noopener noreferrer"
-                draggable="false"
-                class="group rounded-lg! transition"
-              >
-                <Image
-                  src="/assets/experience/AppStoreBadge.svg"
-                  alt="Download on the App Store"
-                  width={120}
-                  height={40}
-                  draggable="false"
-                  class="group-hover:opacity-70 group-focus-visible:opacity-70 group-active:opacity-60"
-                />
-              </a>
-              <a
-                href="https://play.google.com/store/apps/details?id=com.PollutionReporter"
-                target="_blank"
-                rel="noopener noreferrer"
-                draggable="false"
-                class="group rounded-md! transition"
-              >
-                <Image
-                  src="/assets/experience/GooglePlayBadge.png"
-                  alt="Get it on Google Play"
-                  width={135}
-                  height={40}
-                  draggable="false"
-                  class="group-hover:opacity-70 group-focus-visible:opacity-70 group-active:opacity-60"
-                />
-              </a>
-            </div>
-            <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400">
-              <h3 class="font-medium">Built with</h3>
-              {
-                [
-                  'TypeScript',
-                  'React Native',
-                  'Expo',
-                  'Reanimated',
-                  'AirTable'
-                ].map((tech) => (
-                  <div class="rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
-                    {tech}
-                  </div>
-                ))
-              }
-            </div>
-            <div class="mt-2 flex flex-col gap-1.5 text-neutral-400">
-              <p>
-                Migrated an outdated Flow React Native app to the latest Expo
-                managed workflow with TypeScript. Released the app on the Google
-                Play Store.
-              </p>
-              <p>
-                Refined the UI by fixing splash screen issues, adjusting safe
-                areas and content padding, adding animations and fixing data
-                loading issues.
-              </p>
-              <p>
-                Modernized the app's architecture by automating native code
-                generation, transitioning to functional components and hooks
-                where appropriate, integrating linting and formatting tools, and
-                applying best practices.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          class="flex flex-col gap-x-6 gap-y-4 lg:flex-row lg:items-center xl:gap-x-10"
-        >
-          <div class="lg:text-right">
-            <div
-              class="mb-1 text-lg md:flex md:items-center md:justify-between lg:block"
-            >
-              <h2 class="font-semibold">
-                Peel District School Board <span class="hidden md:inline"
-                  >EQAO Practice Tests</span
-                >
-              </h2>
-              <h3 class="text-neutral-400">November 2023 - Present</h3>
-            </div>
-            <p class="mb-2 text-neutral-200">
-              Created a practice test website for students in grades 3, 6, 9,
-              and 10 to prepare for provincial tests in mathematics and
-              language. It has been used by over 40,000 students across the last
-              two years.
-            </p>
-            <div
-              class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400 lg:justify-end"
-            >
-              <h3 class="font-medium">Built with</h3>
-              {
-                [
-                  'TypeScript',
-                  'React',
-                  'React Router',
-                  'Vite',
-                  'Tailwind CSS',
-                  'Motion'
-                ].map((tech) => (
-                  <div class="rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
-                    {tech}
-                  </div>
-                ))
-              }
-            </div>
-            <div class="mt-2 flex flex-col gap-1.5 text-neutral-400">
-              <p>
-                Designed and developed a React single-page website closely
-                modeled after the official ministry practice test platform.
-                Focused on responsive styling, proper accessibility, and added
-                confetti on submission to add a touch of fun.
-              </p>
-              <p>
-                Extensively tested the website across different browsers, screen
-                sizes, and old browser versions like Chrome 76 and iOS 14
-                Safari. Conducted classroom usability testing to observe student
-                engagement and identify areas for improvement, particularly in
-                UI and UX.
-              </p>
-            </div>
-          </div>
-          <Image
-            class="unblur -order-1 rounded-xl select-none lg:order-0 lg:w-[calc(50%-1.25rem)]"
-            src="/assets/experience/PracticeTests.jpg"
-            alt="Screenshots of the EQAO Practice Test website"
-            width={1200}
-            height={630}
-            onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
-            loading="eager"
-          />
-        </div>
-        <div
-          class="flex flex-col gap-x-6 gap-y-4 lg:flex-row lg:items-center xl:gap-x-10"
-        >
-          <div class="flex shrink-0 flex-col gap-2 lg:w-[calc(50%-1.25rem)]">
-            <Image
-              class="unblur rounded-xl select-none"
-              src="/assets/experience/BeaneraApp.jpg"
-              alt="Screenshots of the EQAO Practice Test website"
-              width={1200}
-              height={630}
-              onerror="this.src='/assets/projects/placeholder.jpg'; this.onerror=null"
-              loading="eager"
-            />
-          </div>
-          <div>
-            <div
-              class="mb-1 text-lg md:flex md:items-center md:justify-between"
-            >
-              <h2 class="font-semibold">Beanera</h2>
-              <h3 class="text-neutral-400">July 2023 - December 2023</h3>
-            </div>
-            <p class="mb-2 text-neutral-200">
-              Created a startup for a coffee shop directory app, with the aim of
-              helping people discover their next favorite cup of coffee.
-            </p>
-            <div class="flex flex-wrap gap-x-2 gap-y-1.5 text-neutral-400">
-              <h3 class="font-medium">Built with</h3>
-              {
-                [
-                  'TypeScript',
-                  'React Native',
-                  'Expo',
-                  'Reanimated',
-                  'Node.js',
-                  'Fastify',
-                  'PostgreSQL',
-                  'Prisma',
-                  'Next.js',
-                  'Tailwind CSS'
-                ].map((tech) => (
-                  <div class="rounded-xs bg-neutral-200 px-1.5 leading-relaxed whitespace-nowrap text-neutral-700 shadow-xs dark:bg-neutral-800 dark:text-neutral-400">
-                    {tech}
-                  </div>
-                ))
-              }
-            </div>
-            <div class="mt-2 flex flex-col gap-1.5 text-neutral-400">
-              <p>
-                Designed and developed a strict TypeScript monorepo integrating
-                a React Native mobile app, a Next.js admin dashboard, and a
-                Node.js backend with PostgreSQL database. Implemented a shared
-                Zod schema layer for data synchronization across the stack.
-              </p>
-              <p>
-                Documented backend HTTP endpoints, request structures, response
-                payloads (including HTTP codes), authentication requirements,
-                logging and error handling, integrated Swagger and OpenAPI 2.0.
-                Configured a continuous deployment pipeline to deploy the
-                backend to a dedicated Linux server using Docker and GitHub
-                Actions.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> */}
 
     <section
       id="projects"
-      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"
+      aria-labelledby="projects-title"
+      data-show-all="false"
+      class="group/projects enter-2"
     >
       <div class="sticky top-0 z-10 -mx-4 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 px-4 pt-4 pb-2 after:pointer-events-none after:absolute after:-bottom-3.5 after:left-0 after:h-3.5 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:-mx-6 xs:flex-row xs:px-6 md:-mx-12 md:px-12 md:pb-2.5">
-        <ProjectTitle client:load />
-        <ProjectToggle client:load />
+        <div>
+          <h2 id="projects-title" class="text-xl leading-none font-semibold">
+            <span class="group-data-[show-all=true]/projects:hidden">
+              Featured Projects
+            </span>
+            <span class="hidden group-data-[show-all=true]/projects:inline">
+              All Projects
+            </span>
+          </h2>
+          <p class="mt-2 text-neutral-400">
+            Projects I have worked on that
+            <span class="group-data-[show-all=true]/projects:hidden">
+              {' '}
+              best
+            </span>{' '}
+            showcase my abilities.
+          </p>
+        </div>
+        <button
+          type="button"
+          aria-controls="project-list"
+          aria-expanded="false"
+          data-projects-toggle
+          class:list={[
+            interactiveButtonClass,
+            '-mx-2 -my-1 inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-sm px-2 py-1 font-medium select-none hover:text-white focus-visible:text-white active:text-white',
+          ]}
+        >
+          <span class="group-data-[show-all=true]/projects:hidden">
+            Show All
+          </span>
+          <span class="hidden group-data-[show-all=true]/projects:inline">
+            Show Featured
+          </span>
+          <ChevronRightIcon
+            className="size-4 -translate-y-px transition-transform group-data-[show-all=true]/projects:rotate-90"
+            aria-hidden="true"
+          />
+        </button>
       </div>
-      <ProjectList client:load>
-        <ul class="mt-4 grid grid-cols-1 gap-8 gap-x-6 lg:grid-cols-3 xl:gap-x-10">
-          {allProjects.map((project) => (
-            <li data-featured={project.data.featured || undefined}>
-              <ProjectPreview
-                project={project}
-                featured={project.data.featured}
-              />
-            </li>
-          ))}
-        </ul>
-      </ProjectList>
+      <ul
+        id="project-list"
+        class="mt-4 grid grid-cols-1 gap-8 gap-x-6 group-data-[show-all=false]/projects:*:not-data-featured:hidden lg:grid-cols-3 xl:gap-x-10"
+      >
+        {allProjects.map((project) => (
+          <li data-featured={project.data.featured || undefined}>
+            <ProjectPreview
+              project={project}
+              featured={project.data.featured}
+            />
+          </li>
+        ))}
+      </ul>
     </section>
-    <section
-      id="tech-stack"
-      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
-    >
-      <h2 class="text-xl leading-none font-semibold">Tech Stack</h2>
+    <section id="tech-stack" aria-labelledby="tech-stack-title" class="enter-3">
+      <h2 id="tech-stack-title" class="text-xl leading-none font-semibold">
+        Tech Stack
+      </h2>
       <p class="mt-2 mb-3 text-neutral-400">
         Technologies and programming languages that I enjoy using, and have
         worked with in the past.
       </p>
       <TechnologyStack type="technology" />
     </section>
-    <section
-      id="tech-stack"
-      class="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
-    >
-      <h2 class="text-xl leading-none font-semibold">Tools & Services</h2>
+    <section id="tools" aria-labelledby="tools-title" class="enter-4">
+      <h2 id="tools-title" class="text-xl leading-none font-semibold">
+        Tools & Services
+      </h2>
       <p class="mt-2 mb-3 text-neutral-400">
         Tools and services that I enjoy using regularly and have experience
         with.
@@ -349,3 +143,19 @@ const allProjects = await getCollection('projects').then((projects) =>
     </section>
   </PageContainer>
 </Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.querySelector<HTMLButtonElement>(
+      '[data-projects-toggle]',
+    )
+    const section = toggle?.closest<HTMLElement>('[data-show-all]')
+    if (!toggle || !section) return
+
+    toggle.addEventListener('click', () => {
+      const showAll = section.dataset.showAll !== 'true'
+      section.dataset.showAll = String(showAll)
+      toggle.setAttribute('aria-expanded', String(showAll))
+    })
+  })
+</script>

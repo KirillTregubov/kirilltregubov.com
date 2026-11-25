@@ -22,7 +22,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
   title="OverBuddy - Kirill Tregubov"
   description={projectInfo.data.description}
   image={`projects/overbuddy/marketing.jpg`}
-  footerClass="mt-8 motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="mt-8 enter-4"
   footerContent="All trademarks are the property of their respective owners."
 >
   <PageContainer class="flex flex-col space-y-8">
@@ -35,7 +35,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         <span>Download OverBuddy</span>
       </a>
     </ReturnHome>
-    <section class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
+    <section class="grid w-full grid-cols-1 gap-6 enter-1 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
       <div class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center">
         <Image
           class="fade-in select-none max-md:size-28 max-sm:size-24"
@@ -63,15 +63,15 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         download={projectInfo.data.download!}
       />
     </section>
-    <div class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"></div>
+    <div class="h-px w-full rounded-full bg-neutral-700 enter-2"></div>
     <div class="min-h-[calc(100vh-11rem)] w-full xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]">
       <h2
-        class="mb-3 scroll-mt-18 text-xl leading-none font-semibold motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0"
+        class="mb-3 scroll-mt-18 text-xl leading-none font-semibold enter-3"
         id="gallery"
       >
         Background Gallery
       </h2>
-      <div class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 max-xs:top-24 sm:flex-row sm:items-center">
+      <div class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] enter-3 max-xs:top-24 sm:flex-row sm:items-center">
         <input
           id="search"
           type="search"
@@ -108,7 +108,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           </span>
         </button> -->
       </div>
-      <div class="grid grid-cols-1 gap-x-4 gap-y-5 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29">
+      <div class="grid grid-cols-1 gap-x-4 gap-y-5 enter-3 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29">
         {backgrounds.map((background) => (
           <MDImage
             id={background.data.id}

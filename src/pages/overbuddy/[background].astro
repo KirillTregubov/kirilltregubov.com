@@ -38,12 +38,12 @@ const layoutDescription =
   title={`${title} - OverBuddy`}
   description={layoutDescription}
   image={`generated/${id}.png`}
-  footerClass="motion-safe:animate-[fadeUp_0.6s_forwards_0.6s] motion-safe:opacity-0"
+  footerClass="enter-4"
 >
   <PageContainer class="flex flex-col space-y-8">
     <menu
       class:list={[
-        "sticky -top-1 z-10 -mx-1 -mt-5 mb-4 flex gap-6 bg-neutral-900 px-1 pt-5 pb-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] motion-safe:animate-[fadeUp_0.6s_forwards] motion-safe:opacity-0 xs:-mt-7 xs:pt-7 md:-mt-13",
+        "sticky -top-1 z-10 -mx-1 -mt-5 mb-4 flex gap-6 bg-neutral-900 px-1 pt-5 pb-2 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] enter xs:-mt-7 xs:pt-7 md:-mt-13",
       ]}
       transition:animate={fade({ duration: '0.4s' })}
     >
@@ -55,7 +55,7 @@ const layoutDescription =
         <span>Back to Gallery</span>
       </a>
     </menu>
-    <section class="w-full motion-safe:animate-[fadeUp_0.6s_forwards_0.15s] motion-safe:opacity-0">
+    <section class="w-full enter-1">
       <MDImage
         id={id}
         src={image}
@@ -118,8 +118,8 @@ const layoutDescription =
         </div>
       </div>
     </section>
-    <div class="h-px w-full rounded-full bg-neutral-700 motion-safe:animate-[fadeUp_0.6s_forwards_0.3s] motion-safe:opacity-0"></div>
-    <section class="grid w-full grid-cols-1 gap-6 motion-safe:animate-[fadeUp_0.6s_forwards_0.45s] motion-safe:opacity-0 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
+    <div class="h-px w-full rounded-full bg-neutral-700 enter-2"></div>
+    <section class="grid w-full grid-cols-1 gap-6 enter-3 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
       <OverBuddy
         showTitle
         repository={projectInfo.data.repository!}

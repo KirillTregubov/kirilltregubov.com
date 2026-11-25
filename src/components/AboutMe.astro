@@ -1,9 +1,10 @@
 ---
-import Age from './Age'
+import Age from './Age.astro'
 import CanadianFlag from './CanadianFlag.astro'
 import AnimatedLink from './AnimatedLink.astro'
 import Highlight from './Highlight.astro'
 import SocialButtons from './SocialButtons.astro'
+import { CONTACT_EMAIL } from '@lib/site'
 
 interface Props {
   class?: string
@@ -14,8 +15,8 @@ const { class: className } = Astro.props
 
 <div class:list={['text-lg text-pretty', className]}>
   <p>
-    Hey! I'm <Highlight>Kirill Tregubov</Highlight>, a <Age client:load />{' '}
-    year-old <Highlight>software developer</Highlight> based in{' '}
+    Hey! I'm <Highlight>Kirill Tregubov</Highlight>, a <Age /> year-old{' '}
+    <Highlight>software developer</Highlight> based in{' '}
     <span class="whitespace-nowrap">
       <CanadianFlag />
       Canada
@@ -31,8 +32,8 @@ const { class: className } = Astro.props
   <p class="mt-4">
     If you want to get in touch, you can email me at{' '}
     <span class="whitespace-nowrap">
-      <AnimatedLink href="mailto:contact@kirilltregubov.com" draggable="false">
-        {'contact@kirilltregubov.com'}
+      <AnimatedLink href={`mailto:${CONTACT_EMAIL}`} draggable="false">
+        {CONTACT_EMAIL}
       </AnimatedLink>
       .
     </span>
