@@ -69,9 +69,11 @@ Check items off as they land.
 
 ## Follow-ups
 
-- [ ] **Check the sitemap in the next production build.** It is only generated
+- [x] **Check the sitemap in the next production build.** It is only generated
       at build time. Confirm `/sitemap-index.xml` leaves out `/dev`, `/embed`,
       and hidden or draft posts, and uses URLs without trailing slashes.
+      Verified locally (2026-11-24): 109 URLs, no excluded paths, no trailing
+      slashes, canonical tags match.
 
 ## Deferred
 
