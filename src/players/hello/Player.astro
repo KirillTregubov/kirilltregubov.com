@@ -2,7 +2,7 @@
 import Saturn from '@components/Saturn'
 import { getCollection } from 'astro:content'
 import { Image } from 'astro:assets'
-import { resolveBlogImage } from '@lib/blog'
+import { resolvePublicImage } from '@lib/images'
 
 const latestPost = (await getCollection('blog'))
   .filter((post) => !post.data.draft && !post.data.hidden)
@@ -49,7 +49,7 @@ const latestPost = (await getCollection('blog'))
           class="group relative isolate flex items-center gap-3 rounded-lg text-neutral-200 before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-lg before:bg-orange-400/7 before:opacity-0 before:transition-[inset,opacity] before:duration-300 before:ease-[cubic-bezier(0.05,0,0,1)] before:content-[''] hover:before:-inset-2.5 hover:before:opacity-100 focus-visible:ring-0! focus-visible:before:-inset-2.5 focus-visible:before:opacity-100 focus-visible:before:ring-1 focus-visible:before:ring-orange-400/45 motion-reduce:before:transition-none"
         >
           <Image
-            {...resolveBlogImage(latestPost.data.image.url)}
+            {...resolvePublicImage(latestPost.data.image.url)}
             alt={latestPost.data.image.alt}
             width={256}
             height={144}

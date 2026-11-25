@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import { AlertTriangleIcon } from 'lucide-react'
+import { resolvePublicImage } from '@lib/images'
 import MDLink from './markdown/MDLink.astro'
 
 export interface Props {
@@ -34,7 +35,8 @@ const { repository, download, showTitle = false } = Astro.props
     <div class="flex items-center justify-start gap-3">
       <Image
         class="select-none"
-        src={`/assets/projects/overbuddy/icon.png`}
+        {...resolvePublicImage('/assets/projects/overbuddy/icon.png')}
+        densities={[1, 2]}
         alt="OverBuddy icon"
         width={48}
         height={48}
@@ -125,7 +127,8 @@ const { repository, download, showTitle = false } = Astro.props
 <div class="flex w-full items-center">
   <Image
     class="fade-in rounded-sm select-none"
-    src="/assets/projects/overbuddy/screenshot-2.png"
+    {...resolvePublicImage('/assets/projects/overbuddy/screenshot-2.png')}
+    densities={[1, 2]}
     alt="Screenshot of the OverBuddy app"
     width={684}
     height={533}

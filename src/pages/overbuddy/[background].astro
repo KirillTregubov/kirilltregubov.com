@@ -59,8 +59,11 @@ const layoutDescription =
       <MDImage
         id={id}
         src={image}
-        width={472}
-        height={265}
+        width={1920}
+        height={1080}
+        widths={[960, 1440, 1920, 2880]}
+        sizes="(min-width: 1440px) 1440px, 100vw"
+        loading="eager"
         containerClassName="w-full"
         className="fade-in-slow max-h-[70vh] w-full rounded-lg object-cover shadow-lg"
         draggable="false"

@@ -1,37 +1,23 @@
-import { useMemo } from 'react'
-import Snowfall from 'react-snowfall'
+import { lazy, Suspense } from 'react'
 
-const snowflake = document.createElement('img')
-snowflake.src = '/assets/snowflake.png'
+// Loaded only in season, so react-snowfall and the snowflake image are not
+// downloaded the rest of the year. The date check runs in the browser, so the
+// effect turns on and off without a rebuild.
+const SnowEffect = lazy(() => import('./SnowEffect'))
+
+function isHolidaySeason(today = new Date()) {
+  return (
+    today.getMonth() === 11 || (today.getMonth() === 0 && today.getDate() <= 5)
+  )
+}
 
 export default function Snow() {
-  const isHolidaySeason = useMemo(() => {
-    const today = new Date()
-    return (
-      today.getMonth() === 11 ||
-      (today.getMonth() === 0 && today.getDate() <= 5)
-    )
-  }, [])
-
-  if (!isHolidaySeason) {
+  if (!isHolidaySeason()) {
     return null
   }
   return (
-    <Snowfall
-      changeFrequency={400}
-      opacity={[0.3, 0.8]}
-      radius={[6.0, 10.0]}
-      speed={[0.5, 0.75]}
-      wind={[-0.5, 1.5]}
-      rotationSpeed={[-0.5, 0.5]}
-      images={[snowflake]}
-      style={{
-        zIndex: 999,
-        position: 'fixed',
-        width: '100vw',
-        height: '100vh',
-      }}
-      snowflakeCount={50}
-    />
+    <Suspense>
+      <SnowEffect />
+    </Suspense>
   )
 }

@@ -14,6 +14,7 @@ import Android from '@components/icons/Android.astro'
 import Apple from '@components/icons/Apple.astro'
 import GitHub from '@components/icons/GitHub.astro'
 import { formatApproximateDate } from '@lib/time'
+import { resolvePublicImage } from '@lib/images'
 import ProjectLink from './ProjectLink.astro'
 
 interface Props {
@@ -38,10 +39,12 @@ const updatedDate =
   <div class="relative w-full shrink-0 overflow-clip rounded-xl bg-neutral-800 object-contain">
     <Image
       class="unblur select-none"
-      src={`/assets/projects/${project.data.image.url}`}
+      {...resolvePublicImage(`/assets/projects/${project.data.image.url}`)}
       alt={project.data.image?.alt || 'Placeholder project image'}
       width={1200}
       height={630}
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 1440px) 460px, (min-width: 1024px) 33vw, (min-width: 640px) 40vw, 100vw"
       onerror="this.src='/assets/projects/placeholder.jpg'; void src; this.onerror=null; void onerror;"
       loading={featured ? 'eager' : 'lazy'}
     />

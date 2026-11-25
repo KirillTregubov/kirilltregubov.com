@@ -1,5 +1,6 @@
 ---
 import { Image as AstroImage } from 'astro:assets'
+import { getPublicImage } from '@lib/images'
 
 interface Props {
   id?: string
@@ -15,6 +16,8 @@ interface Props {
   keywords?: string
   link?: string
   loading?: 'eager' | 'lazy'
+  widths?: number[]
+  sizes?: string
   draggable?: 'true' | 'false'
   parentProps?: object
 }
@@ -30,8 +33,19 @@ const {
   keywords,
   link,
   parentProps,
+  src,
+  widths,
+  sizes,
   ...props
 } = Astro.props
+
+const localImage = getPublicImage(src)
+// Optimized images get a 2x density by default so they stay sharp on HiDPI.
+const image = localImage
+  ? widths
+    ? { src: localImage, widths, sizes }
+    : { src: localImage, densities: [1, 2] }
+  : { src }
 
 const imgAlt = alt || title || 'Placeholder image'
 ---
@@ -40,6 +54,7 @@ const imgAlt = alt || title || 'Placeholder image'
   <div class:list={['relative', containerClassName]}>
     <AstroImage
       {...props}
+      {...image}
       alt={imgAlt}
       class:list={[
         'relative select-none',

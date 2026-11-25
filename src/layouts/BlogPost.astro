@@ -1,7 +1,7 @@
 ---
 import type { MarkdownHeading } from 'astro'
 import { Image } from 'astro:assets'
-import { resolveBlogImage } from '@lib/blog'
+import { resolvePublicImage } from '@lib/images'
 import type { BlogSeriesNavigation } from '@lib/series'
 import BlogSeriesNavigationComponent from '@components/BlogSeriesNavigation.astro'
 import BlogAuthor from '@components/BlogAuthor.astro'
@@ -82,7 +82,7 @@ const formatDate = (date: Date) =>
       <div class="mb-6 overflow-hidden rounded-xl bg-neutral-800">
         <Image
           class="unblur aspect-1200/630 w-full object-cover select-none"
-          {...resolveBlogImage(image.url)}
+          {...resolvePublicImage(image.url)}
           alt={image.alt}
           width={1200}
           height={630}

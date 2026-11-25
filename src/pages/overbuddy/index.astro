@@ -7,6 +7,7 @@ import OverBuddy from '@components/OverBuddy.astro'
 import PageContainer from '@components/PageContainer.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import Layout from '@layouts/Layout.astro'
+import { resolvePublicImage } from '@lib/images'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
@@ -38,7 +39,8 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
       <div class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center">
         <Image
           class="fade-in select-none max-md:size-28 max-sm:size-24"
-          src={`/assets/projects/overbuddy/icon.png`}
+          {...resolvePublicImage('/assets/projects/overbuddy/icon.png')}
+          densities={[1, 2]}
           alt="OverBuddy icon"
           width={128}
           height={128}
@@ -113,6 +115,8 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
             src={background.data.image}
             width={472}
             height={265}
+            widths={[480, 960]}
+            sizes="(min-width: 1440px) 464px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             title={background.data.title}
             description={background.data.description}
             keywords={background.data.keywords}
