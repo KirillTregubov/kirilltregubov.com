@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import {
+  buttonClass,
+  type ButtonSize,
+  type ButtonVariant,
+} from '@styles/classes'
+
+type Props = Omit<HTMLAttributes<'button'>, 'class'> &
+  Pick<HTMLAttributes<'a'>, 'href' | 'target' | 'rel' | 'download'> & {
+    class?: string
+    variant?: ButtonVariant
+    size?: ButtonSize
+    /** Open `href` in a new tab. */
+    external?: boolean
+  }
+
+const {
+  class: className,
+  variant,
+  size,
+  external,
+  href,
+  type = 'button',
+  ...rest
+} = Astro.props
+
+const classes = [buttonClass({ variant, size }), className]
+---
+
+{href ? (
+  <a
+    href={href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener' : undefined}
+    class:list={classes}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button type={type} class:list={classes} {...rest}>
+    <slot />
+  </button>
+)}

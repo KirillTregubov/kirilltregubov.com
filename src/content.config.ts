@@ -177,8 +177,6 @@ const saved = defineCollection({
   schema: z.discriminatedUnion('type', [
     savedBase.extend({
       type: z.literal('tweet'),
-      // When I found it. Only backfilled posts omit it; they fall back to the publish date.
-      date: z.coerce.date().optional(),
       url: z
         .url()
         .regex(

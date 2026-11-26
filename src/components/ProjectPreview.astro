@@ -108,38 +108,38 @@ const updatedDate =
               </button>
             ) : (
               <ProjectLink href={project.data.source} external>
-                <CodeIcon className="mr-1.5 size-5" aria-hidden="true" />
+                <CodeIcon className="size-5" aria-hidden="true" />
                 Source Code
               </ProjectLink>
             ))
         }
         {project.data.article && (
           <ProjectLink href={project.data.article}>
-            <BookOpenTextIcon className="mr-1.5 size-5" aria-hidden="true" />
+            <BookOpenTextIcon className="size-5" aria-hidden="true" />
             Read More
           </ProjectLink>
         )}
         {project.data.demo && (
           <ProjectLink href={project.data.demo} external>
-            <LinkIcon className="mr-1.5 size-5" aria-hidden="true" />
+            <LinkIcon className="size-5" aria-hidden="true" />
             Demo
           </ProjectLink>
         )}
         {project.data.play && (
           <ProjectLink href={project.data.play} external>
-            <GamepadIcon className="mr-1.5 size-5" aria-hidden="true" />
+            <GamepadIcon className="size-5" aria-hidden="true" />
             Play
           </ProjectLink>
         )}
         {project.data.repository && (
           <ProjectLink href={project.data.repository} external>
-            <GitHub className="mr-1.5 size-5" aria-hidden="true" />
+            <GitHub className="size-5" aria-hidden="true" />
             GitHub
           </ProjectLink>
         )}
         {project.data.download && !project.data.repository && (
           <ProjectLink href={project.data.download} external>
-            <ExternalLinkIcon className="mr-1.5 size-5" aria-hidden="true" />
+            <ExternalLinkIcon className="size-5" aria-hidden="true" />
             Download
           </ProjectLink>
         )}
@@ -148,7 +148,7 @@ const updatedDate =
             href="https://apps.apple.com/ca/app/pollution-reporter/id1476589861"
             external
           >
-            <Apple className="mr-1.5 size-5" aria-hidden="true" />
+            <Apple className="size-5" aria-hidden="true" />
             App Store
           </ProjectLink>
         )}
@@ -157,7 +157,7 @@ const updatedDate =
             href="https://play.google.com/store/apps/details?id=com.PollutionReporter"
             external
           >
-            <Android className="mr-1.5 size-5" aria-hidden="true" />
+            <Android className="size-5" aria-hidden="true" />
             Play Store
           </ProjectLink>
         )}

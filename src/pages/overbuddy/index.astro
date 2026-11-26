@@ -6,6 +6,8 @@ import MDImage from '@components/markdown/MDImage.astro'
 import OverBuddy from '@components/OverBuddy.astro'
 import PageContainer from '@components/PageContainer.astro'
 import ReturnHome from '@components/ReturnHome.astro'
+import Button from '@components/ui/Button.astro'
+import Input from '@components/ui/Input.astro'
 import Layout from '@layouts/Layout.astro'
 import { resolvePublicImage } from '@lib/images'
 
@@ -27,13 +29,10 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
 >
   <PageContainer class="flex flex-col space-y-8">
     <ReturnHome>
-      <a
-        href={projectInfo.data.download!}
-        class="-mx-1 inline-flex items-center gap-1 rounded-sm px-1 font-medium transition select-none hover:text-neutral-400 focus-visible:text-neutral-400 active:text-neutral-400"
-      >
-        <MonitorDownIcon className="mr-1.5 size-5" aria-hidden="true" />
+      <Button variant="ghost" href={projectInfo.data.download!} class="gap-2.5">
+        <MonitorDownIcon className="size-5" aria-hidden="true" />
         <span>Download OverBuddy</span>
-      </a>
+      </Button>
     </ReturnHome>
     <section class="grid w-full grid-cols-1 gap-6 enter-1 md:gap-8 md:gap-y-6 lg:grid-cols-2 lg:gap-10 lg:gap-y-8 xl:gap-12 xl:gap-y-10">
       <div class="inline-flex flex-col items-start justify-start gap-6 md:flex-row md:items-center lg:col-span-2 lg:justify-center">
@@ -72,26 +71,25 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
         Background Gallery
       </h2>
       <div class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] enter-3 max-xs:top-24 sm:flex-row sm:items-center">
-        <input
+        <Input
           id="search"
           type="search"
+          label="Search backgrounds"
           placeholder="Search backgrounds..."
-          class="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2 py-1.5 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-300! md:max-w-96"
           autocomplete="off"
+          class="w-full md:max-w-96"
         />
-        <button
-          class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-center font-medium transition will-change-transform select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-200! active:scale-95 active:border-neutral-600/65 active:bg-neutral-700/65 active:ring-neutral-300!"
-          id="sort"
-          data-newest="false"
-        >
-          <span class="invisible [grid-area:1/-1] group-data-[newest=true]:visible">
-            Sort by <span class="font-semibold">Newest</span>
+        <Button id="sort" data-newest="false" class="group">
+          <span class="grid">
+            <span class="invisible [grid-area:1/-1] group-data-[newest=true]:visible">
+              Sort by <span class="font-semibold">Newest</span>
+            </span>
+            <span class="[grid-area:1/-1] group-data-[newest=true]:invisible">
+              Sort by <span class="font-semibold">Oldest</span>
+            </span>
+            <!-- TODO: Sort by Relevance -->
           </span>
-          <span class="[grid-area:1/-1] group-data-[newest=true]:invisible">
-            Sort by <span class="font-semibold">Oldest</span>
-          </span>
-          <!-- TODO: Sort by Relevance -->
-        </button>
+        </Button>
         <!-- Hide unavailable is disabled because every background is now unavailable.
         <button
           class="group grid w-auto shrink-0 grow-0 cursor-pointer rounded-sm border border-neutral-700 bg-neutral-800 px-3 py-1.5 text-center font-medium transition will-change-transform select-none hover:border-neutral-600 hover:bg-neutral-700 focus-visible:border-neutral-600 focus-visible:bg-neutral-700 focus-visible:ring-neutral-200! active:scale-95 active:border-neutral-600/65 active:bg-neutral-700/65 active:ring-neutral-300!"

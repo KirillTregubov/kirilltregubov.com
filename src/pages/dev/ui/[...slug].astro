@@ -1,0 +1,254 @@
+---
+import { Code } from 'astro:components'
+import {
+  ArrowUpRightIcon,
+  BookOpenTextIcon,
+  ChevronRightIcon,
+  HomeIcon,
+  MonitorDownIcon,
+} from 'lucide-react'
+import GitHub from '@components/icons/GitHub.astro'
+import PageContainer from '@components/PageContainer.astro'
+import ProjectLink from '@components/ProjectLink.astro'
+import SocialButtons from '@components/SocialButtons.astro'
+import Button from '@components/ui/Button.astro'
+import Input from '@components/ui/Input.astro'
+import Layout from '@layouts/Layout.astro'
+import type { ButtonSize } from '@styles/classes'
+
+// Dev-only component gallery. No paths are generated in production.
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { slug: undefined } }] : []
+}
+
+const sizes: ButtonSize[] = ['sm', 'md']
+
+const sectionClass = 'border-t border-neutral-800 py-8'
+const headingClass = 'text-xl font-semibold text-neutral-100'
+const descriptionClass = 'mt-1 text-sm text-neutral-400'
+const labelClass = 'mb-2 font-mono text-xs text-neutral-500'
+const codeClass = 'mt-4 overflow-x-auto rounded-lg px-4 py-3 text-sm'
+---
+
+<Layout
+  title="UI components · Local dev"
+  description="Development-only gallery of shared UI components."
+  noindex
+>
+  <PageContainer class="max-w-240">
+    <header class="mt-8 pb-8">
+      <p class="text-xs font-bold tracking-[0.2em] text-orange-400 uppercase">
+        Development only
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">UI components</h1>
+      <p class="mt-2 text-neutral-400">
+        Shared components from <code>src/components/ui</code>. Styles live in{' '}
+        <code>src/styles/classes.ts</code>.
+      </p>
+    </header>
+
+    <main>
+      <section class={sectionClass}>
+        <h2 class={headingClass}>Button · secondary</h2>
+        <p class={descriptionClass}>
+          Default variant. Filled, bordered control for actions, toggles and
+          links that should read as buttons.
+        </p>
+
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
+          {sizes.map((size) => (
+            <div>
+              <p class={labelClass}>size="{size}"</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <Button size={size}>Button</Button>
+                <Button size={size}>
+                  <BookOpenTextIcon
+                    className={size === 'sm' ? 'size-4' : 'size-5'}
+                    aria-hidden="true"
+                  />
+                  With icon
+                </Button>
+                <Button size={size} href="#" class="group">
+                  Link
+                  <ArrowUpRightIcon
+                    className="size-4 text-neutral-500 transition group-hover:text-neutral-200"
+                    aria-hidden="true"
+                  />
+                </Button>
+                <Button size={size} disabled>
+                  Disabled
+                </Button>
+              </div>
+            </div>
+          ))}
+          <div>
+            <p class={labelClass}>size="icon"</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <Button size="icon" aria-label="Home">
+                <HomeIcon className="size-5" aria-hidden="true" />
+              </Button>
+              <Button size="icon" aria-label="GitHub">
+                <GitHub className="size-5 fill-current" aria-hidden="true" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <Code
+          class={codeClass}
+          lang="astro"
+          code={`<Button size="sm">Button</Button>
+<Button href="https://example.com" external>Link</Button>
+<Button size="icon" aria-label="Home"><HomeIcon className="size-5" /></Button>`}
+        />
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class={headingClass}>Toggle group</h2>
+        <p class={descriptionClass}>
+          <code>secondary</code> with <code>aria-pressed</code>. Click to try
+          the pressed state.
+        </p>
+
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
+          {sizes.map((size) => (
+            <div>
+              <p class={labelClass}>size="{size}"</p>
+              <div class="flex flex-wrap gap-2" data-demo-toggle-group>
+                <Button size={size} aria-pressed="true">
+                  All <span class="text-neutral-500">12</span>
+                </Button>
+                <Button size={size} aria-pressed="false">
+                  Posts <span class="text-neutral-500">11</span>
+                </Button>
+                <Button size={size} aria-pressed="false">
+                  Quotes <span class="text-neutral-500">1</span>
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Code
+          class={codeClass}
+          lang="astro"
+          code={`<Button size="sm" aria-pressed="true">All</Button>`}
+        />
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class={headingClass}>Button · ghost</h2>
+        <p class={descriptionClass}>
+          Text-only action for headers and section links. Negative margin keeps
+          the text aligned with surrounding content.
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-6">
+          <Button variant="ghost" href="#" class="gap-2.5">
+            <HomeIcon className="size-5 -translate-y-px" aria-hidden="true" />
+            Home
+          </Button>
+          <Button variant="ghost" href="#" class="gap-2.5">
+            <MonitorDownIcon className="size-5" aria-hidden="true" />
+            Download OverBuddy
+          </Button>
+          <Button variant="ghost">
+            Show All
+            <ChevronRightIcon
+              className="size-4 -translate-y-px"
+              aria-hidden="true"
+            />
+          </Button>
+        </div>
+
+        <Code
+          class={codeClass}
+          lang="astro"
+          code={`<Button variant="ghost" href="/blog">All Posts</Button>`}
+        />
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class={headingClass}>Input</h2>
+        <p class={descriptionClass}>
+          Text input wrapped in a visually hidden label. Same height as an{' '}
+          <code>md</code> button, so they sit flush in a row.
+        </p>
+
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
+          <div>
+            <p class={labelClass}>type="search" (icon by default)</p>
+            <Input type="search" label="Search" placeholder="Search posts..." />
+          </div>
+          <div>
+            <p class={labelClass}>type="text"</p>
+            <Input label="Name" placeholder="Your name" />
+          </div>
+          <div>
+            <p class={labelClass}>disabled</p>
+            <Input label="Disabled" placeholder="Disabled" disabled />
+          </div>
+          <div>
+            <p class={labelClass}>with a md button</p>
+            <div class="flex items-center gap-2">
+              <Input
+                type="search"
+                label="Search backgrounds"
+                placeholder="Search backgrounds..."
+                class="w-full"
+              />
+              <Button>Sort by Oldest</Button>
+            </div>
+          </div>
+        </div>
+
+        <Code
+          class={codeClass}
+          lang="astro"
+          code={`<Input
+  type="search"
+  label="Search blog posts"
+  placeholder="Search posts..."
+  class="mt-6 max-w-120"
+/>`}
+        />
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class={headingClass}>In use</h2>
+        <p class={descriptionClass}>Components built on top of Button.</p>
+
+        <p class:list={[labelClass, 'mt-6']}>ProjectLink</p>
+        <div class="flex flex-wrap gap-2">
+          <ProjectLink href="#">
+            <BookOpenTextIcon className="size-5" aria-hidden="true" />
+            Read More
+          </ProjectLink>
+          <ProjectLink href="#" external>
+            <GitHub className="size-5" aria-hidden="true" />
+            GitHub
+          </ProjectLink>
+        </div>
+
+        <p class:list={[labelClass, 'mt-6']}>SocialButtons</p>
+        <div class="[&>div]:mt-0!">
+          <SocialButtons />
+        </div>
+      </section>
+    </main>
+  </PageContainer>
+</Layout>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[data-demo-toggle-group]')
+    .forEach((group) => {
+      group.addEventListener('click', (event) => {
+        const button = (event.target as HTMLElement).closest('button')
+        if (!button) return
+        group.querySelectorAll('button').forEach((b) => {
+          b.setAttribute('aria-pressed', String(b === button))
+        })
+      })
+    })
+</script>

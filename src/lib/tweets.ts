@@ -4,7 +4,7 @@ const cache = new Map<string, Promise<Tweet | undefined>>()
 
 /**
  * Fetches a post by its x.com/twitter.com status URL at build time, once per
- * URL, so the /saved page can sort by publish date and render the same data.
+ * URL, so /saved can render it as a static embed.
  */
 export function fetchTweet(url: string): Promise<Tweet | undefined> {
   const id = url.match(/\/status\/(\d+)/)?.[1]

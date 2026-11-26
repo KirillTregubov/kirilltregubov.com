@@ -1,6 +1,6 @@
 ---
 import { ArrowLeftIcon, HomeIcon } from 'lucide-react'
-import { interactiveButtonClass } from '@styles/classes'
+import Button from '@components/ui/Button.astro'
 
 interface Props {
   containerClass?: string
@@ -13,18 +13,12 @@ const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
 
 <menu
   class:list={[
-    "sticky -top-1 isolate z-10 -mx-1 -mt-5 mb-4 flex gap-6 px-1 pt-5 pb-2 before:pointer-events-none before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-dvw before:-translate-x-1/2 before:bg-neutral-900 before:content-[''] after:pointer-events-none after:absolute after:-bottom-2 after:left-1/2 after:z-10 after:h-2 after:w-dvw after:-translate-x-1/2 after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] enter max-xs:flex-col xs:-mt-7 xs:justify-between xs:pt-7 xs:before:-bottom-2 xs:after:-bottom-4 md:-mt-13",
+    "sticky -top-1 isolate z-10 -mx-1 -mt-5 mb-4 flex gap-6 px-1 pt-5 pb-2 before:pointer-events-none before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-dvw before:-translate-x-1/2 before:bg-neutral-900 before:content-[''] after:pointer-events-none after:absolute after:-bottom-2 after:left-1/2 after:z-10 after:h-2 after:w-dvw after:-translate-x-1/2 after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] enter max-xs:flex-col max-xs:items-start xs:-mt-7 xs:justify-between xs:pt-7 xs:before:-bottom-2 xs:after:-bottom-4 md:-mt-13",
     containerClass,
   ]}
   {...props}
 >
-  <a
-    {href}
-    class:list={[
-      interactiveButtonClass,
-      '-ml-1 inline-flex w-auto grow-0 items-center justify-center gap-2.5 rounded-sm px-1 font-medium select-none hover:text-white focus-visible:text-white active:text-white',
-    ]}
-  >
+  <Button variant="ghost" {href} class="gap-2.5">
     {href === '/' ? (
       <HomeIcon
         className="size-5 shrink-0 -translate-y-px"
@@ -37,6 +31,6 @@ const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
       />
     )}
     <span>{label}</span>
-  </a>
+  </Button>
   <slot />
 </menu>

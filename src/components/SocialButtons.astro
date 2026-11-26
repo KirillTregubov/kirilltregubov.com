@@ -1,6 +1,6 @@
 ---
 import { X_URL } from '@lib/site'
-import { interactiveButtonClass } from '@styles/classes'
+import Button from '@components/ui/Button.astro'
 
 const socials = [
   {
@@ -29,15 +29,12 @@ const socials = [
 
 <div class="relative z-10 mt-6 flex w-fit flex-wrap items-center gap-3 leading-none 2xl:mt-5">
   {socials.map((social) => (
-    <a
+    <Button
       href={social.href}
-      target="_blank"
-      rel="noopener"
+      external
+      size="icon"
       aria-label={social.label}
-      class:list={[
-        interactiveButtonClass,
-        'inline-flex shrink-0 items-center justify-center rounded-md border border-neutral-700 bg-neutral-800/80 p-2 text-neutral-300 shadow-sm hover:bg-neutral-700/80 hover:text-white focus-visible:text-white active:bg-neutral-800 active:text-white',
-      ]}
+      class="shadow-sm"
     >
       <svg
         viewBox={social.viewBox}
@@ -46,6 +43,6 @@ const socials = [
       >
         <path d={social.path} />
       </svg>
-    </a>
+    </Button>
   ))}
 </div>

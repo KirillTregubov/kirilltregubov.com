@@ -6,7 +6,7 @@
 #
 # - type: tweet       # Feed. X/Twitter status URL, rendered as an embedded post.
 #   url: https://x.com/user/status/123
-#   date: 2026-11-26   # Only backfilled tweets leave this out; they use their publish date.
+#   date: 2026-11-26
 #
 # - type: link        # Feed. Any page.
 #   title: Page title
@@ -38,6 +38,10 @@
 #   description: One line on what it's for   # optional
 #   date: 2026-11-26
 
+- type: tweet
+  url: https://x.com/BHolmesDev/status/2125351601431089418
+  date: 2026-11-24
+
 - type: resource
   title: SlopCodeBench
   url: https://www.scbench.ai/
@@ -55,15 +59,19 @@
 
 - type: tweet
   url: https://x.com/DanFessler/status/2102467531248382089
+  date: 2026-09-22
 
 - type: tweet
   url: https://x.com/cnakazawa/status/2063812273962189089
+  date: 2026-06-07
 
 - type: tweet
   url: https://x.com/linear/status/2108598795487633821
+  date: 2026-10-09
 
 - type: tweet
   url: https://x.com/antfu7/status/2107052841764569236
+  date: 2026-10-05
 
 - type: resource
   title: Interfaces Cheat Sheet
@@ -74,6 +82,7 @@
 
 - type: tweet
   url: https://x.com/kail_designs/status/2102265246325047711
+  date: 2026-09-22
 
 - type: resource
   title: ossrules.md
@@ -84,9 +93,11 @@
 
 - type: tweet
   url: https://x.com/mazeincoding/status/2118378945557004477
+  date: 2026-11-05
 
 - type: tweet
   url: https://x.com/pabcrab/status/2124615831900369326
+  date: 2026-11-22
 
 - type: tweet
   url: https://x.com/DavidKPiano/status/2125310015557042676
@@ -94,9 +105,12 @@
 
 - type: tweet
   url: https://x.com/tarunsachdeva/status/2098111309573198058
+  date: 2026-09-10
 
 - type: tweet
   url: https://x.com/dillon_mulroy/status/2125765516639740183
+  date: 2026-11-25
 
 - type: tweet
   url: https://x.com/steveruizok/status/2111926712229372076
+  date: 2026-10-18

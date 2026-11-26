@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { SearchIcon } from 'lucide-react'
+import { inputClass, inputPaddingClass } from '@styles/classes'
+
+type Props = Omit<HTMLAttributes<'input'>, 'class'> & {
+  /** Accessible label. Visually hidden; use `placeholder` for visible hint text. */
+  label: string
+  /** Classes for the wrapping `<label>` (width, margin, animation). */
+  class?: string
+  /** Leading icon. Defaults to a search icon for `type="search"`. */
+  icon?: 'search' | false
+}
+
+const {
+  label,
+  class: className,
+  type = 'text',
+  icon = type === 'search' ? 'search' : false,
+  ...rest
+} = Astro.props
+---
+
+<label class:list={['group relative block', className]}>
+  <span class="sr-only">{label}</span>
+  {icon === 'search' && (
+    <SearchIcon
+      className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-neutral-500 transition-colors group-focus-within:text-neutral-400 group-hover:text-neutral-400"
+      aria-hidden="true"
+    />
+  )}
+  <input
+    type={type}
+    class:list={[
+      inputClass,
+      icon ? inputPaddingClass.withIcon : inputPaddingClass.default,
+    ]}
+    {...rest}
+  />
+</label>
