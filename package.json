@@ -26,14 +26,14 @@
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.5",
-    "@types/react": "^19.3.1",
+    "@types/react": "^19.3.3",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.187.0",
     "astro": "7.4.13",
     "astro-heroicons": "^2.1.5-1",
     "cobe": "^2.0.1",
     "fuse.js": "^7.5.0",
-    "lucide-react": "^1.79.0",
+    "lucide-react": "^1.80.0",
     "motion": "^14.14.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
-    "@types/node": "^26.6.7",
+    "@types/node": "^26.6.10",
     "@vercel/speed-insights": "^2.1.0",
     "oxfmt": "^0.80.0",
     "prettier": "^3.10.1",
@@ -56,9 +56,9 @@
     "prettier-plugin-tailwindcss": "^0.8.1"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=26"
   },
-  "packageManager": "bun@1.4.3",
+  "packageManager": "bun@1.4.5",
   "trustedDependencies": [
     "@tailwindcss/oxide",
     "@vercel/speed-insights",

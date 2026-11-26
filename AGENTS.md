@@ -4,7 +4,7 @@
 
 # Verification
 
-- Do not use`bun run build` to verify the changes.
+- Do not use `bun run build` to verify the changes.
 - Use `bun check`
 - Use the dev server to verify the changes visually.
 
