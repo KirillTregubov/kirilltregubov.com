@@ -1,6 +1,7 @@
 import { file, glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection, reference } from 'astro:content'
+import { parse as parseYaml } from 'yaml'
 
 const technologies = defineCollection({
   loader: glob({ pattern: '**/[^_]*.mdx', base: './src/content/technologies' }),
@@ -156,10 +157,70 @@ const cinemas = defineCollection({
   }),
 })
 
+// Everything shown on /saved lives in one YAML list; `type` picks the format.
+const savedBase = z.object({
+  // Position in saved.yaml (added by the parser); breaks ties between same-date items.
+  order: z.number(),
+  date: z.coerce.date(),
+  tags: z.array(z.string()).default([]),
+  note: z.string().optional(),
+})
+
+const saved = defineCollection({
+  loader: file('src/content/saved.yaml', {
+    // List items have no ids, so number them in file order.
+    parser: (text) =>
+      ((parseYaml(text) ?? []) as Record<string, unknown>[]).map(
+        (item, index) => ({ ...item, id: String(index), order: index }),
+      ),
+  }),
+  schema: z.discriminatedUnion('type', [
+    savedBase.extend({
+      type: z.literal('tweet'),
+      // When I found it. Only backfilled posts omit it; they fall back to the publish date.
+      date: z.coerce.date().optional(),
+      url: z
+        .url()
+        .regex(
+          /^https:\/\/(?:www\.)?(?:x|twitter)\.com\/[^/]+\/status\/\d+/,
+          'Expected an x.com or twitter.com status URL',
+        ),
+    }),
+    savedBase.extend({
+      type: z.literal('snippet'),
+      title: z.string(),
+      code: z.string(),
+      lang: z.string().default('plaintext'),
+      source: z.url().optional(),
+    }),
+    savedBase.extend({
+      type: z.literal('link'),
+      title: z.string(),
+      url: z.url(),
+    }),
+    savedBase.extend({
+      type: z.literal('quote'),
+      text: z.string(),
+      source: z.url(),
+      author: z.string().optional(),
+      // Title of the article/page it's from.
+      title: z.string().optional(),
+    }),
+    // Reference sites kept in their own section.
+    savedBase.extend({
+      type: z.literal('resource'),
+      title: z.string(),
+      url: z.url(),
+      description: z.string().optional(),
+    }),
+  ]),
+})
+
 export const collections = {
   technologies,
   projects,
   blog,
   overbuddy,
   cinemas,
+  saved,
 }

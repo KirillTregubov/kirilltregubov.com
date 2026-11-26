@@ -1,0 +1,383 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import { Code } from 'astro:components'
+import ReturnHome from '@components/ReturnHome.astro'
+import { fetchTweet } from '@lib/tweets'
+import SavedTweet from '@components/SavedTweet.astro'
+import Layout from '@layouts/Layout.astro'
+import { ArrowUpRightIcon, ExternalLinkIcon } from 'lucide-react'
+
+type SavedEntry = CollectionEntry<'saved'>
+type ResourceData = Extract<SavedEntry['data'], { type: 'resource' }>
+type ResourceEntry = SavedEntry & { data: ResourceData }
+type FeedEntry = SavedEntry & {
+  data: Exclude<SavedEntry['data'], ResourceData>
+}
+
+const typeLabels = {
+  tweet: 'Post',
+  quote: 'Quote',
+  snippet: 'Snippet',
+  link: 'Link',
+} as const
+
+const isResource = (item: SavedEntry): item is ResourceEntry =>
+  item.data.type === 'resource'
+
+const collection = await getCollection('saved')
+
+// `date` is when I found something. Backfilled tweets without one use their
+// publish time instead (in the build's time zone, like the embed). Sorted by day,
+// newest first; same-day items keep their order in saved.yaml, and undated ones
+// (failed fetch) go last.
+const dayKey = (date: Date, timeZone?: string) =>
+  new Intl.DateTimeFormat('en-CA', { timeZone }).format(date) // YYYY-MM-DD
+
+const items = (
+  await Promise.all(
+    collection
+      .filter((item): item is FeedEntry => !isResource(item))
+      .map(async ({ data }) => {
+        const published = !data.date
+        const date =
+          data.date ??
+          (data.type === 'tweet'
+            ? await fetchTweet(data.url).then(
+                (tweet) => tweet && new Date(tweet.created_at),
+              )
+            : undefined)
+        const day = date ? dayKey(date, published ? undefined : 'UTC') : ''
+        return { data, published, date, day }
+      }),
+  )
+).sort((a, b) => b.day.localeCompare(a.day) || a.data.order - b.data.order)
+const resources = collection
+  .filter(isResource)
+  .sort(
+    (a, b) =>
+      b.data.date.getTime() - a.data.date.getTime() ||
+      a.data.order - b.data.order,
+  )
+
+const presentTypes = (Object.keys(typeLabels) as (keyof typeof typeLabels)[])
+  .map((type) => ({
+    type,
+    count: items.filter((item) => item.data.type === type).length,
+  }))
+  .filter(({ count }) => count > 0)
+
+const dateFormat = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+})
+// Publish times use the build's local time zone, like the tweet embed itself.
+const publishedFormat = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+})
+const monthFormat = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: 'short',
+  timeZone: 'UTC',
+})
+
+const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, '')
+const siteName = (url: string) => {
+  const host = hostname(url)
+  return host === 'x.com' || host === 'twitter.com' ? 'X' : host
+}
+
+// Matches the home page's "My Writing" cards (BlogPreviewCard).
+const cardClass =
+  'group flex rounded-xl border border-neutral-700/60 bg-neutral-800/30 p-4 transition duration-150 will-change-transform hover:border-neutral-600 hover:bg-neutral-800/60 focus-visible:border-neutral-600 focus-visible:bg-neutral-800/60 active:scale-[0.99]'
+const cardTitleClass =
+  'leading-snug font-medium text-neutral-200 transition group-hover:text-white group-focus-visible:text-white'
+const cardArrowClass =
+  'size-5 shrink-0 text-neutral-500 transition group-hover:text-neutral-200 group-focus-visible:text-neutral-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:translate-x-0.5 motion-safe:group-focus-visible:-translate-y-0.5'
+const tagClass =
+  'rounded-sm bg-neutral-800 px-1.5 py-0.5 text-xs text-neutral-400'
+
+const sectionLinkClass =
+  '-mx-1 inline-flex items-center gap-1.5 rounded-sm px-1 font-medium transition select-none hover:text-white focus-visible:text-white active:text-white'
+const filterButtonClass =
+  'rounded-full border border-neutral-700 px-3 py-1 text-sm text-neutral-400 transition hover:border-neutral-600 hover:text-white aria-pressed:border-neutral-500 aria-pressed:bg-neutral-800 aria-pressed:text-neutral-100'
+---
+
+<Layout
+  title="Saved - Kirill Tregubov"
+  description="Things I saved for later."
+  bodyClass="flex flex-col"
+  footerClass="enter-3"
+  noindex
+>
+  <main class="mx-auto w-full max-w-360 grow">
+    <ReturnHome>
+      <nav aria-label="Sections" class="flex gap-5">
+        <a href="#feed" class={sectionLinkClass}>
+          Feed <span class="text-neutral-500">{items.length}</span>
+        </a>
+        <a href="#resources" class={sectionLinkClass}>
+          Resources <span class="text-neutral-500">{resources.length}</span>
+        </a>
+      </nav>
+    </ReturnHome>
+    <header class="mt-6 enter-1">
+      <h1 class="text-3xl font-semibold text-neutral-100">Saved</h1>
+      <p class="mt-3 text-lg text-neutral-400">Things I saved for later.</p>
+    </header>
+
+    <section
+      id="feed"
+      aria-labelledby="feed-title"
+      class="mt-10 scroll-mt-20 enter-2"
+    >
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 id="feed-title" class="text-xl font-semibold text-neutral-100">
+          Feed
+        </h2>
+        {presentTypes.length > 1 && (
+          <div
+            id="saved-filters"
+            class="flex flex-wrap gap-2"
+            role="group"
+            aria-label="Filter by type"
+          >
+            <button
+              type="button"
+              data-filter=""
+              aria-pressed="true"
+              class={filterButtonClass}
+            >
+              All <span class="text-neutral-500">{items.length}</span>
+            </button>
+            {presentTypes.map(({ type, count }) => (
+              <button
+                type="button"
+                data-filter={type}
+                aria-pressed="false"
+                class={filterButtonClass}
+              >
+                {typeLabels[type]}s{' '}
+                <span class="text-neutral-500">{count}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- Masonry columns: each at least 24rem: 1 on phones, up to 3 at max width. -->
+      <ul id="saved-list" class="mt-6 columns-sm gap-8">
+        {items.map(({ data, date, published }) => {
+          // Quotes have their own source button instead.
+          const href =
+            data.type === 'snippet'
+              ? data.source
+              : data.type === 'quote'
+                ? undefined
+                : data.url
+          return (
+            <li data-type={data.type} class="mb-10 break-inside-avoid">
+              <div class="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500">
+                <span class="font-medium text-neutral-400">
+                  {typeLabels[data.type]}
+                </span>
+                {date && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <time datetime={date.toISOString()}>
+                      {(published ? publishedFormat : dateFormat).format(date)}
+                    </time>
+                  </>
+                )}
+                {data.tags.map((tag) => (
+                  <span class={tagClass}>{tag}</span>
+                ))}
+                {href && (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener"
+                    class="ml-auto inline-flex items-center gap-1 rounded-sm transition hover:text-white focus-visible:text-white"
+                  >
+                    {data.type === 'snippet' ? 'Source' : 'Open'}
+                    <ExternalLinkIcon className="size-3.5" aria-hidden="true" />
+                  </a>
+                )}
+              </div>
+
+              {data.type === 'tweet' && <SavedTweet url={data.url} />}
+
+              {data.type === 'link' && (
+                <a
+                  href={data.url}
+                  target="_blank"
+                  rel="noopener"
+                  class:list={[cardClass, 'items-center gap-4']}
+                >
+                  <span class="min-w-0 flex-1">
+                    <span class:list={[cardTitleClass, 'block']}>
+                      {data.title}
+                    </span>
+                    <span class="mt-1 block truncate text-sm text-neutral-500">
+                      {hostname(data.url)}
+                    </span>
+                  </span>
+                  <ArrowUpRightIcon
+                    className={cardArrowClass}
+                    aria-hidden="true"
+                  />
+                </a>
+              )}
+
+              {data.type === 'quote' && (
+                <figure>
+                  <blockquote class="border-l-2 border-neutral-600 pl-4 leading-relaxed whitespace-pre-line text-neutral-200">
+                    {data.text.trim()}
+                  </blockquote>
+                  <figcaption class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <span class="min-w-0 text-sm text-neutral-400">
+                      {data.author && (
+                        <span class="block text-neutral-300">
+                          {data.author}
+                        </span>
+                      )}
+                      {data.title && (
+                        <cite class="not-italic">{data.title}</cite>
+                      )}
+                    </span>
+                    <a
+                      href={data.source}
+                      target="_blank"
+                      rel="noopener"
+                      class="group inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-neutral-700/60 bg-neutral-800/30 px-3 py-1.5 text-sm font-medium text-neutral-300 transition duration-150 will-change-transform hover:border-neutral-600 hover:bg-neutral-800/60 hover:text-white focus-visible:border-neutral-600 focus-visible:bg-neutral-800/60 focus-visible:text-white active:scale-[0.98]"
+                    >
+                      Read on {siteName(data.source)}
+                      <ArrowUpRightIcon
+                        className="size-4 text-neutral-500 transition group-hover:text-neutral-200 group-focus-visible:text-neutral-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </figcaption>
+                </figure>
+              )}
+
+              {data.type === 'snippet' && (
+                <>
+                  <h3 class="mb-2 font-medium text-neutral-100">
+                    {data.title}
+                  </h3>
+                  <Code
+                    code={data.code.trimEnd()}
+                    lang={data.lang as 'plaintext'}
+                    class="overflow-x-auto rounded-xl px-4 py-3 text-sm"
+                  />
+                </>
+              )}
+
+              {data.note && (
+                <p class="mt-3 whitespace-pre-line text-neutral-400">
+                  {data.note}
+                </p>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+
+      {items.length === 0 && (
+        <p class="mt-6 text-neutral-500">Nothing saved yet.</p>
+      )}
+    </section>
+
+    <section
+      id="resources"
+      aria-labelledby="resources-title"
+      class="mt-6 scroll-mt-20 border-t border-neutral-800 pt-10 enter-3"
+    >
+      <h2 id="resources-title" class="text-xl font-semibold text-neutral-100">
+        Resources
+      </h2>
+      <ul class="mt-6 grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-4">
+        {resources.map(({ data }) => (
+          <li>
+            <a
+              href={data.url}
+              target="_blank"
+              rel="noopener"
+              class:list={[cardClass, 'h-full flex-col']}
+            >
+              <span class="flex items-start justify-between gap-3">
+                <time
+                  datetime={data.date.toISOString()}
+                  class="text-xs text-neutral-400"
+                >
+                  {monthFormat.format(data.date)}
+                </time>
+                <ArrowUpRightIcon
+                  className={cardArrowClass}
+                  aria-hidden="true"
+                />
+              </span>
+              <span class:list={[cardTitleClass, '-mt-1 text-lg']}>
+                {data.title}
+              </span>
+              {hostname(data.url) !== data.title && (
+                <span class="truncate text-sm text-neutral-500">
+                  {hostname(data.url)}
+                </span>
+              )}
+              {data.description && (
+                <span class="mt-2 text-sm leading-relaxed text-neutral-400">
+                  {data.description}
+                </span>
+              )}
+              {data.tags.length > 0 && (
+                <span class="mt-auto flex flex-wrap gap-1.5 pt-4">
+                  {data.tags.map((tag) => (
+                    <span class={tagClass}>{tag}</span>
+                  ))}
+                </span>
+              )}
+            </a>
+            {data.note && (
+              <p class="mt-2 px-1 text-sm whitespace-pre-line text-neutral-400">
+                {data.note}
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      {resources.length === 0 && (
+        <p class="mt-6 text-neutral-500">No resources yet.</p>
+      )}
+    </section>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const filters = document.querySelector<HTMLElement>('#saved-filters')
+    const rows = document.querySelectorAll<HTMLElement>('#saved-list > li')
+    if (!filters || filters.dataset.init !== undefined) return
+    filters.dataset.init = ''
+
+    filters.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
+        'button[data-filter]',
+      )
+      if (!button) return
+      const type = button.dataset.filter
+      filters.querySelectorAll('button').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b === button))
+      })
+      rows.forEach((row) => {
+        row.hidden = Boolean(type) && row.dataset.type !== type
+      })
+    })
+  })
+</script>

@@ -26,7 +26,7 @@ const unlistedBlogPaths = new Set(
 
 const excludedFromSitemap = (pathname: string) =>
   /^\/(dev|embed|assets)\//.test(pathname) ||
-  /^\/(404|rss\.xml|robots\.txt)\/?$/.test(pathname) ||
+  /^\/(404|rss\.xml|robots\.txt|saved)\/?$/.test(pathname) ||
   unlistedBlogPaths.has(pathname.endsWith('/') ? pathname : `${pathname}/`)
 
 // https://astro.build/config
@@ -56,6 +56,8 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    // react-tweet imports CSS modules, which Node can't load unbundled.
+    ssr: { noExternal: ['react-tweet'] },
     build: {
       // SaturnScene is deliberately lazy-loaded after the GPU capability check.
       // Currently ~1003 kB (three.js), so allow headroom for updates.

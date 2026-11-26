@@ -1,0 +1,102 @@
+# Everything shown on /saved. Add new items at the TOP (newest first).
+#
+# Every item: type, date (YYYY-MM-DD, the day you found it);
+# optional: tags: [a, b], note: plain text
+# Both sections sort newest first by date; same-day items keep this file's order.
+#
+# - type: tweet       # Feed. X/Twitter status URL, rendered as an embedded post.
+#   url: https://x.com/user/status/123
+#   date: 2026-11-26   # Only backfilled tweets leave this out; they use their publish date.
+#
+# - type: link        # Feed. Any page.
+#   title: Page title
+#   url: https://example.com
+#   date: 2026-11-26
+#
+# - type: snippet     # Feed. Code, highlighted with `lang` (default: plaintext).
+#   title: Short description
+#   lang: css
+#   source: https://where-i-found-it.com   # optional
+#   date: 2026-11-26
+#   code: |
+#     .center {
+#       display: grid;
+#       place-items: center;
+#     }
+#
+# - type: quote       # Feed. A passage, with a button to where it's from.
+#   text: |
+#     The quoted passage.
+#   source: https://example.com/article
+#   author: Name (@handle)   # optional
+#   title: Article title     # optional
+#   date: 2026-11-26
+#
+# - type: resource    # Resources section. Reference sites to come back to.
+#   title: Site name
+#   url: https://example.com
+#   description: One line on what it's for   # optional
+#   date: 2026-11-26
+
+- type: resource
+  title: SlopCodeBench
+  url: https://www.scbench.ai/
+  description: Community driven benchmark for measuring code erosion under iterative specification refinement.
+  date: 2026-11-25
+  tags: [agents]
+
+- type: quote
+  text: |
+    The software factory is a system where software production becomes asynchronous from human attention. Humans define goals, workers execute, work gets correlated back to objectives, the system validates outputs, failures retry, bad changes get reverted or compensated, low-value failures get reconciled later, and high-risk actions escalate. The human spends their time improving the system instead of personally participating in every execution.
+  source: https://x.com/unwitty/status/2091143479090885003
+  author: Skynet's Thrall (@unwitty)
+  title: The Software Factory Does Not Use Two-Phase Commit
+  date: 2026-11-25
+
+- type: tweet
+  url: https://x.com/DanFessler/status/2102467531248382089
+
+- type: tweet
+  url: https://x.com/cnakazawa/status/2063812273962189089
+
+- type: tweet
+  url: https://x.com/linear/status/2108598795487633821
+
+- type: tweet
+  url: https://x.com/antfu7/status/2107052841764569236
+
+- type: resource
+  title: Interfaces Cheat Sheet
+  url: https://interfaces.dev/cheat-sheet
+  description: A mix of best practices and personal preferences that help build better interfaces.
+  date: 2026-11-25
+  tags: [design]
+
+- type: tweet
+  url: https://x.com/kail_designs/status/2102265246325047711
+
+- type: resource
+  title: ossrules.md
+  url: https://ossrules.md/
+  description: Real AGENTS.md and CLAUDE.md examples, agent skills, and analysis from open source projects.
+  date: 2026-11-25
+  tags: [agents]
+
+- type: tweet
+  url: https://x.com/mazeincoding/status/2118378945557004477
+
+- type: tweet
+  url: https://x.com/pabcrab/status/2124615831900369326
+
+- type: tweet
+  url: https://x.com/DavidKPiano/status/2125310015557042676
+  date: 2026-11-25
+
+- type: tweet
+  url: https://x.com/tarunsachdeva/status/2098111309573198058
+
+- type: tweet
+  url: https://x.com/dillon_mulroy/status/2125765516639740183
+
+- type: tweet
+  url: https://x.com/steveruizok/status/2111926712229372076

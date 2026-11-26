@@ -1,0 +1,56 @@
+---
+import { EmbeddedTweet } from 'react-tweet'
+import { fetchTweet } from '@lib/tweets'
+
+interface Props {
+  url: string
+}
+
+const { url } = Astro.props
+
+// Fetched at build time, so the page shows the post even where X is blocked.
+const tweet = await fetchTweet(url)
+---
+
+{tweet ? (
+  <div class="[&_.react-tweet-theme]:m-0! [&_.react-tweet-theme]:max-w-none! [&_.react-tweet-theme]:min-w-0!">
+    <EmbeddedTweet tweet={tweet} />
+  </div>
+) : (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener"
+    class="block rounded-xl border border-neutral-700 bg-neutral-800 px-4 py-3 text-neutral-300 transition hover:border-neutral-600 hover:text-white"
+  >
+    Couldn't load this post. Open it on X →
+    <span class="mt-1 block truncate text-sm text-neutral-500">{url}</span>
+  </a>
+)}
+
+<script>
+  // The tweet is static HTML, so wire up react-tweet's video play button by hand
+  // instead of hydrating React for it.
+  document.addEventListener('astro:page-load', () => {
+    document
+      .querySelectorAll<HTMLButtonElement>(
+        '.react-tweet-theme video + button:not([data-init])',
+      )
+      .forEach((button) => {
+        button.dataset.init = ''
+        button.addEventListener('click', (event) => {
+          event.preventDefault()
+          const video = button.previousElementSibling as HTMLVideoElement
+          // The "Watch on X" overlay follows the button.
+          button.nextElementSibling?.remove()
+          button.remove()
+          video.controls = true
+          video.tabIndex = 0
+          video
+            .play()
+            .then(() => video.focus())
+            .catch(() => {})
+        })
+      })
+  })
+</script>

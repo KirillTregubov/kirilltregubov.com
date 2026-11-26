@@ -17,6 +17,7 @@ interface Props {
   footerClass?: string
   footerContent?: string
   player?: { path: string; width: number; height: number }
+  noindex?: boolean
 }
 
 let {
@@ -30,6 +31,7 @@ let {
   footerClass,
   footerContent = null,
   player,
+  noindex = false,
 } = Astro.props
 const { pathname } = Astro.url
 if (!description) {
@@ -69,7 +71,10 @@ const devOverflowToggleScript = `
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="robots" content="follow, index" />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, nofollow' : 'follow, index'}
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       href="/favicons/favicon-96x96.png"
