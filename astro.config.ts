@@ -57,7 +57,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     // react-tweet imports CSS modules, which Node can't load unbundled.
-    ssr: { noExternal: ['react-tweet'] },
+    resolve: { noExternal: ['react-tweet'] },
     build: {
       // SaturnScene is deliberately lazy-loaded after the GPU capability check.
       // Currently ~1003 kB (three.js), so allow headroom for updates.
