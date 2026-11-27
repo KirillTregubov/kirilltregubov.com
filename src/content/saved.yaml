@@ -38,6 +38,10 @@
 #   description: One line on what it's for   # optional
 #   date: 2026-11-26
 
+- type: tweet
+  url: https://x.com/zkmarek/status/2126221381796823470
+  date: 2026-11-27
+
 - type: resource
   title: Name That UI
   url: https://namethatui.com
