@@ -55,8 +55,9 @@
   url: https://x.com/edwardsanchez/status/2125842324437766488
   date: 2026-11-26
 
-- type: tweet
-  url: https://x.com/ubereng/status/2125008806249930999
+- type: link
+  title: How Uber Evals 1 Million Agent Skill Invocations a Month
+  url: https://x.com/i/article/2120222611070500864
   date: 2026-11-26
 
 - type: link
