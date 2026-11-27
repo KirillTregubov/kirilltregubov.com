@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/raiven", "destination": "/blog/raiven", "permanent": true },
+    {
+      "source": "/github",
+      "destination": "https://github.com/KirillTregubov",
+      "permanent": true
+    },
+    {
+      "source": "/linkedin",
+      "destination": "https://www.linkedin.com/in/kirilltregubov/",
+      "permanent": true
+    }
+  ]
+}

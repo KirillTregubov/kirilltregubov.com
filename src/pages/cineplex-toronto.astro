@@ -1,13 +1,16 @@
 ---
 import { getCollection } from 'astro:content'
 import { LocateFixedIcon, SearchIcon, XIcon } from 'lucide-react'
+import BadgeSprite from '@components/cineplex-badges/BadgeSprite.astro'
+import { isFeatureFormat } from '@components/cineplex-badges/badges'
 import ExperienceBadge from '@components/cineplex-badges/ExperienceBadge.astro'
 import PageContainer from '@components/PageContainer.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import { pluralize } from '@lib/pluralize'
 import Layout from '@layouts/Layout.astro'
+import { solidColors } from '@styles/classes'
 
-const manuallyClassifiedFeatures = new Set<string>(['Clubhouse'])
+const theatreChips = solidColors.theatreCardChips
 
 const theatres = (await getCollection('cinemas'))
   .map((theatre) => ({
@@ -15,7 +18,7 @@ const theatres = (await getCollection('cinemas'))
     formats: Array.from(
       new Set(
         theatre.data.auditoriums.flatMap(({ formats }) =>
-          formats.filter((format) => !manuallyClassifiedFeatures.has(format)),
+          formats.filter((format) => !isFeatureFormat(format)),
         ),
       ),
     ),
@@ -23,7 +26,7 @@ const theatres = (await getCollection('cinemas'))
       new Set(
         theatre.data.auditoriums.flatMap(({ formats, features }) => [
           ...features,
-          ...formats.filter((format) => manuallyClassifiedFeatures.has(format)),
+          ...formats.filter((format) => isFeatureFormat(format)),
         ]),
       ),
     ),
@@ -54,22 +57,36 @@ const formatPriority: Record<string, number> = {
   Regular: 7,
 }
 
+// Picture and sound first, then presentation, then seating, then amenities.
+const featurePriority: Record<string, number> = {
+  'Dolby Atmos': 0,
+  'Laser Projection': 1,
+  '3D': 2,
+  HFR: 3,
+  'D-BOX': 4,
+  Recliners: 5,
+  'Prime Seats': 6,
+  Clubhouse: 7,
+}
+
+// Lower priority shows first; anything unlisted goes last, alphabetically.
+const byPriority =
+  (priority: Record<string, number>) => (a: string, b: string) =>
+    (priority[a] ?? Number.POSITIVE_INFINITY) -
+      (priority[b] ?? Number.POSITIVE_INFINITY) || a.localeCompare(b)
+
 const formatOptions = Array.from(
   new Set(theatres.flatMap((theatre) => theatre.formats)),
-).sort(
-  (a, b) =>
-    (formatPriority[a] ?? Number.POSITIVE_INFINITY) -
-      (formatPriority[b] ?? Number.POSITIVE_INFINITY) || a.localeCompare(b),
-)
+).sort(byPriority(formatPriority))
 
 const featureOptions = Array.from(
   new Set(theatres.flatMap((theatre) => theatre.features)),
 )
   .filter((feature) => !formats.has(feature))
-  .sort((a, b) => a.localeCompare(b))
+  .sort(byPriority(featurePriority))
 
 const filterButtonClass =
-  'filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-neutral-700 px-3 py-2 text-sm font-semibold text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-neutral-600 hover:text-white hover:shadow-xs active:border-neutral-500 active:bg-neutral-800 active:text-white active:shadow-xs aria-pressed:border-transparent aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-transparent aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-2 aria-pressed:focus-visible:ring-amber-200! aria-pressed:focus-visible:ring-offset-2 aria-pressed:focus-visible:ring-offset-neutral-900 aria-pressed:active:border-transparent aria-pressed:active:bg-amber-300/75 aria-pressed:active:shadow-amber-200/20 data-[soft-selected=true]:border-amber-300/35 data-[soft-selected=true]:bg-amber-300/14 data-[soft-selected=true]:text-amber-200 data-[soft-selected=true]:hover:border-yellow-400/45 data-[soft-selected=true]:hover:bg-yellow-400/20 data-[soft-selected=true]:hover:text-yellow-100 data-[soft-selected=true]:focus-visible:ring-2 data-[soft-selected=true]:focus-visible:ring-amber-200! data-[soft-selected=true]:focus-visible:ring-offset-2 data-[soft-selected=true]:focus-visible:ring-offset-neutral-900 data-[soft-selected=true]:active:border-yellow-500/55 data-[soft-selected=true]:active:bg-yellow-500/25 data-[soft-selected=true]:active:text-yellow-100 disabled:cursor-not-allowed disabled:border-neutral-800 disabled:text-neutral-600 disabled:shadow-none disabled:ring-0'
+  'filter-button inline-flex shrink-0 cursor-pointer items-center rounded-full border border-neutral-700 px-3 py-2 text-sm font-semibold text-neutral-300 shadow-sm shadow-neutral-950/40 transition duration-200 hover:border-neutral-600 hover:text-white hover:shadow-xs active:border-neutral-500 active:bg-neutral-800 active:text-white active:shadow-xs aria-pressed:border-transparent aria-pressed:bg-amber-300 aria-pressed:text-neutral-950 aria-pressed:shadow-amber-200/20 aria-pressed:hover:border-transparent aria-pressed:hover:bg-amber-300/85 aria-pressed:hover:shadow-amber-200/20 aria-pressed:focus-visible:ring-2 aria-pressed:focus-visible:ring-amber-200! aria-pressed:focus-visible:ring-offset-2 aria-pressed:focus-visible:ring-offset-neutral-900 aria-pressed:active:border-transparent aria-pressed:active:bg-amber-300/75 aria-pressed:active:shadow-amber-200/20 data-[soft-selected=true]:border-amber-300/35 data-[soft-selected=true]:bg-amber-300/14 data-[soft-selected=true]:text-amber-200 data-[soft-selected=true]:hover:border-yellow-400/45 data-[soft-selected=true]:hover:bg-yellow-400/20 data-[soft-selected=true]:hover:text-yellow-100 data-[soft-selected=true]:focus-visible:ring-2 data-[soft-selected=true]:focus-visible:ring-amber-200! data-[soft-selected=true]:focus-visible:ring-offset-2 data-[soft-selected=true]:focus-visible:ring-offset-neutral-900 data-[soft-selected=true]:active:border-yellow-500/55 data-[soft-selected=true]:active:bg-yellow-500/25 data-[soft-selected=true]:active:text-yellow-100 aria-disabled:cursor-not-allowed aria-disabled:border-neutral-800 aria-disabled:bg-transparent aria-disabled:text-neutral-600 aria-disabled:shadow-none'
 
 type ScreenShape = {
   filterLabel: string
@@ -97,14 +114,26 @@ const screenShapeOptions = Array.from(screenShapeByRatio.values())
   )
   .map(({ filterLabel }) => filterLabel)
 
+const badgeFormats = new Set(
+  theatres.flatMap((theatre) =>
+    theatre.data.auditoriums.flatMap(({ formats, features }) => [
+      ...formats,
+      ...features,
+    ]),
+  ),
+)
+
 const getRatioDiagram = (ratio: string) => {
-  const [width = 1, height = 1] = ratio.split(':').map(Number)
+  const [width, height] = ratio.split(':').map(Number)
+  // Unconfirmed ratios ("N/A") get a neutral outline instead of a shape.
+  const known = width > 0 && height > 0
   const canvasWidth = 92
   const canvasHeight = 62
   const screenWidth = 84
-  const screenHeight = screenWidth / (width / height)
+  const screenHeight = known ? screenWidth / (width / height) : 40
 
   return {
+    known,
     x: (canvasWidth - screenWidth) / 2,
     y: (canvasHeight - screenHeight) / 2,
     width: screenWidth,
@@ -123,18 +152,18 @@ const getAuditoriumHeading = (auditoriums: string) => {
   bodyClass="bg-[radial-gradient(circle_at_50%_-12rem,rgb(120_53_15/0.2),transparent_35rem),#171717]"
   footerClass="enter-3"
 >
+  <BadgeSprite formats={badgeFormats} />
   <PageContainer>
     <ReturnHome />
 
     <header class="mt-2 enter">
       <div class="grid gap-5">
-        <div class="relative overflow-hidden rounded-3xl border border-amber-200/16 bg-[#160d08] bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem)] px-6 py-8 sm:p-10">
-          <!-- class="relative rounded-3xl border border-amber-200/16 bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem),#160d08] px-6 py-9 sm:px-10 sm:py-12" -->
-          <!-- <div
-            class="absolute -top-24 right-[12%] size-72 rounded-full bg-amber-300/15 blur-3xl"
-            aria-hidden="true"
-          >
-          </div> -->
+        <div
+          class:list={[
+            'relative overflow-hidden rounded-3xl border border-amber-200/16 bg-(--hero-background) bg-[radial-gradient(circle_at_88%_-6rem,rgb(252_211_77/0.15),transparent_18rem)] px-6 py-8 sm:p-10',
+            solidColors.cineplexHero.background,
+          ]}
+        >
           <div class="relative grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-8">
             <div>
               <!-- <p
@@ -151,12 +180,17 @@ const getAuditoriumHeading = (auditoriums: string) => {
               </p>
               <a
                 href="#directory"
-                class="mt-5 inline-flex rounded-full border border-amber-300/30 bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:border-amber-200/20 hover:bg-amber-300/85 focus-visible:ring-2 focus-visible:ring-amber-200! focus-visible:ring-offset-2 focus-visible:ring-offset-[#160d08] active:border-amber-200/20 active:bg-amber-300/70"
+                class="mt-5 inline-flex rounded-full border border-amber-300 bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:border-amber-200/20 hover:bg-amber-300/85 focus-visible:ring-2 focus-visible:ring-amber-200! focus-visible:ring-offset-2 focus-visible:ring-offset-(--hero-background) active:border-amber-200/20 active:bg-amber-300/70"
               >
                 Explore theatres
               </a>
 
-              <dl class="relative mt-6 hidden flex-wrap gap-x-10 border-t border-white/10 pt-6 lg:flex">
+              <dl
+                class:list={[
+                  'relative mt-6 hidden flex-wrap gap-x-10 border-t pt-6 lg:flex',
+                  solidColors.cineplexHero.statsBorder,
+                ]}
+              >
                 <div>
                   <dt class="text-xs tracking-wider text-neutral-500 uppercase">
                     Locations
@@ -196,11 +230,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
             <div class="relative mr-auto w-full max-w-[20rem] -rotate-2 touch-manipulation rounded-xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 enter-1 lg:hidden">
               <span
-                class="absolute top-[55%] -left-3 size-5 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[55%] -left-3 size-5 -translate-y-1/2 rounded-full bg-(--hero-background)"
                 aria-hidden="true"
               ></span>
               <span
-                class="absolute top-[55%] -right-3 size-5 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[55%] -right-3 size-5 -translate-y-1/2 rounded-full bg-(--hero-background)"
                 aria-hidden="true"
               ></span>
               <div class="p-5 py-4 lg:p-6">
@@ -210,7 +244,12 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 </div>
                 <div class="mt-4 grid grid-cols-3 gap-3 border-t border-dashed border-amber-950/30 pt-4">
                   <div>
-                    <p class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]">
+                    <p
+                      class:list={[
+                        'text-[8px] font-bold tracking-wider uppercase sm:text-[9px]',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Locations
                     </p>
                     <p class="mt-0.5 text-xl font-black sm:text-2xl">
@@ -218,7 +257,12 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     </p>
                   </div>
                   <div>
-                    <p class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]">
+                    <p
+                      class:list={[
+                        'text-[8px] font-bold tracking-wider uppercase sm:text-[9px]',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Formats
                     </p>
                     <p class="mt-0.5 text-xl font-black sm:text-2xl">
@@ -226,7 +270,12 @@ const getAuditoriumHeading = (auditoriums: string) => {
                     </p>
                   </div>
                   <div>
-                    <p class="text-[8px] font-bold tracking-wider uppercase opacity-50 sm:text-[9px]">
+                    <p
+                      class:list={[
+                        'text-[8px] font-bold tracking-wider uppercase sm:text-[9px]',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Auditoriums
                     </p>
                     <p class="mt-0.5 text-xl font-black sm:text-2xl">
@@ -235,7 +284,12 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </div>
                 </div>
                 <div class="mt-4 flex items-center justify-between gap-4">
-                  <span class="text-[9px] font-bold tracking-[0.18em] uppercase opacity-55">
+                  <span
+                    class:list={[
+                      'text-[9px] font-bold tracking-[0.18em] uppercase',
+                      solidColors.ticketLabel,
+                    ]}
+                  >
                     Greater Toronto Area
                   </span>
                   <span
@@ -248,11 +302,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
             <div class="relative mx-auto hidden w-full max-w-md rotate-2 touch-manipulation rounded-2xl bg-[oklch(94.3%_0.0895_95.6815)] text-amber-950 shadow-2xl shadow-black/35 transition-transform duration-300 will-change-transform hover:rotate-0 active:rotate-0 enter-1 lg:block">
               <span
-                class="absolute top-[67%] -left-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[67%] -left-3 size-6 -translate-y-1/2 rounded-full bg-(--hero-background)"
                 aria-hidden="true"
               ></span>
               <span
-                class="absolute top-[67%] -right-3 size-6 -translate-y-1/2 rounded-full bg-[#160d08]"
+                class="absolute top-[67%] -right-3 size-6 -translate-y-1/2 rounded-full bg-(--hero-background)"
                 aria-hidden="true"
               ></span>
               <div class="p-6">
@@ -261,7 +315,12 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   <span>Admit One</span>
                 </div>
                 <div>
-                  <p class="mt-4 text-[10px] font-bold tracking-[0.18em] uppercase opacity-55">
+                  <p
+                    class:list={[
+                      'mt-4 text-[10px] font-bold tracking-[0.18em] uppercase',
+                      solidColors.ticketLabel,
+                    ]}
+                  >
                     Your next presentation
                   </p>
                   <p class="mt-0.5 text-3xl font-black tracking-[-0.045em]">
@@ -270,32 +329,57 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 </div>
                 <div class="mt-3 flex justify-between gap-4 border-t border-dashed border-amber-950/30 pt-4">
                   <div class="flex-1">
-                    <p class="text-[9px] font-bold tracking-wider uppercase opacity-50">
+                    <p
+                      class:list={[
+                        'text-[9px] font-bold tracking-wider uppercase',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Auditorium
                     </p>
                     <p class="mt-0.5 text-base font-black">12</p>
                   </div>
                   <div class="flex-1">
-                    <p class="text-[9px] font-bold tracking-wider uppercase opacity-50">
+                    <p
+                      class:list={[
+                        'text-[9px] font-bold tracking-wider uppercase',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Presentation
                     </p>
                     <p class="mt-0.5 text-base font-black">IMAX</p>
                   </div>
                   <div class="flex-1">
-                    <p class="text-[9px] font-bold tracking-wider uppercase opacity-50">
+                    <p
+                      class:list={[
+                        'text-[9px] font-bold tracking-wider uppercase',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Screen
                     </p>
                     <p class="mt-0.5 text-base font-black">1.43:1</p>
                   </div>
                   <div class="flex-1">
-                    <p class="text-[9px] font-bold tracking-wider uppercase opacity-50">
+                    <p
+                      class:list={[
+                        'text-[9px] font-bold tracking-wider uppercase',
+                        solidColors.ticketLabel,
+                      ]}
+                    >
                       Projection
                     </p>
                     <p class="mt-0.5 text-base font-black">Laser</p>
                   </div>
                 </div>
                 <div class="mt-4 flex items-center justify-between gap-4">
-                  <span class="text-[9px] font-bold tracking-[0.18em] uppercase opacity-55">
+                  <span
+                    class:list={[
+                      'text-[9px] font-bold tracking-[0.18em] uppercase',
+                      solidColors.ticketLabel,
+                    ]}
+                  >
                     Greater Toronto Area
                   </span>
                   <span
@@ -357,7 +441,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           >
             <div
               id="format-filter-scroller"
-              role="group"
+              role="toolbar"
               class="flex min-w-0 cursor-grab scroll-px-28 scrollbar-none gap-1.5 overflow-x-auto p-1 select-none [-ms-overflow-style:none] active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
               aria-label="Filter by viewing format, screen shape, or auditorium feature"
             >
@@ -366,53 +450,75 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 class={filterButtonClass}
                 data-filter="all"
                 aria-pressed="true"
+                tabindex="0"
               >
                 All
               </button>
-              {formatOptions.map((format) => (
-                <button
-                  type="button"
-                  class={filterButtonClass}
-                  data-filter-type="format"
-                  data-filter-value={format}
-                  aria-label={`Filter by ${format}`}
-                  aria-pressed="false"
-                >
-                  <ExperienceBadge format={format} />
-                </button>
-              ))}
+              <div
+                role="group"
+                aria-label="Viewing formats"
+                class="flex shrink-0 gap-1.5"
+              >
+                {formatOptions.map((format) => (
+                  <button
+                    type="button"
+                    class={filterButtonClass}
+                    data-filter-type="format"
+                    data-filter-value={format}
+                    aria-label={`Filter by ${format}`}
+                    aria-pressed="false"
+                    tabindex="-1"
+                  >
+                    <ExperienceBadge format={format} />
+                  </button>
+                ))}
+              </div>
               <span
                 class="my-1 w-px shrink-0 bg-white/15"
                 aria-hidden="true"
               ></span>
-              {screenShapeOptions.map((shape) => (
-                <button
-                  type="button"
-                  class={filterButtonClass}
-                  data-filter-type="screen-shape"
-                  data-filter-value={shape}
-                  aria-label={`Filter by ${shape} screens`}
-                  aria-pressed="false"
-                >
-                  {shape}
-                </button>
-              ))}
+              <div
+                role="group"
+                aria-label="Screen shapes"
+                class="flex shrink-0 gap-1.5"
+              >
+                {screenShapeOptions.map((shape) => (
+                  <button
+                    type="button"
+                    class={filterButtonClass}
+                    data-filter-type="screen-shape"
+                    data-filter-value={shape}
+                    aria-label={`Filter by ${shape} screens`}
+                    aria-pressed="false"
+                    tabindex="-1"
+                  >
+                    {shape}
+                  </button>
+                ))}
+              </div>
               <span
                 class="my-1 w-px shrink-0 bg-white/15"
                 aria-hidden="true"
               ></span>
-              {featureOptions.map((feature) => (
-                <button
-                  type="button"
-                  class={filterButtonClass}
-                  data-filter-type="feature"
-                  data-filter-value={feature}
-                  aria-label={`Filter by ${feature}`}
-                  aria-pressed="false"
-                >
-                  <ExperienceBadge format={feature} />
-                </button>
-              ))}
+              <div
+                role="group"
+                aria-label="Auditorium features"
+                class="flex shrink-0 gap-1.5"
+              >
+                {featureOptions.map((feature) => (
+                  <button
+                    type="button"
+                    class={filterButtonClass}
+                    data-filter-type="feature"
+                    data-filter-value={feature}
+                    aria-label={`Filter by ${feature}`}
+                    aria-pressed="false"
+                    tabindex="-1"
+                  >
+                    <ExperienceBadge format={feature} />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -442,7 +548,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
         </div>
 
         <ul id="theatre-grid" class="mt-4 grid gap-4 lg:grid-cols-2">
-          {theatres.map((theatre, index) => {
+          {theatres.map((theatre) => {
             const formats = JSON.stringify(theatre.formats)
             const features = JSON.stringify(theatre.features)
             const searchableAddress = theatre.data.location
@@ -468,23 +574,38 @@ const getAuditoriumHeading = (auditoriums: string) => {
             return (
               <li class="h-full" data-theatre-id={theatre.data.id}>
                 <article
-                  class="theatre-card h-full overflow-hidden rounded-lg border border-white/10 bg-(--theatre-card-background) transition duration-200"
+                  class:list={[
+                    'theatre-card h-full overflow-hidden rounded-lg border bg-(--theatre-card-background) transition duration-200 [--theatre-card-background:oklch(0.1638_0_0)]',
+                    solidColors.theatreCard.border,
+                  ]}
                   data-name={`${theatre.data.name} ${theatre.data.area} ${searchableAddress}`.toLowerCase()}
                   data-formats={formats}
                   data-features={features}
                   data-screen-shapes={screenShapes}
                   data-latitude={theatre.data.location?.coordinates.latitude}
                   data-longitude={theatre.data.location?.coordinates.longitude}
-                  style={`--card-delay: ${Math.min(index * 30, 240)}ms; --theatre-card-background: oklch(0.1638 0 0)`}
                 >
-                  <header class="border-b border-white/8 px-5 py-5 sm:px-6">
+                  <header
+                    class:list={[
+                      'border-b px-5 py-5 sm:px-6',
+                      solidColors.theatreCard.headerBorder,
+                    ]}
+                  >
                     <div>
                       <div class="mb-1 flex flex-wrap items-center gap-x-2">
-                        <p class="text-xs font-semibold tracking-wider text-amber-300/80 uppercase">
+                        <p
+                          class:list={[
+                            'text-xs font-semibold tracking-wider uppercase',
+                            solidColors.theatreCard.areaText,
+                          ]}
+                        >
                           {theatre.data.area}
                         </p>
                         <span
-                          class="distance-label hidden text-xs text-amber-300/80 before:mr-2 before:text-neutral-700 before:content-['•']"
+                          class:list={[
+                            "distance-label hidden text-xs before:mr-2 before:text-neutral-700 before:content-['•']",
+                            solidColors.theatreCard.areaText,
+                          ]}
                           aria-live="polite"
                         />
                       </div>
@@ -519,13 +640,13 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   <ul>
                     {theatre.data.auditoriums.map((auditorium) => {
                       const auditoriumFormats = auditorium.formats.filter(
-                        (format) => !manuallyClassifiedFeatures.has(format),
+                        (format) => !isFeatureFormat(format),
                       )
                       const auditoriumFeatures = Array.from(
                         new Set([
                           ...auditorium.features,
                           ...auditorium.formats.filter((format) =>
-                            manuallyClassifiedFeatures.has(format),
+                            isFeatureFormat(format),
                           ),
                         ]),
                       )
@@ -554,7 +675,10 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
                       return (
                         <li
-                          class="auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 border-white/7 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6"
+                          class:list={[
+                            'auditorium-row grid grid-cols-[5.75rem_1fr] items-center gap-4 px-5 py-4 sm:grid-cols-[6.5rem_1fr] sm:px-6',
+                            solidColors.theatreCard.rowBorder,
+                          ]}
                           data-auditorium-number={auditorium.auditoriums}
                           data-auditorium-formats={JSON.stringify(
                             auditoriumFormats,
@@ -588,6 +712,15 @@ const getAuditoriumHeading = (auditoriums: string) => {
                                   class="stroke-linejoin-round fill-none stroke-current stroke-[1.5] opacity-75 [vector-effect:non-scaling-stroke]"
                                 />
                               </>
+                            ) : !diagram.known ? (
+                              <rect
+                                x={diagram.x}
+                                y={diagram.y}
+                                width={diagram.width}
+                                height={diagram.height}
+                                rx="3"
+                                class="fill-none stroke-current stroke-[1.25] opacity-55 [stroke-dasharray:4_3] [vector-effect:non-scaling-stroke]"
+                              />
                             ) : (
                               <>
                                 <line
@@ -623,7 +756,13 @@ const getAuditoriumHeading = (auditoriums: string) => {
                           <div class="min-w-0">
                             <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                               {auditoriumFormats.map((format) => (
-                                <span class="inline-flex min-h-8 items-center rounded-md border border-white/10 bg-white/4 px-2.5 py-1">
+                                <span
+                                  class:list={[
+                                    'inline-flex min-h-8 items-center rounded-md border px-2.5 py-1',
+                                    theatreChips.format.border,
+                                    theatreChips.format.background,
+                                  ]}
+                                >
                                   <ExperienceBadge
                                     format={format}
                                     class="text-white"
@@ -653,7 +792,13 @@ const getAuditoriumHeading = (auditoriums: string) => {
                             {auditoriumFeatures.length > 0 && (
                               <div class="mt-2 flex flex-wrap gap-1.5">
                                 {auditoriumFeatures.map((feature) => (
-                                  <span class="inline-flex min-h-6 items-center rounded-md border border-neutral-500/15 bg-neutral-500/5 px-2 py-0.5">
+                                  <span
+                                    class:list={[
+                                      'inline-flex min-h-6 items-center rounded-md border px-2 py-0.5',
+                                      theatreChips.feature.border,
+                                      theatreChips.feature.background,
+                                    ]}
+                                  >
                                     <ExperienceBadge
                                       format={feature}
                                       class="text-neutral-400"
@@ -669,13 +814,29 @@ const getAuditoriumHeading = (auditoriums: string) => {
                   </ul>
 
                   {theatre.data.notes.length > 0 && (
-                    <div class="border-t border-amber-300/10 bg-amber-300/4 px-5 py-4 sm:px-6">
-                      <p class="mb-2 text-xs font-semibold tracking-wider text-amber-200/70 uppercase">
+                    <div
+                      class:list={[
+                        'border-t px-5 py-4 sm:px-6',
+                        solidColors.theatreCard.notesBorder,
+                        solidColors.theatreCard.notesBackground,
+                      ]}
+                    >
+                      <p
+                        class:list={[
+                          'mb-2 text-xs font-semibold tracking-wider uppercase',
+                          solidColors.theatreCard.notesHeading,
+                        ]}
+                      >
                         {pluralize(theatre.data.notes.length, 'note')}
                       </p>
                       <ul class="space-y-1.5 text-sm leading-relaxed text-neutral-400">
                         {theatre.data.notes.map((note) => (
-                          <li class="pl-3 before:mr-2 before:-ml-3 before:text-amber-300/60 before:content-['•']">
+                          <li
+                            class:list={[
+                              "pl-3 before:mr-2 before:-ml-3 before:content-['•']",
+                              solidColors.theatreCard.notesBullet,
+                            ]}
+                          >
                             {note}
                           </li>
                         ))}
@@ -690,7 +851,10 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
         <div
           id="no-results"
-          class="mt-4 hidden rounded-2xl border border-dashed border-white/15 px-6 py-14 text-center flex-col items-center"
+          class:list={[
+            'mt-4 hidden flex-col items-center rounded-2xl border border-dashed px-6 py-14 text-center',
+            solidColors.cineplexNoResultsBorder,
+          ]}
         >
           <p class="font-medium text-neutral-300">
             No matching theatres found.
@@ -1143,7 +1307,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
             'aria-pressed',
             String(candidate ? isSelected : activeFilters.length === 0),
           )
-          button.disabled = !hasOverlap
+          if (hasOverlap) {
+            button.removeAttribute('aria-disabled')
+          } else {
+            button.setAttribute('aria-disabled', 'true')
+          }
           button.dataset.softSelected = String(isSoftSelected)
           if (hasOverlap) {
             if (isSoftSelected) {
@@ -1316,11 +1484,46 @@ const getAuditoriumHeading = (auditoriums: string) => {
           })
         }
 
+        // Toolbar pattern (WAI-ARIA APG): the filters are one Tab stop, and the
+        // arrow keys, Home and End move between them. A roving tabindex keeps
+        // the last focused filter as the stop, so Tab returns to it.
+        const setTabStop = (target: HTMLButtonElement) => {
+          filterButtons.forEach((button) => {
+            button.tabIndex = button === target ? 0 : -1
+          })
+        }
+
         filterScroller.addEventListener('focusin', (event) => {
+          const button = (event.target as Element).closest<HTMLButtonElement>(
+            '.filter-button',
+          )
+          if (button) setTabStop(button)
+
           if ((event.target as Element).matches(':focus-visible')) {
-            console.log('focusin')
             scrollFilterIntoView(event)
           }
+        })
+
+        filterScroller.addEventListener('keydown', (event) => {
+          if (event.altKey || event.ctrlKey || event.metaKey) return
+
+          const currentIndex = filterButtons.indexOf(
+            document.activeElement as HTMLButtonElement,
+          )
+          if (currentIndex < 0) return
+
+          const lastIndex = filterButtons.length - 1
+          const nextIndex = {
+            ArrowLeft: Math.max(currentIndex - 1, 0),
+            ArrowRight: Math.min(currentIndex + 1, lastIndex),
+            Home: 0,
+            End: lastIndex,
+          }[event.key]
+          if (nextIndex === undefined) return
+
+          event.preventDefault()
+          setTabStop(filterButtons[nextIndex])
+          filterButtons[nextIndex].focus()
         })
         filterScroller.addEventListener('pointerup', scrollFilterIntoView)
 
@@ -1423,6 +1626,8 @@ const getAuditoriumHeading = (auditoriums: string) => {
       }
       filterButtons.forEach((button) => {
         button.addEventListener('click', () => {
+          if (button.getAttribute('aria-disabled') === 'true') return
+
           const filterType = button.dataset.filterType as FilterType | undefined
           const filterValue = button.dataset.filterValue
 

@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify:theatres": "bun scripts/verify-theatres.ts",
+    "solid": "bun scripts/solid-color.ts",
     "format": "oxfmt && prettier --write '**/*.astro'",
     "format:check": "oxfmt --check && prettier --check '**/*.astro'",
     "upgrade": "bunx @astrojs/upgrade"
@@ -33,7 +34,7 @@
     "astro-heroicons": "^2.1.5-1",
     "cobe": "^2.0.1",
     "fuse.js": "^7.5.0",
-    "lucide-react": "^1.80.0",
+    "lucide-react": "^1.81.0",
     "motion": "^14.14.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -51,7 +52,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "@types/node": "^26.6.11",
-    "@vercel/speed-insights": "^2.1.0",
+    "@vercel/speed-insights": "^2.1.1",
     "oxfmt": "^0.80.0",
     "prettier": "^3.10.1",
     "prettier-plugin-astro": "^1.1.2",

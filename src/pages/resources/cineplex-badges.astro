@@ -1,0 +1,166 @@
+---
+import { getCollection } from 'astro:content'
+import {
+  allBadges,
+  getBadge,
+  type BadgeCategory,
+} from '@components/cineplex-badges/badges'
+import BadgeSprite from '@components/cineplex-badges/BadgeSprite.astro'
+import ExperienceBadge from '@components/cineplex-badges/ExperienceBadge.astro'
+import PageContainer from '@components/PageContainer.astro'
+import ReturnHome from '@components/ReturnHome.astro'
+import { pluralize } from '@lib/pluralize'
+import Layout from '@layouts/Layout.astro'
+import { solidColors } from '@styles/classes'
+
+// Count the theatres in the guide that use each badge.
+const theatres = await getCollection('cinemas')
+const theatreCounts = new Map<string, number>()
+
+for (const theatre of theatres) {
+  const names = new Set(
+    theatre.data.auditoriums
+      .flatMap(({ formats, features }) => [...formats, ...features])
+      .map((format) => getBadge(format)?.name),
+  )
+  for (const name of names) {
+    if (name) theatreCounts.set(name, (theatreCounts.get(name) ?? 0) + 1)
+  }
+}
+
+const categories: {
+  category: BadgeCategory
+  title: string
+  description: string
+  /** Staggered fade-in, after the header. */
+  enterClass: string
+}[] = [
+  {
+    category: 'format',
+    title: 'Viewing formats',
+    description: 'How the film is presented.',
+    enterClass: 'enter-2',
+  },
+  {
+    category: 'feature',
+    title: 'Auditorium features',
+    description: 'Projection, sound, motion, and seating.',
+    enterClass: 'enter-3',
+  },
+  {
+    category: 'showtime',
+    title: 'Showtime labels',
+    description: 'Tags on individual screenings.',
+    enterClass: 'enter-4',
+  },
+]
+
+const groups = categories.map((group) => ({
+  ...group,
+  badges: allBadges
+    .filter(({ category }) => category === group.category)
+    .sort(
+      (a, b) =>
+        (theatreCounts.get(b.name) ?? 0) - (theatreCounts.get(a.name) ?? 0) ||
+        a.label.localeCompare(b.label),
+    ),
+}))
+
+// Chip styles, in solid colours (see solidColors in classes.ts).
+const chipClass = {
+  format: [
+    'min-h-8 rounded-md border px-2.5 py-1 text-white',
+    solidColors.badgeTileChips.format.border,
+    solidColors.badgeTileChips.format.background,
+  ],
+  feature: [
+    'min-h-6 rounded-md border px-2 py-0.5 text-neutral-400',
+    solidColors.badgeTileChips.feature.border,
+    solidColors.badgeTileChips.feature.background,
+  ],
+}
+---
+
+<Layout
+  title="Cineplex Badges - Kirill Tregubov"
+  description="Cineplex experience badges, from IMAX and UltraAVX to D-BOX and Dolby Atmos, and how many Toronto-area theatres use each."
+  footerClass="enter-5"
+>
+  <BadgeSprite formats={allBadges.map(({ label }) => label)} />
+  <PageContainer class="max-w-240">
+    <ReturnHome href="/cineplex-toronto" label="Cineplex Guide" />
+    <header class="mt-2 mb-8 enter-1">
+      <h1 class="text-2xl font-semibold text-white">Cineplex badges</h1>
+      <p class="mt-1 text-sm text-pretty text-neutral-400">
+        {allBadges.length} Cineplex experience badges, styled as they appear in
+        the{' '}
+        <a
+          href="/cineplex-toronto"
+          class="text-neutral-300 underline decoration-neutral-600 underline-offset-2 hover:text-white hover:decoration-neutral-400"
+        >
+          Toronto Cineplex Guide
+        </a>
+        . Counts are theatres in the guide.
+      </p>
+    </header>
+
+    <div class="grid gap-8">
+      {groups.map(({ title, description, enterClass, badges }, index) => (
+        <section aria-labelledby={`badge-group-${index}`} class={enterClass}>
+          <div class="mb-3 flex flex-wrap items-baseline gap-x-2">
+            <h2
+              id={`badge-group-${index}`}
+              class="text-sm font-semibold text-neutral-100"
+            >
+              {title}
+            </h2>
+            <span class="text-sm text-neutral-500 tabular-nums">
+              {badges.length}
+            </span>
+            <p class="w-full text-xs text-neutral-500 sm:ml-auto sm:w-auto">
+              {description}
+            </p>
+          </div>
+
+          <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {badges.map((badge) => {
+              const count = theatreCounts.get(badge.name)
+              return (
+                <li
+                  class:list={[
+                    'flex min-w-0 items-center justify-between gap-3 rounded-lg border px-3 py-2 sm:flex-col sm:items-stretch sm:gap-2 sm:py-3',
+                    solidColors.badgeTile.border,
+                    solidColors.badgeTile.background,
+                  ]}
+                >
+                  <div class="flex h-8 shrink-0 items-center">
+                    <span
+                      class:list={[
+                        'inline-flex items-center',
+                        chipClass[
+                          badge.category === 'format' ? 'format' : 'feature'
+                        ],
+                      ]}
+                    >
+                      <ExperienceBadge format={badge.label} />
+                    </span>
+                  </div>
+                  <div class="flex min-w-0 flex-col items-end text-xs sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
+                    <span class="max-w-full truncate text-neutral-300">
+                      {badge.label}
+                    </span>
+                    {count !== undefined && (
+                      <span class="shrink-0 text-neutral-500 tabular-nums">
+                        {count} {pluralize(count, 'theatre')}
+                      </span>
+                    )}
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </PageContainer>
+</Layout>

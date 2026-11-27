@@ -3,6 +3,7 @@ import { Image } from 'astro:assets'
 import { resolvePublicImage } from '@lib/images'
 import type { CollectionEntry } from 'astro:content'
 import { ArrowRightIcon } from 'lucide-react'
+import { solidColors } from '@styles/classes'
 
 interface Props {
   post: CollectionEntry<'blog'>
@@ -21,8 +22,11 @@ const formattedDate = post.data.pubDate.toLocaleDateString('en-CA', {
 <a
   href={`/blog/${post.id}`}
   class:list={[
-    'duration-150 will-change-transform active:scale-[0.99]',
-    'group flex h-full min-w-0 flex-col gap-4 rounded-xl border border-neutral-700/60 bg-neutral-800/30 p-4 transition hover:border-neutral-600 hover:bg-neutral-800/60 focus-visible:border-neutral-600 focus-visible:bg-neutral-800/60 sm:flex-row sm:items-center sm:gap-5',
+    'duration-150 active:scale-[0.99]',
+    'group flex h-full min-w-0 flex-col gap-4 rounded-xl border p-4 transition hover:border-neutral-600 focus-visible:border-neutral-600 sm:flex-row sm:items-center sm:gap-5',
+    solidColors.blogPreviewCard.background,
+    solidColors.blogPreviewCard.border,
+    solidColors.blogPreviewCard.hoverBackground,
     !single && 'lg:flex-col lg:items-stretch xl:flex-row xl:items-center',
   ]}
 >

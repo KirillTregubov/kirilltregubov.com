@@ -1,0 +1,471 @@
+---
+/**
+ * Dev-only playground for page entrance animations, for comparing timing
+ * patterns on a real page. Drop it into any page during development:
+ *
+ *   {import.meta.env.DEV && <RevealGizmo />}
+ *
+ * "Sections" replays the page's `enter` / `enter-N` blocks. "Tiles" replays
+ * elements marked `data-reveal`, falling back to the blocks when none are.
+ * The site's live values are the `--enter-*` properties in global.css.
+ */
+import { revealPresets } from './revealPresets'
+
+const patterns = [
+  ['cascade', 'Cascade', 'One after another, in reading order.'],
+  ['rows', 'Rows', 'Each visual row together, top to bottom.'],
+  ['diagonal', 'Diagonal', 'A sweep from the top-left corner.'],
+  ['current', 'Current', 'A diagonal sweep that drifts in from the left.'],
+  ['ripple', 'Ripple', 'Rings out from where you click.'],
+  ['scatter', 'Scatter', 'Random order.'],
+  ['shore', 'Shore', 'Rows that wash in from the left, like water up a beach.'],
+  ['swell', 'Swell', 'Rows with a rolling, wavy front.'],
+  ['crest', 'Crest', 'Each row breaks from the middle outward.'],
+  ['ebb', 'Ebb', 'Rows from the bottom up, like water pulling back.'],
+] as const
+
+const sliders = [
+  ['spread', 'Spread', 0, 1500, 20, 'ms', 'First to last start'],
+  ['duration', 'Duration', 150, 1500, 50, 'ms', 'Each fade'],
+  ['distance', 'Distance', 0, 40, 1, 'px', 'Travel'],
+  ['blur', 'Blur', 0, 12, 1, 'px', 'Starting blur'],
+] as const
+
+const segmentClass =
+  'cursor-pointer rounded-md px-2 py-1 text-neutral-400 hover:text-white aria-pressed:bg-white/10 aria-pressed:text-white'
+const labelClass = 'mb-1 text-[11px] text-neutral-500'
+---
+
+<div
+  id="reveal-gizmo"
+  class="fixed right-3 bottom-3 z-50 max-h-[calc(100dvh-1.5rem)] w-76 max-w-[calc(100vw-1.5rem)] overflow-y-auto overscroll-contain rounded-xl border border-white/10 bg-neutral-950/90 text-xs text-neutral-300 shadow-2xl shadow-black/50 backdrop-blur"
+>
+  <div class="flex items-center justify-between gap-2 px-3 py-2">
+    <button
+      type="button"
+      data-toggle
+      class="cursor-pointer font-semibold text-neutral-100"
+      aria-expanded="true"
+    >
+      Reveal gizmo <span class="font-normal text-neutral-500">· dev</span>
+    </button>
+    <button
+      type="button"
+      data-replay
+      class="cursor-pointer rounded-md bg-amber-300 px-2 py-1 font-semibold text-neutral-950 hover:bg-amber-200"
+      title="Replay (R)"
+    >
+      Replay
+    </button>
+  </div>
+
+  <div data-body class="grid gap-3 border-t border-white/10 px-3 pt-2 pb-3">
+    <div>
+      <p class={labelClass}>Presets</p>
+      <div class="flex flex-wrap gap-1">
+        {revealPresets.map(({ id, label, hint }) => (
+          <button
+            type="button"
+            class="cursor-pointer rounded-md border border-white/10 px-2 py-1 text-neutral-300 hover:border-white/25 hover:text-white aria-pressed:border-amber-300/60 aria-pressed:bg-amber-300/10 aria-pressed:text-amber-200"
+            data-preset={id}
+            title={hint}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <p class={labelClass}>Pattern</p>
+      <div class="flex flex-wrap gap-1" data-group="pattern">
+        {patterns.map(([value, label, hint]) => (
+          <button
+            type="button"
+            class={segmentClass}
+            data-value={value}
+            title={hint}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <p class="mt-1 text-[11px] text-neutral-500" data-hint></p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <p class={labelClass}>Unit</p>
+        <div class="flex gap-1" data-group="unit">
+          <button type="button" class={segmentClass} data-value="blocks">
+            Sections
+          </button>
+          <button type="button" class={segmentClass} data-value="items">
+            Tiles
+          </button>
+        </div>
+      </div>
+      <div>
+        <p class={labelClass}>Easing</p>
+        <select
+          data-input="easing"
+          class="w-full rounded-md border border-white/10 bg-neutral-900 px-1.5 py-1 text-neutral-200"
+        >
+          <option value="ease">ease (current)</option>
+          <option value="out">ease-out</option>
+          <option value="expo">expo out</option>
+          <option value="back">back out</option>
+          <option value="sine">in-out sine (softest)</option>
+          <option value="inout">ease-in-out</option>
+          <option value="cubic">in-out cubic (firmest)</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <p class={labelClass}>Direction</p>
+      <div class="flex flex-wrap gap-1" data-group="direction">
+        <button type="button" class={segmentClass} data-value="up">
+          Up
+        </button>
+        <button type="button" class={segmentClass} data-value="left">
+          From left
+        </button>
+        <button type="button" class={segmentClass} data-value="scale">
+          Scale
+        </button>
+        <button type="button" class={segmentClass} data-value="down">
+          Down
+        </button>
+        <button type="button" class={segmentClass} data-value="none">
+          Fade only
+        </button>
+      </div>
+    </div>
+
+    <div class="grid gap-2">
+      {sliders.map(([name, label, min, max, step, unit, hint]) => (
+        <label class="grid grid-cols-[4.5rem_1fr_3.5rem] items-center gap-2">
+          <span class="text-neutral-400" title={hint}>
+            {label}
+          </span>
+          <input
+            type="range"
+            data-input={name}
+            min={min}
+            max={max}
+            step={step}
+            class="accent-amber-300"
+          />
+          <output
+            data-output={name}
+            data-unit={unit}
+            class="text-right text-neutral-400 tabular-nums"
+          />
+        </label>
+      ))}
+    </div>
+
+    <p class="text-[11px] text-neutral-500">
+      Last element finishes at{' '}
+      <output data-total class="text-neutral-300 tabular-nums"></output>
+    </p>
+
+    <div class="flex items-center justify-between gap-2 text-[11px]">
+      <span class="text-neutral-500">R replays · ripple: click the page</span>
+      <span class="flex gap-2">
+        <button
+          type="button"
+          data-reset
+          class="cursor-pointer text-neutral-400 underline underline-offset-2 hover:text-white"
+        >
+          Reset
+        </button>
+        <button
+          type="button"
+          data-copy
+          class="cursor-pointer text-neutral-400 underline underline-offset-2 hover:text-white"
+        >
+          Copy
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { revealPresets, type RevealSettings } from './revealPresets'
+
+  type Settings = RevealSettings
+
+  // What the site uses now (the `--enter-*` values in global.css).
+  const defaults: Settings = revealPresets.find(
+    ({ id }) => id === 'site',
+  )!.settings
+
+  const easings: Record<string, string> = {
+    ease: 'ease',
+    out: 'cubic-bezier(0, 0, 0.58, 1)',
+    expo: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    back: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+    sine: 'cubic-bezier(0.37, 0, 0.63, 1)',
+    inout: 'cubic-bezier(0.42, 0, 0.58, 1)',
+    cubic: 'cubic-bezier(0.65, 0, 0.35, 1)',
+  }
+
+  const storageKey = 'reveal-gizmo'
+
+  const load = (): Settings => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) ?? 'null')
+      return { ...defaults, ...saved }
+    } catch {
+      return { ...defaults }
+    }
+  }
+
+  const save = (settings: Settings) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(settings))
+    } catch {
+      // Storage can be unavailable; settings just won't persist.
+    }
+  }
+
+  let cleanup: AbortController | undefined
+
+  function setup() {
+    cleanup?.abort()
+    const gizmo = document.getElementById('reveal-gizmo')
+    if (!gizmo) return
+    cleanup = new AbortController()
+    const { signal } = cleanup
+
+    let settings = load()
+    let origin = { x: 0, y: 0 }
+    const animations: Animation[] = []
+
+    // Elements using the `enter` / `enter-N` utilities, in document order.
+    const enterBlocks = () =>
+      [...document.querySelectorAll<HTMLElement>('[class*="enter"]')].filter(
+        (element) =>
+          /(^|\s)enter(-\d+)?(\s|$)/.test(element.getAttribute('class') ?? ''),
+      )
+
+    const targets = () => {
+      const items = [...document.querySelectorAll<HTMLElement>('[data-reveal]')]
+      return settings.unit === 'items' && items.length > 0
+        ? items
+        : enterBlocks()
+    }
+
+    // Position of each element in the wave, from 0 (first) to 1 (last).
+    const progress = (elements: HTMLElement[]) => {
+      const rects = elements.map((element) => element.getBoundingClientRect())
+      const raw = rects.map((rect, index) => {
+        const x = rect.left + rect.width / 2
+        const y = rect.top + window.scrollY + rect.height / 2
+        switch (settings.pattern) {
+          case 'rows':
+            return Math.round(rect.top + window.scrollY)
+          case 'shore':
+            return y + x * 0.2
+          case 'swell':
+            return y + Math.sin(x / 160) * 70
+          case 'crest':
+            return y + Math.abs(x - window.innerWidth / 2) * 0.35
+          case 'ebb':
+            return -Math.round(rect.top + window.scrollY)
+          case 'diagonal':
+          case 'current':
+            return x * 0.6 + y
+          case 'ripple':
+            return Math.hypot(x - origin.x, y - origin.y)
+          case 'scatter':
+            return Math.random()
+          default:
+            return index
+        }
+      })
+      const min = Math.min(...raw)
+      const range = Math.max(...raw) - min || 1
+      return raw.map((value) => (value - min) / range)
+    }
+
+    const fromFrame = (): Keyframe => {
+      const d = settings.distance
+      const direction =
+        settings.pattern === 'current' && settings.direction === 'up'
+          ? 'current'
+          : settings.direction
+      const transform = {
+        up: `translateY(${d}px)`,
+        down: `translateY(${-d}px)`,
+        left: `translateX(${-d}px)`,
+        current: `translate(${-d}px, ${d * 0.6}px)`,
+        scale: `translateY(${d / 2}px) scale(${1 - d / 200})`,
+        none: 'none',
+      }[direction]
+      return {
+        opacity: 0,
+        transform,
+        filter: settings.blur ? `blur(${settings.blur}px)` : 'blur(0)',
+      }
+    }
+
+    const replay = () => {
+      for (const animation of animations.splice(0)) animation.cancel()
+      // Stop the CSS `enter` animations so they don't fight the replay.
+      for (const element of [
+        ...enterBlocks(),
+        ...document.querySelectorAll<HTMLElement>('[data-reveal]'),
+      ]) {
+        for (const animation of element.getAnimations()) animation.cancel()
+        element.style.animation = 'none'
+      }
+
+      const elements = targets()
+      const offsets = progress(elements)
+      const from = fromFrame()
+      elements.forEach((element, index) => {
+        animations.push(
+          element.animate(
+            [from, { opacity: 1, transform: 'none', filter: 'blur(0)' }],
+            {
+              duration: settings.duration,
+              delay: offsets[index] * settings.spread,
+              easing: easings[settings.easing] ?? 'ease',
+              fill: 'both',
+            },
+          ),
+        )
+      })
+    }
+
+    const render = () => {
+      for (const group of gizmo.querySelectorAll<HTMLElement>('[data-group]')) {
+        const key = group.dataset.group as keyof Settings
+        for (const button of group.querySelectorAll<HTMLElement>(
+          '[data-value]',
+        )) {
+          button.setAttribute(
+            'aria-pressed',
+            String(button.dataset.value === settings[key]),
+          )
+        }
+      }
+      for (const input of gizmo.querySelectorAll<
+        HTMLInputElement | HTMLSelectElement
+      >('[data-input]')) {
+        input.value = String(settings[input.dataset.input as keyof Settings])
+      }
+      for (const output of gizmo.querySelectorAll<HTMLOutputElement>(
+        '[data-output]',
+      )) {
+        const value = settings[output.dataset.output as keyof Settings]
+        output.textContent = `${value}${output.dataset.unit}`
+      }
+      for (const button of gizmo.querySelectorAll<HTMLElement>(
+        '[data-preset]',
+      )) {
+        const preset = revealPresets.find(
+          ({ id }) => id === button.dataset.preset,
+        )
+        const active =
+          preset !== undefined &&
+          (Object.keys(preset.settings) as (keyof Settings)[]).every(
+            (key) => preset.settings[key] === settings[key],
+          )
+        button.setAttribute('aria-pressed', String(active))
+      }
+      gizmo.querySelector<HTMLElement>('[data-total]')!.textContent =
+        `${settings.spread + settings.duration}ms`
+      const hint = gizmo.querySelector<HTMLElement>(
+        `[data-group="pattern"] [data-value="${settings.pattern}"]`,
+      )?.title
+      gizmo.querySelector<HTMLElement>('[data-hint]')!.textContent = hint ?? ''
+    }
+
+    const update = (patch: Partial<Settings>) => {
+      settings = { ...settings, ...patch }
+      save(settings)
+      render()
+      replay()
+    }
+
+    gizmo.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement
+      const option = target.closest<HTMLElement>('[data-value]')
+      const group = option?.closest<HTMLElement>('[data-group]')
+      const presetButton = target.closest<HTMLElement>('[data-preset]')
+      const preset = revealPresets.find(
+        ({ id }) => id === presetButton?.dataset.preset,
+      )
+      if (preset) {
+        update({ ...preset.settings })
+      } else if (option && group) {
+        update({
+          [group.dataset.group as keyof Settings]: option.dataset.value,
+        })
+      } else if (target.closest('[data-replay]')) {
+        replay()
+      } else if (target.closest('[data-reset]')) {
+        update({ ...defaults })
+      } else if (target.closest('[data-copy]')) {
+        void navigator.clipboard?.writeText(JSON.stringify(settings, null, 2))
+      } else if (target.closest('[data-toggle]')) {
+        const body = gizmo.querySelector<HTMLElement>('[data-body]')!
+        const toggle = gizmo.querySelector('[data-toggle]')!
+        body.hidden = !body.hidden
+        toggle.setAttribute('aria-expanded', String(!body.hidden))
+      }
+    })
+
+    // Sliders update their readout live and replay once released.
+    gizmo.addEventListener('input', (event) => {
+      const input = event.target as HTMLInputElement
+      const key = input.dataset.input as keyof Settings
+      if (!key) return
+      const value = input.type === 'range' ? Number(input.value) : input.value
+      settings = { ...settings, [key]: value }
+      save(settings)
+      render()
+      if (input.type !== 'range') replay()
+    })
+    gizmo.addEventListener('change', (event) => {
+      if ((event.target as HTMLInputElement).type === 'range') replay()
+    })
+
+    document.addEventListener(
+      'click',
+      (event) => {
+        if (
+          settings.pattern !== 'ripple' ||
+          gizmo.contains(event.target as Node)
+        )
+          return
+        if ((event.target as HTMLElement).closest('a, button')) return
+        origin = { x: event.clientX, y: event.clientY + window.scrollY }
+        replay()
+      },
+      { signal },
+    )
+
+    document.addEventListener(
+      'keydown',
+      (event) => {
+        const target = event.target as HTMLElement
+        if (event.key !== 'r' || event.metaKey || event.ctrlKey) return
+        if (target.closest('input, select, textarea')) return
+        replay()
+      },
+      { signal },
+    )
+
+    render()
+    // Show the saved settings straight away instead of the CSS default.
+    replay()
+  }
+
+  document.addEventListener('astro:page-load', setup)
+</script>

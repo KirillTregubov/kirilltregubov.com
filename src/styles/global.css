@@ -3,11 +3,18 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@source './**/*.astro';
+@source '../**/*.astro';
 @source '../content/**/*.mdx';
 
 :root {
   color-scheme: dark;
+  /*
+   * Page entrance ("Tide · soft stop" in the RevealGizmo): delay between
+   * `enter-N` steps, and each block's fade.
+   */
+  --enter-stagger: 70ms;
+  --enter-duration: 450ms;
+  --enter-easing: ease;
 }
 
 @theme {
@@ -69,21 +76,21 @@
 
 /*
  * Page entrance animation. Blocks fade up in reading order:
- * `enter` starts immediately and `enter-N` waits N × 150ms.
+ * `enter` starts immediately and `enter-N` waits N × --enter-stagger.
  * The `both` fill mode keeps a block hidden until its step starts.
  */
 @utility enter {
   @media (prefers-reduced-motion: no-preference) {
-    animation: fadeUp 0.6s both;
-    animation-delay: calc(var(--enter-step, 0) * 150ms);
+    animation: fadeUp var(--enter-duration) var(--enter-easing) both;
+    animation-delay: calc(var(--enter-step, 0) * var(--enter-stagger));
   }
 }
 
 @utility enter-* {
   --enter-step: --value(integer);
   @media (prefers-reduced-motion: no-preference) {
-    animation: fadeUp 0.6s both;
-    animation-delay: calc(var(--enter-step) * 150ms);
+    animation: fadeUp var(--enter-duration) var(--enter-easing) both;
+    animation-delay: calc(var(--enter-step) * var(--enter-stagger));
   }
 }
 

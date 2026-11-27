@@ -10,6 +10,7 @@ import Button from '@components/ui/Button.astro'
 import Input from '@components/ui/Input.astro'
 import Layout from '@layouts/Layout.astro'
 import { resolvePublicImage } from '@lib/images'
+import { solidColors } from '@styles/classes'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
@@ -128,7 +129,10 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           >
             {background.data.available === true && (
               <div
-                class="absolute top-2 right-2 z-10 flex cursor-help items-center gap-1 rounded-[0.1875rem] border border-amber-200/60 bg-amber-300 px-1 pt-px text-xs font-bold tracking-wide text-yellow-950 uppercase shadow shadow-amber-700 select-none"
+                class:list={[
+                  'absolute top-2 right-2 z-10 flex cursor-help items-center gap-1 rounded-[0.1875rem] border bg-amber-300 px-1 pt-px text-xs font-bold tracking-wide text-yellow-950 uppercase shadow shadow-amber-700 select-none',
+                  solidColors.overBuddy.availableTagBorder,
+                ]}
                 title="Available in game"
                 data-available
               >

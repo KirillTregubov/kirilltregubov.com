@@ -1,0 +1,28 @@
+---
+import { getBadges } from './badges'
+
+interface Props {
+  /** Every format that an ExperienceBadge on this page may render. */
+  formats: Iterable<string>
+}
+
+const badges = getBadges(Astro.props.formats)
+const defs = badges.map(({ defs }) => defs).join('')
+---
+
+{/* Not display:none, which stops clip paths from rendering in some browsers. */}
+<svg
+  class="pointer-events-none absolute size-0 overflow-hidden"
+  aria-hidden="true"
+  focusable="false"
+>
+  {defs && <defs set:html={defs} />}
+  {badges.map(({ id, viewBox, body }) => (
+    <symbol
+      id={id}
+      viewBox={viewBox}
+      class="overflow-visible"
+      set:html={body}
+    />
+  ))}
+</svg>

@@ -6,6 +6,7 @@ import ReturnHome from '@components/ReturnHome.astro'
 import Button from '@components/ui/Button.astro'
 import SavedTweet from '@components/SavedTweet.astro'
 import Layout from '@layouts/Layout.astro'
+import { solidColors } from '@styles/classes'
 import { ArrowUpRightIcon, ExternalLinkIcon } from 'lucide-react'
 
 type SavedEntry = CollectionEntry<'saved'>
@@ -62,9 +63,12 @@ const siteName = (url: string) => {
   return host === 'x.com' || host === 'twitter.com' ? 'X' : host
 }
 
-// Matches the home page's "My Writing" cards (BlogPreviewCard).
-const cardClass =
-  'group flex rounded-xl border border-neutral-700/60 bg-neutral-800/30 p-4 transition duration-150 will-change-transform hover:border-neutral-600 hover:bg-neutral-800/60 focus-visible:border-neutral-600 focus-visible:bg-neutral-800/60 active:scale-[0.99]'
+const cardClass = [
+  'group flex rounded-xl border p-4 transition duration-150 hover:border-neutral-600 focus-visible:border-neutral-600 active:scale-[0.99]',
+  solidColors.savedCard.background,
+  solidColors.savedCard.border,
+  solidColors.savedCard.hoverBackground,
+]
 const cardTitleClass =
   'leading-snug font-medium text-neutral-200 transition group-hover:text-white group-focus-visible:text-white'
 const cardArrowClass =
@@ -113,12 +117,17 @@ const tagClass =
             aria-label="Filter by type"
           >
             <Button size="sm" data-filter="" aria-pressed="true">
-              All <span class="text-neutral-500">{items.length}</span>
+              All{' '}
+              <span class="text-neutral-500 in-aria-pressed:text-neutral-300">
+                {items.length}
+              </span>
             </Button>
             {presentTypes.map(({ type, count }) => (
               <Button size="sm" data-filter={type} aria-pressed="false">
                 {typeLabels[type]}s{' '}
-                <span class="text-neutral-500">{count}</span>
+                <span class="text-neutral-500 in-aria-pressed:text-neutral-300">
+                  {count}
+                </span>
               </Button>
             ))}
           </div>

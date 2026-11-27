@@ -6,6 +6,7 @@ import Input from '@components/ui/Input.astro'
 import Layout from '@layouts/Layout.astro'
 import { BLOG_SUBTITLE } from '@lib/blog'
 import { ChevronRightIcon } from 'lucide-react'
+import { solidColors } from '@styles/classes'
 
 const visiblePosts = await getCollection('blog').then((posts) =>
   posts
@@ -119,7 +120,12 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
           </details>
         </div>
       )}
-      <div class="blog-no-results mx-3 mt-6 hidden rounded-xl border border-dashed border-white/15 px-6 py-12 text-center md:mx-6">
+      <div
+        class:list={[
+          'blog-no-results mx-3 mt-6 hidden rounded-xl border border-dashed px-6 py-12 text-center md:mx-6',
+          solidColors.blogNoResultsBorder,
+        ]}
+      >
         <p class="font-medium text-neutral-300">No matching posts found.</p>
         <p class="mt-1 text-sm text-neutral-400">
           Try another title, topic, or keyword.

@@ -3,6 +3,7 @@ import Saturn from '@components/Saturn'
 import { getCollection } from 'astro:content'
 import { Image } from 'astro:assets'
 import { resolvePublicImage } from '@lib/images'
+import { solidColors } from '@styles/classes'
 
 const latestPost = (await getCollection('blog'))
   .filter((post) => !post.data.draft && !post.data.hidden)
@@ -41,7 +42,7 @@ const latestPost = (await getCollection('blog'))
       </a>
     </div>
     {latestPost && (
-      <div class="border-t border-neutral-700/70 pt-5">
+      <div class:list={['border-t pt-5', solidColors.helloPlayerDivider]}>
         <a
           href={`/blog/${latestPost.id}`}
           target="_blank"

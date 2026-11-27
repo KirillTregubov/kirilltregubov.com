@@ -6,6 +6,8 @@ import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'astro/config'
 
+import vercelConfig from './vercel.json' with { type: 'json' }
+
 const previewHostname =
   process.env.VERCEL_ENV === 'preview'
     ? process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL
@@ -65,18 +67,12 @@ export default defineConfig({
     },
   },
 
-  redirects: {
-    '/raiven': {
-      status: 308,
-      destination: '/blog/raiven',
-    },
-    '/github': {
-      status: 308,
-      destination: 'https://github.com/KirillTregubov',
-    },
-    '/linkedin': {
-      status: 308,
-      destination: 'https://www.linkedin.com/in/kirilltregubov/',
-    },
-  },
+  // Vercel serves these as real 308s; Astro uses them for the dev server and
+  // for any host that ignores vercel.json (where they become meta refreshes).
+  redirects: Object.fromEntries(
+    vercelConfig.redirects.map(({ source, destination }) => [
+      source,
+      { status: 308 as const, destination },
+    ]),
+  ),
 })
