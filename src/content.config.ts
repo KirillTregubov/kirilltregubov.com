@@ -166,6 +166,10 @@ const savedBase = z.object({
   note: z.string().optional(),
 })
 
+const savedPost = savedBase.extend({
+  category: z.literal('design').optional(),
+})
+
 const saved = defineCollection({
   loader: file('src/content/saved.yaml', {
     // List items have no ids, so number them in file order.
@@ -175,7 +179,7 @@ const saved = defineCollection({
       ),
   }),
   schema: z.discriminatedUnion('type', [
-    savedBase.extend({
+    savedPost.extend({
       type: z.literal('tweet'),
       url: z
         .url()
@@ -184,19 +188,19 @@ const saved = defineCollection({
           'Expected an x.com or twitter.com status URL',
         ),
     }),
-    savedBase.extend({
+    savedPost.extend({
       type: z.literal('snippet'),
       title: z.string(),
       code: z.string(),
       lang: z.string().default('plaintext'),
       source: z.url().optional(),
     }),
-    savedBase.extend({
+    savedPost.extend({
       type: z.literal('link'),
       title: z.string(),
       url: z.url(),
     }),
-    savedBase.extend({
+    savedPost.extend({
       type: z.literal('quote'),
       text: z.string(),
       source: z.url(),
