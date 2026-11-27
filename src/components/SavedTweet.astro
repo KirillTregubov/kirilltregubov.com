@@ -13,7 +13,7 @@ const tweet = await fetchTweet(url)
 ---
 
 {tweet ? (
-  <div class="[&_.react-tweet-theme]:m-0! [&_.react-tweet-theme]:max-w-none! [&_.react-tweet-theme]:min-w-0!">
+  <div class="[&_.react-tweet-theme]:m-0! [&_.react-tweet-theme]:max-w-none! [&_.react-tweet-theme]:min-w-0! [&_.react-tweet-theme]:[--tweet-header-line-height:1.5rem]! [&_.react-tweet-theme_p_a]:underline! [&_.react-tweet-theme_p_a]:underline-offset-2">
     <EmbeddedTweet tweet={tweet} />
   </div>
 ) : (
@@ -37,19 +37,53 @@ const tweet = await fetchTweet(url)
         '.react-tweet-theme video + button:not([data-init])',
       )
       .forEach((button) => {
+        const video = button.previousElementSibling
+        const overlay = button.nextElementSibling
+        if (
+          !(video instanceof HTMLVideoElement) ||
+          !(overlay instanceof HTMLElement)
+        )
+          return
+
+        const source = video.querySelector('source')
+        const watchOnX = overlay.querySelector('a')
+        if (!source || !watchOnX) return
+
         button.dataset.init = ''
-        button.addEventListener('click', (event) => {
-          event.preventDefault()
-          const video = button.previousElementSibling as HTMLVideoElement
-          // The "Watch on X" overlay follows the button.
-          button.nextElementSibling?.remove()
-          button.remove()
+        button.setAttribute('aria-label', 'Play video')
+        watchOnX.setAttribute('aria-live', 'polite')
+
+        const showFallback = () => {
+          const failureMessage = 'Playback failed. Watch on X'
+          const hadFocus = document.activeElement === video
+          button.hidden = false
+          overlay.hidden = false
+          video.controls = false
+          video.tabIndex = -1
+          if (watchOnX.textContent !== failureMessage) {
+            watchOnX.textContent = failureMessage
+          }
+          if (hadFocus) button.focus()
+        }
+
+        video.addEventListener('error', showFallback)
+        button.addEventListener('click', async () => {
+          // A direct src makes a failed download reject play() in browsers
+          // that can leave it pending with <source> children.
+          if (video.src !== source.src || video.error) video.src = source.src
+          try {
+            await video.play()
+          } catch {
+            showFallback()
+            return
+          }
+
+          const hadFocus = document.activeElement === button
           video.controls = true
           video.tabIndex = 0
-          video
-            .play()
-            .then(() => video.focus())
-            .catch(() => {})
+          if (hadFocus) video.focus()
+          button.hidden = true
+          overlay.hidden = true
         })
       })
   })

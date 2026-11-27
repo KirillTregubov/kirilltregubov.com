@@ -418,6 +418,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
                 type="search"
                 placeholder="Search..."
                 autocomplete="off"
+                aria-controls="theatre-grid"
                 class="w-full peer rounded-md border border-neutral-700 bg-neutral-800 py-1.5 pr-2 pl-8 text-base text-neutral-100 transition outline-none placeholder:text-neutral-400 placeholder:select-none hover:border-neutral-600 hover:bg-neutral-700 active:border-neutral-500 active:bg-neutral-600 selection:bg-neutral-300 selection:text-neutral-950"
               />
             </label>
@@ -618,18 +619,20 @@ const getAuditoriumHeading = (auditoriums: string) => {
                             <a
                               href={googleMapsUrl}
                               class="underline decoration-neutral-700 underline-offset-2 -m-0.5 p-0.5 rounded-sm transition hover:text-neutral-300"
-                              aria-label={`Open ${theatre.data.name} in Google Maps`}
                             >
                               {theatre.data.location.address.streetAddress},{' '}
                               {theatre.data.location.address.addressLocality},{' '}
                               {theatre.data.location.address.addressRegion}
+                              <span class="sr-only"> in Google Maps</span>
                             </a>
                           </address>
                           <a
                             href={appleMapsUrl}
                             class="text-xs underline decoration-neutral-700 underline-offset-2 transition -m-0.5 p-0.5 rounded-sm hover:text-neutral-300"
-                            aria-label={`Open ${theatre.data.name} in Apple Maps`}
                           >
+                            <span class="sr-only">
+                              {`Open ${theatre.data.name} in `}
+                            </span>
                             Apple Maps
                           </a>
                         </div>
@@ -699,7 +702,11 @@ const getAuditoriumHeading = (auditoriums: string) => {
                             ]}
                             viewBox="0 0 92 62"
                             role="img"
-                            aria-label={`${auditorium.screen.ratio} screen proportions`}
+                            aria-label={
+                              diagram.known
+                                ? `${auditorium.screen.ratio} screen proportions`
+                                : 'Screen proportions unavailable'
+                            }
                           >
                             {isScreenX ? (
                               <>
@@ -915,6 +922,9 @@ const getAuditoriumHeading = (auditoriums: string) => {
       const searchInput =
         document.querySelector<HTMLInputElement>('#theatre-search')
       const largeViewport = window.matchMedia('(min-width: 30rem)') // 40rem
+      const reducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      )
       const updateSearchPlaceholder = () => {
         if (!searchInput) return
 
@@ -1403,7 +1413,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
         ) {
           hasAutoScrolledToDirectory = true
           directory.scrollIntoView({
-            behavior: 'smooth',
+            behavior: reducedMotion.matches ? 'instant' : 'smooth',
             block: 'start',
             inline: 'start',
           })
@@ -1480,7 +1490,7 @@ const getAuditoriumHeading = (auditoriums: string) => {
           button?.scrollIntoView({
             block: 'nearest',
             inline: 'nearest',
-            behavior: 'smooth',
+            behavior: reducedMotion.matches ? 'instant' : 'smooth',
           })
         }
 

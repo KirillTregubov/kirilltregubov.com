@@ -59,7 +59,11 @@ const archivedPosts = visiblePosts.filter((post) => post.data.archived)
       label="Search blog posts"
       placeholder="Search posts..."
       autocomplete="off"
-      aria-controls="blog-post-list blog-archive-list"
+      aria-controls={
+        archivedPosts.length > 0
+          ? 'blog-post-list blog-archive-list'
+          : 'blog-post-list'
+      }
       class="mt-6 max-w-120 enter-2"
     />
     <div class="post-list-region relative -mx-3 enter-3 md:-mx-6">

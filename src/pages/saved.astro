@@ -82,6 +82,7 @@ const tagClass =
   description="Things I saved for later."
   bodyClass="flex flex-col"
   footerClass="enter-3"
+  referrerPolicy="same-origin"
   noindex
 >
   <main class="mx-auto w-full max-w-360 grow">
@@ -116,14 +117,24 @@ const tagClass =
             role="group"
             aria-label="Filter by type"
           >
-            <Button size="sm" data-filter="" aria-pressed="true">
+            <Button
+              size="sm"
+              data-filter=""
+              aria-pressed="true"
+              aria-controls="saved-list"
+            >
               All{' '}
               <span class="text-neutral-500 in-aria-pressed:text-neutral-300">
                 {items.length}
               </span>
             </Button>
             {presentTypes.map(({ type, count }) => (
-              <Button size="sm" data-filter={type} aria-pressed="false">
+              <Button
+                size="sm"
+                data-filter={type}
+                aria-pressed="false"
+                aria-controls="saved-list"
+              >
                 {typeLabels[type]}s{' '}
                 <span class="text-neutral-500 in-aria-pressed:text-neutral-300">
                   {count}
@@ -133,6 +144,13 @@ const tagClass =
           </div>
         )}
       </div>
+
+      <p
+        id="saved-filter-status"
+        class="sr-only"
+        role="status"
+        aria-atomic="true"
+      ></p>
 
       <!-- Masonry columns: each at least 24rem: 1 on phones, up to 3 at max width. -->
       <ul id="saved-list" class="mt-6 columns-sm gap-8">
@@ -319,7 +337,8 @@ const tagClass =
   document.addEventListener('astro:page-load', () => {
     const filters = document.querySelector<HTMLElement>('#saved-filters')
     const rows = document.querySelectorAll<HTMLElement>('#saved-list > li')
-    if (!filters || filters.dataset.init !== undefined) return
+    const status = document.querySelector<HTMLElement>('#saved-filter-status')
+    if (!filters || !status || filters.dataset.init !== undefined) return
     filters.dataset.init = ''
 
     filters.addEventListener('click', (event) => {
@@ -331,9 +350,12 @@ const tagClass =
       filters.querySelectorAll('button').forEach((b) => {
         b.setAttribute('aria-pressed', String(b === button))
       })
+      let visibleCount = 0
       rows.forEach((row) => {
         row.hidden = Boolean(type) && row.dataset.type !== type
+        if (!row.hidden) visibleCount++
       })
+      status.textContent = `Showing ${visibleCount} of ${rows.length} saved items.`
     })
   })
 </script>

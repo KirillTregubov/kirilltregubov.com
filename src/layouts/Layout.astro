@@ -17,6 +17,7 @@ interface Props {
   footerClass?: string
   footerContent?: string
   player?: { path: string; width: number; height: number }
+  referrerPolicy?: ReferrerPolicy
   noindex?: boolean
 }
 
@@ -31,6 +32,7 @@ let {
   footerClass,
   footerContent = null,
   player,
+  referrerPolicy = 'strict-origin-when-cross-origin',
   noindex = false,
 } = Astro.props
 const { pathname } = Astro.url
@@ -76,6 +78,7 @@ const devOverflowToggleScript = `
       content={noindex ? 'noindex, nofollow' : 'follow, index'}
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content={referrerPolicy} />
     <link
       href="/favicons/favicon-96x96.png"
       rel="icon"
