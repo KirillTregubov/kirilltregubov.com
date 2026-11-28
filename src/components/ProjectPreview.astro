@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { Image } from 'astro:assets'
+import { Picture } from 'astro:assets'
 import { getEntries } from 'astro:content'
 import {
   BookOpenTextIcon,
@@ -33,24 +33,32 @@ const updatedDateLabel = updatedDate && formatApproximateDate(updatedDate)
 ---
 
 <div class="sm:max-lg:grid sm:max-lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:max-lg:items-center sm:max-lg:gap-6">
-  <div class="relative w-full shrink-0 overflow-clip rounded-xl bg-neutral-800 object-contain">
-    <Image
+  <button
+    type="button"
+    data-zoom-trigger
+    aria-label={`Enlarge ${project.data.name} image`}
+    class="relative block w-full shrink-0 cursor-zoom-in overflow-clip rounded-xl bg-neutral-800"
+  >
+    <Picture
+      formats={['avif']}
+      fallbackFormat="webp"
+      pictureAttributes={{ class: 'block' }}
       class="unblur select-none"
       {...resolvePublicImage(`/assets/projects/${project.data.image.url}`)}
       alt={project.data.image?.alt || 'Placeholder project image'}
       width={1200}
       height={630}
-      widths={[480, 800, 1200]}
+      widths={[480, 800, 1200, 1600, 2400]}
       sizes="(min-width: 1440px) 460px, (min-width: 1024px) 33vw, (min-width: 640px) 40vw, 100vw"
       onerror="this.src='/assets/projects/placeholder.jpg'; void src; this.onerror=null; void onerror;"
       loading={featured ? 'eager' : 'lazy'}
     />
     {project.data.draft && (
-      <div class="absolute top-3 right-4 rounded bg-neutral-200/80 px-2.5 py-0.5 font-medium text-neutral-900">
+      <span class="absolute top-3 right-4 rounded bg-neutral-200/80 px-2.5 py-0.5 font-medium text-neutral-900">
         Draft
-      </div>
+      </span>
     )}
-  </div>
+  </button>
   <div class="min-w-0">
     <div class="my-4 mb-3 flex flex-col sm:max-lg:mt-0">
       <div class="mb-1 flex flex-wrap justify-between gap-x-2 gap-y-0">
@@ -107,14 +115,10 @@ const updatedDateLabel = updatedDate && formatApproximateDate(updatedDate)
           // ) : (
           project.data.source &&
             (project.data.source === 'closed' ? (
-              <button
-                disabled
-                aria-disabled="true"
-                class="flex cursor-not-allowed items-center py-1.5 pr-2 leading-none font-medium disabled:opacity-80"
-              >
+              <span class="flex items-center py-1.5 pr-2 leading-none font-medium text-neutral-400">
                 <LockIcon className="mr-1.5 size-5" aria-hidden="true" />
-                <div>Closed Source</div>
-              </button>
+                Closed Source
+              </span>
             ) : (
               <ProjectLink href={project.data.source} external>
                 <CodeIcon className="size-5" aria-hidden="true" />

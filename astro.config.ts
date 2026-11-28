@@ -56,6 +56,19 @@ export default defineConfig({
     incrementalBuild: true,
   },
 
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        // Project images are UI screenshots: keep full colour resolution
+        // (4:4:4), since 4:2:0 visibly smears coloured text and edges. At this
+        // quality AVIF is about the size of the old WebP at q80, but far
+        // closer to the original.
+        avif: { quality: 70, chromaSubsampling: '4:4:4' },
+      },
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
     // react-tweet imports CSS modules, which Node can't load unbundled.

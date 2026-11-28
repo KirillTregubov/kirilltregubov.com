@@ -1,0 +1,431 @@
+---
+import { XIcon } from 'lucide-react'
+---
+
+<!--
+  Shared lightbox for zoomable images. Mark a rounded wrapper around an <img>
+  with `data-zoom-trigger` and clicking it grows the image from its place on
+  the page into the centre of the screen, sized to fit the viewport. Set
+  `data-zoom-src` on the trigger to show a specific file when zoomed; otherwise
+  the image's own srcset (or its <picture> source) is used at the zoomed size.
+  The file starts loading when the pointer or focus reaches the trigger.
+
+  The zoomed image sits above the whole page, including sticky headers. Mark
+  a sticky bar that cards scroll under with `data-zoom-cover="<fade px>"` (the
+  height of the fade below its bottom edge) and the image is masked to match
+  near the card, so it doesn't pop behind the bar.
+-->
+<dialog
+  data-image-zoom
+  aria-label="Image preview"
+  class="fixed inset-0 m-0 size-full max-h-none max-w-none cursor-zoom-out overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
+>
+  <div
+    data-image-zoom-backdrop
+    class="absolute inset-0 bg-neutral-950/80 opacity-0 backdrop-blur-sm"
+  ></div>
+  <img
+    data-image-zoom-image
+    alt=""
+    class="absolute top-0 left-0 max-w-none origin-top-left object-cover shadow-xl shadow-black/30 select-none"
+  />
+  <button
+    type="button"
+    data-image-zoom-close
+    aria-label="Close preview"
+    class="absolute top-3 right-3 flex size-10 items-center justify-center rounded-full bg-neutral-800/80 text-neutral-200 opacity-0 transition-colors hover:bg-neutral-700 hover:text-white sm:top-4 sm:right-4"
+  >
+    <XIcon className="size-5" aria-hidden="true" />
+  </button>
+</dialog>
+
+<script>
+  type Rect = { left: number; top: number; width: number; height: number }
+
+  type ZoomState = {
+    dialog: HTMLDialogElement
+    image: HTMLImageElement
+    fades: HTMLElement[]
+    source: HTMLImageElement
+    radius: number
+    target: Rect
+    scrollY: number
+    animations: Animation[]
+    frame: number
+    closing: boolean
+  }
+
+  const OPEN_MS = 420
+  const CLOSE_MS = 320
+  const EASING = 'cubic-bezier(0.2, 0, 0, 1)'
+  const SCROLL_CLOSE_PX = 40
+  /** Corner radius of the zoomed image, in on-screen pixels. */
+  const ZOOM_RADIUS = 16
+
+  let state: ZoomState | null = null
+
+  /** `cubic-bezier(x1, y1, x2, y2)` as a function of time, like CSS. */
+  const cubicBezier =
+    (x1: number, y1: number, x2: number, y2: number) => (time: number) => {
+      const curve = (a: number, b: number, t: number) =>
+        3 * a * t * (1 - t) ** 2 + 3 * b * t * t * (1 - t) + t ** 3
+      let low = 0
+      let high = 1
+      for (let i = 0; i < 24; i++) {
+        const mid = (low + high) / 2
+        if (curve(x1, x2, mid) < time) low = mid
+        else high = mid
+      }
+      return curve(y1, y2, (low + high) / 2)
+    }
+
+  /** Matches `EASING`, for the frame-by-frame close. */
+  const ease = cubicBezier(0.2, 0, 0, 1)
+
+  /**
+   * Hides the part of the image that a `data-zoom-cover` bar would hide on the
+   * card. `strength` blends from 0 (whole image visible) to 1 (exactly the part
+   * visible on the page), so the mask only takes over near the card.
+   */
+  const maskUnderCover = (current: ZoomState, strength: number) => {
+    const { image, target } = current
+    let edge = -Infinity
+    let fade = 0
+    document
+      .querySelectorAll<HTMLElement>('[data-zoom-cover]')
+      .forEach((cover) => {
+        const bottom = cover.getBoundingClientRect().bottom
+        if (bottom > edge) {
+          edge = bottom
+          fade = Number(cover.dataset.zoomCover) || 0
+        }
+      })
+
+    const rect = image.getBoundingClientRect()
+    if (strength <= 0 || edge + fade <= rect.top) {
+      image.style.maskImage = ''
+      return
+    }
+    // The mask is in the image's own, unscaled coordinates.
+    const scale = rect.height / target.height
+    const start = (edge - rect.top) / scale
+    const end = (edge + fade - rect.top) / scale
+    image.style.maskImage = `linear-gradient(to bottom, rgb(0 0 0 / ${1 - strength}) ${start}px, #000 ${Math.max(end, start + 0.01)}px)`
+  }
+
+  const reducedMotion = () =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  /** The largest rect with the given aspect ratio centred in the viewport. */
+  const fitRect = (aspect: number): Rect => {
+    const viewWidth = document.documentElement.clientWidth
+    const viewHeight = document.documentElement.clientHeight
+    const gutter = viewWidth >= 1024 ? 64 : viewWidth >= 640 ? 40 : 16
+    const width = Math.min(
+      viewWidth - gutter * 2,
+      (viewHeight - gutter * 2) * aspect,
+    )
+    const height = width / aspect
+    return {
+      left: (viewWidth - width) / 2,
+      top: (viewHeight - height) / 2,
+      width,
+      height,
+    }
+  }
+
+  const place = (image: HTMLImageElement, rect: Rect) => {
+    image.style.left = `${rect.left}px`
+    image.style.top = `${rect.top}px`
+    image.style.width = `${rect.width}px`
+    image.style.height = `${rect.height}px`
+  }
+
+  /** Transform that maps the placed image (`to`) back onto `from`. */
+  const transformFrom = (from: DOMRect, to: Rect) =>
+    `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width})`
+
+  const fullImages = new WeakMap<HTMLElement, Promise<string>>()
+
+  /**
+   * Loads and decodes the file to show when zoomed, once per trigger: the
+   * trigger's `data-zoom-src`, or else the image's srcset candidate for
+   * `width`. Inside a <picture>, the preload is an off-page copy of it, so the
+   * browser picks the format (AVIF, WebP, ...) the same way it did for the
+   * card. Resolves to the loaded file's URL.
+   */
+  const loadFull = (trigger: HTMLElement, width: number) => {
+    const cached = fullImages.get(trigger)
+    if (cached) return cached
+    const source = trigger.querySelector('img')
+    if (!source) return
+
+    const full = new Image()
+    const zoomSrc = trigger.dataset.zoomSrc
+    const sizes = `${Math.ceil(width)}px`
+    if (zoomSrc) {
+      full.src = zoomSrc
+    } else {
+      const picture = source.parentElement
+      if (picture instanceof HTMLPictureElement) {
+        const copy = document.createElement('picture')
+        picture.querySelectorAll('source').forEach((option) => {
+          const element = document.createElement('source')
+          element.type = option.type
+          element.media = option.media
+          element.sizes = sizes
+          element.srcset = option.srcset
+          copy.append(element)
+        })
+        // Sources go in first: the image picks one when it is added.
+        copy.append(full)
+      }
+      if (!source.srcset) return
+      full.sizes = sizes
+      full.srcset = source.srcset
+    }
+    const loaded = full.decode().then(() => full.currentSrc)
+    loaded.catch(() => fullImages.delete(trigger))
+    fullImages.set(trigger, loaded)
+    return loaded
+  }
+
+  /** Starts loading the zoomed file when a pointer or focus reaches a trigger. */
+  const prefetch = (event: Event) => {
+    const trigger = (event.target as Element | null)?.closest?.<HTMLElement>(
+      '[data-zoom-trigger]',
+    )
+    const connection = (navigator as { connection?: { saveData?: boolean } })
+      .connection
+    if (!trigger || connection?.saveData) return
+    const rect = trigger.querySelector('img')?.getBoundingClientRect()
+    if (!rect?.width || !rect.height) return
+    loadFull(trigger, fitRect(rect.width / rect.height).width)
+  }
+
+  const finish = () => {
+    if (!state) return
+    const { dialog, image, fades, source, animations, frame } = state
+    state = null
+    cancelAnimationFrame(frame)
+    animations.forEach((animation) => animation.cancel())
+    for (const element of [image, ...fades]) {
+      element.style.opacity = ''
+    }
+    image.style.transform = ''
+    image.style.maskImage = ''
+    source.style.visibility = ''
+    image.removeAttribute('src')
+    if (dialog.open) dialog.close()
+  }
+
+  /** Set while the zoomed image decodes, before the dialog opens. */
+  let opening = false
+
+  const open = async (trigger: HTMLElement) => {
+    if (state || opening) return
+    const dialog =
+      document.querySelector<HTMLDialogElement>('[data-image-zoom]')
+    const image = dialog?.querySelector<HTMLImageElement>(
+      '[data-image-zoom-image]',
+    )
+    const source = trigger.querySelector('img')
+    if (!dialog || !image || !source) return
+
+    const fades = [
+      ...dialog.querySelectorAll<HTMLElement>(
+        '[data-image-zoom-backdrop], [data-image-zoom-close]',
+      ),
+    ]
+    if (!source.getBoundingClientRect().width) return
+
+    // Decode before showing anything. A fresh <img> otherwise paints empty
+    // for a frame or two while the browser decodes it (slower for AVIF), so
+    // the zoom looks like it fades in. The card stays visible meanwhile. It's
+    // the card's own, already-loaded file, so this is quick; the timeout only
+    // guards against a decode that stalls.
+    opening = true
+    image.src = source.currentSrc || source.src
+    image.alt = source.alt
+    await Promise.race([
+      image.decode().catch(() => {}),
+      new Promise((resolve) => setTimeout(resolve, 150)),
+    ])
+    opening = false
+
+    // Measured after the wait, in case the page moved.
+    const rect = source.getBoundingClientRect()
+    if (state || !rect.width || !rect.height || !source.isConnected) return
+
+    const target = fitRect(rect.width / rect.height)
+    const radius =
+      parseFloat(getComputedStyle(trigger).borderTopLeftRadius) || 0
+
+    image.style.borderRadius = `${ZOOM_RADIUS}px`
+    place(image, target)
+    dialog.showModal()
+    source.style.visibility = 'hidden'
+
+    const reduced = reducedMotion()
+    const scale = rect.width / target.width
+    const timing: KeyframeAnimationOptions = {
+      duration: reduced ? 150 : OPEN_MS,
+      easing: EASING,
+      fill: 'both',
+    }
+    const animations = [
+      image.animate(
+        reduced
+          ? [{ opacity: 0 }, { opacity: 1 }]
+          : [
+              {
+                transform: transformFrom(rect, target),
+                borderRadius: `${radius / scale}px`,
+              },
+              { transform: 'none', borderRadius: `${ZOOM_RADIUS}px` },
+            ],
+        timing,
+      ),
+      ...fades.map((element) =>
+        element.animate([{ opacity: 0 }, { opacity: 1 }], timing),
+      ),
+    ]
+
+    state = {
+      dialog,
+      image,
+      fades,
+      source,
+      radius,
+      target,
+      scrollY: window.scrollY,
+      animations,
+      frame: 0,
+      closing: false,
+    }
+    loadFull(trigger, target.width)
+      ?.then((url) => {
+        if (state?.source !== source || state.closing) return
+        if (url && image.currentSrc !== url) image.src = url
+      })
+      .catch(() => {})
+
+    // Fade out the bar's mask as the image leaves the card.
+    const current = state
+    const imageAnimation = animations[0]
+    const track = () => {
+      if (state !== current || current.closing || reduced) return
+      const progress = imageAnimation?.effect?.getComputedTiming().progress ?? 1
+      maskUnderCover(current, 1 - progress)
+      if (imageAnimation?.playState === 'running' || imageAnimation?.pending) {
+        current.frame = requestAnimationFrame(track)
+      } else {
+        maskUnderCover(current, 0)
+      }
+    }
+    track()
+  }
+
+  const close = () => {
+    if (!state || state.closing) return
+    state.closing = true
+    const current = state
+    const { image, fades, source, radius, target } = current
+
+    // Start from wherever the opening animation got to, so closing midway
+    // reverses smoothly instead of jumping.
+    const imageStyle = getComputedStyle(image)
+    const matrix =
+      imageStyle.transform === 'none'
+        ? new DOMMatrixReadOnly()
+        : new DOMMatrixReadOnly(imageStyle.transform)
+    const from = {
+      x: matrix.e,
+      y: matrix.f,
+      scale: matrix.a,
+      radius: parseFloat(imageStyle.borderTopLeftRadius) || 0,
+      opacity: Number(imageStyle.opacity),
+    }
+    const fadeFrom = fades.map((element) =>
+      Number(getComputedStyle(element).opacity),
+    )
+    current.animations.forEach((animation) => animation.cancel())
+    cancelAnimationFrame(current.frame)
+
+    const reduced = reducedMotion()
+    const duration = reduced ? 150 : CLOSE_MS
+    const startTime = performance.now()
+
+    // Driven frame by frame rather than with a fixed keyframe animation: when
+    // closing because the page scrolled, the card is still moving, so the
+    // image re-aims at the card's current position on every frame.
+    const step = (now: number) => {
+      if (state !== current) return
+      const progress = Math.min((now - startTime) / duration, 1)
+      const eased = ease(progress)
+      const mix = (a: number, b: number) => a + (b - a) * eased
+
+      fades.forEach((element, index) => {
+        element.style.opacity = String(mix(fadeFrom[index] ?? 1, 0))
+      })
+
+      const rect = source.getBoundingClientRect()
+      if (reduced || !rect.width) {
+        image.style.opacity = String(mix(from.opacity, 0))
+      } else {
+        const scale = rect.width / target.width
+        image.style.transform = `translate(${mix(from.x, rect.left - target.left)}px, ${mix(from.y, rect.top - target.top)}px) scale(${mix(from.scale, scale)})`
+        image.style.borderRadius = `${mix(from.radius, radius / scale)}px`
+        maskUnderCover(current, eased)
+      }
+
+      if (progress < 1) current.frame = requestAnimationFrame(step)
+      else finish()
+    }
+    step(startTime)
+  }
+
+  document.addEventListener('click', (event) => {
+    const trigger = (event.target as Element | null)?.closest<HTMLElement>(
+      '[data-zoom-trigger]',
+    )
+    if (trigger) open(trigger)
+  })
+
+  document.addEventListener('pointerover', prefetch, { passive: true })
+  document.addEventListener('focusin', prefetch)
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (state && Math.abs(window.scrollY - state.scrollY) > SCROLL_CLOSE_PX) {
+        close()
+      }
+    },
+    { passive: true },
+  )
+
+  window.addEventListener('resize', () => {
+    if (!state || state.closing) return
+    const { width, height } = state.target
+    state.target = fitRect(width / height)
+    place(state.image, state.target)
+  })
+
+  document.addEventListener('astro:page-load', () => {
+    const dialog =
+      document.querySelector<HTMLDialogElement>('[data-image-zoom]')
+    if (!dialog || dialog.dataset.zoomInit !== undefined) return
+    dialog.dataset.zoomInit = ''
+
+    dialog.addEventListener('click', close)
+    dialog.addEventListener('cancel', (event) => {
+      event.preventDefault()
+      close()
+    })
+    // Closed some other way (e.g. the browser forcing Escape): clean up.
+    dialog.addEventListener('close', finish)
+  })
+
+  document.addEventListener('astro:before-swap', finish)
+</script>

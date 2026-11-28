@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import HomeHero from '@components/HomeHero.astro'
+import ImageZoom from '@components/ImageZoom.astro'
 import LatestPosts from '@components/LatestPosts.astro'
 import PageContainer from '@components/PageContainer.astro'
 import ProjectPreview from '@components/ProjectPreview.astro'
@@ -9,6 +10,7 @@ import Button from '@components/ui/Button.astro'
 import Layout from '@layouts/Layout.astro'
 import { BLOG_SUBTITLE } from '@lib/blog'
 import { SITE_NAME } from '@lib/site'
+import { stickyEnterCoverClass } from '@styles/classes'
 // import { skipLinkClass } from '@styles/classes'
 import { ArrowRightIcon, ChevronRightIcon } from 'lucide-react'
 
@@ -61,7 +63,13 @@ const allProjects = await getCollection('projects').then((projects) =>
       data-show-all="false"
       class="group/projects enter-2"
     >
-      <div class="sticky top-0 z-10 -mx-4 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 px-4 pt-4 pb-2 after:pointer-events-none after:absolute after:-bottom-3.5 after:left-0 after:h-3.5 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:-mx-6 xs:flex-row xs:px-6 md:-mx-12 md:px-12 md:pb-2.5">
+      <div
+        data-zoom-cover="14"
+        class:list={[
+          stickyEnterCoverClass,
+          "sticky top-0 z-10 -mx-4 flex flex-col items-start justify-between gap-x-3 gap-y-2 bg-neutral-900 px-4 pt-4 pb-2 after:pointer-events-none after:absolute after:-bottom-3.5 after:left-0 after:h-3.5 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-neutral-900/0 after:content-[''] xs:-mx-6 xs:flex-row xs:px-6 md:-mx-12 md:px-12 md:pb-2.5",
+        ]}
+      >
         <div>
           <h2 id="projects-title" class="text-xl leading-none font-semibold">
             <span class="group-data-[show-all=true]/projects:hidden">
@@ -142,6 +150,7 @@ const allProjects = await getCollection('projects').then((projects) =>
       <TechnologyStack type="tool" />
     </section>
   </PageContainer>
+  <ImageZoom />
 </Layout>
 
 <script>

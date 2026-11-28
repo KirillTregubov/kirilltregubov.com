@@ -15,6 +15,13 @@
   --enter-stagger: 70ms;
   --enter-duration: 450ms;
   --enter-easing: ease;
+  /* How far `enter` blocks rise while fading in. */
+  --enter-distance: 10px;
+  /*
+   * Height of `stickyEnterCoverClass`'s strip above sticky bars: the rise plus
+   * a little slack. See `src/styles/classes.ts`.
+   */
+  --enter-cover: calc(var(--enter-distance) + 2px);
 }
 
 @theme {
@@ -65,7 +72,7 @@
 
 @keyframes fadeUp {
   from {
-    transform: translateY(10px);
+    transform: translateY(var(--enter-distance));
     opacity: 0;
   }
   to {

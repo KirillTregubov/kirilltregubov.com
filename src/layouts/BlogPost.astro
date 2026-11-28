@@ -5,6 +5,7 @@ import { resolvePublicImage } from '@lib/images'
 import type { BlogSeriesNavigation } from '@lib/series'
 import BlogSeriesNavigationComponent from '@components/BlogSeriesNavigation.astro'
 import BlogAuthor from '@components/BlogAuthor.astro'
+import ImageZoom from '@components/ImageZoom.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import Layout from '@layouts/Layout.astro'
 import { ChevronRightIcon } from 'lucide-react'
@@ -77,9 +78,14 @@ const formatDate = (date: Date) =>
   footerClass="enter-5"
 >
   <main class="mx-auto w-full max-w-200 grow space-y-8">
-    <ReturnHome href="/blog" label="Blog" />
+    <ReturnHome href="/blog" label="Blog" data-zoom-cover="16" />
     <header class="mt-6 enter-1">
-      <div class="mb-6 overflow-hidden rounded-xl bg-neutral-800">
+      <button
+        type="button"
+        data-zoom-trigger
+        aria-label={`Enlarge ${title} cover image`}
+        class="mb-6 block w-full cursor-zoom-in overflow-hidden rounded-xl bg-neutral-800"
+      >
         <Image
           class="unblur aspect-1200/630 w-full object-cover select-none"
           {...resolvePublicImage(image.url)}
@@ -88,10 +94,10 @@ const formatDate = (date: Date) =>
           height={630}
           loading="eager"
           fetchpriority="high"
-          widths={[480, 800, 1200, 1600]}
+          widths={[480, 800, 1200, 1600, 2400]}
           sizes="(max-width: 848px) calc(100vw - 48px), 800px"
         />
-      </div>
+      </button>
       <h1 class="text-3xl leading-tight font-semibold text-neutral-100 sm:text-4xl">
         {title}
       </h1>
@@ -181,6 +187,7 @@ const formatDate = (date: Date) =>
       </div>
     </article>
   </main>
+  <ImageZoom />
 </Layout>
 
 <script>

@@ -4,6 +4,22 @@ export const interactiveButtonClass =
 export const skipLinkClass =
   'pointer-events-none absolute rounded-md bg-neutral-800 px-2 py-1 text-sm font-medium text-neutral-200 opacity-0 focus-visible:pointer-events-auto focus-visible:opacity-100'
 
+/**
+ * For sticky bars inside a block that fades in with `enter` (e.g. a section
+ * with its own sticky header): a solid strip directly above the bar. While the
+ * page entrance plays, the block (and so the bar) sits up to
+ * `--enter-distance` below where the bar sticks, and content that has scrolled
+ * under it would show through that gap (most visible when the page loads
+ * already scrolled). Once settled, the strip sits off-screen, under a bar
+ * above it, or over empty page margin. Uses `::before`, so the bar can't use
+ * it for anything else.
+ *
+ * A sticky bar that is itself the animated block should fade its contents
+ * instead (`*:enter`), keeping its background solid; see `ReturnHome.astro`.
+ */
+export const stickyEnterCoverClass =
+  "before:pointer-events-none before:absolute before:inset-x-0 before:bottom-full before:h-(--enter-cover) before:bg-neutral-900 before:content-['']"
+
 export type ButtonVariant = 'secondary' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'icon'
 
