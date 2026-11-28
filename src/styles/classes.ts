@@ -10,7 +10,7 @@ export type ButtonSize = 'sm' | 'md' | 'icon'
 // Buttons default to text-base rather than inheriting the font size around
 // them. The default has zero specificity (`:where`), so a size class or a
 // `text-*` class passed in always overrides it.
-const buttonBaseClass = `${interactiveButtonClass} [:where(&)]:text-base inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 font-medium select-none disabled:pointer-events-none disabled:opacity-60`
+const buttonBaseClass = `${interactiveButtonClass} [:where(&)]:text-base inline-flex shrink-0 cursor-pointer items-center justify-center font-medium select-none disabled:pointer-events-none disabled:opacity-60`
 
 const buttonVariantClasses: Record<ButtonVariant, string> = {
   // Bordered, filled control: filters, toggles, sort, external actions.
@@ -19,14 +19,14 @@ const buttonVariantClasses: Record<ButtonVariant, string> = {
   // Text-only action: header nav, "Show All". Negative margins preserve
   // alignment with surrounding content while giving the focus ring room.
   ghost:
-    '-mx-1 -my-0.5 rounded-md px-1 py-0.5 hover:text-white focus-visible:text-white active:text-white',
+    'gap-1.5 -mx-1 -my-0.5 rounded-md px-1 py-0.5 hover:text-white focus-visible:text-white active:text-white',
 }
 
 // Only applies to `secondary`.
 const buttonSizeClasses: Record<ButtonSize, string> = {
-  sm: 'px-2.5 py-1 text-sm',
-  md: 'px-2.5 py-1.5',
-  icon: 'p-2',
+  sm: 'gap-1.5 px-2.5 py-1 text-sm',
+  md: 'gap-2 px-2.5 py-1.5',
+  icon: 'gap-1.5 p-2',
 }
 
 /** Class string for the shared button styles, for markup that can't use `<Button>` (React, scripts). */
@@ -124,12 +124,6 @@ export const solidColors = {
     },
   },
 
-  /** Hero on /cineplex-toronto. */
-  cineplexHero: {
-    background: '[--hero-background:oklch(16.97%_0.0187_50.75)]', // bg-[#160d08]
-    statsBorder: 'border-[oklch(27.29%_0.0147_50.82)]', // border-white/10 (hero background white/10)
-  },
-
   /** The "no theatres found" box on /cineplex-toronto, on the page. */
   cineplexNoResultsBorder: 'border-[oklch(34.8%_0_0)]', // border-white/15 (neutral-900 white/15)
 
@@ -156,11 +150,6 @@ export const solidColors = {
       border: 'border-[oklch(24.98%_0_0)]', // border-neutral-500/15 (card neutral-500/5 neutral-500/15)
     },
   },
-
-  /** Small labels on the Cineplex hero ticket. */
-  // opacity-50 / opacity-55 on text-amber-950, raised to 65% for 4.5:1 contrast
-  // ('oklch(94.3% 0.0895 95.6815)' amber-950/65)
-  ticketLabel: 'text-[oklch(52.72%_0.0719_68.62)]',
 
   /** OverBuddy pages, on the page. */
   overBuddy: {

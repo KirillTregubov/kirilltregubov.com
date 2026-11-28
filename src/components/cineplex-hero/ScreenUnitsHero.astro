@@ -1,0 +1,136 @@
+---
+// Saved hero draft — "Every screen": one block per auditorium, stacked per
+// theatre west to east and coloured by format. 347 blocks, 347 screens.
+import { formatOrder, type HeroStats, shortTheatreName } from './stats'
+
+interface Props {
+  stats: HeroStats
+}
+
+const { stats } = Astro.props
+
+const groups = [
+  {
+    key: 'imax',
+    label: 'IMAX',
+    formats: ['IMAX 70mm', 'IMAX'],
+    class: 'bg-amber-300',
+  },
+  {
+    key: 'avx',
+    label: 'UltraAVX',
+    formats: ['UltraAVX'],
+    class: 'bg-orange-400',
+  },
+  {
+    key: 'immersive',
+    label: 'SCREENX · 4DX · 70mm',
+    formats: ['SCREENX', '4DX', '70mm'],
+    class: 'bg-rose-400',
+  },
+  {
+    key: 'vip',
+    label: 'VIP · Clubhouse',
+    formats: ['VIP 19+', 'Clubhouse'],
+    class: 'bg-stone-300',
+  },
+  {
+    key: 'regular',
+    label: 'Standard',
+    formats: ['Regular'],
+    class: 'bg-[#3d322a]',
+  },
+]
+const groupOf = (format: string) =>
+  groups.find((g) => g.formats.includes(format)) ?? groups.at(-1)!
+
+const columns = [...stats.theatres]
+  .sort((a, b) => (a.longitude ?? 0) - (b.longitude ?? 0))
+  .map((t) => {
+    // Premium on top, standard at the base; trim to the published count.
+    const units = formatOrder
+      .filter((f) => f !== 'Regular')
+      .flatMap((f) =>
+        Array.from({ length: t.formatCounts[f] ?? 0 }, () => groupOf(f)),
+      )
+      .slice(0, t.auditoriumCount)
+    while (units.length < t.auditoriumCount) units.push(groups.at(-1)!)
+    return {
+      name: shortTheatreName(t.name),
+      fullName: t.name,
+      count: t.auditoriumCount,
+      units,
+    }
+  })
+
+const totals = groups.map((g) => ({
+  ...g,
+  count: columns.reduce(
+    (n, c) => n + c.units.filter((u) => u.key === g.key).length,
+    0,
+  ),
+}))
+const max = Math.max(...columns.map((c) => c.count))
+---
+
+<div class="relative overflow-hidden rounded-3xl border border-[#2b221b] bg-[#140f0b]">
+  <div class="grid gap-8 px-6 pt-8 sm:px-10 sm:pt-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+    <div>
+      <p class="text-sm font-semibold text-amber-300">
+        The Toronto Cineplex Guide
+      </p>
+      <h1 class="mt-3 max-w-2xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl">
+        {`${stats.auditoriumCount} screens.`}{' '}
+        <span class="text-stone-500">Every one accounted for.</span>
+      </h1>
+      <p class="mt-3 max-w-xl leading-relaxed text-balance text-stone-400">
+        {`Each block below is one auditorium at one of ${stats.theatreCount} Cineplex theatres across the GTA. Find out what’s behind every door.`}
+      </p>
+    </div>
+    <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-xs sm:grid-cols-3 lg:grid-cols-1">
+      {totals.map((t) => (
+        <div class="flex items-center gap-2">
+          <span
+            class:list={['size-2.5 shrink-0 rounded-[2px]', t.class]}
+          ></span>
+          <dt class="text-stone-400">{t.label}</dt>
+          <dd class="ml-auto pl-3 font-mono text-stone-200 tabular-nums">
+            {t.count}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+  <figure class="mt-10 px-6 sm:px-10">
+    <div
+      class="flex items-end gap-[3px] sm:gap-1"
+      role="img"
+      aria-label={`${stats.auditoriumCount} auditoriums across ${stats.theatreCount} theatres, west to east, coloured by format`}
+    >
+      {columns.map((column) => (
+        <div
+          class="group flex flex-1 flex-col-reverse gap-[2px]"
+          title={`${column.fullName} · ${column.count} auditoriums`}
+          style={{ height: `${(column.count / max) * 100}%` }}
+        >
+          {[...column.units].reverse().map((unit) => (
+            <span
+              class:list={[
+                'block h-[5px] rounded-[1px] transition-opacity group-hover:opacity-70 sm:h-[7px]',
+                unit.class,
+              ]}
+            ></span>
+          ))}
+        </div>
+      ))}
+    </div>
+    <figcaption class="flex items-center justify-between gap-4 border-t border-stone-700 py-3 text-[11px] text-stone-500">
+      <span>← West · {columns[0].name}</span>
+      <a href="#directory" class="font-medium text-stone-300 hover:text-white">
+        Explore theatres →
+      </a>
+      <span>{columns.at(-1)!.name} · East →</span>
+    </figcaption>
+  </figure>
+</div>

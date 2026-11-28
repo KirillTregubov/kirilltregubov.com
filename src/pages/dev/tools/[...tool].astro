@@ -7,16 +7,11 @@ import { players } from '@lib/players'
 // No paths are generated in production: these tools exist only in astro dev.
 export function getStaticPaths() {
   return import.meta.env.DEV
-    ? [
-        { params: { tool: undefined } },
-        { params: { tool: 'player' } },
-        { params: { tool: 'players' } },
-      ]
+    ? [{ params: { tool: 'player' } }, { params: { tool: 'players' } }]
     : []
 }
 
 const isPlayer = Astro.params.tool === 'player'
-const isGallery = Astro.params.tool === 'players'
 ---
 
 <!doctype html>
@@ -25,7 +20,7 @@ const isGallery = Astro.params.tool === 'players'
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>{isPlayer ? 'X player preview' : 'Local tools'} · Local dev</title>
+    <title>{isPlayer ? 'X player preview' : 'Player gallery'} · Local dev</title>
   </head>
   <body class="m-0 p-4 font-sans text-neutral-300 sm:p-6">
     <main>
@@ -33,22 +28,22 @@ const isGallery = Astro.params.tool === 'players'
         <>
           <header class="mb-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
             <a
-              href="/dev/tools"
+              href="/dev"
               class="text-neutral-400 underline underline-offset-4 hover:text-white"
             >
-              Local tools
+              Dev pages
             </a>
             <h1 class="font-medium">X player preview</h1>
           </header>
           <PlayerPreview players={players} client:load />
         </>
-      ) : isGallery ? (
+      ) : (
         <>
           <a
-            href="/dev/tools"
+            href="/dev"
             class="text-sm text-neutral-400 underline underline-offset-4"
           >
-            Local tools
+            Dev pages
           </a>
           <h1 class="mt-4 text-xl font-semibold text-neutral-100">
             Player gallery
@@ -86,31 +81,6 @@ const isGallery = Astro.params.tool === 'players'
               </article>
             ))}
           </div>
-        </>
-      ) : (
-        <>
-          <h1 class="text-xl font-semibold text-neutral-100">Local tools</h1>
-          <p class="mt-2 text-sm text-neutral-500">
-            Development only. Excluded from production builds.
-          </p>
-          <ul class="mt-6">
-            <li class="mb-3">
-              <a
-                href="/dev/tools/players"
-                class="text-neutral-300 underline underline-offset-4 hover:text-white"
-              >
-                Player gallery
-              </a>
-            </li>
-            <li>
-              <a
-                href="/dev/tools/player"
-                class="text-neutral-300 underline underline-offset-4 hover:text-white"
-              >
-                X player preview
-              </a>
-            </li>
-          </ul>
         </>
       )}
     </main>

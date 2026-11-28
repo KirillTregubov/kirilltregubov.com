@@ -1,0 +1,94 @@
+---
+import CineplexHero from '@components/cineplex-hero/CineplexHero.astro'
+import FramingChart from '@components/cineplex-hero/FramingChart.astro'
+import ScreenUnitsHero from '@components/cineplex-hero/ScreenUnitsHero.astro'
+import SkylineHero from '@components/cineplex-hero/SkylineHero.astro'
+import { getHeroStats } from '@components/cineplex-hero/stats'
+import BadgeSprite from '@components/cineplex-badges/BadgeSprite.astro'
+import PageContainer from '@components/PageContainer.astro'
+import Layout from '@layouts/Layout.astro'
+
+// Dev-only shelf of Cineplex UI pieces, live and saved for later.
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { slug: undefined } }] : []
+}
+
+const stats = await getHeroStats()
+
+const sectionClass = 'border-t border-neutral-800 py-8'
+const headingClass = 'text-lg font-semibold text-neutral-100'
+const descriptionClass = 'mt-1 mb-5 text-sm text-neutral-400'
+const pathClass = 'font-mono text-xs text-neutral-500'
+---
+
+<Layout
+  title="Cineplex UI · Local dev"
+  description="Development-only shelf of Cineplex hero and chart components."
+  bodyClass="bg-[radial-gradient(circle_at_50%_-12rem,rgb(120_53_15/0.2),transparent_35rem),#171717]"
+  noindex
+>
+  <BadgeSprite
+    formats={[
+      'IMAX',
+      'IMAX 70mm',
+      'UltraAVX',
+      'SCREENX',
+      '4DX',
+      '70mm',
+      'VIP 19+',
+      'Clubhouse',
+    ]}
+  />
+  <PageContainer>
+    <header class="mt-8 pb-4">
+      <a
+        href="/dev"
+        class="text-sm text-neutral-400 underline underline-offset-4 hover:text-white"
+      >
+        Dev pages
+      </a>
+      <p class="mt-6 text-xs font-bold tracking-[0.2em] text-orange-400 uppercase">
+        Development only
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">Cineplex UI</h1>
+      <p class="mt-2 text-neutral-400">
+        Components from <code>src/components/cineplex-hero</code>, rendered with
+        live data.
+      </p>
+    </header>
+
+    <section class={sectionClass}>
+      <h2 class={headingClass}>Hero · live</h2>
+      <p class={pathClass}>CineplexHero.astro</p>
+      <p class={descriptionClass}>In use on /cineplex-toronto.</p>
+      <CineplexHero stats={stats} />
+    </section>
+
+    <section class={sectionClass}>
+      <h2 class={headingClass}>Framing chart · saved</h2>
+      <p class={pathClass}>FramingChart.astro</p>
+      <p class={descriptionClass}>
+        Every screen ratio at equal area, with callouts.
+      </p>
+      <FramingChart stats={stats} class="max-w-xl" />
+    </section>
+
+    <section class={sectionClass}>
+      <h2 class={headingClass}>Skyline hero · saved</h2>
+      <p class={pathClass}>SkylineHero.astro</p>
+      <p class={descriptionClass}>
+        One bar per theatre, west to east, height = auditoriums.
+      </p>
+      <SkylineHero stats={stats} />
+    </section>
+
+    <section class={sectionClass}>
+      <h2 class={headingClass}>Every-screen hero · saved</h2>
+      <p class={pathClass}>ScreenUnitsHero.astro</p>
+      <p class={descriptionClass}>
+        One block per auditorium, stacked per theatre and coloured by format.
+      </p>
+      <ScreenUnitsHero stats={stats} />
+    </section>
+  </PageContainer>
+</Layout>

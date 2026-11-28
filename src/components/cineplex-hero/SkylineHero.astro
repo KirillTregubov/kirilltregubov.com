@@ -1,0 +1,87 @@
+---
+// Saved hero draft — "Skyline": one bar per theatre, west to east, height =
+// auditoriums. Reads like a city skyline, but every bar is data.
+import { type HeroStats, shortTheatreName } from './stats'
+
+interface Props {
+  stats: HeroStats
+}
+
+const { stats } = Astro.props
+
+const max = Math.max(...stats.theatres.map((t) => t.auditoriumCount))
+const bars = [...stats.theatres]
+  .sort((a, b) => (a.longitude ?? 0) - (b.longitude ?? 0))
+  .map((t) => ({
+    name: shortTheatreName(t.name),
+    fullName: t.name,
+    count: t.auditoriumCount,
+    height: (t.auditoriumCount / max) * 100,
+    imax: t.formats.some((f) => f.startsWith('IMAX')),
+  }))
+const west = bars[0]
+const east = bars.at(-1)!
+---
+
+<div class="relative overflow-hidden rounded-3xl border border-[#2b221b] bg-[#140f0b]">
+  <div class="grid gap-6 px-6 pt-8 sm:px-10 sm:pt-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+    <div>
+      <p class="text-sm font-semibold text-amber-300">
+        The Toronto Cineplex Guide
+      </p>
+      <h1 class="mt-3 max-w-2xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl">
+        The city's screens, side by side.
+      </h1>
+      <p class="mt-3 max-w-xl leading-relaxed text-balance text-stone-400">
+        {`${stats.theatreCount} Cineplex theatres and ${stats.auditoriumCount} auditoriums across the GTA, with the formats and screen ratios for each one.`}
+      </p>
+    </div>
+    <a
+      href="#directory"
+      class="inline-flex w-fit rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#140f0b]"
+    >
+      Explore theatres
+    </a>
+  </div>
+
+  <figure class="mt-10 px-6 sm:px-10">
+    <div
+      class="flex h-44 items-end gap-[3px] sm:h-56 sm:gap-1"
+      role="img"
+      aria-label={`Auditoriums per theatre, west to east, from ${west.name} to ${east.name}`}
+    >
+      {bars.map((bar) => (
+        <div
+          class="group relative flex h-full flex-1 flex-col justify-end"
+          title={`${bar.fullName} · ${bar.count} auditoriums`}
+        >
+          <span class="mb-1 hidden text-center text-[10px] text-stone-500 tabular-nums transition-colors group-hover:text-stone-200 sm:block">
+            {bar.count}
+          </span>
+          <div
+            class:list={[
+              'rounded-t-[3px] transition-colors',
+              bar.imax
+                ? 'bg-amber-300 group-hover:bg-amber-200'
+                : 'bg-[#3d322a] group-hover:bg-[#57493e]',
+            ]}
+            style={{ height: `${bar.height}%` }}
+          ></div>
+        </div>
+      ))}
+    </div>
+    <figcaption class="flex items-center justify-between gap-4 border-t border-stone-700 py-3 text-[11px] text-stone-500">
+      <span>← West · {west.name}</span>
+      <span class="hidden items-center gap-4 sm:flex">
+        <span class="flex items-center gap-1.5">
+          <span class="size-2 rounded-xs bg-amber-300"></span>Has IMAX
+        </span>
+        <span class="flex items-center gap-1.5">
+          <span class="size-2 rounded-xs bg-[#3d322a]"></span>Auditoriums per
+          theatre
+        </span>
+      </span>
+      <span>{east.name} · East →</span>
+    </figcaption>
+  </figure>
+</div>

@@ -180,7 +180,6 @@ function CanvasContent({ onReady, scale }: SaturnSceneProps) {
         intensity={12000}
       />
       {/* <directionalLight intensity={1.5} position={[1, 0.6, 0]} /> */}
-      <color attach="background" args={['#171717']} />
     </>
   )
 }
@@ -214,7 +213,15 @@ function OuterCanvas({ onReady, scale }: SaturnSceneProps) {
   }, [])
 
   return (
-    <Canvas ref={ref} camera={camera}>
+    // Transparent canvas: the page background shows through instead of a
+    // painted #171717, which some compositors (Chrome on Linux) render in a
+    // different colour or as black while the canvas layer fades in.
+    <Canvas
+      ref={ref}
+      camera={camera}
+      gl={{ alpha: true, premultipliedAlpha: true }}
+      onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
+    >
       <Suspense fallback={null}>
         <CanvasContent onReady={onReady} scale={scale} />
       </Suspense>

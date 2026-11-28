@@ -1,0 +1,101 @@
+---
+// Hero for /cineplex-toronto: a slow-scrolling index of every theatre.
+import ExperienceBadge from '@components/cineplex-badges/ExperienceBadge.astro'
+import { formatOrder, type HeroStats, shortTheatreName } from './stats'
+
+interface Props {
+  stats: HeroStats
+}
+
+const { stats } = Astro.props
+
+// Premium formats only, best first, with how many auditoriums have each.
+const rows = stats.theatres.map((t) => ({
+  name: shortTheatreName(t.name),
+  area: t.area,
+  auditoriums: t.auditoriumCount,
+  premium: formatOrder
+    .filter((format) => format !== 'Regular' && t.formatCounts[format])
+    // An IMAX 70mm house also runs IMAX, so the 70mm badge covers both.
+    .filter((format) => !(format === 'IMAX' && t.formatCounts['IMAX 70mm']))
+    .map((format) => ({ format, count: t.formatCounts[format] })),
+}))
+---
+
+<div class="relative overflow-hidden rounded-3xl border border-[#2b221b] bg-[#140f0b]">
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,38rem)]">
+    <div class="flex flex-col justify-center px-6 py-8 sm:p-10">
+      <h1 class="max-w-xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl">
+        {`${stats.theatreCount} theatres.`}{' '}
+        <span class="text-stone-500">{`${stats.auditoriumCount} screens.`}</span>{' '}
+        One reference.
+      </h1>
+      <p class="mt-4 max-w-lg leading-relaxed text-balance text-stone-400">
+        A searchable index of every Cineplex in the Greater Toronto Area, with
+        the formats and screen ratios behind each auditorium.
+      </p>
+      <a
+        href="#directory"
+        class="mt-6 inline-flex w-fit rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#140f0b]"
+      >
+        Search the index
+      </a>
+    </div>
+
+    <div
+      class="border-t border-[#2b221b] bg-[#0f0b08] font-mono text-xs lg:border-t-0 lg:border-l"
+      aria-hidden="true"
+    >
+      <div class="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,9rem)] sm:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,13rem)] gap-3 border-b border-[#2b221b] px-5 py-3 text-[10px] tracking-[0.18em] text-stone-500 uppercase">
+        <span>Theatre</span>
+        <span class="text-right">Aud</span>
+        <span>Premium</span>
+      </div>
+      <div class="board-mask relative h-72 overflow-hidden">
+        <ul class="board-track">
+          {[...rows, ...rows].map((row) => (
+            <li class="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,9rem)] sm:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,13rem)] items-center gap-3 border-b border-[#1e1813] px-5 py-2">
+              <span class="truncate">
+                <span class="text-stone-100">{row.name}</span>
+                <span class="ml-2 text-stone-600">{row.area}</span>
+              </span>
+              <span class="text-right text-amber-300 tabular-nums">
+                {String(row.auditoriums).padStart(2, '0')}
+              </span>
+              <span class="flex items-center gap-2.5 overflow-hidden">
+                {row.premium.map(({ format }) => (
+                  <ExperienceBadge
+                    format={format}
+                    class="shrink-0 [&_svg]:h-2.5"
+                  />
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .board-mask {
+    mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent);
+  }
+  .board-track {
+    animation: board-scroll 60s linear infinite;
+  }
+  .board-mask:hover .board-track {
+    animation-play-state: paused;
+  }
+  @keyframes board-scroll {
+    to {
+      transform: translateY(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .board-track {
+      animation: none;
+    }
+  }
+</style>

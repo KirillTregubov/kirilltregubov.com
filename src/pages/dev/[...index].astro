@@ -1,0 +1,111 @@
+---
+import { ChevronRightIcon } from 'lucide-react'
+import PageContainer from '@components/PageContainer.astro'
+import { devPageInfo } from '@lib/devPages'
+import Layout from '@layouts/Layout.astro'
+
+// Dev-only index of every page under src/pages/dev. Pages are discovered from
+// the file system and their getStaticPaths, so new ones show up here on their
+// own. Describe them in src/lib/devPages.ts.
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { index: undefined } }] : []
+}
+
+type PageModule = {
+  getStaticPaths?: (options: unknown) => unknown
+}
+
+// Only files in subfolders, so this page doesn't import itself.
+const modules = import.meta.glob<PageModule>('./*/**/*.astro')
+
+const toPaths = async (file: string, load: () => Promise<PageModule>) => {
+  const route = file
+    .replace(/^\./, '/dev')
+    .replace(/\.astro$/, '')
+    .replace(/\/index$/, '')
+  const params = route.match(/\[(?:\.\.\.)?([^\]]+)\]/g) ?? []
+  if (params.length === 0) return [route]
+
+  const { getStaticPaths } = await load()
+  const entries = (await getStaticPaths?.({ paginate: () => [] })) as
+    { params: Record<string, string | undefined> }[] | undefined
+
+  return (entries ?? []).map(({ params: values }) =>
+    route
+      .replace(
+        /\[(?:\.\.\.)?([^\]]+)\]/g,
+        (_, name: string) => values[name] ?? '',
+      )
+      .replace(/\/+$/, ''),
+  )
+}
+
+const humanize = (path: string) =>
+  path
+    .replace(/^\/dev\//, '')
+    .split('/')
+    .map((part) => part.replace(/[-_]/g, ' '))
+    .join(' / ')
+    .replace(/^./, (c) => c.toUpperCase())
+
+const pages = (
+  await Promise.all(
+    Object.entries(modules).map(([file, load]) => toPaths(file, load)),
+  )
+)
+  .flat()
+  .sort()
+  .map((path) => ({
+    path,
+    title: devPageInfo[path]?.title ?? humanize(path),
+    description: devPageInfo[path]?.description,
+  }))
+---
+
+<Layout
+  title="Dev pages · Local dev"
+  description="Development-only index of local pages."
+  noindex
+>
+  <PageContainer class="max-w-240">
+    <header class="mt-8 pb-8">
+      <p class="text-xs font-bold tracking-[0.2em] text-orange-400 uppercase">
+        Development only
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold text-white">Dev pages</h1>
+      <p class="mt-2 text-neutral-400">
+        Every page under <code>src/pages/dev</code>. Describe new ones in{' '}
+        <code>src/lib/devPages.ts</code>.
+      </p>
+    </header>
+
+    <ul class="divide-y divide-neutral-800 border-y border-neutral-800">
+      {pages.map((page) => (
+        <li>
+          <a
+            href={page.path}
+            class="group flex items-center gap-4 py-4 focus-visible:outline-none"
+          >
+            <span class="min-w-0 flex-1">
+              <span class="block font-medium text-neutral-100 group-hover:text-white group-focus-visible:underline">
+                {page.title}
+              </span>
+              {page.description && (
+                <span class="mt-0.5 block text-sm text-neutral-400">
+                  {page.description}
+                </span>
+              )}
+              <span class="mt-1 block font-mono text-xs text-neutral-500">
+                {page.path}
+              </span>
+            </span>
+            <ChevronRightIcon
+              className="size-4 shrink-0 text-neutral-600 transition group-hover:translate-x-0.5 group-hover:text-neutral-300"
+              aria-hidden="true"
+            />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </PageContainer>
+</Layout>

@@ -20,3 +20,8 @@
 - Why: in some browsers (Chrome on Linux), translucent cards and chips visibly flicker while their section fades in. The fade animates the section's opacity, so the browser renders it on its own layer, and the translucent colours get blended again when that layer is created and dropped. `will-change-transform` on the same element makes it worse by adding another layer. A solid colour looks the same once settled but has nothing to re-blend.
 - Compute a solid value as `alpha x colour + (1 - alpha) x surface` per sRGB channel, using Tailwind's colours in sRGB. It's only valid on that surface.
 - Hover, active and focus states, rings, shadows, and anything over images or gradients can stay translucent.
+
+# Dev pages
+
+- Dev-only pages live under `src/pages/dev/<name>/[...slug].astro` and return paths from `getStaticPaths` only when `import.meta.env.DEV`.
+- `/dev` lists every page under `src/pages/dev` automatically. Give a new page a title and description in `src/lib/devPages.ts`.
