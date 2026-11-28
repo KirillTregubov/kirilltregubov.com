@@ -10,7 +10,7 @@ interface Props {
 const { stats } = Astro.props
 
 const boardColumns =
-  'grid grid-cols-[minmax(0,1fr)_4.75rem_min(38%,9rem)] gap-2 px-4 sm:grid-cols-[minmax(0,1fr)_4.75rem_13rem] sm:gap-3 sm:px-5'
+  'grid grid-cols-[min(8.5rem,45%)_1.25rem_minmax(0,1fr)] gap-2 px-4 sm:grid-cols-[minmax(0,1fr)_4.75rem_13rem] sm:gap-3 sm:px-5'
 
 // Premium formats only, best first, with how many auditoriums have each.
 const rows = stats.theatres.map((t) => ({
@@ -56,7 +56,7 @@ const rows = stats.theatres.map((t) => ({
         ]}
       >
         <span>Theatre</span>
-        <span class="text-right">Count</span>
+        <span class="text-right">#</span>
         <span>Formats</span>
       </div>
       <div class="board-mask relative h-72 overflow-hidden">
@@ -68,14 +68,17 @@ const rows = stats.theatres.map((t) => ({
                 'items-center border-b border-[#1e1813] py-2',
               ]}
             >
-              <span class="truncate">
+              <span class="min-w-0 sm:truncate">
                 <span class="text-stone-100">{row.name}</span>
-                <span class="ml-2 text-stone-600">{row.area}</span>
+                <span class="ml-2 hidden text-stone-600 sm:inline">
+                  {row.area}
+                </span>
               </span>
               <span class="text-right text-amber-300 tabular-nums">
                 {String(row.auditoriums).padStart(2, '0')}
               </span>
-              <span class="flex items-center gap-2.5 overflow-hidden">
+              {/* One line tall: badges that don't fit wrap out of view. */}
+              <span class="flex h-2.5 flex-wrap items-center gap-x-2.5 gap-y-4 overflow-hidden">
                 {row.premium.map(({ format }) => (
                   <ExperienceBadge
                     format={format}
