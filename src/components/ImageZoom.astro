@@ -83,12 +83,15 @@ import { XIcon } from 'lucide-react'
   const ease = cubicBezier(0.2, 0, 0, 1)
 
   /**
-   * Hides the part of the image that a `data-zoom-cover` bar would hide on the
-   * card. `strength` blends from 0 (whole image visible) to 1 (exactly the part
+   * Hides the part of the image that a `data-zoom-cover` bar hides on the
+   * card. The mask is measured against the card, not the screen, so it moves
+   * with the image: a card the bar doesn't reach gets no mask, and the image
+   * can pass over the bar on its way back without the bar cutting into it.
+   * `strength` blends from 0 (whole image visible) to 1 (exactly the part
    * visible on the page), so the mask only takes over near the card.
    */
   const maskUnderCover = (current: ZoomState, strength: number) => {
-    const { image, target } = current
+    const { image, source, target } = current
     let edge = -Infinity
     let fade = 0
     document
@@ -101,15 +104,15 @@ import { XIcon } from 'lucide-react'
         }
       })
 
-    const rect = image.getBoundingClientRect()
-    if (strength <= 0 || edge + fade <= rect.top) {
+    const card = source.getBoundingClientRect()
+    if (strength <= 0 || !card.height || edge + fade <= card.top) {
       image.style.maskImage = ''
       return
     }
     // The mask is in the image's own, unscaled coordinates.
-    const scale = rect.height / target.height
-    const start = (edge - rect.top) / scale
-    const end = (edge + fade - rect.top) / scale
+    const scale = card.height / target.height
+    const start = (edge - card.top) / scale
+    const end = (edge + fade - card.top) / scale
     image.style.maskImage = `linear-gradient(to bottom, rgb(0 0 0 / ${1 - strength}) ${start}px, #000 ${Math.max(end, start + 0.01)}px)`
   }
 

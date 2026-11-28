@@ -72,6 +72,12 @@
 
 # Feed
 
+- type: link
+  tags: [agents]
+  title: Superpowers
+  url: https://github.com/obra/superpowers
+  date: 2026-11-28
+
 - type: tweet
   tags: [design, agents]
   url: https://x.com/nonzeroexitcode/status/2126410123187028461?a=ClQEYe7C6m6DT6Ia0Uo&s=46
