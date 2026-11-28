@@ -9,6 +9,7 @@ import Button from '@components/ui/Button.astro'
 import Layout from '@layouts/Layout.astro'
 import { BLOG_SUBTITLE } from '@lib/blog'
 import { SITE_NAME } from '@lib/site'
+// import { skipLinkClass } from '@styles/classes'
 import { ArrowRightIcon, ChevronRightIcon } from 'lucide-react'
 
 const latestPosts = (await getCollection('blog'))
@@ -111,10 +112,15 @@ const allProjects = await getCollection('projects').then((projects) =>
         ))}
       </ul>
     </section>
-    <section id="tech-stack" aria-labelledby="tech-stack-title" class="enter-3">
+    <section id="tech-stack" aria-labelledby="tech-stack-title" class="relative enter-3">
       <h2 id="tech-stack-title" class="text-xl leading-none font-semibold">
         Tech Stack
       </h2>
+      {/* Restore when there is more content after Tools & Services.
+        <a href="#site-footer" class:list={[skipLinkClass, '-top-1 right-0']}>
+          Skip badges
+        </a>
+      */}
       <p class="mt-2 mb-3 text-neutral-400">
         Technologies and programming languages that I enjoy using, and have
         worked with in the past.

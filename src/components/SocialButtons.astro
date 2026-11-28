@@ -1,6 +1,7 @@
 ---
 import { X_URL } from '@lib/site'
 import Button from '@components/ui/Button.astro'
+import { BookmarkIcon } from 'lucide-react'
 
 const socials = [
   {
@@ -45,4 +46,9 @@ const socials = [
       </svg>
     </Button>
   ))}
+  <span class="mx-1 h-8 w-px bg-neutral-700" aria-hidden="true"></span>
+  <Button href="/saved" class="shadow-sm">
+    <BookmarkIcon className="-ml-1 size-5" aria-hidden="true" />
+    Saved
+  </Button>
 </div>

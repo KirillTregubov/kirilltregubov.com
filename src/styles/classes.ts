@@ -1,10 +1,16 @@
 export const interactiveButtonClass =
   'transition duration-150 will-change-transform active:scale-[0.98]'
 
+export const skipLinkClass =
+  'pointer-events-none absolute rounded-md bg-neutral-800 px-2 py-1 text-sm font-medium text-neutral-200 opacity-0 focus-visible:pointer-events-auto focus-visible:opacity-100'
+
 export type ButtonVariant = 'secondary' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'icon'
 
-const buttonBaseClass = `${interactiveButtonClass} inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 font-medium select-none disabled:pointer-events-none disabled:opacity-60`
+// Buttons default to text-base rather than inheriting the font size around
+// them. The default has zero specificity (`:where`), so a size class or a
+// `text-*` class passed in always overrides it.
+const buttonBaseClass = `${interactiveButtonClass} [:where(&)]:text-base inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 font-medium select-none disabled:pointer-events-none disabled:opacity-60`
 
 const buttonVariantClasses: Record<ButtonVariant, string> = {
   // Bordered, filled control: filters, toggles, sort, external actions.

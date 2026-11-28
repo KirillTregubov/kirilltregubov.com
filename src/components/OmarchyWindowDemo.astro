@@ -7,16 +7,26 @@ import {
   RotateCcwIcon,
 } from 'lucide-react'
 import { Image } from 'astro:assets'
+import { skipLinkClass } from '@styles/classes'
 import wallpaper from '../../public/assets/blog/quattro.jpg'
 import OmarchyDummyApps from './OmarchyDummyApps.astro'
 import Keybind from './markdown/Keybind.astro'
+
+interface Props {
+  skipTo: string
+}
+
+const { skipTo } = Astro.props
 ---
 
 <section
   class="omarchy-demo not-prose shadow-lg [--orange:#ff8a3d] [--focus-blue:#8bd5ff] m-[2.5rem_0] overflow-hidden [border:1px_solid_rgb(255_255_255/0.1)] rounded-[1.25rem] bg-[#111116] data-transitioning:relative data-transitioning:z-50"
   aria-labelledby="omarchy-demo-title"
 >
-  <div class="demo-heading p-[18px_20px] [border-bottom:1px_solid_rgb(255_255_255/0.08)]">
+  <div class="demo-heading relative p-[18px_20px] [border-bottom:1px_solid_rgb(255_255_255/0.08)]">
+    <a href={`#${skipTo}`} class:list={[skipLinkClass, 'top-3.5 right-5']}>
+      Skip demo
+    </a>
     <div class="demo-copy min-w-0 select-text">
       <h2
         id="omarchy-demo-title"
@@ -81,7 +91,7 @@ import Keybind from './markdown/Keybind.astro'
                 {[1, 2, 3, 4, 5].map((workspace) => (
                   <button
                     type="button"
-                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer place-items-center rounded-[0.1875rem] border-0 bg-transparent p-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] transition-opacity motion-reduce:transition-none data-occupied:text-[#bdbdcc] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
+                    class="workspace-button group/workspace relative grid h-4.5 w-3.5 flex-[0_0_0.875rem] cursor-pointer scroll-mt-20 place-items-center rounded-[0.1875rem] border-0 bg-transparent p-0 font-[inherit] [font-weight:inherit] leading-none text-[#686878] transition-opacity motion-reduce:transition-none data-occupied:text-[#bdbdcc] disabled:cursor-default disabled:opacity-40 disabled:pointer-events-none"
                     data-workspace-button={workspace}
                     aria-label={`Switch to workspace ${workspace}`}
                     aria-pressed={workspace === 1 ? 'true' : 'false'}
@@ -375,46 +385,6 @@ import Keybind from './markdown/Keybind.astro'
   import { defaultKeybindingsHandlerIgnore, tinykeys } from 'tinykeys'
   import { getKeyArrowPath } from '../lib/keybind'
 
-  // --- SESSION LOCK (runs immediately) ---
-  // Wires the Wake button. The demo boots immediately below, exactly as
-  // before, so the shortcut list renders on page load — but shortcut
-  // handling (list clicks + keyboard) stays dormant until Wake arms it
-  // via the `omarchy-demo:wake` event.
-  const setupOmarchyDemos = () => {
-    document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach((demo) => {
-      const wakeButton =
-        demo.querySelector<HTMLButtonElement>('[data-wake-button]')
-      if (demo.dataset.lockWired === undefined) {
-        demo.dataset.lockWired = ''
-        wakeButton?.addEventListener(
-          'click',
-          () => {
-            dismissLockScreen(demo)
-            demo.dispatchEvent(new CustomEvent('omarchy-demo:wake'))
-          },
-          { once: true },
-        )
-      }
-      bootOmarchyDemo(demo)
-      if (wakeButton) wakeButton.disabled = false
-    })
-  }
-
-  // Dismisses the session-lock overlay with a short fade. Wake is purely
-  // visual: the demo behind it is already booted.
-  const dismissLockScreen = (demo: HTMLElement) => {
-    demo.toggleAttribute('data-unlocked', true)
-    const lockScreen = demo.querySelector<HTMLElement>('[data-lock-screen]')
-    if (!lockScreen) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-      lockScreen.remove()
-    else {
-      lockScreen.dataset.leaving = ''
-      window.setTimeout(() => lockScreen.remove(), 300)
-    }
-  }
-
-  // --- DEMO (runs immediately, as before) ---
   // Boots the full interactive desktop demo: windows, layouts, workspaces,
   // shortcuts, clock, and observers.
   const bootOmarchyDemo = (demo: HTMLElement) => {
@@ -1663,16 +1633,37 @@ import Keybind from './markdown/Keybind.astro'
       )
     })
 
-    // Wake arms handling: update() enables the app/reset/layout buttons
-    // and updateShortcutControls() enables the shortcut list + keyboard.
-    demo.addEventListener(
-      'omarchy-demo:wake',
-      () => {
-        update()
-        updateShortcutControls()
-      },
-      listenerOptions,
-    )
+    const lockScreen = screen.querySelector<HTMLElement>('[data-lock-screen]')
+    const wakeButton =
+      lockScreen?.querySelector<HTMLButtonElement>('[data-wake-button]')
+    if (lockScreen && wakeButton) {
+      wakeButton.addEventListener(
+        'click',
+        () => {
+          demo.toggleAttribute('data-unlocked', true)
+          update()
+          updateShortcutControls()
+
+          const removeLockScreen = () => {
+            const restoreFocus = document.activeElement === wakeButton
+            lockScreen.remove()
+            if (restoreFocus) workspaceButtons[0]?.focus()
+          }
+
+          if (
+            wakeButton.matches(':focus-visible') ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ) {
+            removeLockScreen()
+          } else {
+            lockScreen.dataset.leaving = ''
+            window.setTimeout(removeLockScreen, 300)
+          }
+        },
+        { ...listenerOptions, once: true },
+      )
+      wakeButton.disabled = false
+    }
 
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       demoVisible = entry.isIntersecting
@@ -1713,7 +1704,9 @@ import Keybind from './markdown/Keybind.astro'
     // updateFullscreenButton()
   }
 
-  document.addEventListener('astro:page-load', setupOmarchyDemos)
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach(bootOmarchyDemo)
+  })
 </script>
 
 <style>

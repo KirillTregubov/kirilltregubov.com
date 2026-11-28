@@ -106,7 +106,7 @@ const sectionTitleClass =
 
 <Layout
   title="Saved - Kirill Tregubov"
-  description="Resources and bookmarks that I'm saving for later."
+  description="Resources, posts and ideas I want to come back to."
   bodyClass="flex flex-col"
   footerClass="enter-4"
   referrerPolicy="same-origin"
@@ -126,8 +126,7 @@ const sectionTitleClass =
     <header class="mt-6 enter-1">
       <h1 class="text-3xl font-semibold text-neutral-100">Saved Items</h1>
       <p class="mt-3 text-lg text-neutral-400">
-        Resources, tools, technologies, designs, inspirations that I'm saving
-        for later.
+        Resources, posts and ideas I want to come back to.
       </p>
     </header>
 
@@ -270,7 +269,7 @@ const sectionTitleClass =
                   {dateFormat.format(data.date)}
                 </time>
                 {href && (
-                  <Button variant="ghost" {href} external class="ms-auto">
+                  <Button variant="ghost" {href} external class="ms-auto text-sm">
                     {data.type === 'snippet' ? 'Source' : 'Open'}
                     <ExternalLinkIcon className="size-3.5" aria-hidden="true" />
                   </Button>
