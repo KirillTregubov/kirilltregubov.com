@@ -269,7 +269,12 @@ const sectionTitleClass =
                   {dateFormat.format(data.date)}
                 </time>
                 {href && (
-                  <Button variant="ghost" {href} external class="ms-auto text-sm">
+                  <Button
+                    variant="ghost"
+                    {href}
+                    external
+                    class="ms-auto text-sm"
+                  >
                     {data.type === 'snippet' ? 'Source' : 'Open'}
                     <ExternalLinkIcon className="size-3.5" aria-hidden="true" />
                   </Button>

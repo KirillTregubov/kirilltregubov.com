@@ -9,6 +9,9 @@ interface Props {
 
 const { stats } = Astro.props
 
+const boardColumns =
+  'grid grid-cols-[minmax(0,1fr)_4.75rem_min(38%,9rem)] gap-2 px-4 sm:grid-cols-[minmax(0,1fr)_4.75rem_13rem] sm:gap-3 sm:px-5'
+
 // Premium formats only, best first, with how many auditoriums have each.
 const rows = stats.theatres.map((t) => ({
   name: shortTheatreName(t.name),
@@ -28,17 +31,17 @@ const rows = stats.theatres.map((t) => ({
       <h1 class="max-w-xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl">
         {`${stats.theatreCount} theatres.`}{' '}
         <span class="text-stone-500">{`${stats.auditoriumCount} screens.`}</span>{' '}
-        One reference.
+        One showing.
       </h1>
       <p class="mt-4 max-w-lg leading-relaxed text-balance text-stone-400">
-        A searchable index of every Cineplex in the Greater Toronto Area, with
-        the formats and screen ratios behind each auditorium.
+        Give your next film the format it deserves. Compare screen, sound, and
+        seating at Cineplex theatres across the GTA.
       </p>
       <a
         href="#directory"
         class="mt-6 inline-flex w-fit rounded-full bg-amber-300 px-5 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-amber-200 focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#140f0b]"
       >
-        Search the index
+        Explore the guide
       </a>
     </div>
 
@@ -46,15 +49,25 @@ const rows = stats.theatres.map((t) => ({
       class="border-t border-[#2b221b] bg-[#0f0b08] font-mono text-xs lg:border-t-0 lg:border-l"
       aria-hidden="true"
     >
-      <div class="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,9rem)] sm:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,13rem)] gap-3 border-b border-[#2b221b] px-5 py-3 text-[10px] tracking-[0.18em] text-stone-500 uppercase">
+      <div
+        class:list={[
+          boardColumns,
+          'border-b border-[#2b221b] pt-2.5 pb-1.5 text-stone-400',
+        ]}
+      >
         <span>Theatre</span>
-        <span class="text-right">Aud</span>
-        <span>Premium</span>
+        <span class="text-right">Count</span>
+        <span>Formats</span>
       </div>
       <div class="board-mask relative h-72 overflow-hidden">
         <ul class="board-track">
           {[...rows, ...rows].map((row) => (
-            <li class="grid grid-cols-[minmax(0,1fr)_2rem_minmax(0,9rem)] sm:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,13rem)] items-center gap-3 border-b border-[#1e1813] px-5 py-2">
+            <li
+              class:list={[
+                boardColumns,
+                'items-center border-b border-[#1e1813] py-2',
+              ]}
+            >
               <span class="truncate">
                 <span class="text-stone-100">{row.name}</span>
                 <span class="ml-2 text-stone-600">{row.area}</span>

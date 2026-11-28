@@ -1705,7 +1705,9 @@ const { skipTo } = Astro.props
   }
 
   document.addEventListener('astro:page-load', () => {
-    document.querySelectorAll<HTMLElement>('.omarchy-demo').forEach(bootOmarchyDemo)
+    document
+      .querySelectorAll<HTMLElement>('.omarchy-demo')
+      .forEach(bootOmarchyDemo)
   })
 </script>
 

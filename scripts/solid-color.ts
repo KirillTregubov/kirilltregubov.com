@@ -84,7 +84,13 @@ const format = (rgb: Rgb) => {
     c < 0.0005
       ? `oklch(${lightness} 0 0)`
       : `oklch(${lightness} ${+c.toFixed(4)} ${+h.toFixed(2)})`
-  const hex = `#${rgb.map((v) => Math.round(v * 255).toString(16).padStart(2, '0')).join('')}`
+  const hex = `#${rgb
+    .map((v) =>
+      Math.round(v * 255)
+        .toString(16)
+        .padStart(2, '0'),
+    )
+    .join('')}`
   return { value, tailwind: `[${value.replaceAll(' ', '_')}]`, hex }
 }
 
@@ -98,7 +104,9 @@ if (!surface || layers.length === 0) {
 let current = parseColor(surface).rgb
 for (const layer of layers) {
   const { rgb, alpha } = parseColor(layer)
-  current = current.map((under, i) => alpha * rgb[i] + (1 - alpha) * under) as Rgb
+  current = current.map(
+    (under, i) => alpha * rgb[i] + (1 - alpha) * under,
+  ) as Rgb
   const { value, tailwind, hex } = format(current)
   console.log(`${layer.padEnd(16)} ${value.padEnd(30)} ${hex}  ${tailwind}`)
 }

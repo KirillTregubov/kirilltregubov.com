@@ -475,6 +475,14 @@ function normalizePostal(value?: string) {
   return value?.replace(/\s+/g, '').toUpperCase() ?? ''
 }
 
+// Cineplex sometimes combines a format and a feature into one label (IMAX 3D);
+// split those so they line up with the dataset's separate fields.
+function normalizeCapabilities(value: string): string[] {
+  const normalized = value.trim().toLowerCase()
+  if (normalized === 'imax 3d' || normalized === 'imax3d') return ['IMAX', '3D']
+  return [normalizeCapability(value)]
+}
+
 function normalizeCapability(value: string) {
   const normalized = value.trim().toLowerCase()
   if (normalized === 'ultraavx' || normalized === 'ultra avx') return 'UltraAVX'
@@ -591,8 +599,8 @@ function collectObservations(payloads: any[]) {
       for (const day of theatre?.dates ?? []) {
         for (const movie of day?.movies ?? []) {
           for (const experience of movie?.experiences ?? []) {
-            const capabilities = (experience?.experienceTypes ?? []).map(
-              normalizeCapability,
+            const capabilities = (experience?.experienceTypes ?? []).flatMap(
+              normalizeCapabilities,
             )
             for (const session of experience?.sessions ?? []) {
               if (session?.isInThePast || !session?.auditorium) continue

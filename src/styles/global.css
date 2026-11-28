@@ -143,6 +143,15 @@
   }
 }
 
+/*
+ * During a ClientRouter navigation the view-transition snapshot covers the
+ * page, so the pointer hits it and the cursor drops to the default arrow until
+ * the transition ends. Let the pointer pass through to the real elements.
+ */
+::view-transition {
+  pointer-events: none;
+}
+
 .tech-transition {
   transition:
     opacity 150ms linear,

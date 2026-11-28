@@ -107,11 +107,16 @@ const screenShapeOptions = Array.from(screenShapeByRatio.values())
   )
   .map(({ filterLabel }) => filterLabel)
 
+// The data keeps 3D as a feature of any format; an IMAX room's 3D chip shows
+// Cineplex's combined IMAX 3D badge instead.
+const getFeatureBadge = (feature: string, formats: string[]) =>
+  feature === '3D' && formats.includes('IMAX') ? 'IMAX 3D' : feature
+
 const badgeFormats = new Set(
   theatres.flatMap((theatre) =>
     theatre.data.auditoriums.flatMap(({ formats, features }) => [
       ...formats,
-      ...features,
+      ...features.map((feature) => getFeatureBadge(feature, formats)),
     ]),
   ),
 )
@@ -566,7 +571,10 @@ const getAuditoriumHeading = (auditoriums: string) => {
                                     ]}
                                   >
                                     <ExperienceBadge
-                                      format={feature}
+                                      format={getFeatureBadge(
+                                        feature,
+                                        auditoriumFormats,
+                                      )}
                                       class="text-neutral-400"
                                     />
                                   </span>

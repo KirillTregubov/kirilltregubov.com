@@ -16,31 +16,45 @@
     "auditoriumCount": 23,
     "auditoriums": [
       {
-        "auditoriums": "1, 5, 8, 11, 14, 15, 22",
+        "auditoriums": "1",
         "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
       },
       {
-        "auditoriums": "2, 3, 9, 10, 12, 13, 23, 24",
+        "auditoriums": "2, 12, 24",
+        "formats": ["Regular"],
+        "screen": { "ratio": "2.39:1" },
+        "features": ["3D"]
+      },
+      {
+        "auditoriums": "3, 9, 10, 13, 23",
         "formats": ["Regular"],
         "screen": { "ratio": "2.39:1" }
       },
       {
         "auditoriums": "4",
         "formats": ["4DX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
+      },
+      {
+        "auditoriums": "5, 8, 11, 14, 15, 22",
+        "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "6",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon"
       },
       {
         "auditoriums": "7",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "2.39:1" },
-        "features": ["3D", "Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Laser Projection", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "VIP 1-5",
@@ -69,9 +83,10 @@
     "auditoriumCount": 14,
     "auditoriums": [
       {
-        "auditoriums": "1, 3, 5, 7, 9, 11, 14",
+        "auditoriums": "1, 4, 6, 8, 13",
         "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
       },
       {
         "auditoriums": "2",
@@ -80,10 +95,9 @@
         "features": ["3D", "Laser Projection", "D-BOX"]
       },
       {
-        "auditoriums": "4, 6, 8, 13",
+        "auditoriums": "3, 5, 7, 9, 11, 14",
         "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" },
-        "features": ["3D"]
+        "screen": { "ratio": "1.85:1" }
       },
       {
         "auditoriums": "10",
@@ -95,7 +109,7 @@
         "formats": ["IMAX"],
         "screen": { "ratio": "1.43:1" },
         "features": ["3D", "Laser Projection"],
-        "details": "GT Laser (Dual 4K) | 12-track audio"
+        "details": "GT Laser (Dual 4K) with 12-track audio"
       }
     ]
   },
@@ -134,7 +148,8 @@
       {
         "auditoriums": "8",
         "formats": ["70mm"],
-        "screen": { "ratio": "2.20:1" }
+        "screen": { "ratio": "2.20:1" },
+        "details": "5-perf 70mm film"
       },
       {
         "auditoriums": "VIP 1-4",
@@ -160,12 +175,12 @@
     "auditoriumCount": 12,
     "auditoriums": [
       {
-        "auditoriums": "1-4, 7, 9",
+        "auditoriums": "1, 3, 4, 9",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" }
       },
       {
-        "auditoriums": "5",
+        "auditoriums": "2, 5, 7",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
@@ -180,6 +195,7 @@
         "auditoriums": "8",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon"
       },
       {
@@ -207,20 +223,22 @@
     "auditoriumCount": 5,
     "auditoriums": [
       {
-        "auditoriums": "VIP 1-3",
+        "auditoriums": "VIP 1",
         "formats": ["VIP 19+"],
-        "screen": {
-          "ratio": "1.85:1"
-        },
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D", "Laser Projection"]
+      },
+      {
+        "auditoriums": "VIP 2, VIP 3",
+        "formats": ["VIP 19+"],
+        "screen": { "ratio": "1.85:1" },
         "features": ["Laser Projection"]
       },
       {
         "auditoriums": "VIP 4",
         "formats": ["VIP 19+"],
-        "screen": {
-          "ratio": "1.85:1"
-        },
-        "features": ["Recliners"]
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Dolby Atmos", "Recliners"]
       },
       {
         "auditoriums": "VIP 5",
@@ -252,15 +270,11 @@
         "auditoriums": "1",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon"
       },
       {
-        "auditoriums": "2, 5-10",
-        "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" }
-      },
-      {
-        "auditoriums": "3",
+        "auditoriums": "2, 3",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
@@ -270,6 +284,11 @@
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
         "features": ["D-BOX"]
+      },
+      {
+        "auditoriums": "5-10",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
       }
     ]
   },
@@ -290,7 +309,13 @@
     "auditoriumCount": 13,
     "auditoriums": [
       {
-        "auditoriums": "1-8, 11, 12",
+        "auditoriums": "1, 7, 11",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
+      },
+      {
+        "auditoriums": "2-6, 8, 12",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" }
       },
@@ -298,7 +323,7 @@
         "auditoriums": "9",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "10",
@@ -310,6 +335,7 @@
         "auditoriums": "IMAX",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon for digital presentations"
       },
       {
@@ -339,29 +365,31 @@
       {
         "auditoriums": "1",
         "formats": ["UltraAVX", "SCREENX"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
       },
       {
-        "auditoriums": "2-10, 13-18",
+        "auditoriums": "2, 4, 5, 8, 9, 14-18",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" }
       },
       {
-        "auditoriums": "11",
-        "formats": ["UltraAVX"],
-        "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX"]
-      },
-      {
-        "auditoriums": "12",
+        "auditoriums": "3, 6, 7, 10, 12, 13",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
         "features": ["3D"]
       },
       {
+        "auditoriums": "11",
+        "formats": ["UltraAVX"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D", "Dolby Atmos", "D-BOX"]
+      },
+      {
         "auditoriums": "IMAX",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon for digital presentations"
       },
       {
@@ -392,23 +420,25 @@
         "auditoriums": "1",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Laser Projection", "Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Laser Projection", "Dolby Atmos", "D-BOX"]
       },
       {
-        "auditoriums": "2",
+        "auditoriums": "2, 5, 6, 12, 16, 17",
         "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "1.85:1" },
+        "features": ["Laser Projection"]
       },
       {
         "auditoriums": "3",
         "formats": ["70mm"],
-        "screen": { "ratio": "2.20:1" }
+        "screen": { "ratio": "2.20:1" },
+        "details": "5-perf 70mm film"
       },
       {
-        "auditoriums": "4-6, 8, 11, 12, 16, 17",
+        "auditoriums": "4, 8, 10, 11",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Laser Projection"]
+        "features": ["3D", "Laser Projection"]
       },
       {
         "auditoriums": "7",
@@ -421,12 +451,6 @@
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
         "features": ["Laser Projection", "D-BOX"]
-      },
-      {
-        "auditoriums": "10",
-        "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" },
-        "features": ["3D", "Laser Projection"]
       },
       {
         "auditoriums": "18",
@@ -512,7 +536,13 @@
     "auditoriumCount": 9,
     "auditoriums": [
       {
-        "auditoriums": "1-5, 7-9",
+        "auditoriums": "1-3",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
+      },
+      {
+        "auditoriums": "4, 5, 7-9",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" }
       },
@@ -541,9 +571,10 @@
     "auditoriumCount": 10,
     "auditoriums": [
       {
-        "auditoriums": "1, 3-8",
+        "auditoriums": "1, 3, 7",
         "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
       },
       {
         "auditoriums": "2",
@@ -551,10 +582,15 @@
         "screen": { "ratio": "1.85:1" }
       },
       {
+        "auditoriums": "4-6, 8",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" }
+      },
+      {
         "auditoriums": "9",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Laser Projection", "Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Laser Projection", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "10",
@@ -586,7 +622,13 @@
         "screen": { "ratio": "1.85:1" }
       },
       {
-        "auditoriums": "2-8, 10-15",
+        "auditoriums": "2, 14",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
+      },
+      {
+        "auditoriums": "3-8, 10-13, 15",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" }
       },
@@ -600,6 +642,7 @@
         "auditoriums": "16",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon"
       }
     ]
@@ -621,12 +664,6 @@
     "auditoriumCount": 13,
     "auditoriums": [
       {
-        "auditoriums": "IMAX",
-        "formats": ["IMAX"],
-        "screen": { "ratio": "1.90:1" },
-        "details": "Dual Xenon"
-      },
-      {
         "auditoriums": "2",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
@@ -641,6 +678,13 @@
         "auditoriums": "VIP 1-3",
         "formats": ["VIP 19+"],
         "screen": { "ratio": "1.85:1" }
+      },
+      {
+        "auditoriums": "IMAX",
+        "formats": ["IMAX"],
+        "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
+        "details": "Dual Xenon"
       }
     ]
   },
@@ -661,12 +705,19 @@
     "auditoriumCount": 16,
     "auditoriums": [
       {
-        "auditoriums": "1, 16",
+        "auditoriums": "1",
         "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" }
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D"]
       },
       {
-        "auditoriums": "2-6",
+        "auditoriums": "2, 4, 14",
+        "formats": ["Regular"],
+        "screen": { "ratio": "N/A" },
+        "features": ["3D"]
+      },
+      {
+        "auditoriums": "3, 5, 6, 10-13, 15",
         "formats": ["Regular"],
         "screen": { "ratio": "N/A" }
       },
@@ -685,15 +736,15 @@
         "auditoriums": "9",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
+        "features": ["3D"],
         "details": "Dual Xenon"
       },
       {
-        "auditoriums": "10-15",
+        "auditoriums": "16",
         "formats": ["Regular"],
-        "screen": { "ratio": "N/A" }
+        "screen": { "ratio": "1.85:1" }
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "junxion-erin-mills",
@@ -715,7 +766,7 @@
         "auditoriums": "1",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Laser Projection", "D-BOX", "Recliners"]
+        "features": ["3D", "Laser Projection", "D-BOX", "Recliners"]
       },
       {
         "auditoriums": "2, 5",
@@ -724,16 +775,16 @@
         "features": ["Recliners"]
       },
       {
-        "auditoriums": "3-4",
+        "auditoriums": "3, 6",
+        "formats": ["Regular"],
+        "screen": { "ratio": "1.85:1" },
+        "features": ["3D", "Laser Projection", "Recliners"]
+      },
+      {
+        "auditoriums": "4",
         "formats": ["Regular"],
         "screen": { "ratio": "1.85:1" },
         "features": ["Laser Projection", "Recliners"]
-      },
-      {
-        "auditoriums": "6",
-        "formats": ["Regular"],
-        "screen": { "ratio": "1.85:1" },
-        "features": ["3D", "Recliners"]
       }
     ]
   },
@@ -762,7 +813,7 @@
         "auditoriums": "5",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "6",
@@ -803,7 +854,7 @@
         "auditoriums": "9",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["D-BOX"]
+        "features": ["3D", "D-BOX"]
       }
     ]
   },
@@ -846,8 +897,7 @@
         "screen": { "ratio": "1.85:1" },
         "features": ["3D", "Laser Projection", "Dolby Atmos", "D-BOX"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "oakville-vip",
@@ -880,7 +930,7 @@
         "auditoriums": "6",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Laser Projection", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "VIP 1-3",
@@ -906,7 +956,7 @@
     "auditoriumCount": 22,
     "auditoriums": [
       {
-        "auditoriums": "8-11, 15-19, 22-24",
+        "auditoriums": "8-11, 15, 17-19, 22-24",
         "formats": ["Regular"],
         "screen": { "ratio": "N/A" }
       },
@@ -914,16 +964,17 @@
         "auditoriums": "12",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "13",
         "formats": ["IMAX"],
         "screen": { "ratio": "1.90:1" },
-        "details": "CoLa (4K Laser) | 12-track audio"
+        "features": ["3D", "Laser Projection"],
+        "details": "CoLa (4K Laser) with 12-track audio"
       },
       {
-        "auditoriums": "14",
+        "auditoriums": "14, 16",
         "formats": ["Regular"],
         "screen": { "ratio": "N/A" },
         "features": ["3D"]
@@ -944,8 +995,7 @@
         "screen": { "ratio": "N/A" },
         "features": ["Recliners"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "oshawa",
@@ -973,7 +1023,13 @@
         "auditoriums": "5",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Laser Projection", "Dolby Atmos", "D-BOX", "Recliners"]
+        "features": [
+          "3D",
+          "Laser Projection",
+          "Dolby Atmos",
+          "D-BOX",
+          "Recliners"
+        ]
       },
       {
         "auditoriums": "6",
@@ -981,8 +1037,7 @@
         "screen": { "ratio": "N/A" },
         "features": ["3D", "Recliners"]
       }
-    ],
-    "notes": ["Some auditorium aspect ratios require confirmation."]
+    ]
   },
   {
     "id": "pickering-vip",
@@ -1004,7 +1059,13 @@
         "auditoriums": "1",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX", "Recliners"]
+        "features": [
+          "3D",
+          "Laser Projection",
+          "Dolby Atmos",
+          "D-BOX",
+          "Recliners"
+        ]
       },
       {
         "auditoriums": "2",
@@ -1051,7 +1112,7 @@
         "auditoriums": "1",
         "formats": ["UltraAVX"],
         "screen": { "ratio": "1.85:1" },
-        "features": ["Dolby Atmos", "D-BOX"]
+        "features": ["3D", "Dolby Atmos", "D-BOX"]
       },
       {
         "auditoriums": "2",
