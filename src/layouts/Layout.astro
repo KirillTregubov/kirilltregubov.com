@@ -152,6 +152,35 @@ const devOverflowToggleScript = `
     ]}
   >
     <slot />
+    <!--
+      Sticky stack: publishes the height of each `data-sticky-height="<name>"`
+      element as `--<name>-height` on <html>, and keeps it current. Runs again
+      after each client-side navigation. See `src/styles/classes.ts`.
+    -->
+    <script is:inline>
+      {
+        const root = document.documentElement
+        const previous = window.__stickyHeights
+        previous?.observer.disconnect()
+        previous?.names.forEach((name) => root.style.removeProperty(name))
+
+        const names = new Set()
+        const observer = new ResizeObserver((entries) => {
+          for (const { target } of entries) {
+            const name = `--${target.dataset.stickyHeight}-height`
+            names.add(name)
+            root.style.setProperty(
+              name,
+              `${target.getBoundingClientRect().height}px`,
+            )
+          }
+        })
+        document
+          .querySelectorAll('[data-sticky-height]')
+          .forEach((element) => observer.observe(element))
+        window.__stickyHeights = { observer, names }
+      }
+    </script>
     <SpeedInsights />
     <footer
       id="site-footer"

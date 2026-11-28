@@ -14,15 +14,18 @@ const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
 <!--
   Only the bar's contents fade in (`*:enter`), not the bar: fading the bar
   would fade its background too, and content scrolled under it would show
-  through while the page loads. z-30 keeps it above bars that stick right
-  under it (e.g. the Cineplex filters, z-20), whose `stickyEnterCoverClass`
-  strip would otherwise sit on top of it.
+  through while the page loads.
+
+  It heads the sticky stack (see `stickySectionBarClass` in
+  `src/styles/classes.ts`): it publishes its height, and z-20 keeps it under
+  section bars that stick below it (z-30), so its bottom fade tucks under them.
 -->
 <menu
   class:list={[
-    "sticky -top-1 isolate z-30 -mx-1 -mt-5 mb-4 flex gap-6 px-1 pt-5 pb-2 before:pointer-events-none before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-dvw before:-translate-x-1/2 before:bg-neutral-900 before:content-[''] after:pointer-events-none after:absolute after:-bottom-2 after:left-1/2 after:z-10 after:h-2 after:w-dvw after:-translate-x-1/2 after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] *:enter max-xs:flex-col max-xs:items-start xs:-mt-7 xs:justify-between xs:pt-7 xs:before:-bottom-2 xs:after:-bottom-4 md:-mt-13",
+    "sticky -top-1 isolate z-20 -mx-1 -mt-5 mb-4 flex gap-6 px-1 pt-5 pb-2 before:pointer-events-none before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-dvw before:-translate-x-1/2 before:bg-neutral-900 before:content-[''] after:pointer-events-none after:absolute after:-bottom-2 after:left-1/2 after:z-10 after:h-2 after:w-dvw after:-translate-x-1/2 after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] *:enter max-xs:flex-col max-xs:items-start xs:-mt-7 xs:justify-between xs:pt-7 xs:before:-bottom-2 xs:after:-bottom-4 md:-mt-13",
     containerClass,
   ]}
+  data-sticky-height="sticky-nav"
   {...props}
 >
   <Button variant="ghost" {href} class="gap-2.5">

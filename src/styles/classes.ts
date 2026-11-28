@@ -5,20 +5,43 @@ export const skipLinkClass =
   'pointer-events-none absolute rounded-md bg-neutral-800 px-2 py-1 text-sm font-medium text-neutral-200 opacity-0 focus-visible:pointer-events-auto focus-visible:opacity-100'
 
 /**
+ * Sticky stack: the page's `ReturnHome` bar sticks at the top and section bars
+ * (filters, search) stick right under it.
+ *
+ * - Position: an element marked `data-sticky-height="<name>"` has its height
+ *   measured and published as `--<name>-height` on <html> (script in
+ *   `Layout.astro`). `ReturnHome` publishes `--sticky-nav-height`, and
+ *   `--sticky-nav-bottom` (global.css) is where it ends when stuck. Bars use
+ *   that as `top`, so they meet it exactly at every breakpoint, zoom level and
+ *   font size, however tall the nav gets. Offset anchors the same way, e.g.
+ *   `scroll-mt-(--sticky-nav-bottom)`.
+ * - Layering: lower bars sit above higher ones (`ReturnHome` z-20, section bars
+ *   z-30), so each bar's bottom fade tucks under the bar stuck below it and
+ *   only shows over scrolling content. Page content stays at z-10 or below so
+ *   it scrolls under the whole stack. This relies on `enter` blocks not being
+ *   stacking contexts once settled (`backwards` fill in global.css). Don't
+ *   wrap a section bar in anything that creates one (`isolate`, `transform`,
+ *   `opacity` < 1, `will-change`...), or its z-index only counts inside that
+ *   wrapper.
+ */
+export const stickySectionBarClass = 'sticky top-(--sticky-nav-bottom) z-30'
+
+/**
  * For sticky bars inside a block that fades in with `enter` (e.g. a section
  * with its own sticky header): a solid strip directly above the bar. While the
  * page entrance plays, the block (and so the bar) sits up to
  * `--enter-distance` below where the bar sticks, and content that has scrolled
  * under it would show through that gap (most visible when the page loads
- * already scrolled). Once settled, the strip sits off-screen, under a bar
- * above it, or over empty page margin. Uses `::before`, so the bar can't use
- * it for anything else.
+ * already scrolled). The strip shrinks with the same timing as the rise, so
+ * it's gone once the block settles and never covers a bar stuck above it
+ * (e.g. `ReturnHome`). Uses `::before`, so the bar can't use it for anything
+ * else.
  *
  * A sticky bar that is itself the animated block should fade its contents
  * instead (`*:enter`), keeping its background solid; see `ReturnHome.astro`.
  */
 export const stickyEnterCoverClass =
-  "before:pointer-events-none before:absolute before:inset-x-0 before:bottom-full before:h-(--enter-cover) before:bg-neutral-900 before:content-['']"
+  "before:pointer-events-none before:absolute before:inset-x-0 before:bottom-full before:h-0 before:bg-neutral-900 before:content-[''] before:enter-cover"
 
 export type ButtonVariant = 'secondary' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'icon'

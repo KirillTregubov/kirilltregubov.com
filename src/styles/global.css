@@ -22,6 +22,13 @@
    * a little slack. See `src/styles/classes.ts`.
    */
   --enter-cover: calc(var(--enter-distance) + 2px);
+  /*
+   * Sticky stack (see `src/styles/classes.ts`). `ReturnHome` publishes its
+   * measured height; it sticks at -0.25rem, so when stuck it ends at
+   * --sticky-nav-bottom. The default only applies before the measurement.
+   */
+  --sticky-nav-height: 3.75rem;
+  --sticky-nav-bottom: calc(var(--sticky-nav-height) - 0.25rem);
 }
 
 @theme {
@@ -84,11 +91,14 @@
 /*
  * Page entrance animation. Blocks fade up in reading order:
  * `enter` starts immediately and `enter-N` waits N × --enter-stagger.
- * The `both` fill mode keeps a block hidden until its step starts.
+ * The `backwards` fill mode keeps a block hidden until its step starts, and
+ * drops the animation once it ends. (`both` would leave `transform` applied,
+ * keeping every settled block a stacking context, which traps the z-index of
+ * sticky bars inside it. See "Sticky stack" in `src/styles/classes.ts`.)
  */
 @utility enter {
   @media (prefers-reduced-motion: no-preference) {
-    animation: fadeUp var(--enter-duration) var(--enter-easing) both;
+    animation: fadeUp var(--enter-duration) var(--enter-easing) backwards;
     animation-delay: calc(var(--enter-step, 0) * var(--enter-stagger));
   }
 }
@@ -96,8 +106,31 @@
 @utility enter-* {
   --enter-step: --value(integer);
   @media (prefers-reduced-motion: no-preference) {
-    animation: fadeUp var(--enter-duration) var(--enter-easing) both;
+    animation: fadeUp var(--enter-duration) var(--enter-easing) backwards;
     animation-delay: calc(var(--enter-step) * var(--enter-stagger));
+  }
+}
+
+/*
+ * `stickyEnterCoverClass`'s strip. It runs with the same timing as the
+ * `enter-N` block around it (inheriting `--enter-step`), so its height always
+ * covers the gap left by the rise. It ends at zero, so a settled strip can't
+ * sit over a bar stuck above it.
+ */
+@keyframes enterCoverShrink {
+  from {
+    height: var(--enter-cover);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@utility enter-cover {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: enterCoverShrink var(--enter-duration) var(--enter-easing)
+      backwards;
+    animation-delay: calc(var(--enter-step, 0) * var(--enter-stagger));
   }
 }
 

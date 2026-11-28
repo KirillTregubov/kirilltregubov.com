@@ -26,12 +26,23 @@ const rows = stats.theatres.map((t) => ({
 ---
 
 <div class="relative overflow-hidden rounded-3xl border border-[#2b221b] bg-[#140f0b]">
-  <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,38rem)]">
-    <div class="flex flex-col justify-center px-6 py-8 sm:p-10">
-      <h1 class="max-w-xl text-4xl font-bold tracking-tighter text-balance text-white sm:text-5xl">
-        {`${stats.theatreCount} theatres.`}{' '}
-        <span class="text-stone-500">{`${stats.auditoriumCount} screens.`}</span>{' '}
-        One showing.
+  {/*
+    Side by side (lg), the board takes half the width, between 32rem (leaving
+    the heading room just above lg) and 38rem.
+  */}
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_clamp(32rem,50%,38rem)]">
+    <div class="@container flex flex-col justify-center px-6 py-8 sm:p-10">
+      {/*
+        Each sentence stays on one line, so balancing only breaks between
+        them. The longest ("One showing.") is ~6.12em wide, so the size is
+        capped at 15.5% of the column (~5% spare) and shrinks instead of
+        overflowing where the board squeezes the column (just above lg, or
+        narrow phones). Otherwise it's text-4xl, and text-5xl from sm.
+      */}
+      <h1 class="max-w-xl text-[min(2.25rem,15.5cqi)] leading-[1.11] font-bold tracking-tighter text-balance text-white sm:text-[min(3rem,15.5cqi)] sm:leading-none">
+        <span class="whitespace-nowrap">{`${stats.theatreCount} theatres.`}</span>{' '}
+        <span class="whitespace-nowrap text-stone-500">{`${stats.auditoriumCount} screens.`}</span>{' '}
+        <span class="whitespace-nowrap">One showing.</span>
       </h1>
       <p class="mt-4 max-w-lg leading-relaxed text-balance text-stone-400">
         Give your next film the format it deserves. Compare screen, sound, and
@@ -46,7 +57,7 @@ const rows = stats.theatres.map((t) => ({
     </div>
 
     <div
-      class="border-t border-[#2b221b] bg-[#0f0b08] font-mono text-xs lg:border-t-0 lg:border-l"
+      class="flex flex-col border-t border-[#2b221b] bg-[#0f0b08] font-mono text-xs lg:border-t-0 lg:border-l"
       aria-hidden="true"
     >
       <div
@@ -59,7 +70,12 @@ const rows = stats.theatres.map((t) => ({
         <span class="text-right">#</span>
         <span>Formats</span>
       </div>
-      <div class="board-mask relative h-72 overflow-hidden">
+      {/*
+        Side by side (lg), the board fills the hero's height, however tall the
+        text column is. The zero flex basis keeps the long track from sizing
+        the row; min-h-72 is the board's own minimum.
+      */}
+      <div class="board-mask relative h-72 overflow-hidden lg:h-auto lg:min-h-72 lg:flex-[1_1_0]">
         <ul class="board-track">
           {[...rows, ...rows].map((row) => (
             <li

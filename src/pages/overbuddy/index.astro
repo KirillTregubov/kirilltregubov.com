@@ -10,7 +10,7 @@ import Button from '@components/ui/Button.astro'
 import Input from '@components/ui/Input.astro'
 import Layout from '@layouts/Layout.astro'
 import { resolvePublicImage } from '@lib/images'
-import { solidColors } from '@styles/classes'
+import { solidColors, stickySectionBarClass } from '@styles/classes'
 
 const projectInfo = await getEntry('projects', 'overbuddy')
 if (!projectInfo) throw new Error('OverBuddy project not found')
@@ -66,12 +66,18 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
     <div class="h-px w-full rounded-full bg-neutral-700 enter-2"></div>
     <div class="min-h-[calc(100vh-11rem)] w-full xs:min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-9rem)] lg:min-h-[calc(100vh-8rem)]">
       <h2
-        class="mb-3 scroll-mt-18 text-xl leading-none font-semibold enter-3"
+        class="mb-3 scroll-mt-[calc(var(--sticky-nav-bottom)+1rem)] text-xl leading-none font-semibold enter-3"
         id="gallery"
       >
         Background Gallery
       </h2>
-      <div class="sticky top-14 z-20 -mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] *:enter-3 max-xs:top-24 sm:flex-row sm:items-center">
+      <div
+        data-sticky-height="gallery-filters"
+        class:list={[
+          stickySectionBarClass,
+          "-mx-1 -mt-2 mb-2 box-content flex w-full flex-col items-start gap-2 gap-y-1.5 bg-neutral-900 px-1 py-2 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-[''] *:enter-3 sm:flex-row sm:items-center",
+        ]}
+      >
         <Input
           id="search"
           type="search"
@@ -107,7 +113,7 @@ backgrounds = backgrounds.toSorted((a, b) => b.data.order - a.data.order)
           </span>
         </button> -->
       </div>
-      <div class="grid grid-cols-1 gap-x-4 gap-y-5 enter-3 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-60 xs:[&>figure]:scroll-mt-51 sm:[&>figure]:scroll-mt-29">
+      <div class="grid grid-cols-1 gap-x-4 gap-y-5 enter-3 sm:grid-cols-2 lg:grid-cols-3 [&>figure]:scroll-mt-[calc(var(--sticky-nav-bottom)+var(--gallery-filters-height)+1rem)]">
         {backgrounds.map((background) => (
           <MDImage
             id={background.data.id}

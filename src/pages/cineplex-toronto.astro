@@ -10,7 +10,11 @@ import PageContainer from '@components/PageContainer.astro'
 import ReturnHome from '@components/ReturnHome.astro'
 import { pluralize } from '@lib/pluralize'
 import Layout from '@layouts/Layout.astro'
-import { solidColors, stickyEnterCoverClass } from '@styles/classes'
+import {
+  solidColors,
+  stickyEnterCoverClass,
+  stickySectionBarClass,
+} from '@styles/classes'
 
 const theatreChips = solidColors.theatreCardChips
 
@@ -160,13 +164,14 @@ const getAuditoriumHeading = (auditoriums: string) => {
 
     <section
       id="directory"
-      class="mt-4 scroll-mt-12 enter-1 xs:scroll-mt-13"
+      class="mt-2 scroll-mt-(--sticky-nav-bottom) enter-1"
       aria-labelledby="directory-title"
     >
       <div
         class:list={[
           stickyEnterCoverClass,
-          "sticky top-12 xs:top-13 z-20 -mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-['']",
+          stickySectionBarClass,
+          "-mx-1 box-content bg-neutral-900 px-1 py-2 pt-4 text-neutral-200 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:z-10 after:h-2 after:w-full after:bg-linear-to-b after:from-neutral-900 after:to-transparent after:content-['']",
         ]}
       >
         <h2 id="directory-title" class="sr-only">
