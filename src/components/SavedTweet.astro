@@ -10,11 +10,29 @@ const { url } = Astro.props
 
 // Fetched at build time, so the page shows the post even where X is blocked.
 const tweet = await fetchTweet(url)
+const hintId = tweet && `saved-tweet-hint-${tweet.id_str}`
 ---
 
 {tweet ? (
-  <div class="[&_.react-tweet-theme]:m-0! [&_.react-tweet-theme]:max-w-none! [&_.react-tweet-theme]:min-w-0! [&_.react-tweet-theme]:[--tweet-header-line-height:1.5rem]! [&_.react-tweet-theme_p_a]:underline! [&_.react-tweet-theme_p_a]:underline-offset-2">
+  <div
+    data-saved-tweet
+    tabindex="0"
+    role="group"
+    aria-label={`Post by ${tweet.user.name}`}
+    aria-describedby={hintId}
+    class="group/tweet relative rounded-xl transition-shadow motion-reduce:transition-none [&_.react-tweet-theme]:m-0! [&_.react-tweet-theme]:max-w-none! [&_.react-tweet-theme]:min-w-0! [&_.react-tweet-theme]:[--tweet-header-line-height:1.5rem]! [&_.react-tweet-theme_p_a]:underline! [&_.react-tweet-theme_p_a]:underline-offset-2"
+  >
     <EmbeddedTweet tweet={tweet} />
+    <span id={hintId} hidden>
+      Press Enter to move through the links in this post, and Escape to leave
+      it.
+    </span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-3 right-4 hidden rounded-md border border-neutral-600 bg-neutral-800 px-2 py-0.5 text-xs text-neutral-300 group-focus-visible/tweet:block"
+    >
+      Enter to explore
+    </span>
   </div>
 ) : (
   <a
@@ -29,6 +47,74 @@ const tweet = await fetchTweet(url)
 )}
 
 <script>
+  // Each post is one Tab stop. Its links and buttons leave the tab order until
+  // you press Enter (or focus one by clicking or with a screen reader), and
+  // drop back out once focus leaves the post, so Tab skips dense posts.
+  const focusable =
+    'a[href], button, input, select, textarea, iframe, summary, video[controls], [tabindex]'
+
+  const inner = (post: HTMLElement) =>
+    [...post.querySelectorAll<HTMLElement>(focusable)].filter(
+      (element) => element !== post,
+    )
+
+  const collapse = (post: HTMLElement) => {
+    if (post.dataset.collapsed !== undefined) return
+    post.dataset.collapsed = ''
+    for (const element of inner(post)) {
+      if (element.dataset.tabindex === undefined) {
+        element.dataset.tabindex = element.getAttribute('tabindex') ?? ''
+      }
+      element.tabIndex = -1
+    }
+  }
+
+  const expand = (post: HTMLElement) => {
+    if (post.dataset.collapsed === undefined) return
+    delete post.dataset.collapsed
+    for (const element of inner(post)) {
+      const saved = element.dataset.tabindex
+      if (saved === undefined) continue
+      delete element.dataset.tabindex
+      if (saved === '') element.removeAttribute('tabindex')
+      else element.setAttribute('tabindex', saved)
+    }
+  }
+
+  const isTabbable = (element: HTMLElement) =>
+    element.tabIndex >= 0 && !element.closest('[hidden]')
+
+  document.addEventListener('astro:page-load', () => {
+    document
+      .querySelectorAll<HTMLElement>('[data-saved-tweet]:not([data-init])')
+      .forEach((post) => {
+        post.dataset.init = ''
+        collapse(post)
+
+        post.addEventListener('focusin', (event) => {
+          if (event.target !== post) expand(post)
+        })
+        post.addEventListener('focusout', (event) => {
+          const next = event.relatedTarget
+          if (next instanceof Node && !post.contains(next)) collapse(post)
+        })
+        post.addEventListener('keydown', (event) => {
+          if (
+            event.target === post &&
+            (event.key === 'Enter' || event.key === ' ')
+          ) {
+            event.preventDefault()
+            expand(post)
+            inner(post).find(isTabbable)?.focus()
+          } else if (event.target !== post && event.key === 'Escape') {
+            event.preventDefault()
+            collapse(post)
+            post.focus()
+          }
+        })
+      })
+  })
+
   // The tweet is static HTML, so wire up react-tweet's video play button by hand
   // instead of hydrating React for it.
   document.addEventListener('astro:page-load', () => {

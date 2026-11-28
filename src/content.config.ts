@@ -166,9 +166,8 @@ const savedBase = z.object({
   note: z.string().optional(),
 })
 
-const savedPost = savedBase.extend({
-  category: z.literal('design').optional(),
-})
+// Feed items. Their tags double as the feed's filter tabs.
+const savedPost = savedBase
 
 const saved = defineCollection({
   loader: file('src/content/saved.yaml', {

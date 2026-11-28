@@ -10,7 +10,7 @@
 #   description: One line on what it's for   # optional
 #   date: 2026-11-26
 #
-# Set category: design on a post to show it in Design. Other posts go in Feed.
+# Posts share one Feed. Their tags become filter tabs (e.g. tags: [design]).
 #
 # - type: tweet       # X/Twitter status URL, rendered as an embedded post.
 #   url: https://x.com/user/status/123
@@ -43,8 +43,10 @@
 # Resources
 
 - type: resource
+  tags: [design]
   title: Name That UI
   url: https://namethatui.com
+  description: Search and browse UI elements to find out what they're called.
   date: 2026-11-27
 
 - type: resource
@@ -71,45 +73,65 @@
 # Feed
 
 - type: tweet
+  tags: [design, agents]
+  url: https://x.com/nonzeroexitcode/status/2126410123187028461?a=ClQEYe7C6m6DT6Ia0Uo&s=46
+  date: 2026-11-27
+
+- type: tweet
+  tags: [design]
+  url: https://x.com/emilkowalski/status/2126363152254443942?a=ie6dQrBYRkFStu-0PlE&s=46
+  date: 2026-11-27
+
+- type: tweet
+  tags: [agents]
   url: https://x.com/zkmarek/status/2126221381796823470
   date: 2026-11-27
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/saeed_vz/status/2126383265598574743
   date: 2026-11-27
 
 - type: tweet
+  tags: [dev]
   url: https://x.com/kitlangton/status/2126403774956933139
   date: 2026-11-27
 
 - type: link
+  tags: [review]
   title: Merge Risk
   url: https://www.warp.dev/merge-risk
   date: 2026-11-27
 
 - type: tweet
+  tags: [dev]
   url: https://x.com/devinjameson/status/2125825604272451629
   date: 2026-11-26
 
 - type: tweet
+  tags: [tools]
   url: https://x.com/edwardsanchez/status/2125842324437766488
   date: 2026-11-26
 
 - type: link
+  tags: [agents]
   title: How Uber Evals 1 Million Agent Skill Invocations a Month
   url: https://x.com/i/article/2120222611070500864
   date: 2026-11-26
 
 - type: link
+  tags: [dev]
   title: PerryTS
   url: https://www.perryts.com/en/
   date: 2026-11-26
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/lethain/status/2124590238031094043
   date: 2026-11-26
 
 - type: quote
+  tags: [agents]
   text: |
     The software factory is a system where software production becomes asynchronous from human attention. Humans define goals, workers execute, work gets correlated back to objectives, the system validates outputs, failures retry, bad changes get reverted or compensated, low-value failures get reconciled later, and high-risk actions escalate. The human spends their time improving the system instead of personally participating in every execution.
   source: https://x.com/unwitty/status/2091143479090885003
@@ -118,61 +140,61 @@
   date: 2026-11-25
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/DavidKPiano/status/2125310015557042676
   date: 2026-11-25
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/dillon_mulroy/status/2125765516639740183
   date: 2026-11-25
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/BHolmesDev/status/2125351601431089418
   date: 2026-11-24
 
 - type: tweet
+  tags: [review]
   url: https://x.com/pabcrab/status/2124615831900369326
   date: 2026-11-22
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/mazeincoding/status/2118378945557004477
   date: 2026-11-05
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/steveruizok/status/2111926712229372076
   date: 2026-10-18
 
 - type: tweet
+  tags: [review]
   url: https://x.com/linear/status/2108598795487633821
   date: 2026-10-09
 
 - type: tweet
+  tags: [review]
   url: https://x.com/antfu7/status/2107052841764569236
   date: 2026-10-05
 
 - type: tweet
+  tags: [design]
   url: https://x.com/DanFessler/status/2102467531248382089
   date: 2026-09-22
 
 - type: tweet
+  tags: [design, agents]
   url: https://x.com/kail_designs/status/2102265246325047711
   date: 2026-09-22
 
 - type: tweet
+  tags: [agents]
   url: https://x.com/tarunsachdeva/status/2098111309573198058
   date: 2026-09-10
 
 - type: tweet
+  tags: [review]
   url: https://x.com/cnakazawa/status/2063812273962189089
   date: 2026-06-07
-
-# Design
-
-- type: tweet
-  category: design
-  url: https://x.com/nonzeroexitcode/status/2126410123187028461?a=ClQEYe7C6m6DT6Ia0Uo&s=46
-  date: 2026-11-27
-
-- type: tweet
-  category: design
-  url: https://x.com/emilkowalski/status/2126363152254443942?a=ie6dQrBYRkFStu-0PlE&s=46
-  date: 2026-11-27

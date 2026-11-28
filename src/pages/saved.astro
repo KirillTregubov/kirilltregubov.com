@@ -37,12 +37,32 @@ const posts = collection
   .filter((item): item is PostEntry => !isResource(item))
   .sort(byDate)
 const resources = collection.filter(isResource).sort(byDate)
-const design = posts.filter(({ data }) => data.category === 'design')
-const feed = posts.filter(({ data }) => data.category === undefined)
-const postSections = [
-  { id: 'feed', title: 'Feed', items: feed, enterClass: 'enter-3' },
-  { id: 'design', title: 'Design', items: design, enterClass: 'enter-4' },
-]
+// Every tag used on a post becomes a filter tab. Tags listed here come first,
+// in this order; any others follow, most used first.
+const tagOrder = ['tools', 'dev', 'design', 'agents', 'review']
+const tagRank = (tag: string) => {
+  const index = tagOrder.indexOf(tag)
+  return index === -1 ? tagOrder.length : index
+}
+const tagCounts = new Map<string, number>()
+for (const { data } of posts) {
+  for (const tag of data.tags) tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)
+}
+const feedTags = [...tagCounts]
+  .sort(
+    ([a, x], [b, y]) => tagRank(a) - tagRank(b) || y - x || a.localeCompare(b),
+  )
+  .map(([tag, count]) => ({ tag, count }))
+// Dev only: a tab for posts that still need a tag. `import.meta.env.DEV` is
+// replaced with `false` in production builds, so this and its tab drop out.
+const untaggedCount = import.meta.env.DEV
+  ? posts.filter(({ data }) => data.tags.length === 0).length
+  : 0
+const tagLabel = (tag: string) =>
+  tag
+    .split('-')
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(' ')
 
 const dateFormat = new Intl.DateTimeFormat('en-CA', {
   year: 'numeric',
@@ -74,40 +94,45 @@ const cardArrowClass =
   'size-5 shrink-0 text-neutral-500 transition group-hover:text-neutral-200 group-focus-visible:text-neutral-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:translate-x-0.5 motion-safe:group-focus-visible:-translate-y-0.5'
 const tagClass =
   'rounded-sm bg-neutral-800 px-1.5 py-0.5 text-xs text-neutral-400'
+// Header nav links and feed tabs share one look: neutral-300 labels that turn
+// white, with counts a step dimmer (neutral-500 -> neutral-400).
+const countClass =
+  'text-neutral-500 transition group-hover:text-neutral-400 group-focus-visible:text-neutral-400 group-active:text-neutral-400 group-aria-pressed:text-neutral-400'
+const tabClass =
+  'group relative -mb-px cursor-pointer border-b-2 border-transparent pb-2 font-medium text-neutral-300 transition before:pointer-events-none before:absolute before:-inset-x-1.5 before:-top-0.5 before:bottom-1.5 before:rounded-md before:transition-shadow hover:text-white focus-visible:text-white focus-visible:ring-0! focus-visible:before:ring-2 focus-visible:before:ring-neutral-400 active:text-white aria-pressed:border-neutral-200 aria-pressed:text-white motion-reduce:before:transition-none'
+const sectionTitleClass =
+  'scroll-mt-26 text-xl font-semibold text-neutral-100 xs:scroll-mt-30 sm:scroll-mt-22'
 ---
 
 <Layout
   title="Saved - Kirill Tregubov"
-  description="Things I saved for later."
+  description="Resources and bookmarks that I'm saving for later."
   bodyClass="flex flex-col"
-  footerClass="enter-5"
+  footerClass="enter-4"
   referrerPolicy="same-origin"
   noindex
 >
   <main class="mx-auto w-full max-w-360 grow">
     <ReturnHome containerClass="max-sm:flex-col max-sm:items-start max-sm:gap-2">
       <nav aria-label="Sections" class="flex flex-wrap gap-4 sm:gap-5">
-        <Button variant="ghost" href="#resources">
-          Resources <span class="text-neutral-500">{resources.length}</span>
+        <Button variant="ghost" href="#resources" class="group">
+          Resources <span class={countClass}>{resources.length}</span>
         </Button>
-        {postSections.map(({ id, title, items }) => (
-          <Button variant="ghost" href={`#${id}`}>
-            {title} <span class="text-neutral-500">{items.length}</span>
-          </Button>
-        ))}
+        <Button variant="ghost" href="#feed" class="group">
+          Feed <span class={countClass}>{posts.length}</span>
+        </Button>
       </nav>
     </ReturnHome>
     <header class="mt-6 enter-1">
-      <h1 class="text-3xl font-semibold text-neutral-100">Saved</h1>
-      <p class="mt-3 text-lg text-neutral-400">Things I saved for later.</p>
+      <h1 class="text-3xl font-semibold text-neutral-100">Saved Items</h1>
+      <p class="mt-3 text-lg text-neutral-400">
+        Resources, tools, technologies, designs, inspirations that I'm saving
+        for later.
+      </p>
     </header>
 
-    <section
-      id="resources"
-      aria-labelledby="resources-title"
-      class="mt-10 scroll-mt-24 enter-2 sm:scroll-mt-20"
-    >
-      <h2 id="resources-title" class="text-xl font-semibold text-neutral-100">
+    <section aria-labelledby="resources" class="mt-10 enter-2">
+      <h2 id="resources" class={sectionTitleClass}>
         Resources
       </h2>
       <ul class="mt-6 grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-4">
@@ -166,231 +191,219 @@ const tagClass =
       )}
     </section>
 
-    {postSections.map(({ id, title, items, enterClass }) => {
-      const listId = `${id}-list`
-      const presentTypes = (
-        Object.keys(typeLabels) as (keyof typeof typeLabels)[]
-      )
-        .map((type) => ({
-          type,
-          count: items.filter((item) => item.data.type === type).length,
-        }))
-        .filter(({ count }) => count > 0)
-      return (
-        <section
-          {id}
-          data-saved-posts
-          aria-labelledby={`${id}-title`}
-          class:list={[
-            'mt-6 scroll-mt-24 border-t border-neutral-800 pt-10 sm:scroll-mt-20',
-            enterClass,
-          ]}
-        >
-          <div class="flex flex-wrap items-center justify-between gap-4">
-            <h2
-              id={`${id}-title`}
-              class="text-xl font-semibold text-neutral-100"
+    <section data-saved-feed aria-labelledby="feed" class="mt-12 enter-3">
+      <h2 id="feed" class={sectionTitleClass}>
+        Feed
+      </h2>
+
+      {feedTags.length > 0 && (
+        <>
+          <div
+            data-saved-tabs
+            class="mt-4 flex flex-wrap gap-x-6 border-b border-neutral-800"
+            role="group"
+            aria-label="Filter by tag"
+          >
+            <button
+              type="button"
+              class={tabClass}
+              data-tag=""
+              aria-pressed="true"
+              aria-controls="feed-list"
             >
-              {title}
-            </h2>
-            {presentTypes.length > 1 && (
-              <div
-                data-saved-filters
-                class="flex flex-wrap gap-2"
-                role="group"
-                aria-label="Filter by type"
+              All <span class={countClass}>{posts.length}</span>
+            </button>
+            {feedTags.map(({ tag, count }) => (
+              <button
+                type="button"
+                class={tabClass}
+                data-tag={tag}
+                aria-pressed="false"
+                aria-controls="feed-list"
               >
-                <Button
-                  size="sm"
-                  data-filter=""
-                  aria-pressed="true"
-                  aria-controls={listId}
-                >
-                  All{' '}
-                  <span class="text-neutral-500 in-aria-pressed:text-neutral-300">
-                    {items.length}
-                  </span>
-                </Button>
-                {presentTypes.map(({ type, count }) => (
-                  <Button
-                    size="sm"
-                    data-filter={type}
-                    aria-pressed="false"
-                    aria-controls={listId}
-                  >
-                    {typeLabels[type]}s{' '}
-                    <span class="text-neutral-500 in-aria-pressed:text-neutral-300">
-                      {count}
-                    </span>
-                  </Button>
-                ))}
-              </div>
+                {tagLabel(tag)} <span class={countClass}>{count}</span>
+              </button>
+            ))}
+            {import.meta.env.DEV && untaggedCount > 0 && (
+              <button
+                type="button"
+                class:list={[tabClass, 'italic']}
+                data-tag=":untagged"
+                aria-pressed="false"
+                aria-controls="feed-list"
+                title="Only shown in dev"
+              >
+                Untagged <span class={countClass}>{untaggedCount}</span>
+              </button>
             )}
           </div>
+          <p
+            data-saved-filter-status
+            class="sr-only"
+            role="status"
+            aria-atomic="true"
+          ></p>
+        </>
+      )}
 
-          {presentTypes.length > 1 && (
-            <p
-              data-saved-filter-status
-              class="sr-only"
-              role="status"
-              aria-atomic="true"
-            ></p>
-          )}
+      <!-- Masonry columns: each at least 24rem: 1 on phones, up to 3 at max width. -->
+      <ul id="feed-list" data-saved-list class="mt-6 columns-sm gap-8">
+        {posts.map(({ data }) => {
+          // Quotes have their own source button instead.
+          const href =
+            data.type === 'snippet'
+              ? data.source
+              : data.type === 'quote'
+                ? undefined
+                : data.url
+          return (
+            <li
+              data-tags={data.tags.join(' ')}
+              class="mb-10 break-inside-avoid"
+            >
+              <div class="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500">
+                <span class="font-medium text-neutral-400">
+                  {typeLabels[data.type]}
+                </span>
+                <span aria-hidden="true">·</span>
+                <time datetime={data.date.toISOString()}>
+                  {dateFormat.format(data.date)}
+                </time>
+                {href && (
+                  <Button variant="ghost" {href} external class="ms-auto">
+                    {data.type === 'snippet' ? 'Source' : 'Open'}
+                    <ExternalLinkIcon className="size-3.5" aria-hidden="true" />
+                  </Button>
+                )}
+              </div>
 
-          <!-- Masonry columns: each at least 24rem: 1 on phones, up to 3 at max width. -->
-          <ul id={listId} data-saved-list class="mt-6 columns-sm gap-8">
-            {items.map(({ data }) => {
-              // Quotes have their own source button instead.
-              const href =
-                data.type === 'snippet'
-                  ? data.source
-                  : data.type === 'quote'
-                    ? undefined
-                    : data.url
-              return (
-                <li data-type={data.type} class="mb-10 break-inside-avoid">
-                  <div class="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-500">
-                    <span class="font-medium text-neutral-400">
-                      {typeLabels[data.type]}
+              {data.type === 'tweet' && <SavedTweet url={data.url} />}
+
+              {data.type === 'link' && (
+                <a
+                  href={data.url}
+                  target="_blank"
+                  rel="noopener"
+                  class:list={[cardClass, 'items-center gap-4']}
+                >
+                  <span class="min-w-0 flex-1">
+                    <span class:list={[cardTitleClass, 'block']}>
+                      {data.title}
                     </span>
-                    <span aria-hidden="true">·</span>
-                    <time datetime={data.date.toISOString()}>
-                      {dateFormat.format(data.date)}
-                    </time>
-                    {data.tags.map((tag) => (
-                      <span class={tagClass}>{tag}</span>
-                    ))}
-                    {href && (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener"
-                        class="ml-auto inline-flex items-center gap-1 rounded-sm transition hover:text-white focus-visible:text-white"
-                      >
-                        {data.type === 'snippet' ? 'Source' : 'Open'}
-                        <ExternalLinkIcon
-                          className="size-3.5"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    )}
-                  </div>
+                    <span class="mt-1 block truncate text-sm text-neutral-500">
+                      {hostname(data.url)}
+                    </span>
+                  </span>
+                  <ArrowUpRightIcon
+                    className={cardArrowClass}
+                    aria-hidden="true"
+                  />
+                </a>
+              )}
 
-                  {data.type === 'tweet' && <SavedTweet url={data.url} />}
-
-                  {data.type === 'link' && (
-                    <a
-                      href={data.url}
-                      target="_blank"
-                      rel="noopener"
-                      class:list={[cardClass, 'items-center gap-4']}
-                    >
-                      <span class="min-w-0 flex-1">
-                        <span class:list={[cardTitleClass, 'block']}>
-                          {data.title}
+              {data.type === 'quote' && (
+                <figure>
+                  <blockquote class="border-l-2 border-neutral-600 pl-4 leading-relaxed whitespace-pre-line text-neutral-200">
+                    {data.text.trim()}
+                  </blockquote>
+                  <figcaption class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <span class="min-w-0 text-sm text-neutral-400">
+                      {data.author && (
+                        <span class="block text-neutral-300">
+                          {data.author}
                         </span>
-                        <span class="mt-1 block truncate text-sm text-neutral-500">
-                          {hostname(data.url)}
-                        </span>
-                      </span>
+                      )}
+                      {data.title && (
+                        <cite class="not-italic">{data.title}</cite>
+                      )}
+                    </span>
+                    <Button href={data.source} external size="sm" class="group">
+                      Read on {siteName(data.source)}
                       <ArrowUpRightIcon
-                        className={cardArrowClass}
+                        className="size-4 text-neutral-500 transition group-hover:text-neutral-200 group-focus-visible:text-neutral-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
                         aria-hidden="true"
                       />
-                    </a>
-                  )}
+                    </Button>
+                  </figcaption>
+                </figure>
+              )}
 
-                  {data.type === 'quote' && (
-                    <figure>
-                      <blockquote class="border-l-2 border-neutral-600 pl-4 leading-relaxed whitespace-pre-line text-neutral-200">
-                        {data.text.trim()}
-                      </blockquote>
-                      <figcaption class="mt-4 flex flex-wrap items-center justify-between gap-3">
-                        <span class="min-w-0 text-sm text-neutral-400">
-                          {data.author && (
-                            <span class="block text-neutral-300">
-                              {data.author}
-                            </span>
-                          )}
-                          {data.title && (
-                            <cite class="not-italic">{data.title}</cite>
-                          )}
-                        </span>
-                        <Button
-                          href={data.source}
-                          external
-                          size="sm"
-                          class="group"
-                        >
-                          Read on {siteName(data.source)}
-                          <ArrowUpRightIcon
-                            className="size-4 text-neutral-500 transition group-hover:text-neutral-200 group-focus-visible:text-neutral-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
-                            aria-hidden="true"
-                          />
-                        </Button>
-                      </figcaption>
-                    </figure>
-                  )}
+              {data.type === 'snippet' && (
+                <>
+                  <h3 class="mb-2 font-medium text-neutral-100">
+                    {data.title}
+                  </h3>
+                  <Code
+                    code={data.code.trimEnd()}
+                    lang={data.lang as 'plaintext'}
+                    class="overflow-x-auto rounded-xl px-4 py-3 text-sm"
+                  />
+                </>
+              )}
 
-                  {data.type === 'snippet' && (
-                    <>
-                      <h3 class="mb-2 font-medium text-neutral-100">
-                        {data.title}
-                      </h3>
-                      <Code
-                        code={data.code.trimEnd()}
-                        lang={data.lang as 'plaintext'}
-                        class="overflow-x-auto rounded-xl px-4 py-3 text-sm"
-                      />
-                    </>
-                  )}
+              {data.note && (
+                <p class="mt-3 whitespace-pre-line text-neutral-400">
+                  {data.note}
+                </p>
+              )}
+            </li>
+          )
+        })}
+      </ul>
 
-                  {data.note && (
-                    <p class="mt-3 whitespace-pre-line text-neutral-400">
-                      {data.note}
-                    </p>
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-
-          {items.length === 0 && (
-            <p class="mt-6 text-neutral-500">Nothing saved yet.</p>
-          )}
-        </section>
-      )
-    })}
+      {posts.length === 0 && (
+        <p class="mt-6 text-neutral-500">Nothing saved yet.</p>
+      )}
+    </section>
   </main>
 </Layout>
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    document.querySelectorAll('[data-saved-posts]').forEach((section) => {
-      const filters = section.querySelector<HTMLElement>('[data-saved-filters]')
-      const status = section.querySelector('[data-saved-filter-status]')
-      if (!filters || !status || filters.dataset.init !== undefined) return
-      filters.dataset.init = ''
-      const rows = section.querySelectorAll<HTMLElement>(
-        '[data-saved-list] > li',
-      )
+    const section = document.querySelector<HTMLElement>('[data-saved-feed]')
+    const tabs = section?.querySelector<HTMLElement>('[data-saved-tabs]')
+    const status = section?.querySelector('[data-saved-filter-status]')
+    if (!section || !tabs || !status || tabs.dataset.init !== undefined) return
+    tabs.dataset.init = ''
+    const rows = section.querySelectorAll<HTMLElement>('[data-saved-list] > li')
+    const known = new Set(
+      [...tabs.querySelectorAll<HTMLElement>('[data-tag]')].map(
+        (tab) => tab.dataset.tag,
+      ),
+    )
 
-      filters.addEventListener('click', (event) => {
-        const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
-          'button[data-filter]',
-        )
-        if (!button) return
-        const type = button.dataset.filter
-        filters.querySelectorAll('button').forEach((b) => {
-          b.setAttribute('aria-pressed', String(b === button))
-        })
-        let visibleCount = 0
-        rows.forEach((row) => {
-          row.hidden = Boolean(type) && row.dataset.type !== type
-          if (!row.hidden) visibleCount++
-        })
-        status.textContent = `Showing ${visibleCount} of ${rows.length} saved items.`
+    const apply = (tag: string) => {
+      tabs.querySelectorAll<HTMLElement>('[data-tag]').forEach((tab) => {
+        tab.setAttribute('aria-pressed', String(tab.dataset.tag === tag))
       })
+      let visibleCount = 0
+      rows.forEach((row) => {
+        const rowTags = (row.dataset.tags ?? '').split(' ').filter(Boolean)
+        // Dev-only Untagged tab; pruned from production builds.
+        if (import.meta.env.DEV && tag === ':untagged') {
+          row.hidden = rowTags.length > 0
+        } else {
+          row.hidden = Boolean(tag) && !rowTags.includes(tag)
+        }
+        if (!row.hidden) visibleCount++
+      })
+      status.textContent = tag
+        ? `Showing ${visibleCount} of ${rows.length} saved items ${tag === ':untagged' ? 'without a tag' : `tagged ${tag}`}.`
+        : `Showing all ${rows.length} saved items.`
+      const url = new URL(location.href)
+      if (tag) url.searchParams.set('tag', tag)
+      else url.searchParams.delete('tag')
+      history.replaceState(history.state, '', url)
+    }
+
+    tabs.addEventListener('click', (event) => {
+      const tab = (event.target as HTMLElement).closest<HTMLElement>(
+        '[data-tag]',
+      )
+      if (tab) apply(tab.dataset.tag ?? '')
     })
+
+    const initial = new URL(location.href).searchParams.get('tag') ?? ''
+    if (initial && known.has(initial)) apply(initial)
   })
 </script>

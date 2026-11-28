@@ -20,15 +20,9 @@ const { containerClass, href = '/', label = 'Home', ...props } = Astro.props
 >
   <Button variant="ghost" {href} class="gap-2.5">
     {href === '/' ? (
-      <HomeIcon
-        className="size-5 shrink-0 -translate-y-px"
-        aria-hidden="true"
-      />
+      <HomeIcon className="size-5 shrink-0" aria-hidden="true" />
     ) : (
-      <ArrowLeftIcon
-        className="size-5 shrink-0 -translate-y-px"
-        aria-hidden="true"
-      />
+      <ArrowLeftIcon className="size-5 shrink-0" aria-hidden="true" />
     )}
     <span>{label}</span>
   </Button>
